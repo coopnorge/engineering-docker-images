@@ -1,0 +1,12 @@
+# https://flake8.pycqa.org/en/latest/user/configuration.html
+[flake8]
+exclude = .svn,CVS,.bzr,.hg,.git,__pycache__,.venv
+extend-ignore =
+    # E501: line too long
+    # Disabled so that black can control line length.
+    E501,
+    # See https://github.com/PyCQA/pycodestyle/issues/373
+    E203,
+    # This is required for typer
+    # B008: Do not perform function calls in argument defaults.
+    B008,
