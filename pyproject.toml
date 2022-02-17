@@ -1,0 +1,33 @@
+# THIS IS ONLY FOR TESTS
+[tool.poetry]
+name = "engineering-docker-images"
+version = "0.1.0"
+description = ""
+authors = []
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.0.1"
+black = "^22.1.0"
+flake8 = "^4.0.1"
+flake8-black = "^0.2.4"
+mypy = "^0.931"
+
+[tool.isort]
+# https://pycqa.github.io/isort/docs/configuration/config_files.html
+profile = "black"
+
+[tool.pytest.ini_options]
+addopts = ["--capture=no"]
+# https://docs.pytest.org/en/stable/customize.html
+# https://docs.pytest.org/en/stable/reference.html#configuration-options
+log_cli = true
+log_cli_level = "DEBUG"
+log_cli_format = "%(asctime)s %(process)d %(thread)d %(levelno)03d:%(levelname)-8s %(name)-12s %(module)s:%(lineno)s:%(funcName)s %(message)s"
+log_cli_date_format = "%Y-%m-%dT%H:%M:%S"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

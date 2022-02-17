@@ -1,0 +1,55 @@
+{
+	"composefiles": {
+		"docker-compose.yml": [
+			{
+				"name": "docker.io/library/ubuntu",
+				"tag": "20.04",
+				"digest": "669e010b58baf5beb2836b253c1fd5768333f0d1dbcb834f7c07a4dc93f474be",
+				"dockerfile": "Dockerfile.devtools",
+				"service": "devtools"
+			},
+			{
+				"name": "safewaters/docker-lock",
+				"tag": "latest",
+				"digest": "432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622",
+				"service": "docker-lock"
+			},
+			{
+				"name": "docker.io/goodwithtech/dockle",
+				"tag": "v0.4.3",
+				"digest": "6771d453cdeaad77ae5bb0cd75ba1637243108fae7f2caa393ae63035cb88721",
+				"service": "dockle"
+			},
+			{
+				"name": "ghcr.io/hadolint/hadolint",
+				"tag": "2.8.0-alpine",
+				"digest": "6c4b7c23f96339489dd35f21a711996d7ce63047467a9a562287748a03ad5242",
+				"service": "hadolint"
+			}
+		]
+	},
+	"dockerfiles": {
+		"images/devtools-terraform/context/Dockerfile": [
+			{
+				"name": "ghcr.io/terraform-linters/tflint-bundle",
+				"tag": "v0.34.1.2",
+				"digest": "25889a5d3738a97ba1fa1e72bdc1b05dd1e7087c58213597cb0e1ed30f52615a"
+			},
+			{
+				"name": "docker.io/aquasec/tfsec",
+				"tag": "v1.1",
+				"digest": "c867867e5eb038f8c3e9f0cf698c7b6158006ff68088273934718060c8c7002b"
+			},
+			{
+				"name": "docker.io/hashicorp/terraform",
+				"tag": "1.1.6",
+				"digest": "6f68122ab2981c609d9a7ee9cd3ba5564e4b1bf9b26ca3bc3628c106f98e9c35"
+			},
+			{
+				"name": "docker.io/library/ubuntu",
+				"tag": "20.04",
+				"digest": "669e010b58baf5beb2836b253c1fd5768333f0d1dbcb834f7c07a4dc93f474be"
+			}
+		]
+	}
+}
