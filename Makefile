@@ -55,6 +55,10 @@ $(call dump_vars,IMAGE_NAMES)
 
 docker=docker
 docker_compose=docker-compose
+# docker_image_build=$(docker) image build
+docker_image_build_cmd=$(docker) buildx build --progress plain
+docker_image_build_args?=
+docker_image_build=$(docker_image_build_cmd) $(docker_image_build_args)
 hadolint=$(docker_compose) run --rm -T hadolint
 
 all: build
@@ -68,7 +72,9 @@ validate: $(validate_dockerfile_targets)
 
 .PHONY: image-%
 image-%:
-	$(docker) image build --tag ocreg.invalid/coopnorge/engineering/image/$(*):built images/$(*)/context/
+	$(docker_image_build) \
+		--tag ocreg.invalid/coopnorge/engineering/image/$(*):built \
+		images/$(*)/context/
 image_targets=$(foreach image_name,$(IMAGE_NAMES),image-$(image_name))
 
 images: ## build all images
