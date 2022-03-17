@@ -10,7 +10,6 @@ services:
       - .:/srv/workspace:z
       - xdg-cache-home:/root/.cache
       - /var/run/docker.sock:/var/run/docker.sock:z
-      # - devtools-var:/srv/workspace/var
     command: ["make", "all"]
     ports:
       - "127.0.0.1:32604:32604"
@@ -27,4 +26,3 @@ services:
       - .:/srv/workspace:z
 volumes:
     xdg-cache-home: {}
-    # devtools-var: {}
