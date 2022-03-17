@@ -1,0 +1,2 @@
+2d0f5ba6faa787878b642c151ccb2c3390ce4c1e6c8e2b59568b3869ba407c4f  kubectl-linux-amd64
+1d77d6027fc8dfed772609ad9bd68f611b7e4ce73afa949f27084ad3a92b15fe  kubectl-linux-arm64
