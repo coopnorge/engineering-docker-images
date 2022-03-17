@@ -1,6 +1,6 @@
 services:
   devtools:
-    image: ocreg.invalid/coopnorge/engineering/image/devtools-terraform:built
+    image: ${IMAGE_UNDER_TEST:-ocreg.invalid/coopnorge/engineering/image/devtools-terraform-v1beta1:built}
     working_dir: /srv/workspace
     volumes:
       - .:/srv/workspace:z
