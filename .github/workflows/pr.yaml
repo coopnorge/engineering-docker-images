@@ -25,6 +25,13 @@ jobs:
           key: poetry-v1-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
             poetry-v1-
+      - name: Cache python venv
+        uses: actions/cache@v2
+        with:
+          path: ${{ github.workspace }}/.venv
+          key: pyvenv-v1-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            pyvenv-v1-
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -52,10 +59,16 @@ jobs:
         shell: bash
         run: |
           poetry install
+      - name: Expose GitHub Runtime
+        uses: crazy-max/ghaction-github-runtime@v1
       - id: build-and-publish
         shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           export IMAGE_NAMES="${{ steps.image-names.outputs.image_names }}"
+          docker buildx create --use
+          export docker_image_build_args="--load --cache-from type=gha --cache-to type=gha,mode=max"
           make VERBOSE=all validate build
           # make VERBOSE=all test # TODO: FIXME
           echo "${{ github.token }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
