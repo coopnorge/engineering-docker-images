@@ -28,6 +28,12 @@ docker-compose run --rm devtools make watch
 
 ```bash
 poetry install
+make build validate test
+```
 
-RAPID_TEST=1 make test
+### Useful commands
+
+```bash
+# run tests for only one image
+make IMAGE_NAMES=devtools-terraform-v1beta1 build validate test
 ```
