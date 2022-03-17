@@ -19,6 +19,7 @@ COPY maker /usr/local/bin/maker
 COPY .golangci.yml /usr/local/share/devtools-golang/.golangci.yml
 
 RUN \
+    ln -s /usr/local/bin/maker /usr/local/bin/help && \
     ln -s /usr/local/bin/maker /usr/local/bin/validate && \
     ln -s /usr/local/bin/maker /usr/local/bin/validate-fix && \
     ln -s /usr/local/bin/maker /usr/local/bin/validate-static && \
