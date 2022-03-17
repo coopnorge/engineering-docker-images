@@ -10,6 +10,10 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      packages: write
+      contents: read
     steps:
       - name: Cache xdg
         uses: actions/cache@v2
@@ -46,7 +50,8 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: "3.10"
+
       - name: Setup Poetry
         uses: Gr1N/setup-poetry@v7
       - id: image-names
@@ -61,8 +66,7 @@ jobs:
           poetry install
       - name: Expose GitHub Runtime
         uses: crazy-max/ghaction-github-runtime@v1
-      - id: build-and-publish
-        shell: bash
+      - name: Build images
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -70,6 +74,20 @@ jobs:
           docker buildx create --use
           export docker_image_build_args="--load --cache-from type=gha --cache-to type=gha,mode=max"
           make VERBOSE=all validate build
-          # make VERBOSE=all test # TODO: FIXME
+          make VERBOSE=all test || :
           echo "${{ github.token }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
+      - id: "auth"
+        uses: "google-github-actions/auth@v0.4.0"
+        with:
+          workload_identity_provider: projects/943318002566/locations/global/workloadIdentityPools/github-actions/providers/github-actions-provider
+          service_account: gha-docker-images@engineering-production-af50.iam.gserviceaccount.com
+          create_credentials_file: true
+      - run: |
+          gcloud auth configure-docker europe-docker.pkg.dev
+      - name: Push images
+        # TODO: FIXME
+        # if: github.ref == 'refs/heads/main'
+        run: |
           make push-images oci_remote_ref_prefixes=ghcr.io/${{ github.repository }}/
+          make push-images oci_remote_ref_prefixes=europe-docker.pkg.dev/engineering-production-af50/images/
+
