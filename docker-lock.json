@@ -4,7 +4,7 @@
 			{
 				"name": "docker.io/library/ubuntu",
 				"tag": "20.04",
-				"digest": "669e010b58baf5beb2836b253c1fd5768333f0d1dbcb834f7c07a4dc93f474be",
+				"digest": "8ae9bafbb64f63a50caab98fd3a5e37b3eb837a3e0780b78e5218e63193961f9",
 				"dockerfile": "Dockerfile.devtools",
 				"service": "devtools"
 			},
@@ -26,6 +26,14 @@
 				"digest": "6c4b7c23f96339489dd35f21a711996d7ce63047467a9a562287748a03ad5242",
 				"service": "hadolint"
 			}
+		],
+		"images/devtools-terraform/tests/prototype/docker-compose.yaml": [
+			{
+				"name": "ocreg.invalid/coopnorge/engineering/image/devtools-terraform",
+				"tag": "built",
+				"digest": "",
+				"service": "devtools"
+			}
 		]
 	},
 	"dockerfiles": {
@@ -46,9 +54,14 @@
 				"digest": "6f68122ab2981c609d9a7ee9cd3ba5564e4b1bf9b26ca3bc3628c106f98e9c35"
 			},
 			{
+				"name": "docker.io/library/golang",
+				"tag": "latest",
+				"digest": "0906175f651d65550ab51876c06083868e17c8da5f76b46215016f4e5b5eaeff"
+			},
+			{
 				"name": "docker.io/library/ubuntu",
 				"tag": "20.04",
-				"digest": "669e010b58baf5beb2836b253c1fd5768333f0d1dbcb834f7c07a4dc93f474be"
+				"digest": "8ae9bafbb64f63a50caab98fd3a5e37b3eb837a3e0780b78e5218e63193961f9"
 			}
 		]
 	}
