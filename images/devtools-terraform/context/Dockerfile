@@ -58,7 +58,7 @@ RUN \
     tar -xvf terraform-switcher_${tfswitcher_version}_${GOOS}_${GOARCH}.tar.gz -C /usr/local/bin tfswitch && \
     mkdir -vp ~/.cache/.terraform.versions && \
     ln -s ~/.cache/.terraform.versions ~/.terraform.versions && \
-    true
+    true \
     for ver in ${terraform_versions}; \
     do \
         tfswitch "${ver}"; \
