@@ -58,8 +58,8 @@ RUN \
     sed -i "/_${GOOS}_${GOARCH}.tar.gz/!d" "terraform-switcher_${tfswitcher_version}_checksums.txt" && \
     sha256sum -c "terraform-switcher_${tfswitcher_version}_checksums.txt" && \
     tar -xvf "terraform-switcher_${tfswitcher_version}_${GOOS}_${GOARCH}.tar.gz" -C /usr/local/bin tfswitch && \
-    mkdir -vp ~/.cache/.terraform.versions && \
-    ln -s ~/.cache/.terraform.versions ~/.terraform.versions && \
+    # mkdir -vp ~/.cache/.terraform.versions && \
+    # ln -s ~/.cache/.terraform.versions ~/.terraform.versions && \
     # for ver in ${terraform_versions}; \
     # do \
     #     tfswitch "${ver}"; \
