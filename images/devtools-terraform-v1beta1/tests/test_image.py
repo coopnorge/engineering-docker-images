@@ -5,7 +5,7 @@ import logging
 import shutil
 import subprocess
 import sys
-from tempfile import TemporaryDirectory
+import tempfile
 from typing import Iterator, Optional, TypeVar, Union
 
 import pytest
@@ -34,15 +34,16 @@ def ctx_chdir(newdir: PathLikeT) -> Iterator[PathLikeT]:
 def ctx_prototype(tmp_path: Path, dottf_dir: Optional[Path]) -> Iterator[Path]:
     logging.debug("RAPID_TEST = %s", RAPID_TEST)
     workdir = tmp_path / "base"
-    logging.info("workdir = %s", workdir)
+    logging.info("workdir = %s, dottf_dir = %s", workdir, dottf_dir)
     shutil.copytree(
         PROTYPE_DIR,
         workdir,
-        ignore=shutil.ignore_patterns(".terraform") if not RAPID_TEST else None,
+        ignore=shutil.ignore_patterns(".terraform", ".terraform.lock.hcl") if not RAPID_TEST else None,
     )
     if not RAPID_TEST:
         assert dottf_dir is not None
         shutil.copytree(dottf_dir, workdir / ".terraform")
+        shutil.copy2(dottf_dir.parent / ".terraform.lock.hcl", workdir / ".terraform.lock.hcl")
 
     with ctx_chdir(workdir):
         yield workdir
@@ -61,8 +62,10 @@ def dottf_dir() -> Iterator[Optional[Path]]:
                 )
             yield tfdir
     else:
-        with TemporaryDirectory("dottf_dir") as _tmp_path:
-            tmp_path = Path(_tmp_path)
+        _tmp_path = tempfile.mkdtemp("dottf_dir")
+        # _tmp_path = TemporaryDirectory("dottf_dir", ignore_cleanup_errors=True)
+        tmp_path = Path(_tmp_path)
+        try:
             workdir = tmp_path / "terraform_dir"
             logging.info("workdir = %s", workdir)
             shutil.copytree(
@@ -77,10 +80,17 @@ def dottf_dir() -> Iterator[Optional[Path]]:
                 tfdir = workdir / ".terraform"
                 logging.debug("tfdir = %s", tfdir)
             yield tfdir
+        finally:
+            try:
+                shutil.rmtree(tmp_path, ignore_errors=True)
+            except Exception:
+                logging.warning("failed to rmtree %s", tmp_path, exc_info=True)
 
 
 def test_prototype_ok(tmp_path: Path, dottf_dir: Optional[Path]) -> None:
     with ctx_prototype(tmp_path, dottf_dir):
+        subprocess.run("pwd".split(" "), check=True)
+        subprocess.run("find .".split(" "), check=True)
         subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
 
 
@@ -126,7 +136,7 @@ resource "google_storage_bucket" "example" {
             sys.stdout.write(captured.out)
             sys.stderr.write("captured.err:\n")
             sys.stderr.write(captured.err)
-        assert "Missing required argument" in captured.out
+        assert "Missing required argument" in (captured.out + captured.err)
 
 
 def test_prototype_fail_tfsec(
