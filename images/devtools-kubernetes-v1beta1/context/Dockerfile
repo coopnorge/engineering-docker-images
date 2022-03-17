@@ -21,6 +21,7 @@ RUN \
 
 COPY maker /usr/local/bin/maker
 RUN \
+    ln -rs /usr/local/bin/maker /usr/local/bin/help && \
     ln -rs /usr/local/bin/maker /usr/local/bin/validate && \
     ln -rs /usr/local/bin/maker /usr/local/bin/validate-fix && \
     true
