@@ -1,0 +1,9 @@
+services:
+  devtools:
+    image: ocreg.invalid/coopnorge/engineering/image/devtools-golang:built
+    working_dir: /srv/workspace
+    volumes:
+      - .:/srv/workspace:z
+      - xdg-cache-home:/root/.cache
+volumes:
+    xdg-cache-home: {}

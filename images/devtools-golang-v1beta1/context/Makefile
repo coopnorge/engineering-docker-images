@@ -1,0 +1,67 @@
+SHELL=bash
+.SHELLFLAGS=-ec -o pipefail
+current_makefile:=$(lastword $(MAKEFILE_LIST))
+current_makefile_dir:=$(dir $(abspath $(current_makefile)))
+
+.PHONY: all
+all: validate validate-fix  ## Do everything (default target)
+
+########################################################################
+# boiler plate
+########################################################################
+
+ifneq ($(filter all vars,$(VERBOSE)),)
+dump_var=$(info var $(1)=$($(1)))
+dump_vars=$(foreach var,$(1),$(call dump_var,$(var)))
+else
+dump_var=
+dump_vars=
+endif
+
+########################################################################
+# variables
+########################################################################
+
+PROJECT_TOOLS_DIR?=$(current_makefile_dir)var/tools/
+tools_dir=$(PROJECT_TOOLS_DIR)
+ifneq ($(tools_dir),)
+export PATH:=$(tools_dir):$(PATH)
+endif
+XDG_CACHE_HOME?=$(HOME)/.cache
+
+# setting this so that it is more likely things will work on MacOS and Linux
+export POSIXLY_CORRECT:=1
+
+golangci_lint=golangci-lint $(if $(filter all commands,$(VERBOSE)),-v) --config /usr/local/share/devtools-golang/.golangci.yml
+
+########################################################################
+# targets ...
+########################################################################
+
+.PHONY: validate
+validate: validate-static test  ## Run static and dynamic validation (tests)
+
+.PHONY: validate-fix
+validate-fix:  ## Let the tooling fix what can be automatically fixed
+	$(golangci_lint) run  --fix ./...
+
+.PHONY: validate-static
+validate-static:  ## Static code validation
+	$(golangci_lint) run  ./...
+
+.PHONY: test
+test:  ## Dynamic code validation
+	go test -race -cover $(if $(filter all commands,$(VERBOSE)),-v) ./...
+
+########################################################################
+# utility
+########################################################################
+
+.PHONY: help
+help:
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+## create directories
+.PRECIOUS: %/
+%/:
+	mkdir -vp $(@)
