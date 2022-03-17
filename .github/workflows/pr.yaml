@@ -13,6 +13,8 @@ jobs:
     permissions:
       id-token: write
       packages: write
+      deployments: write
+      repository-projects: write
       contents: read
     steps:
       - name: Cache xdg
@@ -71,10 +73,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           export IMAGE_NAMES="${{ steps.image-names.outputs.image_names }}"
+          # IMAGE_NAMES=devtools-terraform-v1beta1
           docker buildx create --use
           export docker_image_build_args="--load --cache-from type=gha --cache-to type=gha,mode=max"
           make VERBOSE=all validate build
-          make VERBOSE=all test || :
+          make VERBOSE=all test
           echo "${{ github.token }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
       - id: "auth"
         uses: "google-github-actions/auth@v0.4.0"
@@ -83,11 +86,13 @@ jobs:
           service_account: gha-docker-images@engineering-production-af50.iam.gserviceaccount.com
           create_credentials_file: true
       - run: |
-          gcloud auth configure-docker europe-docker.pkg.dev
+          gcloud auth configure-docker europe-north1-docker.pkg.dev
       - name: Push images
         # TODO: FIXME
         # if: github.ref == 'refs/heads/main'
         run: |
-          make push-images oci_remote_ref_prefixes=ghcr.io/${{ github.repository }}/
-          make push-images oci_remote_ref_prefixes=europe-docker.pkg.dev/engineering-production-af50/images/
-
+          echo "${{ github.token }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
+          export IMAGE_NAMES="${{ steps.image-names.outputs.image_names }}"
+          # IMAGE_NAMES=devtools-terraform-v1beta1
+          make push-images oci_remote_ref_prefixes=ghcr.io/${{ github.repository }}/ || :
+          make push-images oci_remote_ref_prefixes=europe-north1-docker.pkg.dev/engineering-production-af50/images/ || :
