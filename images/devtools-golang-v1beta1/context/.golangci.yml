@@ -1,0 +1,29 @@
+linters:
+  disable-all: true
+  enable:
+  - contextcheck
+  - deadcode
+  - errcheck
+  - gofmt
+  - goimports
+  - gosimple
+  - govet
+  - ineffassign
+  - misspell
+  - revive
+  - staticcheck
+  - structcheck
+  - typecheck
+  - unused
+  - varcheck
+issues:
+  exclude-use-default: false
+  exclude-rules:
+  - path: _test[.]go
+    linters:
+      - errcheck
+      - gosimple
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
