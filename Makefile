@@ -30,6 +30,13 @@ __ORIGINAL_SHELL:=$(SHELL)
 SHELL=$(warning Building $@$(if $<, (from $<))$(if $?, ($? newer)))$(TIME) $(__ORIGINAL_SHELL)
 endif
 
+
+define __newline
+
+
+endef
+
+
 $(call dump_vars,current_makefile current_makefile_dirname \
 	current_makefile_dirname_abspath current_makefile_dirname_realpath)
 
@@ -75,22 +82,41 @@ test-image-%:
 test_image_targets=$(foreach image_name,$(image_names),test-image-$(image_name))
 test: $(test_image_targets)
 
+oci_remote_ref_prefixes=\
+
+tag-image-%:
+	$(foreach oci_remote_ref_prefix,$(oci_remote_ref_prefixes),\
+		$(docker) tag ocreg.invalid/coopnorge/engineering/image/$(*):built $(oci_remote_ref_prefix)$(*):latest $(__newline))
+
+
+tag_image_targets=$(foreach image_name,$(image_names),tag-image-$(image_name))
+tag-images: $(tag_image_targets)
+
+
+push-image-%: tag-image-%
+	$(foreach oci_remote_ref_prefix,$(oci_remote_ref_prefixes),\
+		$(docker) push $(oci_remote_ref_prefix)$(*):latest $(__newline))
+
+
+push_image_targets=$(foreach image_name,$(image_names),push-image-$(image_name))
+push-images: $(push_image_targets)
 
 ########################################################################
 # docker-lock
 ########################################################################
 
-docker_lock=$(docker_compose) run --rm -T docker-lock
-# docker_lock=docker-lock
+# docker_lock=$(docker_compose) run --rm -T docker-lock
+docker_lock=docker-lock
 
 .PHONY: docker-lock
 docker-lock: ## Generate and rewrite digests of docker images
 	$(docker_lock) lock generate \
 		--update-existing-digests \
-		--dockerfile-globs *.Dockerfile Dockerfile \
+		--dockerfile-globs *.Dockerfile Dockerfile Dockerfile.* \
 		--dockerfile-recursive \
 		--composefile-recursive \
-		--kubernetesfile-recursive
+		--kubernetesfile-recursive \
+		--ignore-missing-digests
 	$(docker_lock) lock rewrite
 
 ########################################################################

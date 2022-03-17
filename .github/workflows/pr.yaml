@@ -3,8 +3,25 @@ on:
   push:
     branches-ignore:
       - main
+env:
+  XDG_CACHE_HOME: ${{ github.workspace }}/cache
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello, World"
+      - name: Cache xdg
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.XDG_CACHE_HOME }}
+          key: xdg-v1-${{ hashFiles('**/Makefile') }}
+          restore-keys: |
+            xdg-v1-
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - shell: bash
+        run: |
+          echo "${{ github.token }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
+          make VERBOSE=all validate
+          make build
+          make push-images oci_remote_ref_prefixes=ghcr.io/${{ github.repository }}/
