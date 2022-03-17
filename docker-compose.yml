@@ -15,6 +15,8 @@ services:
       - "127.0.0.1:32604:32604"
   hadolint:
     image: ghcr.io/hadolint/hadolint:2.8.0-alpine@sha256:6c4b7c23f96339489dd35f21a711996d7ce63047467a9a562287748a03ad5242
+    volumes:
+      - .hadolint.yaml:/.hadolint.yaml:z
   dockle:
     image: docker.io/goodwithtech/dockle:v0.4.3@sha256:6771d453cdeaad77ae5bb0cd75ba1637243108fae7f2caa393ae63035cb88721
     volumes:
