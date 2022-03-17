@@ -96,7 +96,7 @@ def test_prototype_linter_errors(
             sys.stdout.write(captured.out)
             sys.stderr.write("captured.err:\n")
             sys.stderr.write(captured.err)
-        
+
         assert error_msg in captured.out
 
 def test_prototype_failing_tests(tmp_path: Path, capfd: CaptureFixture[str]) -> None:
@@ -119,7 +119,7 @@ func TestThatFails(t *testing.T) {
             sys.stdout.write(captured.out)
             sys.stderr.write("captured.err:\n")
             sys.stderr.write(captured.err)
-        
+
         assert "FAIL: TestThatFails" in captured.out
 
 def test_prototype_validate_fix(tmp_path: Path) -> None:
@@ -167,5 +167,5 @@ func init() {
 	print(x)
 }
 """
-        
+
         assert formatted_file == open(workdir / "bad_file.go").read()

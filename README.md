@@ -27,5 +27,7 @@ docker-compose run --rm devtools make watch
 ### without devtools
 
 ```bash
-RAPID_TEST=
+poetry install
+
+RAPID_TEST=1 make test
 ```
