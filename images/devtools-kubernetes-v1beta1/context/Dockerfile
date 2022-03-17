@@ -15,7 +15,9 @@ RUN \
         make=4.2.1-1.2 \
         curl=7.68.0-1ubuntu2.7 \
         ca-certificates=20210119~20.04.2 \
-    && true
+        && \
+    rm -vr /var/lib/apt/lists/* && \
+    true
 
 COPY maker /usr/local/bin/maker
 RUN \
@@ -54,10 +56,10 @@ COPY kubectl_${kubectl_version}_checksums.txt /var/tmp/build/kubectl_${kubectl_v
 RUN \
     cd /var/tmp/build && \
     . /usr/local/bin/goenv.sh && \
-    curl -LJ "https://dl.k8s.io/release/v${kubectl_version}/bin/${GOOS}/${GOARCH}/kubectl" -o kubectl-${GOOS}-${GOARCH} && \
+    curl -LJ "https://dl.k8s.io/release/v${kubectl_version}/bin/${GOOS}/${GOARCH}/kubectl" -o "kubectl-${GOOS}-${GOARCH}" && \
     sed -i "/-${GOOS}-${GOARCH}/!d" "kubectl_${kubectl_version}_checksums.txt" && \
     sha256sum -c "kubectl_${kubectl_version}_checksums.txt" && \
-    install -o root -g root -m 0755 kubectl-${GOOS}-${GOARCH} /usr/local/bin/kubectl && \
+    install -o root -g root -m 0755 "kubectl-${GOOS}-${GOARCH}" /usr/local/bin/kubectl && \
     true
 
 RUN \
