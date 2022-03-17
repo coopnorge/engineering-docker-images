@@ -101,7 +101,9 @@ data "null_data_source" "values" {
 
         captured = capfd.readouterr()
         with capfd.disabled():
+            sys.stdout.write("captured.out:\n")
             sys.stdout.write(captured.out)
+            sys.stderr.write("captured.err:\n")
             sys.stderr.write(captured.err)
         assert "+++ new/bad_fmt.tf" in captured.out
 
@@ -120,7 +122,9 @@ resource "google_storage_bucket" "example" {
             subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
         captured = capfd.readouterr()
         with capfd.disabled():
+            sys.stdout.write("captured.out:\n")
             sys.stdout.write(captured.out)
+            sys.stderr.write("captured.err:\n")
             sys.stderr.write(captured.err)
         assert "Missing required argument" in captured.out
 
@@ -141,7 +145,9 @@ resource "google_storage_bucket" "example" {
             subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
         captured = capfd.readouterr()
         with capfd.disabled():
+            sys.stdout.write("captured.out:\n")
             sys.stdout.write(captured.out)
+            sys.stderr.write("captured.err:\n")
             sys.stderr.write(captured.err)
         assert "Bucket has uniform bucket level access disabled." in captured.out
 
@@ -165,6 +171,8 @@ resource "google_project_iam_binding" "iam_binding" {
             subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
         captured = capfd.readouterr()
         with capfd.disabled():
+            sys.stdout.write("captured.out:\n")
             sys.stdout.write(captured.out)
+            sys.stderr.write("captured.err:\n")
             sys.stderr.write(captured.err)
         assert "first.last@example.com is an invalid member format" in captured.out

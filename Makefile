@@ -50,8 +50,8 @@ $(call dump_vars,current_makefile current_makefile_dirname \
 ########################################################################
 
 images_dir=images
-image_names=$(notdir $(wildcard $(images_dir)/*))
-$(call dump_vars,$(image_names))
+IMAGE_NAMES?=$(notdir $(wildcard $(images_dir)/*))
+$(call dump_vars,IMAGE_NAMES)
 
 docker=docker
 docker_compose=docker-compose
@@ -63,13 +63,13 @@ build: ## build artifacts
 validate-dockerfile-%:
 	$(hadolint) < images/$(*)/context/Dockerfile
 
-validate_dockerfile_targets=$(foreach image_name,$(image_names),validate-dockerfile-$(image_name))
+validate_dockerfile_targets=$(foreach image_name,$(IMAGE_NAMES),validate-dockerfile-$(image_name))
 validate: $(validate_dockerfile_targets)
 
 .PHONY: image-%
 image-%:
 	$(docker) image build --tag ocreg.invalid/coopnorge/engineering/image/$(*):built images/$(*)/context/
-image_targets=$(foreach image_name,$(image_names),image-$(image_name))
+image_targets=$(foreach image_name,$(IMAGE_NAMES),image-$(image_name))
 
 images: ## build all images
 build: images
@@ -79,7 +79,7 @@ test-image-%:
 	IMAGE_UNDER_TEST=ocreg.invalid/coopnorge/engineering/image/$(*):built \
 		images/$(*)/tests/run
 
-test_image_targets=$(foreach image_name,$(image_names),test-image-$(image_name))
+test_image_targets=$(foreach image_name,$(IMAGE_NAMES),test-image-$(image_name))
 test: $(test_image_targets)
 
 oci_remote_ref_prefixes=\
@@ -89,7 +89,7 @@ tag-image-%:
 		$(docker) tag ocreg.invalid/coopnorge/engineering/image/$(*):built $(oci_remote_ref_prefix)$(*):latest $(__newline))
 
 
-tag_image_targets=$(foreach image_name,$(image_names),tag-image-$(image_name))
+tag_image_targets=$(foreach image_name,$(IMAGE_NAMES),tag-image-$(image_name))
 tag-images: $(tag_image_targets)
 
 
@@ -98,7 +98,7 @@ push-image-%: tag-image-%
 		$(docker) push $(oci_remote_ref_prefix)$(*):latest $(__newline))
 
 
-push_image_targets=$(foreach image_name,$(image_names),push-image-$(image_name))
+push_image_targets=$(foreach image_name,$(IMAGE_NAMES),push-image-$(image_name))
 push-images: $(push_image_targets)
 
 ########################################################################
