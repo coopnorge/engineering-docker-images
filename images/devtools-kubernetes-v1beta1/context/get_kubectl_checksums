@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+if [ $# -lt 1 ]; then
+	echo "Usage: $0 release_version"
+	exit 1
+fi
+
+release_version=$1
+outfile=./kubectl_${release_version}_checksums.txt
+
+for arch in amd64 arm64
+do
+	curl -LJ "https://dl.k8s.io/v$release_version/bin/linux/$arch/kubectl.sha256" -o -
+	echo "  kubectl-linux-$arch"
+done > $outfile
