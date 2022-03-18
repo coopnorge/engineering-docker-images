@@ -1,9 +1,7 @@
 ---
 on:
-  push:
-    branches-ignore:
-      - main
-  workflow_dispatch:
+  push: {}
+  workflow_dispatch: {}
 env:
   XDG_CACHE_HOME: ${{ github.workspace }}/.cache/xdg
   POETRY_CACHE_DIR: ${{ github.workspace }}/.cache/poetry
@@ -79,12 +77,14 @@ jobs:
         run: |
           make VERBOSE=all -j4 test
       - name: Auth to GCP
+        if: github.ref == 'refs/heads/main'
         uses: "google-github-actions/auth@v0.4.0"
         with:
           workload_identity_provider: projects/943318002566/locations/global/workloadIdentityPools/github-actions/providers/github-actions-provider
           service_account: gha-docker-images@engineering-production-af50.iam.gserviceaccount.com
           create_credentials_file: true
       - name: Login to GCP artifact registry
+        if: github.ref == 'refs/heads/main'
         run: |
           gcloud auth configure-docker europe-north1-docker.pkg.dev
       - name: Push images
