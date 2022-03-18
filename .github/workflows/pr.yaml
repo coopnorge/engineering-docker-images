@@ -88,7 +88,7 @@ jobs:
         run: |
           gcloud auth configure-docker europe-north1-docker.pkg.dev
       - name: Push images
-        # if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         env:
           IMAGE_NAMES: ${{ steps.image-names.outputs.image_names }}
         run: |
