@@ -28,10 +28,6 @@ Devtools images are intended for use in git repos to do validation and artifact 
 
   [Usage example](./images/devtools-golang-v1beta1/tests/prototype/).
 
-- `devtools-kubernetes-v1beta1`: Tools for kubernetes.
-
-  [Usage example](./images/devtools-kubernetes-v1beta1/tests/prototype/).
-
 - `devtools-terraform-v1beta1`: Tools for terraform.
 
   [Usage example](./images/devtools-terraform-v1beta1/tests/prototype/).
