@@ -14,8 +14,6 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - name: Cache xdg
         uses: actions/cache@v2
         with:
@@ -45,18 +43,18 @@ jobs:
           filters: |
             images:
               - 'images/**'
-      - name: Setup Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.10"
-      - name: Setup Poetry
-        uses: Gr1N/setup-poetry@v7
       - id: image-names
         shell: bash
         run: |
           image_names="$(printf "%s\n" ${{ steps.paths-filter.outputs.images_files }} | sed -E -e 's,^.*images/([^/]+)/.*$,\1,g' | sort | uniq | tr '\n' ' ')"
           declare -p image_names
           echo "::set-output name=image_names::${image_names}"
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - name: Setup Poetry
+        uses: Gr1N/setup-poetry@v7
       - id: toolchain
         shell: bash
         run: |

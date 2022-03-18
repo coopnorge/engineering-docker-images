@@ -16,6 +16,7 @@ linters:
   - typecheck
   - unused
   - varcheck
+  - whitespace
 issues:
   exclude-use-default: false
   exclude-rules:

@@ -1,10 +1,11 @@
+# https://www.gnu.org/software/make/manual/make.html
 SHELL=bash
 .SHELLFLAGS=-ec -o pipefail
 current_makefile:=$(lastword $(MAKEFILE_LIST))
 current_makefile_dir:=$(dir $(abspath $(current_makefile)))
 
 .PHONY: all
-all: validate validate-fix  ## Do everything (default target)
+all: validate  ## Do everything (default target)
 
 ########################################################################
 # boiler plate
@@ -16,6 +17,11 @@ dump_vars=$(foreach var,$(1),$(call dump_var,$(var)))
 else
 dump_var=
 dump_vars=
+endif
+
+ifneq ($(filter all targets,$(VERBOSE)),)
+__ORIGINAL_SHELL:=$(SHELL)
+SHELL=$(warning Building $@$(if $<, (from $<))$(if $?, ($? newer)))$(TIME) $(__ORIGINAL_SHELL)
 endif
 
 ########################################################################
@@ -32,7 +38,7 @@ XDG_CACHE_HOME?=$(HOME)/.cache
 # setting this so that it is more likely things will work on MacOS and Linux
 export POSIXLY_CORRECT:=1
 
-golangci_lint=golangci-lint $(if $(filter all commands,$(VERBOSE)),-v) --config /usr/local/share/devtools-golang/.golangci.yml
+golangci_lint=golangci-lint $(if $(filter all commands,$(VERBOSE)),-v)
 
 ########################################################################
 # targets ...
@@ -51,7 +57,38 @@ validate-static:  ## Static code validation
 
 .PHONY: test
 test:  ## Dynamic code validation
-	go test -race -cover $(if $(filter all commands,$(VERBOSE)),-v) ./...
+test coverage.out:
+	go test -race -cover $(if $(filter all commands,$(VERBOSE)),-v) ./... \
+		-coverprofile=coverage.out -covermode=atomic \
+		$(if $(gotest_files),$(gotest_files),./...) \
+		$(gotest_args)
+
+.PHONY: build
+build: ## build source
+	go build -race -v ./...
+
+.PHONY: view-coverage
+view-coverage: coverage.out ## view coverage
+	go tool cover -html=$(<)
+
+########################################################################
+# docker-lock
+########################################################################
+
+docker_compose=docker-compose
+docker_lock=$(docker_compose) run --rm -T docker-lock
+# docker_lock=docker-lock
+
+.PHONY: docker-lock
+docker-lock: ## Generate and rewrite digests of docker images
+	$(docker_lock) lock generate \
+		--update-existing-digests \
+		--dockerfile-globs *.Dockerfile Dockerfile Dockerfile.* \
+		--dockerfile-recursive \
+		--composefile-recursive \
+		--kubernetesfile-recursive \
+		--ignore-missing-digests
+	$(docker_lock) lock rewrite
 
 ########################################################################
 # utility

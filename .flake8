@@ -10,3 +10,5 @@ extend-ignore =
     # This is required for typer
     # B008: Do not perform function calls in argument defaults.
     B008,
+per-file-ignores =
+    images/devtools-golang-v1beta1/tests/test_image.py:W191,E101
