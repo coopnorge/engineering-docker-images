@@ -15,21 +15,21 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Cache xdg
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.XDG_CACHE_HOME }}
           key: xdg-v1-${{ hashFiles('**/Makefile') }}
           restore-keys: |
             xdg-v1-
       - name: Cache poetry
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.POETRY_CACHE_DIR }}
           key: poetry-v1-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
             poetry-v1-
       - name: Cache python venv
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}/.venv
           key: pyvenv-v1-${{ hashFiles('**/poetry.lock') }}
