@@ -72,25 +72,6 @@ view-coverage: coverage.out ## view coverage
 	go tool cover -html=$(<)
 
 ########################################################################
-# docker-lock
-########################################################################
-
-docker_compose=docker-compose
-docker_lock=$(docker_compose) run --rm -T docker-lock
-# docker_lock=docker-lock
-
-.PHONY: docker-lock
-docker-lock: ## Generate and rewrite digests of docker images
-	$(docker_lock) lock generate \
-		--update-existing-digests \
-		--dockerfile-globs *.Dockerfile Dockerfile Dockerfile.* \
-		--dockerfile-recursive \
-		--composefile-recursive \
-		--kubernetesfile-recursive \
-		--ignore-missing-digests
-	$(docker_lock) lock rewrite
-
-########################################################################
 # utility
 ########################################################################
 
