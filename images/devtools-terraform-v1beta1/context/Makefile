@@ -89,6 +89,9 @@ validate-fix: ## Fix auto-fixable validation errors.
 validate-fix: | .terraform
 	$(terraform) fmt -recursive
 
+.PHONY: validate-static
+validate-static: validate
+
 ########################################################################
 # utility
 ########################################################################
