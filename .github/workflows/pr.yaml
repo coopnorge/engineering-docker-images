@@ -73,7 +73,7 @@ jobs:
         env:
           IMAGE_NAMES: ${{ steps.image-names.outputs.image_names }}
         run: |
-          make VERBOSE=all -j4 test
+          make VERBOSE=all test
       - name: Auth to GCP
         if: github.ref == 'refs/heads/main'
         uses: "google-github-actions/auth@v0.6.0"
