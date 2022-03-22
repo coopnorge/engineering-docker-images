@@ -4,7 +4,7 @@
 			{
 				"name": "docker.io/library/ubuntu",
 				"tag": "20.04",
-				"digest": "8ae9bafbb64f63a50caab98fd3a5e37b3eb837a3e0780b78e5218e63193961f9",
+				"digest": "bea6d19168bbfd6af8d77c2cc3c572114eb5d113e6f422573c93cb605a0e2ffb",
 				"dockerfile": "Dockerfile.devtools",
 				"service": "devtools"
 			},
@@ -16,28 +16,32 @@
 			},
 			{
 				"name": "docker.io/goodwithtech/dockle",
-				"tag": "v0.4.3",
-				"digest": "6771d453cdeaad77ae5bb0cd75ba1637243108fae7f2caa393ae63035cb88721",
+				"tag": "latest",
+				"digest": "ebd36f6c92ac850408c7cbbf1eddf97e53565da9d661c5fb8ec184ad82a5358d",
 				"service": "dockle"
 			},
 			{
 				"name": "ghcr.io/hadolint/hadolint",
-				"tag": "2.8.0-alpine",
-				"digest": "6c4b7c23f96339489dd35f21a711996d7ce63047467a9a562287748a03ad5242",
+				"tag": "latest",
+				"digest": "6c9e9654461b7cf81e1797d4ece13942207e0a92d1a33c8e0275260d39d61e6a",
 				"service": "hadolint"
-			}
-		],
-		"images/devtools-terraform/tests/prototype/docker-compose.yaml": [
-			{
-				"name": "ocreg.invalid/coopnorge/engineering/image/devtools-terraform",
-				"tag": "built",
-				"digest": "",
-				"service": "devtools"
 			}
 		]
 	},
 	"dockerfiles": {
-		"images/devtools-terraform/context/Dockerfile": [
+		"images/devtools-golang-v1beta1/context/Dockerfile": [
+			{
+				"name": "golangci/golangci-lint",
+				"tag": "v1.45-alpine",
+				"digest": "e2e0e2d5016a35e80cce1c78f294384e006f4dd9e36fe39f8792a22c5ebd58e5"
+			},
+			{
+				"name": "golang",
+				"tag": "1.17-buster",
+				"digest": "4a4f99be38fc652b55665f87115761e6fcbbdfd7fe60c1e48d11960682562edb"
+			}
+		],
+		"images/devtools-terraform-v1beta1/context/Dockerfile": [
 			{
 				"name": "ghcr.io/terraform-linters/tflint-bundle",
 				"tag": "v0.34.1.2",
@@ -55,13 +59,13 @@
 			},
 			{
 				"name": "docker.io/library/golang",
-				"tag": "latest",
-				"digest": "0906175f651d65550ab51876c06083868e17c8da5f76b46215016f4e5b5eaeff"
+				"tag": "1.17",
+				"digest": "fdc8c53f80fabdc23fdbc620486735ca780a5a486cd4534296a69ddb5b1e98dc"
 			},
 			{
 				"name": "docker.io/library/ubuntu",
 				"tag": "20.04",
-				"digest": "8ae9bafbb64f63a50caab98fd3a5e37b3eb837a3e0780b78e5218e63193961f9"
+				"digest": "bea6d19168bbfd6af8d77c2cc3c572114eb5d113e6f422573c93cb605a0e2ffb"
 			}
 		]
 	}
