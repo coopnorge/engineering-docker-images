@@ -4,6 +4,10 @@ RUN apk add --update --no-cache make curl python3
 
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
 
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
+RUN python -m ensurepip
+
 ENV PATH=/root/.poetry/bin:$PATH
 
 WORKDIR /tmp/workspace
