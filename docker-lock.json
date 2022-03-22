@@ -41,6 +41,13 @@
 				"digest": "4a4f99be38fc652b55665f87115761e6fcbbdfd7fe60c1e48d11960682562edb"
 			}
 		],
+		"images/devtools-piptools-v1beta1/context/Dockerfile": [
+			{
+				"name": "python",
+				"tag": "3.8-slim-buster",
+				"digest": "b9c6d865d1a0e6c1a0c3e0ee7a15d37ac2e9d0a195c9c23d4ec5e6ccd6e06cc0"
+			}
+		],
 		"images/devtools-terraform-v1beta1/context/Dockerfile": [
 			{
 				"name": "ghcr.io/terraform-linters/tflint-bundle",
