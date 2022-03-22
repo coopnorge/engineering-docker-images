@@ -1,8 +1,8 @@
-FROM golangci/golangci-lint:v1.45-alpine@sha256:e44ade2286749434ac58a90083b819ab19c4017c20a3d6ca2129fa669103f442 as golangci-lint
+FROM golangci/golangci-lint:v1.45-alpine@sha256:e2e0e2d5016a35e80cce1c78f294384e006f4dd9e36fe39f8792a22c5ebd58e5 as golangci-lint
 
 # golangci-lint does not work with go1.18
 # https://github.com/golangci/golangci-lint/issues/2649
-FROM golang:1.17-buster@sha256:645084f761154b6f9509f4f558993baceece127d9143371c3e6986cd0f777b59 as base
+FROM golang:1.17-buster@sha256:4a4f99be38fc652b55665f87115761e6fcbbdfd7fe60c1e48d11960682562edb as base
 
 RUN \
     apt-get update && \

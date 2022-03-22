@@ -14,11 +14,11 @@ services:
     ports:
       - "127.0.0.1:32604:32604"
   hadolint:
-    image: ghcr.io/hadolint/hadolint:2.8.0-alpine@sha256:6c4b7c23f96339489dd35f21a711996d7ce63047467a9a562287748a03ad5242
+    image: ghcr.io/hadolint/hadolint:latest@sha256:6c9e9654461b7cf81e1797d4ece13942207e0a92d1a33c8e0275260d39d61e6a
     volumes:
       - .hadolint.yaml:/.hadolint.yaml:z
   dockle:
-    image: docker.io/goodwithtech/dockle:v0.4.3@sha256:6771d453cdeaad77ae5bb0cd75ba1637243108fae7f2caa393ae63035cb88721
+    image: docker.io/goodwithtech/dockle:latest@sha256:ebd36f6c92ac850408c7cbbf1eddf97e53565da9d661c5fb8ec184ad82a5358d
     volumes:
       - ./var/oci-images:/srv/images:ro,z
   docker-lock:

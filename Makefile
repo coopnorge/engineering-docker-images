@@ -53,7 +53,7 @@ IMAGE_NAMES?=$(notdir $(wildcard $(images_dir)/*))
 $(call dump_vars,IMAGE_NAMES)
 
 docker=docker
-docker_compose=docker-compose
+docker_compose=docker compose
 # docker_image_build_cmd=$(docker) image build
 docker_image_build_cmd=$(docker) buildx build --progress plain --load
 docker_image_build_args?=
@@ -145,19 +145,17 @@ load-any-images: | $(oci_output_dir)/ ## Loads any images that are found
 # docker-lock
 ########################################################################
 
-# docker_lock=$(docker_compose) run --rm -T docker-lock
-docker_lock=docker-lock
+docker_lock=$(docker_compose) run --rm -T docker-lock
+#docker_lock=docker-lock
 
 .PHONY: docker-lock
 docker-lock: ## Generate and rewrite digests of docker images
-	$(docker_lock) lock generate \
-		--update-existing-digests \
-		--dockerfile-globs *.Dockerfile Dockerfile Dockerfile.* \
-		--dockerfile-recursive \
-		--composefile-recursive \
-		--kubernetesfile-recursive \
-		--ignore-missing-digests
+	$(docker_lock) lock generate
 	$(docker_lock) lock rewrite
+
+.PHONY: validate-images-digests
+validate-images-digests:  ## Validate images digests
+	$(docker_lock) lock verify
 
 ########################################################################
 # utility
