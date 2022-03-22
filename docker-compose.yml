@@ -8,6 +8,7 @@ services:
     working_dir: /tmp/workspace
     volumes:
       - .:/tmp/workspace:z
+      - devtools-venv:/tmp/workspace/.venv
       - xdg-cache-home:/root/.cache
       - /var/run/docker.sock:/var/run/docker.sock:z
     command: ["make", "all"]
@@ -28,3 +29,4 @@ services:
       - .:/tmp/workspace:z
 volumes:
     xdg-cache-home: {}
+    devtools-venv: {}
