@@ -57,7 +57,7 @@ def dottf_dir() -> Iterator[Optional[Path]]:
             tfdir = PROTYPE_DIR / ".terraform"
             if not tfdir.exists():
                 subprocess.run(
-                    "docker-compose run --rm devtools terraform init".split(" "),
+                    "docker compose run --rm devtools terraform init".split(" "),
                     check=True,
                 )
             yield tfdir
@@ -74,7 +74,7 @@ def dottf_dir() -> Iterator[Optional[Path]]:
 
             with ctx_chdir(workdir):
                 subprocess.run(
-                    "docker-compose run --rm devtools terraform init".split(" "),
+                    "docker compose run --rm devtools terraform init".split(" "),
                     check=True,
                 )
                 tfdir = workdir / ".terraform"
@@ -91,7 +91,7 @@ def test_prototype_ok(tmp_path: Path, dottf_dir: Optional[Path]) -> None:
     with ctx_prototype(tmp_path, dottf_dir):
         subprocess.run("pwd".split(" "), check=True)
         subprocess.run("find .".split(" "), check=True)
-        subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
+        subprocess.run("docker compose run --rm devtools".split(" "), check=True)
 
 
 def test_prototype_fail_fmt(
@@ -107,7 +107,7 @@ data "null_data_source" "values" {
 """
         )
         with pytest.raises(subprocess.CalledProcessError):
-            subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
+            subprocess.run("docker compose run --rm devtools".split(" "), check=True)
 
         captured = capfd.readouterr()
         with capfd.disabled():
@@ -129,7 +129,7 @@ resource "google_storage_bucket" "example" {
 """
         )
         with pytest.raises(subprocess.CalledProcessError):
-            subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
+            subprocess.run("docker compose run --rm devtools".split(" "), check=True)
         captured = capfd.readouterr()
         with capfd.disabled():
             sys.stdout.write("captured.out:\n")
@@ -152,7 +152,7 @@ resource "google_storage_bucket" "example" {
 """
         )
         with pytest.raises(subprocess.CalledProcessError):
-            subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
+            subprocess.run("docker compose run --rm devtools".split(" "), check=True)
         captured = capfd.readouterr()
         with capfd.disabled():
             sys.stdout.write("captured.out:\n")
@@ -178,7 +178,7 @@ resource "google_project_iam_binding" "iam_binding" {
 """
         )
         with pytest.raises(subprocess.CalledProcessError):
-            subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
+            subprocess.run("docker compose run --rm devtools".split(" "), check=True)
         captured = capfd.readouterr()
         with capfd.disabled():
             sys.stdout.write("captured.out:\n")
