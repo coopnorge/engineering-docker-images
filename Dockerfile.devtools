@@ -1,9 +1,8 @@
-FROM docker.io/library/ubuntu:20.04@sha256:bea6d19168bbfd6af8d77c2cc3c572114eb5d113e6f422573c93cb605a0e2ffb
+FROM ghcr.io/crazy-max/docker:20.10.13@sha256:b12c2af335c6a8fa045e81674cd994f1815e56fd0b47ccabf9372db8b61dd05d
 
-RUN \
-    apt update && \
-    apt-get install -y \
-        make \
-        docker \
-    && true
+RUN apk add --update --no-cache make curl python3
+
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
+
+ENV PATH=/root/.poetry/bin:$PATH
 

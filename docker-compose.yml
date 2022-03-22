@@ -5,9 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.devtools
-    working_dir: /srv/workspace
+    working_dir: $PWD
     volumes:
-      - .:/srv/workspace:z
+      - .:$PWD:z
       - xdg-cache-home:/root/.cache
       - /var/run/docker.sock:/var/run/docker.sock:z
     command: ["make", "all"]
@@ -23,8 +23,8 @@ services:
       - ./var/oci-images:/srv/images:ro,z
   docker-lock:
     image: safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622
-    working_dir: /srv/workspace
+    working_dir: $PWD
     volumes:
-      - .:/srv/workspace:z
+      - .:$PWD:z
 volumes:
     xdg-cache-home: {}
