@@ -146,7 +146,6 @@ load-any-images: | $(oci_output_dir)/ ## Loads any images that are found
 ########################################################################
 
 docker_lock=$(docker_compose) run --rm -T docker-lock
-#docker_lock=docker-lock
 
 .PHONY: docker-lock
 docker-lock: ## Generate and rewrite digests of docker images
