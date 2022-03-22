@@ -10,7 +10,9 @@ services:
       - .:/tmp/workspace:z
       - devtools-venv:/tmp/workspace/.venv
       - xdg-cache-home:/root/.cache
-      - /var/run/docker.sock:/var/run/docker.sock:z
+      - ${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock:z
+    environment:
+      DOCKER_HOST: unix:///var/run/docker.sock
     command: ["make", "all"]
     ports:
       - "127.0.0.1:32604:32604"
