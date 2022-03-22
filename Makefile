@@ -49,7 +49,10 @@ oci_output_dir=var/oci-images
 ########################################################################
 
 images_dir=images
-IMAGE_NAMES?=$(notdir $(wildcard $(images_dir)/*))
+IMAGE_NAMES?=
+ifeq ($(IMAGE_NAMES),)
+IMAGE_NAMES:=$(notdir $(wildcard $(images_dir)/*))
+endif
 $(call dump_vars,IMAGE_NAMES)
 
 docker=docker
