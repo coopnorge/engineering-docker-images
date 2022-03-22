@@ -145,8 +145,8 @@ load-any-images: | $(oci_output_dir)/ ## Loads any images that are found
 # docker-lock
 ########################################################################
 
-# docker_lock=$(docker_compose) run --rm -T docker-lock
-docker_lock=docker-lock
+docker_lock=$(docker_compose) run --rm -T docker-lock
+# docker_lock=docker-lock
 
 .PHONY: docker-lock
 docker-lock: ## Generate and rewrite digests of docker images
@@ -154,7 +154,6 @@ docker-lock: ## Generate and rewrite digests of docker images
 		--update-existing-digests \
 		--dockerfile-globs *.Dockerfile Dockerfile Dockerfile.* \
 		--dockerfile-recursive \
-		--composefile-recursive \
 		--kubernetesfile-recursive \
 		--ignore-missing-digests
 	$(docker_lock) lock rewrite

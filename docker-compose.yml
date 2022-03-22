@@ -6,10 +6,12 @@ services:
       context: .
       dockerfile: Dockerfile.devtools
     working_dir: /srv/workspace
+    environment:
+      DOCKER_HOST: unix:///var/run/docker.sock
     volumes:
       - .:/srv/workspace:z
       - xdg-cache-home:/root/.cache
-      - /var/run/docker.sock:/var/run/docker.sock:z
+      - ${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock:z
     command: ["make", "all"]
     ports:
       - "127.0.0.1:32604:32604"
