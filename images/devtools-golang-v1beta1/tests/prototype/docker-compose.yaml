@@ -1,9 +1,9 @@
 services:
   devtools:
     image: ${IMAGE_UNDER_TEST:-ocreg.invalid/coopnorge/engineering/image/devtools-golang-v1beta1:built}
-    working_dir: /srv/workspace
+    working_dir: /tmp/workspace
     volumes:
-      - .:/srv/workspace:z
+      - ${HOST_PATH:-../../../..}/images/devtools-golang-v1beta1/tests/prototype:/tmp/workspace:z
       - xdg-cache-home:/root/.cache
 volumes:
     xdg-cache-home: {}

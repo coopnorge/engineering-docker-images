@@ -13,6 +13,7 @@ services:
       - ${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock:z
     environment:
       DOCKER_HOST: unix:///var/run/docker.sock
+      HOST_PATH: ${PWD}
     command: ["make", "all"]
     ports:
       - "127.0.0.1:32604:32604"
