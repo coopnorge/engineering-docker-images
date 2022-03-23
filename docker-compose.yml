@@ -5,11 +5,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.devtools
-    working_dir: /srv/workspace
+    working_dir: /tmp/workspace
     volumes:
-      - .:/srv/workspace:z
+      - .:/tmp/workspace:z
+      - devtools-venv:/tmp/workspace/.venv
       - xdg-cache-home:/root/.cache
-      - /var/run/docker.sock:/var/run/docker.sock:z
+      - ${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock:z
+    environment:
+      DOCKER_HOST: unix:///var/run/docker.sock
+      HOST_PATH: ${PWD}
     command: ["make", "all"]
     ports:
       - "127.0.0.1:32604:32604"
@@ -23,8 +27,9 @@ services:
       - ./var/oci-images:/srv/images:ro,z
   docker-lock:
     image: safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622
-    working_dir: /srv/workspace
+    working_dir: /tmp/workspace
     volumes:
-      - .:/srv/workspace:z
+      - .:/tmp/workspace:z
 volumes:
     xdg-cache-home: {}
+    devtools-venv: {}

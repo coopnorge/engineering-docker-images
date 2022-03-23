@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
+set -eo pipefail
+
 script_dirname="$( dirname -- "${0}" )"
+
+1>&2 echo "Installing poetry environment ..."
+poetry install
+
 cmd=(poetry run pytest "${script_dirname}" "${@}")
 printf " %q" "${cmd[@]}"; echo
 exec "${cmd[@]}"

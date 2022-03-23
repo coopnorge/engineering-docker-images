@@ -33,8 +33,8 @@ RUN \
     ln -rs /usr/local/bin/maker /usr/local/bin/validate-fix && \
     true
 
-VOLUME /srv/workspace
-WORKDIR /srv/workspace
+VOLUME /tmp/workspace
+WORKDIR /tmp/workspace
 
 ARG tfswitcher_version=0.13.1201
 

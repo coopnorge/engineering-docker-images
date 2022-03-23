@@ -27,8 +27,8 @@ RUN \
     ln -s /usr/local/bin/maker /usr/local/bin/build && \
     true
 
-VOLUME /srv/workspace
-WORKDIR /srv/workspace
+VOLUME /tmp/workspace
+WORKDIR /tmp/workspace
 
 COPY --from=golangci-lint /usr/bin/golangci-lint /usr/bin/golangci-lint
 
