@@ -1,0 +1,9 @@
+# https://github.com/safe-waters/docker-lock/blob/master/.docker-lock.example.yml
+generate:
+  base-dir: .
+  composefiles:
+    - docker-compose.yml
+  dockerfile-globs:
+    - 'images/**/Dockerfile'
+  dockerfile-recursive: true
+  update-existing-digests: true
