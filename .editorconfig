@@ -1,0 +1,33 @@
+# http://editorconfig.org/#file-format-details
+root = false
+
+[*]
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{yaml,yml,json}]
+indent_style = space
+indent_size = 2
+
+# https://www.python.org/dev/peps/pep-0008/#indentation
+[*.{py,pyi}]
+indent_style = space
+indent_size = 4
+
+# https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html#tag_20_76_13_04
+# https://www.gnu.org/software/make/manual/make.html#Rule-Introduction
+# http://heirloom.sourceforge.net/devtools/make.1.html
+[{makefile,Makefile,*.mk,*.make}]
+indent_style = tab
+
+# https://daringfireball.net/projects/markdown/syntax#list
+# https://spec.commonmark.org/0.7/#motivation
+[*.md]
+indent_style = space
+indent_size = 2
+
+# https://golang.org/pkg/cmd/gofmt/
+[*.go]
+indent_style = tab

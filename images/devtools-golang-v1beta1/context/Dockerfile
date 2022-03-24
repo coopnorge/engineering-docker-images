@@ -1,14 +1,20 @@
-FROM golangci/golangci-lint:v1.45-alpine@sha256:e2e0e2d5016a35e80cce1c78f294384e006f4dd9e36fe39f8792a22c5ebd58e5 as golangci-lint
+FROM docker.io/safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622 AS docker-lock
+FROM golangci/golangci-lint:v1.45-alpine@sha256:392ae6fa26b7184cbcbc669024a7f48e3b2b64eded4c4323e9db533b51904243 as golangci-lint
 
 # golangci-lint does not work with go1.18
 # https://github.com/golangci/golangci-lint/issues/2649
-FROM golang:1.17-buster@sha256:4a4f99be38fc652b55665f87115761e6fcbbdfd7fe60c1e48d11960682562edb as base
+FROM golang:1.17-buster@sha256:e9f0ce41eac62541ecbd9b7115916617c96a070fe0cca8e494eff829b234b31b as base
 
+# https://packages.debian.org/search?keywords=busybox&searchon=names&suite=buster&section=all
 RUN \
     apt-get update && \
     apt-get install -y \
         --no-install-recommends \
         make=4.2.1-1.2 \
+        socat=1.7.3.2-2 \
+        curl=7.64.0-4+deb10u2 \
+        ca-certificates=20200601~deb10u2 \
+        busybox=1:1.30.1-4 \
         && \
     rm -vr /var/lib/apt/lists/* && \
     true
@@ -31,5 +37,6 @@ VOLUME /srv/workspace
 WORKDIR /srv/workspace
 
 COPY --from=golangci-lint /usr/bin/golangci-lint /usr/bin/golangci-lint
+COPY --from=docker-lock /prod/docker-lock /usr/local/bin/docker-lock
 
 CMD ["validate", "build"]
