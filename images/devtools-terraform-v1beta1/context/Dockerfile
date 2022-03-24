@@ -1,8 +1,9 @@
 # syntax=docker/dockerfile:1.3
+FROM docker.io/safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622 AS docker-lock
 FROM ghcr.io/terraform-linters/tflint-bundle:v0.34.1.2@sha256:25889a5d3738a97ba1fa1e72bdc1b05dd1e7087c58213597cb0e1ed30f52615a AS tflint
 FROM docker.io/aquasec/tfsec:v1.1@sha256:c867867e5eb038f8c3e9f0cf698c7b6158006ff68088273934718060c8c7002b AS tfsec
 FROM docker.io/hashicorp/terraform:1.1.6@sha256:6f68122ab2981c609d9a7ee9cd3ba5564e4b1bf9b26ca3bc3628c106f98e9c35 AS terraform
-FROM docker.io/library/golang:1.17@sha256:fdc8c53f80fabdc23fdbc620486735ca780a5a486cd4534296a69ddb5b1e98dc as golang
+FROM docker.io/library/golang:1.17@sha256:dba09c285770f58d6685b25a0606d72420b0a7525a2338080807d138a258c671 as golang
 
 RUN \
     go env > /usr/local/bin/goenv.sh && \
@@ -11,6 +12,7 @@ RUN \
 FROM docker.io/library/ubuntu:20.04@sha256:bea6d19168bbfd6af8d77c2cc3c572114eb5d113e6f422573c93cb605a0e2ffb AS base
 
 
+# https://packages.ubuntu.com/search?keywords=busybox&searchon=names&suite=focal&section=all
 RUN \
     apt-get update && \
     apt-get install -y \
@@ -19,6 +21,7 @@ RUN \
         socat=1.7.3.3-2 \
         curl=7.68.0-1ubuntu2.7 \
         ca-certificates=20210119~20.04.2 \
+        busybox=1:1.30.1-4ubuntu6.4 \
         && \
     rm -vr /var/lib/apt/lists/* && \
     true
@@ -43,6 +46,7 @@ COPY --from=tflint /root/.tflint.d /root/.tflint.d
 COPY --from=tflint /usr/local/bin/tflint /usr/bin/tflint
 COPY --from=tfsec  /usr/bin/tfsec /usr/bin/tfsec
 COPY --from=golang /usr/local/bin/goenv.sh /usr/local/bin/goenv.sh
+COPY --from=docker-lock /prod/docker-lock /usr/local/bin/docker-lock
 
 COPY terraform-switcher_${tfswitcher_version}_checksums.txt /var/tmp/terraform-switcher_${tfswitcher_version}_checksums.txt
 

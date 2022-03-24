@@ -31,17 +31,27 @@
 	"dockerfiles": {
 		"images/devtools-golang-v1beta1/context/Dockerfile": [
 			{
+				"name": "docker.io/safewaters/docker-lock",
+				"tag": "latest",
+				"digest": "432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622"
+			},
+			{
 				"name": "golangci/golangci-lint",
 				"tag": "v1.45-alpine",
-				"digest": "e2e0e2d5016a35e80cce1c78f294384e006f4dd9e36fe39f8792a22c5ebd58e5"
+				"digest": "392ae6fa26b7184cbcbc669024a7f48e3b2b64eded4c4323e9db533b51904243"
 			},
 			{
 				"name": "golang",
 				"tag": "1.17-buster",
-				"digest": "4a4f99be38fc652b55665f87115761e6fcbbdfd7fe60c1e48d11960682562edb"
+				"digest": "e9f0ce41eac62541ecbd9b7115916617c96a070fe0cca8e494eff829b234b31b"
 			}
 		],
 		"images/devtools-terraform-v1beta1/context/Dockerfile": [
+			{
+				"name": "docker.io/safewaters/docker-lock",
+				"tag": "latest",
+				"digest": "432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622"
+			},
 			{
 				"name": "ghcr.io/terraform-linters/tflint-bundle",
 				"tag": "v0.34.1.2",
@@ -60,7 +70,7 @@
 			{
 				"name": "docker.io/library/golang",
 				"tag": "1.17",
-				"digest": "fdc8c53f80fabdc23fdbc620486735ca780a5a486cd4534296a69ddb5b1e98dc"
+				"digest": "dba09c285770f58d6685b25a0606d72420b0a7525a2338080807d138a258c671"
 			},
 			{
 				"name": "docker.io/library/ubuntu",
