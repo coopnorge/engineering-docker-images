@@ -90,6 +90,31 @@ validate-fix: | .terraform
 	$(terraform) fmt -recursive
 
 ########################################################################
+# docker-lock
+########################################################################
+
+docker_lock_cmd=docker-lock
+docker_lock_args=$(if $(wildcard .docker-lock.yml),,
+		--update-existing-digests \
+		--dockerfile-globs "*.Dockerfile" \
+		--dockerfile-globs "Dockerfile" \
+		--dockerfile-globs "Dockerfile.*" \
+		--dockerfile-recursive \
+		--composefile-recursive \
+		--kubernetesfile-recursive \
+		--ignore-missing-digests
+	)
+
+.PHONY: docker-lock-all
+docker-lock-all: ## Generate and rewrite digests of docker images
+	$(docker_lock) lock generate
+	$(docker_lock) lock rewrite
+
+.PHONY: validate-images-digests
+validate-images-digests:  ## Validate images digests
+	$(docker_lock) lock verify
+
+########################################################################
 # utility
 ########################################################################
 

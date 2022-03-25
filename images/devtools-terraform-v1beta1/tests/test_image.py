@@ -186,3 +186,30 @@ resource "google_project_iam_binding" "iam_binding" {
             sys.stderr.write("captured.err:\n")
             sys.stderr.write(captured.err)
         assert "first.last@example.com is an invalid member format" in captured.out
+
+
+
+def test_docker_lock_nocfg(
+    tmp_path: Path, dottf_dir: Optional[Path], capfd: CaptureFixture[str]
+) -> None:
+    with ctx_prototype(tmp_path, dottf_dir) as workdir:
+        (workdir / "bad_tflint.tf").write_text(
+            """
+resource "google_project_iam_binding" "iam_binding" {
+  project = "abc"
+  role    = "def"
+  members = [
+    "first.last@example.com",
+  ]
+}
+"""
+        )
+        with pytest.raises(subprocess.CalledProcessError):
+            subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
+        captured = capfd.readouterr()
+        with capfd.disabled():
+            sys.stdout.write("captured.out:\n")
+            sys.stdout.write(captured.out)
+            sys.stderr.write("captured.err:\n")
+            sys.stderr.write(captured.err)
+        assert "first.last@example.com is an invalid member format" in captured.out
