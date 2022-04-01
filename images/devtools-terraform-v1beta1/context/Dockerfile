@@ -19,6 +19,7 @@ RUN \
         --no-install-recommends \
         make=4.2.1-1.2 \
         socat=1.7.3.3-2 \
+        git=1:2.25.1-1ubuntu3.2 \
         curl=7.68.0-1ubuntu2.7 \
         ca-certificates=20210119~20.04.2 \
         busybox=1:1.30.1-4ubuntu6.4 \
