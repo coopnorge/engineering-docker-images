@@ -8,6 +8,14 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "images/devtools-golang-v1beta1/context/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "images/devtools-terraform-v1beta1/context/"
+    schedule:
+      interval: "daily"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
