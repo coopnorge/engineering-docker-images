@@ -10,11 +10,11 @@ RUN \
     apt-get update && \
     apt-get install -y \
         --no-install-recommends \
-        make=4.2.1-1.2 \
-        socat=1.7.3.2-2 \
-        curl=7.64.0-4+deb10u2 \
-        ca-certificates=20200601~deb10u2 \
-        busybox=1:1.30.1-4 \
+        make \
+        socat \
+        curl \
+        ca-certificates \
+        busybox \
         && \
     rm -vr /var/lib/apt/lists/* && \
     true

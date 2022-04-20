@@ -1,3 +1,6 @@
 ignored:
   - DL3003
   - SC1091
+  # Ignoring this as pinning versions essentially breaks the utility provided
+  # by dependabot and we can't pin ranges either.
+  - DL3008
