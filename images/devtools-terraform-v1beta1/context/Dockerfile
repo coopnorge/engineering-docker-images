@@ -58,9 +58,6 @@ COPY terraform-switcher_${tfswitcher_version}_checksums.txt /var/tmp/terraform-s
 
 ARG terraform_versions="0.15.5 1.0.11 1.1.7"
 
-RUN \
-    mkdir -vp ~/.cache ~/.local/bin ~/bin && \
-    true
 
 RUN \
     cd /var/tmp && \
@@ -77,5 +74,23 @@ RUN \
     # done; \
     true
 
+ARG group_name=devtools
+ARG user_name=devtools
+
+RUN \
+    groupadd ${group_name} && \
+    useradd -m -G ${group_name},users -g ${group_name} ${user_name} && \
+    true
+
+COPY --from=tflint /root/.tflint.d /home/${user_name}/.tflint.d
+
+RUN \
+    chown -v -R ${group_name}:${user_name} /home/${user_name}/
+
+USER ${group_name}:${user_name}
+
+RUN \
+    mkdir -vp ~/.cache ~/.local/bin ~/bin && \
+    true
 
 CMD ["validate"]
