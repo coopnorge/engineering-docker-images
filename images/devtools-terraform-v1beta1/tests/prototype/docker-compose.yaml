@@ -4,6 +4,6 @@ services:
     working_dir: /srv/workspace
     volumes:
       - .:/srv/workspace:z
-      - xdg-cache-home:/root/.cache
+      - xdg-cache-home:/home/devtools/.cache
 volumes:
     xdg-cache-home: {}
