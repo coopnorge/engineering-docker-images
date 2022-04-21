@@ -20,7 +20,7 @@ mypy = "^0.942"
 profile = "black"
 
 [tool.pytest.ini_options]
-addopts = ["--capture=no"]
+addopts = ["--capture=no", "--tb=native"]
 # https://docs.pytest.org/en/stable/customize.html
 # https://docs.pytest.org/en/stable/reference.html#configuration-options
 log_cli = true

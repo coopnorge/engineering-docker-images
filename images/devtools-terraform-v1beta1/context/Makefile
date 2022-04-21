@@ -37,12 +37,15 @@ export POSIXLY_CORRECT:=1
 ########################################################################
 
 # Find all directories that look like they are terraform root directories.
-tfdirs=$(shell find . -name .terraform -prune -o \( -name '*.tf' -print0 \) \
-	| xargs -0 grep -c required_version \
-	| awk -F: '($$2 != 0){ print $$1 }' \
-	| sed 's|/[^/]\{1,\}$$||g')
+TFDIRS_EXCLUDE?=%/examples %/example
+$(info TFDIRS_EXCLUDE=$(TFDIRS_EXCLUDE))
 
-$(call dump_vars,tfdirs)
+TFDIRS?=$(filter-out $(TFDIRS_EXCLUDE), \
+	$(or $(shell find . -name .terraform -prune -o \( -name '*.tf' -print \) \
+		| sed 's|/[^/]\{1,\}$$||g' \
+		| sort | uniq),.))
+
+$(info TFDIRS=$(TFDIRS))
 
 terraform=terraform
 
@@ -54,19 +57,21 @@ terraform=terraform
 
 tfsec=tfsec
 tflint=tflint --enable-plugin=google --enable-plugin=azurerm $(if $(filter all commands,$(VERBOSE)),--loglevel=trace)
-tfswitch=tfswitch
+tfswitch={ set +o pipefail; yes | tfswitch; }
 
 define tfdir_targets
 
 tf-reinit: tf-reinit-$(1)
 .PHONY: tf-reinit-$(1)
 tf-reinit-$(1):
+	$(if $(TF_PLUGIN_CACHE_DIR),mkdir -vp $(TF_PLUGIN_CACHE_DIR),)
 	cd $(1) && $$(tfswitch)
 	cd $(1) && $$(terraform) init -upgrade
 
 validate: validate-tf-$(1)
 .PHONY: validate-tf-$(1)
 validate-tf-$(1): | $(1)/.terraform
+	$(if $(TF_PLUGIN_CACHE_DIR),mkdir -vp $(TF_PLUGIN_CACHE_DIR),)
 	cd $(1) && $$(tfswitch)
 	cd $(1) && $$(terraform) fmt -check -recursive -diff
 	cd $(1) && $$(terraform) validate
@@ -79,9 +84,13 @@ endef
 all: validate
 validate: ## Validate code.
 
+.PHONY: tf-reinit
 tf-reinit: ## Reintialize terraform
 
-$(foreach tfdir,$(tfdirs),\
+.PHONY: terraform-reinit
+terraform-reinit: tf-reinit ## Reintialize terraform
+
+$(foreach tfdir,$(TFDIRS),\
     $(eval $(call tfdir_targets,$(tfdir))))
 
 .PHONY: validate-fix
