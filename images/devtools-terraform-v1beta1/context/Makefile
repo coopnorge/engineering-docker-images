@@ -50,9 +50,11 @@ $(info TFDIRS=$(TFDIRS))
 terraform=terraform
 
 .terraform:
+	$(tfswitch)
 	$(terraform) init $(terraform_init_args)
 
 %/.terraform:
+	cd $(*) && $(tfswitch)
 	cd $(*) && $(terraform) init $(terraform_init_args)
 
 tfsec=tfsec
