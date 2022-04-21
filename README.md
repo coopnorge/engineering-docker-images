@@ -24,13 +24,16 @@ Docker images are published to the following registries:
 
 Devtools images are intended for use in git repos to do validation and artifact building.
 
-- `devtools-golang-v1beta1`: Tools for golang.
+- `devtools-golang-v1beta1`: Development tools for golang.
 
   [Usage example](./images/devtools-golang-v1beta1/tests/prototype/).
 
-- `devtools-terraform-v1beta1`: Tools for terraform.
+- `devtools-terraform-v1beta1`: Development tools for terraform.
+
+  [README](./images/devtools-terraform-v1beta1/README.md).
 
   [Usage example](./images/devtools-terraform-v1beta1/tests/prototype/).
+
 
 #### Security Considerations for devtools
 
