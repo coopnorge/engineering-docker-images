@@ -1,4 +1,5 @@
 from contextlib import contextmanager
+from dataclasses import dataclass
 import glob
 import os
 from pathlib import Path, PurePath
@@ -7,10 +8,11 @@ import shutil
 import subprocess
 import sys
 import tempfile
-from typing import Iterator, Optional, TypeVar, Union, Generator
+from typing import Iterator, List, Optional, TypeVar, Union, Generator
 
 import pytest
 from pytest import CaptureFixture
+from _pytest.capture import CaptureResult
 
 TEST_DIR = Path(__file__).parent.absolute()
 PROTYPE_DIR = TEST_DIR / "prototype"
@@ -102,6 +104,27 @@ def dottf_dir() -> Iterator[Optional[Path]]:
         yield path
 
 
+@dataclass
+class Captured:
+    result: CaptureResult[str]
+    out: str
+    out_lines: List[str]
+    err: str
+    err_lines: List[str]
+
+
+def get_captured_lines(capfd: CaptureFixture[str]) -> Captured:
+    captured = capfd.readouterr()
+    out = captured.out
+    err = captured.err
+    with capfd.disabled():
+        sys.stdout.write("captured.out:\n")
+        sys.stdout.write(captured.out)
+        sys.stderr.write("captured.err:\n")
+        sys.stderr.write(captured.err)
+    return Captured(captured, out, out.splitlines(), err, err.splitlines())
+
+
 def test_prototype_ok(
     tmp_path: Path, dottf_dir: Optional[Path], capfd: CaptureFixture[str]
 ) -> None:
@@ -111,16 +134,10 @@ def test_prototype_ok(
         subprocess.run("find .".split(" "), check=True)
         subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
 
-        captured = capfd.readouterr()
-        with capfd.disabled():
-            sys.stdout.write("captured.out:\n")
-            sys.stdout.write(captured.out)
-            sys.stderr.write("captured.err:\n")
-            sys.stderr.write(captured.err)
-        out_lines = captured.out.splitlines()
-        assert sum("No problems detected" in line for line in out_lines) == 2
-        assert sum("tfsec" in line for line in out_lines) == 2
-        assert sum("tflint" in line for line in out_lines) == 2
+        cap = get_captured_lines(capfd)
+        assert sum("No problems detected" in line for line in cap.out_lines) == 2
+        assert sum("tfsec" in line for line in cap.out_lines) == 2
+        assert sum("tflint" in line for line in cap.out_lines) == 2
 
 
 def test_prototype_ok_no_module(
@@ -135,16 +152,10 @@ def test_prototype_ok_no_module(
         subprocess.run("find .".split(" "), check=True)
         subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
 
-        captured = capfd.readouterr()
-        with capfd.disabled():
-            sys.stdout.write("captured.out:\n")
-            sys.stdout.write(captured.out)
-            sys.stderr.write("captured.err:\n")
-            sys.stderr.write(captured.err)
-        out_lines = captured.out.splitlines()
-        assert sum("No problems detected" in line for line in out_lines) == 1
-        assert sum("tfsec" in line for line in out_lines) == 1
-        assert sum("tflint" in line for line in out_lines) == 1
+        cap = get_captured_lines(capfd)
+        assert sum("No problems detected" in line for line in cap.out_lines) == 1
+        assert sum("tfsec" in line for line in cap.out_lines) == 1
+        assert sum("tflint" in line for line in cap.out_lines) == 1
 
 
 def test_prototype_reinit(
@@ -163,16 +174,10 @@ def test_prototype_reinit(
             "docker-compose run --rm devtools validate".split(" "), check=True
         )
 
-        captured = capfd.readouterr()
-        with capfd.disabled():
-            sys.stdout.write("captured.out:\n")
-            sys.stdout.write(captured.out)
-            sys.stderr.write("captured.err:\n")
-            sys.stderr.write(captured.err)
-        out_lines = captured.out.splitlines()
-        assert sum("No problems detected" in line for line in out_lines) == 4
-        assert sum("tfsec" in line for line in out_lines) == 4
-        assert sum("tflint" in line for line in out_lines) == 4
+        cap = get_captured_lines(capfd)
+        assert sum("No problems detected" in line for line in cap.out_lines) == 4
+        assert sum("tfsec" in line for line in cap.out_lines) == 4
+        assert sum("tflint" in line for line in cap.out_lines) == 4
 
 
 def test_prototype_env_vars(
@@ -184,16 +189,10 @@ def test_prototype_env_vars(
             "docker-compose run --rm devtools validate TFDIRS=".split(" "), check=True
         )
 
-        captured = capfd.readouterr()
-        with capfd.disabled():
-            sys.stdout.write("captured.out:\n")
-            sys.stdout.write(captured.out)
-            sys.stderr.write("captured.err:\n")
-            sys.stderr.write(captured.err)
-        out_lines = captured.out.splitlines()
-        assert sum("No problems detected" in line for line in out_lines) == 0
-        assert sum("tfsec" in line for line in out_lines) == 0
-        assert sum("tflint" in line for line in out_lines) == 0
+        cap = get_captured_lines(capfd)
+        assert sum("No problems detected" in line for line in cap.out_lines) == 0
+        assert sum("tfsec" in line for line in cap.out_lines) == 0
+        assert sum("tflint" in line for line in cap.out_lines) == 0
 
         (workdir / "blank").mkdir()
         subprocess.run(
@@ -201,16 +200,10 @@ def test_prototype_env_vars(
             check=True,
         )
 
-        captured = capfd.readouterr()
-        with capfd.disabled():
-            sys.stdout.write("captured.out:\n")
-            sys.stdout.write(captured.out)
-            sys.stderr.write("captured.err:\n")
-            sys.stderr.write(captured.err)
-        out_lines = captured.out.splitlines()
-        assert sum("No problems detected" in line for line in out_lines) == 1
-        assert sum("tfsec" in line for line in out_lines) == 1
-        assert sum("tflint" in line for line in out_lines) == 1
+        cap = get_captured_lines(capfd)
+        assert sum("No problems detected" in line for line in cap.out_lines) == 1
+        assert sum("tfsec" in line for line in cap.out_lines) == 1
+        assert sum("tflint" in line for line in cap.out_lines) == 1
 
         subprocess.run(
             [
@@ -222,9 +215,10 @@ def test_prototype_env_vars(
             check=True,
         )
 
-        assert sum("No problems detected" in line for line in out_lines) == 1
-        assert sum("tfsec" in line for line in out_lines) == 1
-        assert sum("tflint" in line for line in out_lines) == 1
+        cap = get_captured_lines(capfd)
+        assert sum("No problems detected" in line for line in cap.out_lines) == 1
+        assert sum("tfsec" in line for line in cap.out_lines) == 1
+        assert sum("tflint" in line for line in cap.out_lines) == 1
 
 
 def test_prototype_fail_fmt(
@@ -242,13 +236,8 @@ data "null_data_source" "values" {
         with pytest.raises(subprocess.CalledProcessError):
             subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
 
-        captured = capfd.readouterr()
-        with capfd.disabled():
-            sys.stdout.write("captured.out:\n")
-            sys.stdout.write(captured.out)
-            sys.stderr.write("captured.err:\n")
-            sys.stderr.write(captured.err)
-        assert "+++ new/bad_fmt.tf" in captured.out
+        cap = get_captured_lines(capfd)
+        assert sum("+++ new/bad_fmt.tf" in line for line in cap.out_lines) == 1
 
 
 def test_prototype_fail_validate(
@@ -263,16 +252,11 @@ resource "google_storage_bucket" "example" {
         )
         with pytest.raises(subprocess.CalledProcessError):
             subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
-        captured = capfd.readouterr()
-        with capfd.disabled():
-            sys.stdout.write("captured.out:\n")
-            sys.stdout.write(captured.out)
-            sys.stderr.write("captured.err:\n")
-            sys.stderr.write(captured.err)
-        assert "Missing required argument" in (captured.out + captured.err)
+        cap = get_captured_lines(capfd)
+        assert "Missing required argument" in (cap.out + cap.err)
 
 
-def test_prototype_fail_tfsec(
+def test_prototype_tfsec_failed_and_skip(
     tmp_path: Path, dottf_dir: Optional[Path], capfd: CaptureFixture[str]
 ) -> None:
     with ctx_prototype(tmp_path, dottf_dir) as workdir:
@@ -286,13 +270,22 @@ resource "google_storage_bucket" "example" {
         )
         with pytest.raises(subprocess.CalledProcessError):
             subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
-        captured = capfd.readouterr()
-        with capfd.disabled():
-            sys.stdout.write("captured.out:\n")
-            sys.stdout.write(captured.out)
-            sys.stderr.write("captured.err:\n")
-            sys.stderr.write(captured.err)
-        assert "Bucket has uniform bucket level access disabled." in captured.out
+        cap = get_captured_lines(capfd)
+        assert (
+            sum(
+                "Bucket has uniform bucket level access disabled." in line
+                for line in cap.out_lines
+            )
+            == 1
+        )
+        assert sum("potential problem(s) detected" in line for line in cap.out_lines) == 1
+
+        (workdir / ".tfsec-ignore").touch(exist_ok=True)
+        (workdir / "eg_module" / ".tfsec-ignore").touch(exist_ok=True)
+        subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
+        cap = get_captured_lines(capfd)
+        assert sum("potential problem(s) detected" in line for line in cap.out_lines) == 0
+        assert sum("No problems detected" in line for line in cap.out_lines) == 0
 
 
 def test_prototype_fail_tflint(
@@ -312,13 +305,14 @@ resource "google_project_iam_binding" "iam_binding" {
         )
         with pytest.raises(subprocess.CalledProcessError):
             subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
-        captured = capfd.readouterr()
-        with capfd.disabled():
-            sys.stdout.write("captured.out:\n")
-            sys.stdout.write(captured.out)
-            sys.stderr.write("captured.err:\n")
-            sys.stderr.write(captured.err)
-        assert "first.last@example.com is an invalid member format" in captured.out
+        cap = get_captured_lines(capfd)
+        assert (
+            sum(
+                "first.last@example.com is an invalid member format" in line
+                for line in cap.out_lines
+            )
+            == 1
+        )
 
 
 def test_prototype_fallback(
@@ -340,13 +334,7 @@ def test_prototype_fallback(
             "docker-compose run --rm devtools validate".split(" "), check=True
         )
 
-        captured = capfd.readouterr()
-        with capfd.disabled():
-            sys.stdout.write("captured.out:\n")
-            sys.stdout.write(captured.out)
-            sys.stderr.write("captured.err:\n")
-            sys.stderr.write(captured.err)
-        out_lines = captured.out.splitlines()
-        assert sum("No problems detected" in line for line in out_lines) == 1
-        assert sum("tfsec" in line for line in out_lines) == 1
-        assert sum("tflint" in line for line in out_lines) == 1
+        cap = get_captured_lines(capfd)
+        assert sum("No problems detected" in line for line in cap.out_lines) == 1
+        assert sum("tfsec" in line for line in cap.out_lines) == 1
+        assert sum("tflint" in line for line in cap.out_lines) == 1

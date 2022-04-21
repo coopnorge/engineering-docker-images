@@ -75,7 +75,7 @@ validate-tf-$(1): | $(1)/.terraform
 	cd $(1) && $$(tfswitch)
 	cd $(1) && $$(terraform) fmt -check -recursive -diff
 	cd $(1) && $$(terraform) validate
-	$$(tfsec) $(1)
+	test -e "$(1)/.tfsec-ignore" || $$(tfsec) $(1)
 	$$(tflint) $(1)
 
 endef
