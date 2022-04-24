@@ -36,6 +36,8 @@ Devtools images are intended for use in git repos to do validation and artifact 
 
 - `devtools-kubernetes-v1beta1`: Development tools for kubernetes.
 
+  [README](./images/devtools-kubernetes-v1beta1/README.md).
+
   [Usage example](./images/devtools-kubernetes-v1beta1/tests/prototype/).
 
 #### Security Considerations for devtools
