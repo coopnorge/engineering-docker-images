@@ -1,0 +1,9 @@
+services:
+  devtools:
+    image: ${IMAGE_UNDER_TEST:-ocreg.invalid/coopnorge/engineering/image/devtools-kubernetes-v1beta1:built}
+    working_dir: /srv/workspace
+    volumes:
+      - .:/srv/workspace:z
+      - xdg-cache-home:/root/.cache
+volumes:
+    xdg-cache-home: {}

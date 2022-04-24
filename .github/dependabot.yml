@@ -13,6 +13,10 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "docker"
+    directory: "images/devtools-kubernetes-v1beta1/context/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
     directory: "images/devtools-terraform-v1beta1/context/"
     schedule:
       interval: "daily"

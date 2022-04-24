@@ -14,7 +14,7 @@ services:
     ports:
       - "127.0.0.1:32604:32604"
   hadolint:
-    image: ghcr.io/hadolint/hadolint:latest@sha256:6c9e9654461b7cf81e1797d4ece13942207e0a92d1a33c8e0275260d39d61e6a
+    image: ghcr.io/hadolint/hadolint:latest@sha256:93f0afd12c3be5d732227c0226dd8e7bb84f79319a773d7f8519e55f958ba415
     volumes:
       - .hadolint.yaml:/.hadolint.yaml:z
   dockle:
