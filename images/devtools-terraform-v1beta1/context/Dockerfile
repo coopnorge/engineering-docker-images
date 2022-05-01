@@ -9,8 +9,9 @@ RUN \
     go env > /usr/local/bin/goenv.sh && \
     true
 
-FROM docker.io/library/ubuntu:22.04@sha256:2a7dffab37165e8b4f206f61cfd984f8bb279843b070217f6ad310c9c31c9c7c AS base
+FROM docker.io/library/ubuntu:22.04@sha256:26c68657ccce2cb0a31b330cb0be2b5e108d467f641c62e13ab40cbec258c68d AS base
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # https://packages.ubuntu.com/search?keywords=busybox&searchon=names&suite=focal&section=all
 RUN \
@@ -23,7 +24,8 @@ RUN \
         curl \
         ca-certificates \
         busybox \
-        && \
+        jq  \
+    && \
     rm -vr /var/lib/apt/lists/* && \
     true
 
@@ -41,7 +43,7 @@ RUN \
 VOLUME /srv/workspace
 WORKDIR /srv/workspace
 
-ARG tfswitcher_version=0.13.1218
+ARG tfswitcher_version=""
 
 COPY --from=terraform /bin/terraform /usr/bin/terraform
 COPY --from=tflint /root/.tflint.d /root/.tflint.d
@@ -50,25 +52,27 @@ COPY --from=tfsec  /usr/bin/tfsec /usr/bin/tfsec
 COPY --from=golang /usr/local/bin/goenv.sh /usr/local/bin/goenv.sh
 COPY --from=docker-lock /prod/docker-lock /usr/local/bin/docker-lock
 
-COPY terraform-switcher_${tfswitcher_version}_checksums.txt /var/tmp/terraform-switcher_${tfswitcher_version}_checksums.txt
+COPY terraform_switcher_checksums.txt terraform_switcher_checksums.txt
 
 # Setting TF_PLUGIN_CACHE_DIR makes things a lot faster but this somehow
 # causes weird permission issues.
 # ENV TF_PLUGIN_CACHE_DIR=/root/.cache/terraform.d/plugin-cache
 
-ARG terraform_versions="0.15.5 1.0.11 1.1.7"
-
 RUN \
     mkdir -vp ~/.cache ~/.local/bin ~/bin && \
     true
 
-RUN \
-    cd /var/tmp && \
-    . /usr/local/bin/goenv.sh && \
-    curl -LOJ "https://github.com/warrensbox/terraform-switcher/releases/download/${tfswitcher_version}/terraform-switcher_${tfswitcher_version}_${GOOS}_${GOARCH}.tar.gz" && \
-    sed -i "/_${GOOS}_${GOARCH}.tar.gz/!d" "terraform-switcher_${tfswitcher_version}_checksums.txt" && \
-    sha256sum -c "terraform-switcher_${tfswitcher_version}_checksums.txt" && \
-    tar -xvf "terraform-switcher_${tfswitcher_version}_${GOOS}_${GOARCH}.tar.gz" -C /usr/local/bin tfswitch && \
+RUN --mount=type=secret,id=github_token \
+    if [[ -e "/run/secrets/github_token" ]]; then GITHUB_AUTH="-u \"$(cat /run/secrets/github_token):x-oauth-basic\""; else GITHUB_AUTH=""; fi && \
+    if [[ $tfswitcher_version == "" ]]; then TERRAFORM_SWITCHER_TAG="latest"; else TERRAFORM_SWITCHER_TAG="tags/tfswitcher_version"; fi && \
+    ASSETS=$(curl -H "Accept: application/vnd.github.v3+json" "${GITHUB_AUTH}" "https://api.github.com/repos/warrensbox/terraform-switcher/releases/${TERRAFORM_SWITCHER_TAG}" | jq --raw-output ".assets[]") && \
+    TERRAFORM_SWITCHER_FILE_NAME=$(echo "${ASSETS}" | jq --raw-output "select(.name | contains(\"linux_amd64\")) | .name") && \
+    TERRAFORM_SWITCHER_URL=$(echo "${ASSETS}" | jq --raw-output "select(.name | contains(\"linux_amd64\")) | .browser_download_url") && \
+    curl -LO "${TERRAFORM_SWITCHER_URL}" && \
+    sed -i "/${TERRAFORM_SWITCHER_FILE_NAME}/!d" "terraform_switcher_checksums.txt" && \
+    sha256sum -c "terraform_switcher_checksums.txt" && \
+    tar -xvf "${TERRAFORM_SWITCHER_FILE_NAME}" -C /usr/local/bin tfswitch && \
+    rm -rf "${TERRAFORM_SWITCHER_FILE_NAME}" "terraform_switcher_checksums.txt" && \
     # mkdir -vp ~/.cache/.terraform.versions && \
     # ln -s ~/.cache/.terraform.versions ~/.terraform.versions && \
     # for ver in ${terraform_versions}; \

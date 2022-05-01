@@ -13,3 +13,23 @@
   terraform validation.
 
   Default: `%/examples %/example`
+
+## Updating terraform-switcher checksums file
+
+In order to update terraform-switcher checksum file you can use
+`update-terraform-switcher-checksums` target.
+
+- Update to the latest available version in GitHub
+  ```shell
+  make update-terraform-switcher-checksums
+  ```
+
+- Update to the specific version
+  ```shell
+  make update-terraform-switcher-checksums terraform_switcher_version=<version>
+  ```
+
+Target will try to use GitHub CLI if you have it installed. Otherwise, target
+will use GitHub API. If you want to make authenticated requests please specify
+parameter `github_oauth_token`. The token needs to have `public_repo` scope
+(access to public repositories).

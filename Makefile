@@ -3,6 +3,7 @@ SHELL=bash
 current_makefile:=$(lastword $(MAKEFILE_LIST))
 current_makefile_dir:=$(dir $(abspath $(current_makefile)))
 
+
 .PHONY: all
 all: ## do everything (default target)
 
@@ -56,8 +57,9 @@ docker=docker
 docker_compose=docker compose
 # docker_image_build_cmd=$(docker) image build
 docker_image_build_cmd=$(docker) buildx build --progress plain --load
+docker_image_build_secret_args=--secret=id=github_token,env=GITHUB_TOKEN
 docker_image_build_args?=
-docker_image_build=$(docker_image_build_cmd) $(docker_image_build_args)
+docker_image_build=$(docker_image_build_cmd) $(docker_image_build_secret_args) $(docker_image_build_args)
 hadolint=$(docker_compose) run --rm -T hadolint
 
 oci_local_ref_prefix=ocreg.invalid/coopnorge/engineering/image/

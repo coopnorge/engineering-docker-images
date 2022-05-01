@@ -104,6 +104,29 @@ validate-fix: | .terraform
 # utility
 ########################################################################
 
+GH_CLI := $(shell command -v gh 2> /dev/null)
+github_oauth_token=
+terraform_switcher_version=
+terraform_switcher_tag:="latest"
+ifdef terraform_switcher_version
+	terraform_switcher_tag:="tags/$(terraform_switcher_version)"
+endif
+ifdef github_oauth_token
+	USE_GITHUB_OAUTH_TOKEN:="-U \"$(github_oauth_token):x-oauth-basic\""
+endif
+ifndef GH_CLI
+	terraform_switcher_release:=curl --header "Accept: application/vnd.github.v3+json" $(USE_GITHUB_OAUTH_TOKEN) "https://api.github.com/repos/warrensbox/terraform-switcher/releases/$(terraform_switcher_tag)"
+else
+	terraform_switcher_release:=gh api --header "Accept: application/vnd.github.v3+json" "/repos/warrensbox/terraform-switcher/releases/$(terraform_switcher_tag)"
+endif
+terraform_switcher_checksums_download_url=$(terraform_switcher_release) | jq --raw-output ".assets[] | select(.name | contains(\"checksums\")) | .browser_download_url"
+
+terraform-switcher-download-checksum:
+	curl --location --output terraform_switcher_checksums.txt "$(shell $(terraform_switcher_checksums_download_url))"
+
+.PHONY: update-terraform-switcher-checksums
+update-terraform-switcher-checksums: terraform-switcher-download-checksum ## Update terraform-switcher checksum file.
+
 .PHONY: help
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
