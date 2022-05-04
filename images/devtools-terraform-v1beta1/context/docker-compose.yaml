@@ -1,0 +1,14 @@
+version: "3"
+services:
+  devtools:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /srv/workspace
+    volumes:
+      - ${WORKSPACE_DIR:-../tests/prototype}:/srv/workspace:z,cached
+      - xdg-cache-home:/root/.cache
+      - dot-terraform:/srv/workspace/.terraform
+volumes:
+  xdg-cache-home: {}
+  dot-terraform: {}
