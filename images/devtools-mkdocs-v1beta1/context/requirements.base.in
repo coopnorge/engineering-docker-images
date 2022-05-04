@@ -1,0 +1,3 @@
+poetry~=1.0
+pipx~=1.0
+-r requirements.bootstrap.in

@@ -1,0 +1,22 @@
+version: "3"
+services:
+  delivery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /srv/workspace
+    volumes:
+      - ${WORKSPACE_DIR:-../tests/prototype}:/srv/workspace:z,cached
+      - xdg-cache-home:/root/.cache
+      - dot-venv:/srv/workspace/.venv
+      - dot-tox:/srv/workspace/.tox
+      - dot-mypy_cache:/srv/workspace/.mypy_cache
+      - dot-pytest_cache:/srv/workspace/.pytest_cache
+      - dot-node_modules:/srv/workspace/.node_modules
+volumes:
+  xdg-cache-home: {}
+  dot-venv: {}
+  dot-tox: {}
+  dot-mypy_cache: {}
+  dot-pytest_cache: {}
+  dot-node_modules: {}
