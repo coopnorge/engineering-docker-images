@@ -27,17 +27,6 @@ RUN \
     rm -vr /var/lib/apt/lists/* && \
     true
 
-
-
-COPY Makefile /usr/local/share/devtools-terraform/Makefile
-COPY maker /usr/local/bin/maker
-RUN \
-    ln -rs /usr/local/bin/maker /usr/local/bin/help && \
-    ln -rs /usr/local/bin/maker /usr/local/bin/validate && \
-    ln -rs /usr/local/bin/maker /usr/local/bin/validate-fix && \
-    ln -rs /usr/local/bin/maker /usr/local/bin/terraform-reinit && \
-    true
-
 VOLUME /srv/workspace
 WORKDIR /srv/workspace
 
@@ -52,9 +41,6 @@ COPY --from=docker-lock /prod/docker-lock /usr/local/bin/docker-lock
 
 COPY terraform-switcher_${tfswitcher_version}_checksums.txt /var/tmp/terraform-switcher_${tfswitcher_version}_checksums.txt
 
-# Setting TF_PLUGIN_CACHE_DIR makes things a lot faster but this somehow
-# causes weird permission issues.
-# ENV TF_PLUGIN_CACHE_DIR=/root/.cache/terraform.d/plugin-cache
 
 ARG terraform_versions="0.15.5 1.0.11 1.1.7"
 
@@ -77,5 +63,18 @@ RUN \
     # done; \
     true
 
+ENV TF_PLUGIN_CACHE_DIR=/root/.cache/terraform.d/plugin-cache
+
+
+COPY maker /usr/local/bin/maker
+RUN \
+    ln -rs /usr/local/bin/maker /usr/local/bin/help && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/validate && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/validate-fix && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/terraform-reinit && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/terraform-upgrade && \
+    true
+
+COPY Makefile /usr/local/share/devtools-terraform/Makefile
 
 CMD ["validate"]

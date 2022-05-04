@@ -4,6 +4,8 @@ services:
     working_dir: /srv/workspace
     volumes:
       - .:/srv/workspace:z
-      - xdg-cache-home:/root/.cache
+      - ${_XDG_CACHE_DIR:-xdg-cache-home}:/root/.cache
+      - dot-terraform:/srv/workspace/.terraform
 volumes:
     xdg-cache-home: {}
+    dot-terraform: {}

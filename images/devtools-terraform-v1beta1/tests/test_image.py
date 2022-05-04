@@ -1,21 +1,24 @@
-from contextlib import contextmanager
-from dataclasses import dataclass
 import glob
-import os
-from pathlib import Path, PurePath
 import logging
+import os
+import shlex
 import shutil
 import subprocess
 import sys
 import tempfile
-from typing import Iterator, List, Optional, TypeVar, Union, Generator
+import textwrap
+from contextlib import contextmanager
+from dataclasses import dataclass
+from pathlib import Path, PurePath
+from typing import Dict, Generator, Iterator, List, Optional, TypeVar, Union
 
 import pytest
-from pytest import CaptureFixture
 from _pytest.capture import CaptureResult
+from pytest import CaptureFixture
 
 TEST_DIR = Path(__file__).parent.absolute()
 PROTYPE_DIR = TEST_DIR / "prototype"
+VAR_XDG_CACHE_DIR = TEST_DIR / "var" / "XDG_CACHE_DIR"
 
 RAPID_TEST = len(os.environ.get("RAPID_TEST", "")) > 0
 KEEP_TMP = len(os.environ.get("KEEP_TMP", "")) > 0
@@ -34,61 +37,68 @@ def ctx_chdir(newdir: PathLikeT) -> Iterator[PathLikeT]:
         os.chdir(cwd)
 
 
+def envargs_from_dict(env_args: Optional[Dict[str, str]] = None) -> List[str]:
+    if env_args is None:
+        return []
+    return sum(
+        [["-e", f"{key}={value}"] for key, value in env_args.items()],
+        [],
+    )
+
+
 @contextmanager
 def ctx_prototype(
-    tmp_path: Path, dottf_dir: Optional[Path]
+    tmp_path: Path,
+    cache_dir: Optional[Path],
 ) -> Generator[Path, None, None]:
     logging.debug("RAPID_TEST = %s", RAPID_TEST)
     workdir = tmp_path / "base"
-    logging.info("workdir = %s, dottf_dir = %s", workdir, dottf_dir)
+    logging.info("workdir = %s, cache_dir = %s", workdir, cache_dir)
     shutil.copytree(
         PROTYPE_DIR,
         workdir,
-        ignore=shutil.ignore_patterns(".terraform", ".terraform.lock.hcl")
-        if not RAPID_TEST
-        else None,
+        ignore=shutil.ignore_patterns(".terraform", ".terraform.lock.hcl"),
     )
-    if not RAPID_TEST:
-        assert dottf_dir is not None
-        shutil.copytree(dottf_dir, workdir / ".terraform")
-        shutil.copy2(
-            dottf_dir.parent / ".terraform.lock.hcl", workdir / ".terraform.lock.hcl"
-        )
 
     with ctx_chdir(workdir):
+        dotenv_vars = {"COMPOSE_PROJECT_NAME": "devtools-terraform-reinit"}
+        if cache_dir is not None:
+            dotenv_vars["_XDG_CACHE_DIR"] = f"{cache_dir}"
+        (workdir / ".env").write_text(
+            "\n".join([f"{key}={value}" for key, value in dotenv_vars.items()])
+        )
+
+        subprocess.run(
+            "docker-compose down -v".split(" "),
+            check=True,
+        )
+        run_cmd = "docker-compose run --rm".split(" ") + [
+            "devtools",
+            "bash",
+            "-c",
+            textwrap.dedent(
+                """
+                    find /srv/workspace/.terraform/
+                    find ~/.cache/
+                    """
+            ),
+        ]
+        logging.debug("running %s", shlex.join(run_cmd))
+        subprocess.run(run_cmd, check=True)
         yield workdir
 
 
-@contextmanager
-def ctx_dottf_dir() -> Generator[Optional[Path], None, None]:
-    logging.debug("RAPID_TEST = %s", RAPID_TEST)
+@pytest.fixture(scope="module")
+def cache_dir() -> Generator[Optional[Path], None, None]:
     if RAPID_TEST:
-        with ctx_chdir(PROTYPE_DIR):
-            tfdir = PROTYPE_DIR / ".terraform"
-            if not tfdir.exists():
-                subprocess.run(
-                    "docker-compose run --rm devtools terraform init".split(" "),
-                    check=True,
-                )
-            yield tfdir
+        VAR_XDG_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        yield VAR_XDG_CACHE_DIR
     else:
-        _tmp_path = tempfile.mkdtemp("dottf_dir")
+        # yield None
+        _tmp_path = tempfile.mkdtemp("-devtools-terraform-cache")
         tmp_path = Path(_tmp_path)
         try:
-            workdir = tmp_path / "terraform_dir"
-            logging.info("workdir = %s", workdir)
-            shutil.copytree(
-                PROTYPE_DIR, workdir, ignore=shutil.ignore_patterns(".terraform")
-            )
-
-            with ctx_chdir(workdir):
-                subprocess.run(
-                    "docker-compose run --rm devtools terraform init".split(" "),
-                    check=True,
-                )
-                tfdir = workdir / ".terraform"
-                logging.debug("tfdir = %s", tfdir)
-            yield tfdir
+            yield tmp_path
         finally:
             if KEEP_TMP:
                 return
@@ -96,12 +106,6 @@ def ctx_dottf_dir() -> Generator[Optional[Path], None, None]:
                 shutil.rmtree(tmp_path, ignore_errors=True)
             except Exception:
                 logging.warning("failed to rmtree %s", tmp_path, exc_info=True)
-
-
-@pytest.fixture(scope="module")
-def dottf_dir() -> Iterator[Optional[Path]]:
-    with ctx_dottf_dir() as path:
-        yield path
 
 
 @dataclass
@@ -125,14 +129,49 @@ def get_captured_lines(capfd: CaptureFixture[str]) -> Captured:
     return Captured(captured, out, out.splitlines(), err, err.splitlines())
 
 
+def devtools_cmd(
+    args: Optional[List[str]] = None, /, *, envargs: Optional[Dict[str, str]] = None
+) -> List[str]:
+    if args is None:
+        args = []
+    cmd = [
+        "docker-compose",
+        "run",
+        "--rm",
+        *envargs_from_dict(envargs),
+        "devtools",
+        *args,
+    ]
+    logging.debug("will run: %s", shlex.join(cmd))
+    return cmd
+
+
 def test_prototype_ok(
-    tmp_path: Path, dottf_dir: Optional[Path], capfd: CaptureFixture[str]
+    tmp_path: Path,
+    cache_dir: Optional[Path],
+    capfd: CaptureFixture[str],
 ) -> None:
-    with ctx_prototype(tmp_path, dottf_dir):
+    with ctx_prototype(tmp_path, cache_dir if RAPID_TEST else None):
         subprocess.run("id".split(" "), check=True)
         subprocess.run("pwd".split(" "), check=True)
         subprocess.run("find .".split(" "), check=True)
-        subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
+        subprocess.run(devtools_cmd(), check=True)
+
+        cap = get_captured_lines(capfd)
+        assert sum("No problems detected" in line for line in cap.out_lines) == 2
+        assert sum("tfsec" in line for line in cap.out_lines) == 2
+        assert sum("tflint" in line for line in cap.out_lines) == 2
+
+
+def test_prototype_nocache(
+    tmp_path: Path,
+    capfd: CaptureFixture[str],
+) -> None:
+    with ctx_prototype(tmp_path, None):
+        subprocess.run("id".split(" "), check=True)
+        subprocess.run("pwd".split(" "), check=True)
+        subprocess.run("find .".split(" "), check=True)
+        subprocess.run(devtools_cmd(envargs={"TF_PLUGIN_CACHE_DIR": ""}), check=True)
 
         cap = get_captured_lines(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 2
@@ -141,16 +180,18 @@ def test_prototype_ok(
 
 
 def test_prototype_ok_no_module(
-    tmp_path: Path, dottf_dir: Optional[Path], capfd: CaptureFixture[str]
+    tmp_path: Path,
+    cache_dir: Optional[Path],
+    capfd: CaptureFixture[str],
 ) -> None:
-    with ctx_prototype(tmp_path, dottf_dir) as workdir:
+    with ctx_prototype(tmp_path, cache_dir if RAPID_TEST else None) as workdir:
 
         shutil.rmtree(workdir / "eg_module", ignore_errors=False)
         os.remove(workdir / "use_eg_module.tf")
 
         subprocess.run("pwd".split(" "), check=True)
         subprocess.run("find .".split(" "), check=True)
-        subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
+        subprocess.run(devtools_cmd(), check=True)
 
         cap = get_captured_lines(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 1
@@ -158,21 +199,19 @@ def test_prototype_ok_no_module(
         assert sum("tflint" in line for line in cap.out_lines) == 1
 
 
-def test_prototype_reinit(
-    tmp_path: Path, dottf_dir: Optional[Path], capfd: CaptureFixture[str]
+def test_prototype_reinit_upgrade(
+    tmp_path: Path,
+    cache_dir: Optional[Path],
+    capfd: CaptureFixture[str],
 ) -> None:
-    with ctx_prototype(tmp_path, dottf_dir):
-        subprocess.run(
-            "docker-compose run --rm devtools validate".split(" "), check=True
-        )
+    with ctx_prototype(tmp_path, cache_dir):
+        subprocess.run(devtools_cmd(["validate"]), check=True)
 
-        subprocess.run(
-            "docker-compose run --rm devtools terraform-reinit".split(" "), check=True
-        )
+        subprocess.run(devtools_cmd(["terraform-reinit"]), check=True)
 
-        subprocess.run(
-            "docker-compose run --rm devtools validate".split(" "), check=True
-        )
+        subprocess.run(devtools_cmd(["terraform-upgrade"]), check=True)
+
+        subprocess.run(devtools_cmd(["validate"]), check=True)
 
         cap = get_captured_lines(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 4
@@ -181,13 +220,13 @@ def test_prototype_reinit(
 
 
 def test_prototype_env_vars(
-    tmp_path: Path, dottf_dir: Optional[Path], capfd: CaptureFixture[str]
+    tmp_path: Path,
+    cache_dir: Optional[Path],
+    capfd: CaptureFixture[str],
 ) -> None:
-    with ctx_prototype(tmp_path, dottf_dir) as workdir:
+    with ctx_prototype(tmp_path, cache_dir) as workdir:
 
-        subprocess.run(
-            "docker-compose run --rm devtools validate TFDIRS=".split(" "), check=True
-        )
+        subprocess.run(devtools_cmd(["validate", "TFDIRS="]), check=True)
 
         cap = get_captured_lines(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 0
@@ -196,7 +235,7 @@ def test_prototype_env_vars(
 
         (workdir / "blank").mkdir()
         subprocess.run(
-            "docker-compose run --rm -e TFDIRS=blank devtools validate".split(" "),
+            devtools_cmd(["validate"], envargs={"TFDIRS": "blank"}),
             check=True,
         )
 
@@ -206,12 +245,9 @@ def test_prototype_env_vars(
         assert sum("tflint" in line for line in cap.out_lines) == 1
 
         subprocess.run(
-            [
-                *"docker-compose run --rm".split(" "),
-                "-e",
-                "TFDIRS_EXCLUDE=%/examples %/example %/eg_module",
-                "devtools",
-            ],
+            devtools_cmd(
+                envargs={"TFDIRS_EXCLUDE": "%/examples %/example %/eg_module"}
+            ),
             check=True,
         )
 
@@ -222,9 +258,11 @@ def test_prototype_env_vars(
 
 
 def test_prototype_fail_fmt(
-    tmp_path: Path, dottf_dir: Optional[Path], capfd: CaptureFixture[str]
+    tmp_path: Path,
+    cache_dir: Optional[Path],
+    capfd: CaptureFixture[str],
 ) -> None:
-    with ctx_prototype(tmp_path, dottf_dir) as workdir:
+    with ctx_prototype(tmp_path, cache_dir) as workdir:
         (workdir / "bad_fmt.tf").write_text(
             """
 data "null_data_source" "values" {
@@ -234,16 +272,41 @@ data "null_data_source" "values" {
 """
         )
         with pytest.raises(subprocess.CalledProcessError):
-            subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
+            subprocess.run(devtools_cmd(), check=True)
 
         cap = get_captured_lines(capfd)
         assert sum("+++ new/bad_fmt.tf" in line for line in cap.out_lines) == 1
 
 
+def write_google_versions_tf(workdir: Path) -> None:
+    (workdir / "versions.tf").write_text(
+        """
+# https://www.terraform.io/docs/language/settings/index.html
+# https://www.terraform.io/docs/language/expressions/version-constraints.html
+terraform {
+  required_providers {
+    null = {
+      source = "hashicorp/null"
+      # version = "~> 3.1.0"
+    }
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 4.4"
+    }
+  }
+  required_version = "~> 1.0"
+}
+"""
+    )
+
+
 def test_prototype_fail_validate(
-    tmp_path: Path, dottf_dir: Optional[Path], capfd: CaptureFixture[str]
+    tmp_path: Path,
+    cache_dir: Optional[Path],
+    capfd: CaptureFixture[str],
 ) -> None:
-    with ctx_prototype(tmp_path, dottf_dir) as workdir:
+    with ctx_prototype(tmp_path, cache_dir) as workdir:
+        write_google_versions_tf(workdir)
         (workdir / "bad_validate.tf").write_text(
             """
 resource "google_storage_bucket" "example" {
@@ -251,15 +314,18 @@ resource "google_storage_bucket" "example" {
 """
         )
         with pytest.raises(subprocess.CalledProcessError):
-            subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
+            subprocess.run(devtools_cmd(), check=True)
         cap = get_captured_lines(capfd)
         assert "Missing required argument" in (cap.out + cap.err)
 
 
 def test_prototype_tfsec_failed_and_skip(
-    tmp_path: Path, dottf_dir: Optional[Path], capfd: CaptureFixture[str]
+    tmp_path: Path,
+    cache_dir: Optional[Path],
+    capfd: CaptureFixture[str],
 ) -> None:
-    with ctx_prototype(tmp_path, dottf_dir) as workdir:
+    with ctx_prototype(tmp_path, cache_dir) as workdir:
+        write_google_versions_tf(workdir)
         (workdir / "bad_tfsec.tf").write_text(
             """
 resource "google_storage_bucket" "example" {
@@ -269,7 +335,7 @@ resource "google_storage_bucket" "example" {
 """
         )
         with pytest.raises(subprocess.CalledProcessError):
-            subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
+            subprocess.run(devtools_cmd(), check=True)
         cap = get_captured_lines(capfd)
         assert (
             sum(
@@ -278,20 +344,27 @@ resource "google_storage_bucket" "example" {
             )
             == 1
         )
-        assert sum("potential problem(s) detected" in line for line in cap.out_lines) == 1
+        assert (
+            sum("potential problem(s) detected" in line for line in cap.out_lines) == 1
+        )
 
         (workdir / ".tfsec-ignore").touch(exist_ok=True)
         (workdir / "eg_module" / ".tfsec-ignore").touch(exist_ok=True)
-        subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
+        subprocess.run(devtools_cmd(), check=True)
         cap = get_captured_lines(capfd)
-        assert sum("potential problem(s) detected" in line for line in cap.out_lines) == 0
+        assert (
+            sum("potential problem(s) detected" in line for line in cap.out_lines) == 0
+        )
         assert sum("No problems detected" in line for line in cap.out_lines) == 0
 
 
 def test_prototype_fail_tflint(
-    tmp_path: Path, dottf_dir: Optional[Path], capfd: CaptureFixture[str]
+    tmp_path: Path,
+    cache_dir: Optional[Path],
+    capfd: CaptureFixture[str],
 ) -> None:
-    with ctx_prototype(tmp_path, dottf_dir) as workdir:
+    with ctx_prototype(tmp_path, cache_dir) as workdir:
+        write_google_versions_tf(workdir)
         (workdir / "bad_tflint.tf").write_text(
             """
 resource "google_project_iam_binding" "iam_binding" {
@@ -304,7 +377,7 @@ resource "google_project_iam_binding" "iam_binding" {
 """
         )
         with pytest.raises(subprocess.CalledProcessError):
-            subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
+            subprocess.run(devtools_cmd(), check=True)
         cap = get_captured_lines(capfd)
         assert (
             sum(
@@ -316,9 +389,11 @@ resource "google_project_iam_binding" "iam_binding" {
 
 
 def test_prototype_fallback(
-    tmp_path: Path, dottf_dir: Optional[Path], capfd: CaptureFixture[str]
+    tmp_path: Path,
+    cache_dir: Optional[Path],
+    capfd: CaptureFixture[str],
 ) -> None:
-    with ctx_prototype(tmp_path, dottf_dir) as workdir:
+    with ctx_prototype(tmp_path, cache_dir) as workdir:
 
         for file in [*glob.glob("*"), *glob.glob(".*")]:
             file_path = workdir / file
@@ -330,9 +405,7 @@ def test_prototype_fallback(
             else:
                 os.remove(file)
 
-        subprocess.run(
-            "docker-compose run --rm devtools validate".split(" "), check=True
-        )
+        subprocess.run(devtools_cmd(["validate"]), check=True)
 
         cap = get_captured_lines(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 1

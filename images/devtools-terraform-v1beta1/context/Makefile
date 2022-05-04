@@ -45,15 +45,21 @@ TFDIRS?=$(filter-out $(TFDIRS_EXCLUDE), \
 		| sed 's|/[^/]\{1,\}$$||g' \
 		| sort | uniq),.))
 
+TF_NO_PROVIDERS=
+
 $(info TFDIRS=$(TFDIRS))
 
 terraform=terraform
 
-.terraform:
+tf_plugin_cache_dir_target=$(if $(TF_PLUGIN_CACHE_DIR),$(TF_PLUGIN_CACHE_DIR)/,)
+
+$(call dump_vars,tf_plugin_cache_dir_target TF_PLUGIN_CACHE_DIR)
+
+.terraform .terraform/providers: | $(tf_plugin_cache_dir_target)
 	$(tfswitch)
 	$(terraform) init $(terraform_init_args)
 
-%/.terraform:
+%/.terraform %/.terraform/providers: | $(tf_plugin_cache_dir_target)
 	cd $(*) && $(tfswitch)
 	cd $(*) && $(terraform) init $(terraform_init_args)
 
@@ -65,15 +71,19 @@ define tfdir_targets
 
 tf-reinit: tf-reinit-$(1)
 .PHONY: tf-reinit-$(1)
-tf-reinit-$(1):
-	$(if $(TF_PLUGIN_CACHE_DIR),mkdir -vp $(TF_PLUGIN_CACHE_DIR),)
+tf-reinit-$(1): | $(tf_plugin_cache_dir_target)
+	cd $(1) && $$(tfswitch)
+	cd $(1) && $$(terraform) init
+
+tf-upgrade: tf-reinit-$(1)
+.PHONY: tf-reinit-$(1)
+tf-upgrade-$(1): | $(tf_plugin_cache_dir_target)
 	cd $(1) && $$(tfswitch)
 	cd $(1) && $$(terraform) init -upgrade
 
 validate: validate-tf-$(1)
 .PHONY: validate-tf-$(1)
-validate-tf-$(1): | $(1)/.terraform
-	$(if $(TF_PLUGIN_CACHE_DIR),mkdir -vp $(TF_PLUGIN_CACHE_DIR),)
+validate-tf-$(1): | $(1)/.terraform $(if $(TF_NO_PROVIDERS),,$(1)/.terraform/providers) $(tf_plugin_cache_dir_target)
 	cd $(1) && $$(tfswitch)
 	cd $(1) && $$(terraform) fmt -check -recursive -diff
 	cd $(1) && $$(terraform) validate
@@ -91,6 +101,12 @@ tf-reinit: ## Reintialize terraform
 
 .PHONY: terraform-reinit
 terraform-reinit: tf-reinit ## Reintialize terraform
+
+.PHONY: tf-upgrade
+tf-upgrade: ## Reintialize and upgrade terraform
+
+.PHONY: terraform-upgrade
+terraform-upgrade: tf-upgrade ## Reintialize and upgrade terraform
 
 $(foreach tfdir,$(TFDIRS),\
     $(eval $(call tfdir_targets,$(tfdir))))
