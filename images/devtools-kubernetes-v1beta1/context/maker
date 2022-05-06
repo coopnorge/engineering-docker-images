@@ -2,4 +2,11 @@
 
 script_basename="$( basename -- "${0}" )"
 
-exec make -f "/usr/local/share/devtools-kubernetes/Makefile" "${script_basename}" "${@}"
+if [[ ${script_basename} == maker || ${script_basename} == */maker ]]
+then
+    target=()
+else
+    target=("${script_basename}")
+fi
+
+exec make -f "/usr/local/share/devtools-kubernetes/Makefile" "${target[@]}" "${@}"

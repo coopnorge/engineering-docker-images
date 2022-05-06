@@ -19,10 +19,19 @@ RUN \
     rm -vr /var/lib/apt/lists/* && \
     true
 
-COPY Makefile /usr/local/share/devtools-golang/Makefile
-COPY maker /usr/local/bin/maker
 
 COPY .golangci.yml /.golangci.yml
+
+
+
+VOLUME /srv/workspace
+WORKDIR /srv/workspace
+
+COPY --from=golangci-lint /usr/bin/golangci-lint /usr/bin/golangci-lint
+COPY --from=docker-lock /prod/docker-lock /usr/local/bin/docker-lock
+
+COPY Makefile /usr/local/share/devtools-golang/Makefile
+COPY maker /usr/local/bin/maker
 
 RUN \
     ln -s /usr/local/bin/maker /usr/local/bin/help && \
@@ -32,11 +41,5 @@ RUN \
     ln -s /usr/local/bin/maker /usr/local/bin/test && \
     ln -s /usr/local/bin/maker /usr/local/bin/build && \
     true
-
-VOLUME /srv/workspace
-WORKDIR /srv/workspace
-
-COPY --from=golangci-lint /usr/bin/golangci-lint /usr/bin/golangci-lint
-COPY --from=docker-lock /prod/docker-lock /usr/local/bin/docker-lock
 
 CMD ["validate", "build"]

@@ -162,6 +162,13 @@ def test_prototype_ok(
         assert sum("tfsec" in line for line in cap.out_lines) == 2
         assert sum("tflint" in line for line in cap.out_lines) == 2
 
+        subprocess.run(devtools_cmd(["maker", "validate"]), check=True)
+
+        cap = get_captured_lines(capfd)
+        assert sum("No problems detected" in line for line in cap.out_lines) == 2
+        assert sum("tfsec" in line for line in cap.out_lines) == 2
+        assert sum("tflint" in line for line in cap.out_lines) == 2
+
 
 def test_prototype_nocache(
     tmp_path: Path,
