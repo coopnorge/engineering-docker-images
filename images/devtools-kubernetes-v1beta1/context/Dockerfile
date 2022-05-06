@@ -19,11 +19,7 @@ RUN \
     rm -vr /var/lib/apt/lists/* && \
     true
 
-COPY maker /usr/local/bin/maker
-RUN \
-    ln -rs /usr/local/bin/maker /usr/local/bin/help && \
-    ln -rs /usr/local/bin/maker /usr/local/bin/validate && \
-    true
+
 
 VOLUME /srv/workspace
 WORKDIR /srv/workspace
@@ -64,6 +60,12 @@ RUN \
 
 RUN \
     rm -rf /var/tmp/build && \
+    true
+
+COPY maker /usr/local/bin/maker
+RUN \
+    ln -rs /usr/local/bin/maker /usr/local/bin/help && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/validate && \
     true
 
 COPY Makefile /usr/local/share/devtools-kubernetes/Makefile

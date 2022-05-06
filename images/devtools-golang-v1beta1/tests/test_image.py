@@ -41,6 +41,10 @@ def test_prototype_ok() -> None:
     with ctx_chdir(PROTOTYPE_DIR):
         subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
         assert (PROTOTYPE_DIR / "coverage.out").exists()
+        (PROTOTYPE_DIR / "coverage.out").unlink()
+        assert not (PROTOTYPE_DIR / "coverage.out").exists()
+        subprocess.run("docker-compose run --rm devtools maker validate".split(" "), check=True)
+        assert (PROTOTYPE_DIR / "coverage.out").exists()
 
 
 @pytest.mark.parametrize(
