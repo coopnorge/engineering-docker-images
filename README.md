@@ -28,17 +28,28 @@ Devtools images are intended for use in git repos to do validation and artifact 
 
   [Usage example](./images/devtools-golang-v1beta1/tests/prototype/).
 
+  - [`ghcr.io/coopnorge/engineering-docker-images/e0/devtools-golang-v1beta1`](https://github.com/coopnorge/engineering-docker-images/pkgs/container/engineering-docker-images%2Fe0%2Fdevtools-golang-v1beta1)
+  - [`europe-north1-docker.pkg.dev/engineering-production-af50/images/devtools-golang-v1beta1`](https://console.cloud.google.com/artifacts/docker/engineering-production-af50/europe-north1/images/devtools-golang-v1beta1)
+
 - `devtools-terraform-v1beta1`: Development tools for terraform.
 
   [README](./images/devtools-terraform-v1beta1/README.md).
 
   [Usage example](./images/devtools-terraform-v1beta1/tests/prototype/).
 
+  - [`ghcr.io/coopnorge/engineering-docker-images/e0/devtools-terraform-v1beta1`](https://github.com/coopnorge/engineering-docker-images/pkgs/container/engineering-docker-images%2Fe0%2Fdevtools-terraform-v1beta1)
+  - [`europe-north1-docker.pkg.dev/engineering-production-af50/images/devtools-terraform-v1beta1`](https://console.cloud.google.com/artifacts/docker/engineering-production-af50/europe-north1/images/devtools-terraform-v1beta1)
+
+
 - `devtools-kubernetes-v1beta1`: Development tools for kubernetes.
 
   [README](./images/devtools-kubernetes-v1beta1/README.md).
 
   [Usage example](./images/devtools-kubernetes-v1beta1/tests/prototype/).
+
+  - [`ghcr.io/coopnorge/engineering-docker-images/e0/devtools-kubernetes-v1beta1`](https://github.com/coopnorge/engineering-docker-images/pkgs/container/engineering-docker-images%2Fe0%2Fdevtools-kubernetes-v1beta1)
+  - [`europe-north1-docker.pkg.dev/engineering-production-af50/images/devtools-kubernetes-v1beta1`](https://console.cloud.google.com/artifacts/docker/engineering-production-af50/europe-north1/images/devtools-kubernetes-v1beta1)
+
 
 #### Security Considerations for devtools
 
