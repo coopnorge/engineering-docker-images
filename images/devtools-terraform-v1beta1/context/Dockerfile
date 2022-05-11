@@ -30,7 +30,7 @@ RUN \
 VOLUME /srv/workspace
 WORKDIR /srv/workspace
 
-ARG tfswitcher_version=0.13.1218
+ARG tfswitcher_version=0.13.1221
 
 COPY --from=terraform /bin/terraform /usr/bin/terraform
 COPY --from=tflint /root/.tflint.d /root/.tflint.d
