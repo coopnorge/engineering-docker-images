@@ -28,7 +28,7 @@ ifneq ($(tools_dir),)
 export PATH:=$(tools_dir):$(PATH)
 endif
 XDG_CACHE_HOME?=$(HOME)/.cache
-
+WITH_TFSWITCH?=false
 # setting this so that it is more likely things will work on MacOS and Linux
 export POSIXLY_CORRECT:=1
 
@@ -65,7 +65,12 @@ $(call dump_vars,tf_plugin_cache_dir_target TF_PLUGIN_CACHE_DIR)
 
 tfsec=tfsec
 tflint=tflint --enable-plugin=google --enable-plugin=azurerm $(if $(filter all commands,$(VERBOSE)),--loglevel=trace)
+
+ifeq ($(WITH_TFSWITCH),true)
 tfswitch={ set +o pipefail; yes | tfswitch; }
+else
+tfswitch=true
+endif
 
 define tfdir_targets
 
