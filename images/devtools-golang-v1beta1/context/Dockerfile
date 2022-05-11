@@ -3,7 +3,7 @@ FROM golangci/golangci-lint:v1.46.0-alpine@sha256:a9be740033fde5c19fdb2e9be5ae72
 
 # golangci-lint does not work with go1.18
 # https://github.com/golangci/golangci-lint/issues/2649
-FROM golang:1.18.1-buster@sha256:d8f864bac466e488bb425a59ff9bc104828cd44d0985a8d2fcb5570a9250258a as base
+FROM golang:1.18.2-buster@sha256:b251cba61cd79c89286eaf4610e0b5b200596a5b016dc90e1ba5103e855fd391 as base
 
 # https://packages.debian.org/search?keywords=busybox&searchon=names&suite=buster&section=all
 RUN \
