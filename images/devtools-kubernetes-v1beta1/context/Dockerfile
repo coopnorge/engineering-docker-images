@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.3
 FROM zegl/kube-score:v1.14.0@sha256:df26b2d3978be960b41e8c09906a38f3e5ad7ef3c63b8770c693dc3405005299 as kube-score
-FROM golang:1.18.2@sha256:aa0c16158472cfa9122ea7c54f3933ad79d1e860f216540750ed440bcce841c7 as golang
+FROM golang:1.18.2@sha256:10e33fc8fc78d9f2ddc99ae16eb81819d010dee92f8c0df18a271a339e5ecdf1 as golang
 
 RUN \
     go env > /usr/local/bin/goenv.sh && \
