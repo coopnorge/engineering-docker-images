@@ -51,6 +51,7 @@ validate: ## Validate kubernetes configs
 	$(foreach overlay,$(OVERLAYS),\
 		kubectl kustomize $(overlay) > /dev/null $(__newline) \
 		kubectl kustomize $(overlay) | kubeval --ignore-missing-schemas --strict - $(__newline) \
+		kubectl kustomize $(overlay) | kubeconform -strict -verbose -ignore-missing-schemas - $(__newline) \
 		kubectl kustomize $(overlay) | kube-score score - $(__newline) \
 		@echo Validation of $(overlay) successfully completed $(__newline) \
 		)
