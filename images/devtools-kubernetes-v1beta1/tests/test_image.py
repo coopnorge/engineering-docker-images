@@ -69,6 +69,7 @@ def test_prototype_ok(tmp_path: Path, capfd: CaptureFixture[str]) -> None:
         subprocess.run("docker-compose run --rm devtools maker validate".split(" "), check=True)
         cap = get_captured_lines(capfd)
         assert len(re.findall("Validation of .* completed", cap.out)) == 3
+        assert len(re.findall("Deployment helloworld is valid", cap.out)) == 3
 
 
 def test_prototype_overlay_override(tmp_path: Path, capfd: CaptureFixture[str]) -> None:
