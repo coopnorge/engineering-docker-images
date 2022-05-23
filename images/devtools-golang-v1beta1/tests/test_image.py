@@ -1,5 +1,7 @@
 import logging
 import os
+from tempfile import TemporaryDirectory
+import tempfile
 import pytest
 import shutil
 import subprocess
@@ -7,8 +9,8 @@ import sys
 
 from contextlib import contextmanager
 from pathlib import Path, PurePath
-from pytest import CaptureFixture
-from typing import Dict, Iterator, List, Optional, TypeVar, Union
+from pytest import CaptureFixture, fixture
+from typing import Dict, Iterator, List, Optional, TypeVar, Union, Generator
 
 TEST_DIR = Path(__file__).parent.absolute()
 PROTOTYPE_DIR = TEST_DIR / "prototype"
@@ -43,7 +45,9 @@ def test_prototype_ok() -> None:
         assert (PROTOTYPE_DIR / "coverage.out").exists()
         (PROTOTYPE_DIR / "coverage.out").unlink()
         assert not (PROTOTYPE_DIR / "coverage.out").exists()
-        subprocess.run("docker-compose run --rm devtools maker validate".split(" "), check=True)
+        subprocess.run(
+            "docker-compose run --rm devtools maker validate".split(" "), check=True
+        )
         assert (PROTOTYPE_DIR / "coverage.out").exists()
 
 
@@ -224,3 +228,30 @@ func init() {
 """
 
         assert formatted_file == open(workdir / "bad_file.go").read()
+
+
+@pytest.fixture(scope="module")
+def prototype_ro() -> Generator[Path, None, None]:
+    _tmp_path = tempfile.mkdtemp("-devtools-terraform-cache")
+    tmp_path = Path(_tmp_path)
+    try:
+        with ctx_prototype(tmp_path) as proto_path:
+            yield proto_path
+    finally:
+        try:
+            shutil.rmtree(tmp_path, ignore_errors=True)
+        except Exception:
+            logging.warning("failed to rmtree %s", tmp_path, exc_info=True)
+
+
+@pytest.mark.parametrize(
+    "command",
+    [
+        "modd --version".split(),
+        "mockgen -version".split(),
+        "protoc-gen-go --version".split(),
+        "protoc-gen-go-grpc -version".split(),
+    ],
+)
+def test_commands_run(prototype_ro: Path, command: List[str]) -> None:
+    subprocess.run("docker-compose run --rm devtools".split(" ") + command, check=True)
