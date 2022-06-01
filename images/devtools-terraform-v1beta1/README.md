@@ -1,5 +1,15 @@
 # Terraform Development Tools
 
+- `terraform-reinit` target: This target will run `terraform init` in each
+  terraform directory followed by `terraform providers lock`.
+
+- `terraform-upgrade` target: This target will run `terraform init -upgrade` in
+  each terraform directory followed by `terraform providers lock`.
+
+- `terraform-relock` target: This target will remove the existing terraform
+  lock file and then run `terraform providers lock` in each terraform
+  directory.
+
 - `.tfsec-ignore` file: If this file is present in a directory with terraform
   then tfsec will not be used on the directory.
 
