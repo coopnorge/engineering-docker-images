@@ -50,6 +50,8 @@ TF_NO_PROVIDERS=
 $(info TFDIRS=$(TFDIRS))
 
 terraform=terraform
+lock_platforms=linux_arm64 linux_amd64 darwin_amd64 darwin_arm64 windows_amd64
+terraform_providers_lock_args=$(foreach platform,$(lock_platforms), -platform=$(platform))
 
 tf_plugin_cache_dir_target=$(if $(TF_PLUGIN_CACHE_DIR),$(TF_PLUGIN_CACHE_DIR)/,)
 
@@ -62,6 +64,7 @@ $(call dump_vars,tf_plugin_cache_dir_target TF_PLUGIN_CACHE_DIR)
 %/.terraform %/.terraform/providers: | $(tf_plugin_cache_dir_target)
 	cd $(*) && $(tfswitch)
 	cd $(*) && $(terraform) init $(terraform_init_args)
+	cd $(*) && $(terraform) providers lock $(terraform_providers_lock_args)
 
 tfsec=tfsec
 tflint=tflint --enable-plugin=google --enable-plugin=azurerm $(if $(filter all commands,$(VERBOSE)),--loglevel=trace)
@@ -79,12 +82,21 @@ tf-reinit: tf-reinit-$(1)
 tf-reinit-$(1): | $(tf_plugin_cache_dir_target)
 	cd $(1) && $$(tfswitch)
 	cd $(1) && $$(terraform) init
+	cd $(1) && $$(terraform) providers lock $(terraform_providers_lock_args)
 
-tf-upgrade: tf-reinit-$(1)
-.PHONY: tf-reinit-$(1)
+tf-upgrade: tf-upgrade-$(1)
+.PHONY: tf-upgrade-$(1)
 tf-upgrade-$(1): | $(tf_plugin_cache_dir_target)
 	cd $(1) && $$(tfswitch)
 	cd $(1) && $$(terraform) init -upgrade
+	cd $(1) && $$(terraform) providers lock $(terraform_providers_lock_args)
+
+tf-relock: tf-relock-$(1)
+.PHONY: tf-relock-$(1)
+tf-relock-$(1): | $(tf_plugin_cache_dir_target)
+	cd $(1) && $$(tfswitch)
+	cd $(1) && rm -fv .terraform.lock.hcl
+	cd $(1) && $$(terraform) providers lock $(terraform_providers_lock_args)
 
 validate: validate-tf-$(1)
 .PHONY: validate-tf-$(1)
@@ -112,6 +124,9 @@ tf-upgrade: ## Reintialize and upgrade terraform
 
 .PHONY: terraform-upgrade
 terraform-upgrade: tf-upgrade ## Reintialize and upgrade terraform
+
+.PHONY: terraform-relock
+terraform-relock: tf-relock ## Regenerate .terraform.lock.hcl files
 
 $(foreach tfdir,$(TFDIRS),\
     $(eval $(call tfdir_targets,$(tfdir))))
