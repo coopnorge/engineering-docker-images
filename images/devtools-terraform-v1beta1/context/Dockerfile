@@ -76,6 +76,7 @@ RUN \
     ln -rs /usr/local/bin/maker /usr/local/bin/terraform-reinit && \
     ln -rs /usr/local/bin/maker /usr/local/bin/terraform-upgrade && \
     ln -rs /usr/local/bin/maker /usr/local/bin/terraform-relock && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/tf-docs && \
     true
 
 COPY Makefile /usr/local/share/devtools-terraform/Makefile

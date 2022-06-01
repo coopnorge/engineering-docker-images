@@ -69,7 +69,7 @@ $(call dump_vars,tf_plugin_cache_dir_target TF_PLUGIN_CACHE_DIR)
 tfsec=tfsec
 tflint=tflint --enable-plugin=google --enable-plugin=azurerm $(if $(filter all commands,$(VERBOSE)),--loglevel=trace)
 tfdocs_check=diff <(cat README.md | grep -v _TF_DOCS)  <(terraform-docs . -c terraform-docs.yml --output-file "" )
-
+tfdocs_generate=terraform-docs . -c terraform-docs.yml
 
 ifeq ($(WITH_TFSWITCH),true)
 tfswitch={ set +o pipefail; yes | tfswitch; }
@@ -99,6 +99,11 @@ tf-relock-$(1): | $(tf_plugin_cache_dir_target)
 	cd $(1) && $$(tfswitch)
 	cd $(1) && rm -fv .terraform.lock.hcl
 	cd $(1) && $$(terraform) providers lock $(terraform_providers_lock_args)
+
+tf-docs: tf-docs-$(1)
+.PHONY: tf-docs-$(1)
+tf-docs-$(1):
+	cd $(1) && $$(tfdocs_generate)
 
 validate: validate-tf-$(1)
 .PHONY: validate-tf-$(1)
