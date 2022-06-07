@@ -7,7 +7,7 @@ RUN \
     go env > /usr/local/bin/goenv.sh && \
     true
 
-FROM docker.io/library/ubuntu:22.04@sha256:26c68657ccce2cb0a31b330cb0be2b5e108d467f641c62e13ab40cbec258c68d AS base
+FROM docker.io/library/ubuntu:22.04@sha256:0b8153d771cdca9185be7c730b64c25697f30e63f122fbce49dd4f1f5ae9b26e AS base
 
 RUN \
     apt-get update && \
