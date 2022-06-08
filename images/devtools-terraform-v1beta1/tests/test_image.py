@@ -402,6 +402,7 @@ def test_prototype_tfdocs_fail(
     with ctx_prototype(tmp_path, cache_dir) as workdir:
         (workdir / "terraform-docs.yml").write_text(
             """
+formatter: "markdown table"
 output:
   file: "README.md"
   mode: replace
