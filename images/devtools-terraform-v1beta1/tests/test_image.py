@@ -394,6 +394,34 @@ resource "google_project_iam_binding" "iam_binding" {
             == 1
         )
 
+def test_prototype_tfdocs_fail(
+    tmp_path: Path,
+    cache_dir: Optional[Path],
+    capfd: CaptureFixture[str],
+) -> None:
+    with ctx_prototype(tmp_path, cache_dir) as workdir:
+        (workdir / "terraform-docs.yml").write_text(
+            """
+output:
+  file: "README.md"
+  mode: replace
+  template: |-
+    <!-- BEGIN_TF_DOCS -->
+    {{ .Content }}
+    <!-- END_TF_DOCS -->
+"""
+        )
+        with pytest.raises(subprocess.CalledProcessError):
+            subprocess.run(devtools_cmd(), check=True)
+        cap = get_captured_lines(capfd)
+        assert (
+            sum(
+                "Error: README.md is out of date" in line
+                for line in cap.out_lines
+            )
+            == 1
+        )
+
 
 def test_prototype_fallback(
     tmp_path: Path,
