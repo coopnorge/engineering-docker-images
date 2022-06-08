@@ -418,7 +418,7 @@ output:
         assert (
             sum(
                 "Error: README.md is out of date" in line
-                for line in cap.out_lines
+                for line in cap.err_lines
             )
             == 1
         )
