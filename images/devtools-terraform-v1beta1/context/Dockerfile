@@ -3,6 +3,7 @@ FROM docker.io/safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5
 FROM ghcr.io/terraform-linters/tflint-bundle:v0.37.0.1@sha256:48abd0cd1a521b675d142861d29741d723befcc6c349675970b6b8d5d4e7f830 AS tflint
 FROM docker.io/aquasec/tfsec:v1.22.1@sha256:b89240cdc2e4309fff30ee590f1a6e4bf4269ecf79c02b6543acc8b76a336cad AS tfsec
 FROM docker.io/hashicorp/terraform:1.2.2@sha256:02214c4408e9af68e4a3b886eb423ec6330718f9f73a2d6abb460cf8a35c3108 AS terraform
+FROM quay.io/terraform-docs/terraform-docs:0.16.0@sha256:e24bf3fe70d15eeda95399f4fa5c70260cf4dfffbff4fb66931095d8d7ba9074 as tfdocs
 FROM docker.io/library/golang:1.18.3@sha256:b203dc573d81da7b3176264bfa447bd7c10c9347689be40540381838d75eebef as golang
 
 RUN \
@@ -38,6 +39,7 @@ COPY --from=tflint /usr/local/bin/tflint /usr/bin/tflint
 COPY --from=tfsec  /usr/bin/tfsec /usr/bin/tfsec
 COPY --from=golang /usr/local/bin/goenv.sh /usr/local/bin/goenv.sh
 COPY --from=docker-lock /prod/docker-lock /usr/local/bin/docker-lock
+COPY --from=tfdocs /usr/local/bin/terraform-docs /usr/local/bin/terraform-docs
 
 COPY terraform-switcher_${tfswitcher_version}_checksums.txt /var/tmp/terraform-switcher_${tfswitcher_version}_checksums.txt
 
@@ -74,6 +76,7 @@ RUN \
     ln -rs /usr/local/bin/maker /usr/local/bin/terraform-reinit && \
     ln -rs /usr/local/bin/maker /usr/local/bin/terraform-upgrade && \
     ln -rs /usr/local/bin/maker /usr/local/bin/terraform-relock && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/tf-docs && \
     true
 
 COPY Makefile /usr/local/share/devtools-terraform/Makefile

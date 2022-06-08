@@ -31,6 +31,7 @@ XDG_CACHE_HOME?=$(HOME)/.cache
 WITH_TFSWITCH?=false
 # setting this so that it is more likely things will work on MacOS and Linux
 export POSIXLY_CORRECT:=1
+terraform_docs_config=terraform-docs.yml
 
 ########################################################################
 # targets ...
@@ -68,6 +69,8 @@ $(call dump_vars,tf_plugin_cache_dir_target TF_PLUGIN_CACHE_DIR)
 
 tfsec=tfsec
 tflint=tflint --enable-plugin=google --enable-plugin=azurerm $(if $(filter all commands,$(VERBOSE)),--loglevel=trace)
+tfdocs_check=terraform-docs . -c $(terraform_docs_config) --output-check
+tfdocs_generate=terraform-docs . -c $(terraform_docs_config)
 
 ifeq ($(WITH_TFSWITCH),true)
 tfswitch={ set +o pipefail; yes | tfswitch; }
@@ -98,6 +101,11 @@ tf-relock-$(1): | $(tf_plugin_cache_dir_target)
 	cd $(1) && rm -fv .terraform.lock.hcl
 	cd $(1) && $$(terraform) providers lock $(terraform_providers_lock_args)
 
+tf-docs: tf-docs-$(1)
+.PHONY: tf-docs-$(1)
+tf-docs-$(1):
+	cd $(1) && $$(tfdocs_generate)
+
 validate: validate-tf-$(1)
 .PHONY: validate-tf-$(1)
 validate-tf-$(1): | $(1)/.terraform $(if $(TF_NO_PROVIDERS),,$(1)/.terraform/providers) $(tf_plugin_cache_dir_target)
@@ -105,6 +113,7 @@ validate-tf-$(1): | $(1)/.terraform $(if $(TF_NO_PROVIDERS),,$(1)/.terraform/pro
 	cd $(1) && $$(terraform) fmt -check -recursive -diff
 	cd $(1) && $$(terraform) validate
 	test -e "$(1)/.tfsec-ignore" || $$(tfsec) $(1)
+	[ ! -f "$(1)/$(terraform_docs_config)" ] || (echo "Validating documentation" ; $$(tfdocs_check) )
 	$$(tflint) $(1)
 
 endef
