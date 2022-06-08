@@ -1,15 +1,16 @@
 # syntax=docker/dockerfile:1.3
 FROM docker.io/safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622 AS docker-lock
 FROM ghcr.io/terraform-linters/tflint-bundle:v0.37.0.1@sha256:48abd0cd1a521b675d142861d29741d723befcc6c349675970b6b8d5d4e7f830 AS tflint
-FROM docker.io/aquasec/tfsec:v1.21.2@sha256:fab88797570cdfc03e6b160dac8eb62609d7a5d4fc7fdfceb6af9b7b26d1f601 AS tfsec
-FROM docker.io/hashicorp/terraform:1.2.1@sha256:8aecb79b6197269722e2e3fba5040756135d20427da395a0f9883bb0927e16d1 AS terraform
+FROM docker.io/aquasec/tfsec:v1.22.1@sha256:b89240cdc2e4309fff30ee590f1a6e4bf4269ecf79c02b6543acc8b76a336cad AS tfsec
+FROM docker.io/hashicorp/terraform:1.2.2@sha256:02214c4408e9af68e4a3b886eb423ec6330718f9f73a2d6abb460cf8a35c3108 AS terraform
 FROM quay.io/terraform-docs/terraform-docs:0.16.0@sha256:e24bf3fe70d15eeda95399f4fa5c70260cf4dfffbff4fb66931095d8d7ba9074 as tfdocs
-FROM docker.io/library/golang:1.18.2@sha256:04fab5aaf4fc18c40379924674491d988af3d9e97487472e674d0b5fd837dfac as golang
+FROM docker.io/library/golang:1.18.3@sha256:b203dc573d81da7b3176264bfa447bd7c10c9347689be40540381838d75eebef as golang
+
 RUN \
     go env > /usr/local/bin/goenv.sh && \
     true
 
-FROM docker.io/library/ubuntu:22.04@sha256:26c68657ccce2cb0a31b330cb0be2b5e108d467f641c62e13ab40cbec258c68d AS base
+FROM docker.io/library/ubuntu:22.04@sha256:b6b83d3c331794420340093eb706a6f152d9c1fa51b262d9bf34594887c2c7ac AS base
 
 
 # https://packages.ubuntu.com/search?keywords=busybox&searchon=names&suite=focal&section=all
