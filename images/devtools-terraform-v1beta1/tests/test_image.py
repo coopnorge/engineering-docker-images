@@ -1,3 +1,4 @@
+from functools import cached_property
 import glob
 import logging
 import os
@@ -115,6 +116,10 @@ class Captured:
     out_lines: List[str]
     err: str
     err_lines: List[str]
+
+    @cached_property
+    def all_lines(self) -> List[str]:
+        return self.out_lines + self.err_lines
 
 
 def get_captured_lines(capfd: CaptureFixture[str]) -> Captured:
@@ -418,7 +423,7 @@ output:
         assert (
             sum(
                 "Error: README.md is out of date" in line
-                for line in cap.err_lines
+                for line in cap.all_lines
             )
             == 1
         )
