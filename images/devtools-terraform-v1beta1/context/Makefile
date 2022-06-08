@@ -112,7 +112,7 @@ validate-tf-$(1): | $(1)/.terraform $(if $(TF_NO_PROVIDERS),,$(1)/.terraform/pro
 	cd $(1) && $$(terraform) fmt -check -recursive -diff
 	cd $(1) && $$(terraform) validate
 	test -e "$(1)/.tfsec-ignore" || $$(tfsec) $(1)
-	test -f "$(1)/terraform-docs.yml ; $$(tfdocs_check) || true"
+	test -f "$(1)/terraform-docs.yml" && $$(tfdocs_check) || true
 	$$(tflint) $(1)
 
 endef
