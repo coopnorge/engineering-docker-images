@@ -8,10 +8,21 @@ import subprocess
 import sys
 import tempfile
 import textwrap
-from contextlib import contextmanager
+from contextlib import ExitStack, contextmanager
 from dataclasses import dataclass
 from pathlib import Path, PurePath
-from typing import Dict, Generator, Iterator, List, Optional, TypeVar, Union
+from typing import (
+    Callable,
+    Dict,
+    Generator,
+    Iterable,
+    Iterator,
+    List,
+    Optional,
+    Tuple,
+    TypeVar,
+    Union,
+)
 
 import pytest
 from _pytest.capture import CaptureResult
@@ -120,6 +131,9 @@ class Captured:
     @cached_property
     def all_lines(self) -> List[str]:
         return self.out_lines + self.err_lines
+
+    def all(self) -> str:
+        return "\n".join(self.all_lines)
 
 
 def get_captured_lines(capfd: CaptureFixture[str]) -> Captured:
@@ -399,6 +413,7 @@ resource "google_project_iam_binding" "iam_binding" {
             == 1
         )
 
+
 def test_prototype_tfdocs_fail(
     tmp_path: Path,
     cache_dir: Optional[Path],
@@ -421,10 +436,7 @@ output:
             subprocess.run(devtools_cmd(), check=True)
         cap = get_captured_lines(capfd)
         assert (
-            sum(
-                "Error: README.md is out of date" in line
-                for line in cap.all_lines
-            )
+            sum("Error: README.md is out of date" in line for line in cap.all_lines)
             == 1
         )
 
@@ -452,3 +464,61 @@ def test_prototype_fallback(
         assert sum("No problems detected" in line for line in cap.out_lines) == 1
         assert sum("tfsec" in line for line in cap.out_lines) == 1
         assert sum("tflint" in line for line in cap.out_lines) == 1
+
+
+@pytest.mark.parametrize(
+    ["mutators", "env", "commands", "success", "matchers"],
+    [
+        pytest.param(
+            [],
+            {},
+            [
+                "terraform-reinit".split(),
+                "terraform-relock".split(),
+            ],
+            True,
+            [("Obtained hashicorp/null checksums for darwin_amd64", True)],
+            id="relock",
+        ),
+        pytest.param(
+            [],
+            {"TF_LOCK_PLATFORMS": "linux_arm64"},
+            [
+                "terraform-reinit".split(),
+                "terraform-relock".split(),
+            ],
+            True,
+            [
+                ("Obtained hashicorp/null checksums for darwin_amd64", False),
+                ("Obtained hashicorp/null checksums for linux_arm64", True),
+            ],
+            id="relock-selected",
+        ),
+    ],
+)
+def test_runs(
+    tmp_path: Path,
+    cache_dir: Optional[Path],
+    capfd: CaptureFixture[str],
+    mutators: Iterable[Callable[[Path], None]],
+    env: Dict[str, str],
+    commands: Iterable[List[str]],
+    success: bool,
+    matchers: Iterable[Tuple[str, bool]],
+) -> None:
+    with ExitStack() as xstack:
+        workdir = xstack.enter_context(ctx_prototype(tmp_path, cache_dir))
+        for mutator in mutators:
+            mutator(workdir)
+        if not success:
+            xstack.enter_context(pytest.raises(subprocess.CalledProcessError))
+        for command in commands:
+            subprocess.run(devtools_cmd(command, envargs=env), check=True)
+    cap = get_captured_lines(capfd)
+    for match_string, match_positive in matchers:
+        found = next((line for line in cap.all_lines if match_string in line), None) is not None
+        if match_positive:
+            assert found, f"did not find {match_string} in output ...{found}\n{cap.all()}"
+        else:
+
+            assert not found, f"found {match_string} in output{found}\n{cap.all()}"
