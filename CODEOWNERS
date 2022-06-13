@@ -1,2 +1,4 @@
 *       @coopnorge/engineering
 CODEOWNERS                        @coopnorge/security-guild
+
+.github/workflows/security-* @coopnorge/security-guild
