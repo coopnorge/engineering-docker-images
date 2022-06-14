@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.3
 FROM docker.io/safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622 AS docker-lock
 FROM ghcr.io/terraform-linters/tflint-bundle:v0.37.0.1@sha256:48abd0cd1a521b675d142861d29741d723befcc6c349675970b6b8d5d4e7f830 AS tflint
-FROM docker.io/aquasec/tfsec:v1.23.3@sha256:c65ac78b54130c86fd9b435b7a639d690801444c2cba80c1a7bedcdb7880aaf7 AS tfsec
+FROM docker.io/aquasec/tfsec:v1.24.0@sha256:1a2556c78d4e21a516f872a8e2dae17c66e326e2675d22bf34b69548f278084a AS tfsec
 FROM docker.io/hashicorp/terraform:1.2.2@sha256:02214c4408e9af68e4a3b886eb423ec6330718f9f73a2d6abb460cf8a35c3108 AS terraform
 FROM quay.io/terraform-docs/terraform-docs:0.16.0@sha256:e24bf3fe70d15eeda95399f4fa5c70260cf4dfffbff4fb66931095d8d7ba9074 as tfdocs
 FROM docker.io/library/golang:1.18.3@sha256:b203dc573d81da7b3176264bfa447bd7c10c9347689be40540381838d75eebef as golang
