@@ -1,6 +1,6 @@
 FROM docker.io/safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622 AS docker-lock
 FROM golangci/golangci-lint:v1.46.2-alpine@sha256:6a09f1e87ecce4eab163470467cd88dab3a0efa31cb708ba6d514a6889816095 AS golangci-lint
-FROM docker.io/mikefarah/yq:4@sha256:71d9de06ec2a0f906dcd8f4182dd3b5c4fb014d40da4f539a6261112551b4989 AS yq
+FROM docker.io/mikefarah/yq:4@sha256:9f721225165ba006e52ed8307a0f8be6a27f58053a0be54273dc4fb4b5dbe423 AS yq
 
 
 # golangci-lint does not work with go1.18
