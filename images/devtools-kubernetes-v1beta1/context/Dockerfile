@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.3
-FROM docker.io/argoproj/argocd:v2.4.2 as argocd
+FROM docker.io/argoproj/argocd:v2.4.3 as argocd
 FROM zegl/kube-score:v1.14.0@sha256:df26b2d3978be960b41e8c09906a38f3e5ad7ef3c63b8770c693dc3405005299 as kube-score
 FROM golang:1.18.3@sha256:957001e439d14422e2690652d9ff86f02694996f63e9085767cbca4f8cc45c4b as golang
 
