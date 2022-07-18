@@ -2,7 +2,7 @@
 generate:
   base-dir: .
   composefiles:
-    - docker-compose.yml
+    - docker-compose.yaml
   dockerfile-globs:
     - 'images/**/Dockerfile'
   dockerfile-recursive: true

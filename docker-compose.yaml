@@ -1,10 +1,11 @@
-version: "3"
+version: "3.8"
 
 services:
   devtools:
     build:
       context: .
-      dockerfile: Dockerfile.devtools
+      dockerfile: Dockerfile
+      target: "devtools"
     working_dir: /srv/workspace
     volumes:
       - .:/srv/workspace:z
@@ -14,15 +15,24 @@ services:
     ports:
       - "127.0.0.1:32604:32604"
   hadolint:
-    image: ghcr.io/hadolint/hadolint:latest@sha256:93f0afd12c3be5d732227c0226dd8e7bb84f79319a773d7f8519e55f958ba415
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: "hadolint"
     volumes:
       - .hadolint.yaml:/.hadolint.yaml:z
   dockle:
-    image: docker.io/goodwithtech/dockle:latest@sha256:ebd36f6c92ac850408c7cbbf1eddf97e53565da9d661c5fb8ec184ad82a5358d
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: "dockle"
     volumes:
       - ./var/oci-images:/srv/images:ro,z
   docker-lock:
-    image: safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: "docker-lock"
     working_dir: /srv/workspace
     volumes:
       - .:/srv/workspace:z
