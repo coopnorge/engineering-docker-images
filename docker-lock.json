@@ -1,34 +1,143 @@
 {
 	"composefiles": {
-		"docker-compose.yml": [
+		"docker-compose.yaml": [
 			{
-				"name": "docker.io/library/ubuntu",
-				"tag": "22.04",
-				"digest": "2a7dffab37165e8b4f206f61cfd984f8bb279843b070217f6ad310c9c31c9c7c",
-				"dockerfile": "Dockerfile.devtools",
+				"name": "docker.io/safewaters/docker-lock",
+				"tag": "0.8.10",
+				"digest": "e87cfa64db3ceb8e5d14ec41136b068e2335fdcdfbb890fa20dd091e82735d04",
+				"dockerfile": "Dockerfile",
 				"service": "devtools"
 			},
 			{
-				"name": "safewaters/docker-lock",
-				"tag": "latest",
-				"digest": "432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622",
+				"name": "docker.io/hadolint/hadolint",
+				"tag": "v2.10.0",
+				"digest": "93f0afd12c3be5d732227c0226dd8e7bb84f79319a773d7f8519e55f958ba415",
+				"dockerfile": "Dockerfile",
+				"service": "devtools"
+			},
+			{
+				"name": "docker.io/goodwithtech/dockle",
+				"tag": "v0.4.5",
+				"digest": "ebd36f6c92ac850408c7cbbf1eddf97e53565da9d661c5fb8ec184ad82a5358d",
+				"dockerfile": "Dockerfile",
+				"service": "devtools"
+			},
+			{
+				"name": "docker.io/library/ubuntu",
+				"tag": "22.04",
+				"digest": "b6b83d3c331794420340093eb706a6f152d9c1fa51b262d9bf34594887c2c7ac",
+				"dockerfile": "Dockerfile",
+				"service": "devtools"
+			},
+			{
+				"name": "docker.io/safewaters/docker-lock",
+				"tag": "0.8.10",
+				"digest": "e87cfa64db3ceb8e5d14ec41136b068e2335fdcdfbb890fa20dd091e82735d04",
+				"dockerfile": "Dockerfile",
+				"service": "docker-lock"
+			},
+			{
+				"name": "docker.io/hadolint/hadolint",
+				"tag": "v2.10.0",
+				"digest": "93f0afd12c3be5d732227c0226dd8e7bb84f79319a773d7f8519e55f958ba415",
+				"dockerfile": "Dockerfile",
 				"service": "docker-lock"
 			},
 			{
 				"name": "docker.io/goodwithtech/dockle",
-				"tag": "latest",
+				"tag": "v0.4.5",
 				"digest": "ebd36f6c92ac850408c7cbbf1eddf97e53565da9d661c5fb8ec184ad82a5358d",
+				"dockerfile": "Dockerfile",
+				"service": "docker-lock"
+			},
+			{
+				"name": "docker.io/library/ubuntu",
+				"tag": "22.04",
+				"digest": "b6b83d3c331794420340093eb706a6f152d9c1fa51b262d9bf34594887c2c7ac",
+				"dockerfile": "Dockerfile",
+				"service": "docker-lock"
+			},
+			{
+				"name": "docker.io/safewaters/docker-lock",
+				"tag": "0.8.10",
+				"digest": "e87cfa64db3ceb8e5d14ec41136b068e2335fdcdfbb890fa20dd091e82735d04",
+				"dockerfile": "Dockerfile",
 				"service": "dockle"
 			},
 			{
-				"name": "ghcr.io/hadolint/hadolint",
-				"tag": "latest",
+				"name": "docker.io/hadolint/hadolint",
+				"tag": "v2.10.0",
 				"digest": "93f0afd12c3be5d732227c0226dd8e7bb84f79319a773d7f8519e55f958ba415",
+				"dockerfile": "Dockerfile",
+				"service": "dockle"
+			},
+			{
+				"name": "docker.io/goodwithtech/dockle",
+				"tag": "v0.4.5",
+				"digest": "ebd36f6c92ac850408c7cbbf1eddf97e53565da9d661c5fb8ec184ad82a5358d",
+				"dockerfile": "Dockerfile",
+				"service": "dockle"
+			},
+			{
+				"name": "docker.io/library/ubuntu",
+				"tag": "22.04",
+				"digest": "b6b83d3c331794420340093eb706a6f152d9c1fa51b262d9bf34594887c2c7ac",
+				"dockerfile": "Dockerfile",
+				"service": "dockle"
+			},
+			{
+				"name": "docker.io/safewaters/docker-lock",
+				"tag": "0.8.10",
+				"digest": "e87cfa64db3ceb8e5d14ec41136b068e2335fdcdfbb890fa20dd091e82735d04",
+				"dockerfile": "Dockerfile",
+				"service": "hadolint"
+			},
+			{
+				"name": "docker.io/hadolint/hadolint",
+				"tag": "v2.10.0",
+				"digest": "93f0afd12c3be5d732227c0226dd8e7bb84f79319a773d7f8519e55f958ba415",
+				"dockerfile": "Dockerfile",
+				"service": "hadolint"
+			},
+			{
+				"name": "docker.io/goodwithtech/dockle",
+				"tag": "v0.4.5",
+				"digest": "ebd36f6c92ac850408c7cbbf1eddf97e53565da9d661c5fb8ec184ad82a5358d",
+				"dockerfile": "Dockerfile",
+				"service": "hadolint"
+			},
+			{
+				"name": "docker.io/library/ubuntu",
+				"tag": "22.04",
+				"digest": "b6b83d3c331794420340093eb706a6f152d9c1fa51b262d9bf34594887c2c7ac",
+				"dockerfile": "Dockerfile",
 				"service": "hadolint"
 			}
 		]
 	},
 	"dockerfiles": {
+		"Dockerfile": [
+			{
+				"name": "docker.io/safewaters/docker-lock",
+				"tag": "0.8.10",
+				"digest": "e87cfa64db3ceb8e5d14ec41136b068e2335fdcdfbb890fa20dd091e82735d04"
+			},
+			{
+				"name": "docker.io/hadolint/hadolint",
+				"tag": "v2.10.0",
+				"digest": "93f0afd12c3be5d732227c0226dd8e7bb84f79319a773d7f8519e55f958ba415"
+			},
+			{
+				"name": "docker.io/goodwithtech/dockle",
+				"tag": "v0.4.5",
+				"digest": "ebd36f6c92ac850408c7cbbf1eddf97e53565da9d661c5fb8ec184ad82a5358d"
+			},
+			{
+				"name": "docker.io/library/ubuntu",
+				"tag": "22.04",
+				"digest": "b6b83d3c331794420340093eb706a6f152d9c1fa51b262d9bf34594887c2c7ac"
+			}
+		],
 		"images/devtools-golang-v1beta1/context/Dockerfile": [
 			{
 				"name": "docker.io/safewaters/docker-lock",
@@ -37,16 +146,26 @@
 			},
 			{
 				"name": "golangci/golangci-lint",
-				"tag": "v1.45.2-alpine",
-				"digest": "f785480652fef9878251e5f052ec0a2afc71005eb7c6817e3726de63cc49cd6d"
+				"tag": "v1.46.2-alpine",
+				"digest": "6a09f1e87ecce4eab163470467cd88dab3a0efa31cb708ba6d514a6889816095"
+			},
+			{
+				"name": "docker.io/mikefarah/yq",
+				"tag": "4",
+				"digest": "98fbececf8319565b4bb4da07dd5341f057fc0c1f912c93f45fa4c1f675c28b9"
 			},
 			{
 				"name": "golang",
-				"tag": "1.18.1-buster",
-				"digest": "d8f864bac466e488bb425a59ff9bc104828cd44d0985a8d2fcb5570a9250258a"
+				"tag": "1.18.4-bullseye",
+				"digest": "6bc0fe859a2a28af025f8885fc073996dd14d0371d5c0474aed798317849bc18"
 			}
 		],
 		"images/devtools-kubernetes-v1beta1/context/Dockerfile": [
+			{
+				"name": "docker.io/argoproj/argocd",
+				"tag": "v2.4.6",
+				"digest": "a0a6f3974427c826140b020a483181626e1dcf7280ae6eae2bce48e1a13e7577"
+			},
 			{
 				"name": "zegl/kube-score",
 				"tag": "v1.14.0",
@@ -54,13 +173,13 @@
 			},
 			{
 				"name": "golang",
-				"tag": "1.18",
-				"digest": "12d3995156cb0dcdbb9d3edb5827e4e8e1bf5bf92436bfd12d696ec997001a9a"
+				"tag": "1.18.4",
+				"digest": "9349ed889adb906efa5ebc06485fe1b6a12fb265a01c9266a137bb1352565560"
 			},
 			{
 				"name": "docker.io/library/ubuntu",
 				"tag": "22.04",
-				"digest": "2a7dffab37165e8b4f206f61cfd984f8bb279843b070217f6ad310c9c31c9c7c"
+				"digest": "b6b83d3c331794420340093eb706a6f152d9c1fa51b262d9bf34594887c2c7ac"
 			}
 		],
 		"images/devtools-terraform-v1beta1/context/Dockerfile": [
@@ -71,28 +190,33 @@
 			},
 			{
 				"name": "ghcr.io/terraform-linters/tflint-bundle",
-				"tag": "v0.35.0.1",
-				"digest": "96b605e0e3a06181dffd6aec99148179d019bad653d8aa448ec3912f9afbea4e"
+				"tag": "v0.38.1.0",
+				"digest": "8aa1d7939bcf70ad76c577a8fb9fc4bd21b75ecc195807f613c5b0bb7bbbec7b"
 			},
 			{
 				"name": "docker.io/aquasec/tfsec",
-				"tag": "v1.18.0",
-				"digest": "1260c09ff8d48d44be739418f8141800c4607c78c940d4acd9602dd50c7215c3"
+				"tag": "v1.26.3",
+				"digest": "333493a850e91f4844772923fe115380183e2dc38a341f85db1ca16142c804fb"
 			},
 			{
 				"name": "docker.io/hashicorp/terraform",
-				"tag": "1.1.9",
-				"digest": "25542989c8ad942f81d4219ab21027c83af339078d854643b7e8962f14bd57c9"
+				"tag": "1.2.5",
+				"digest": "7cb0feb2b2c9839830a5be18f266d417bc4619f9eade9a326b019a0886c60a01"
+			},
+			{
+				"name": "quay.io/terraform-docs/terraform-docs",
+				"tag": "0.16.0",
+				"digest": "e24bf3fe70d15eeda95399f4fa5c70260cf4dfffbff4fb66931095d8d7ba9074"
 			},
 			{
 				"name": "docker.io/library/golang",
-				"tag": "1.18.1",
-				"digest": "12d3995156cb0dcdbb9d3edb5827e4e8e1bf5bf92436bfd12d696ec997001a9a"
+				"tag": "1.18.4",
+				"digest": "9349ed889adb906efa5ebc06485fe1b6a12fb265a01c9266a137bb1352565560"
 			},
 			{
 				"name": "docker.io/library/ubuntu",
 				"tag": "22.04",
-				"digest": "2a7dffab37165e8b4f206f61cfd984f8bb279843b070217f6ad310c9c31c9c7c"
+				"digest": "b6b83d3c331794420340093eb706a6f152d9c1fa51b262d9bf34594887c2c7ac"
 			}
 		]
 	}
