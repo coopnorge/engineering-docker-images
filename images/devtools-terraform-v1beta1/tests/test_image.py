@@ -1,4 +1,3 @@
-from functools import cached_property
 import glob
 import logging
 import os
@@ -10,6 +9,7 @@ import tempfile
 import textwrap
 from contextlib import ExitStack, contextmanager
 from dataclasses import dataclass
+from functools import cached_property
 from pathlib import Path, PurePath
 from typing import (
     Callable,
@@ -516,9 +516,14 @@ def test_runs(
             subprocess.run(devtools_cmd(command, envargs=env), check=True)
     cap = get_captured_lines(capfd)
     for match_string, match_positive in matchers:
-        found = next((line for line in cap.all_lines if match_string in line), None) is not None
+        found = (
+            next((line for line in cap.all_lines if match_string in line), None)
+            is not None
+        )
         if match_positive:
-            assert found, f"did not find {match_string} in output ...{found}\n{cap.all()}"
+            assert (
+                found
+            ), f"did not find {match_string} in output ...{found}\n{cap.all()}"
         else:
 
             assert not found, f"found {match_string} in output{found}\n{cap.all()}"

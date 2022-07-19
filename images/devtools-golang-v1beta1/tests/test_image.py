@@ -1,16 +1,15 @@
 import logging
 import os
-from tempfile import TemporaryDirectory
-import tempfile
-import pytest
 import shutil
 import subprocess
 import sys
-
+import tempfile
 from contextlib import contextmanager
 from pathlib import Path, PurePath
-from pytest import CaptureFixture, fixture
-from typing import Dict, Iterator, List, Optional, TypeVar, Union, Generator
+from typing import Dict, Generator, Iterator, List, Optional, TypeVar, Union
+
+import pytest
+from pytest import CaptureFixture
 
 TEST_DIR = Path(__file__).parent.absolute()
 PROTOTYPE_DIR = TEST_DIR / "prototype"

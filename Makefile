@@ -66,12 +66,26 @@ oci_remote_ref_prefixes=\
 all: build
 build: ## build artifacts
 
+py_source=$(shell find images/ -type f -name '*.py')
+
+validate-python: ## Validate Python code
+	poetry check
+	poetry run isort --check-only $(py_source)
+	poetry run black --config ./pyproject.toml --check $(py_source)
+	poetry run pflake8 $(py_source)
+	$(foreach file, $(py_source), poetry run mypy --show-error-codes --show-error-context --pretty $(file) &&) true
+
+
+validate-fix-python: ## Fix auto-fixable validation errors in Python
+	poetry run python -m isort images
+	poetry run python -m black --config ./pyproject.toml images
+
 validate-dockerfile-%: ## Validate a specific dockerfile
 	$(hadolint) < images/$(*)/context/Dockerfile
 
 validate_dockerfile_targets=$(foreach image_name,$(IMAGE_NAMES),validate-dockerfile-$(image_name))
 .PHONY: validate-static
-validate-static: $(validate_dockerfile_targets) ## Run static validation
+validate-static: validate-images-digests $(validate_dockerfile_targets) validate-python ## Run static validation
 
 .PHONY: validate
 validate: validate-static test ## Validate everything
@@ -174,4 +188,3 @@ clean-%/:
 .PRECIOUS: %/
 %/:
 	mkdir -vp $(@)
-

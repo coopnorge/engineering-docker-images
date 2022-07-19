@@ -9,15 +9,29 @@ authors = []
 python = "^3.10"
 
 [tool.poetry.dev-dependencies]
-pytest = "^7.1.2"
-black = "^22.6.0"
-flake8 = "^4.0.1"
-flake8-black = "^0.3.3"
-mypy = "^0.961"
+pytest = ">=7.1.2"
+isort = "^5.10.1"
+black = ">=22.6.0"
+flake8 = ">=4.0.1"
+flake8-black = ">=0.3.3"
+pyproject-flake8 = {version = ">=0.0.1a4", allow-prereleases = true}
+mypy = ">=0.961"
+
+[tool.black]
+target-version = ['py310']
 
 [tool.isort]
 # https://pycqa.github.io/isort/docs/configuration/config_files.html
 profile = "black"
+
+[tool.mypy]
+python_version = 3.10
+strict = true
+warn_unreachable = true
+warn_unused_configs = true
+explicit_package_bases = true
+namespace_packages = true
+mypy_path = "images"
 
 [tool.pytest.ini_options]
 addopts = ["--capture=no", "--tb=native"]

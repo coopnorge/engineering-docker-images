@@ -1,17 +1,17 @@
-from contextlib import contextmanager
-from dataclasses import dataclass
-import os
-from pathlib import Path, PurePath
 import logging
+import os
 import re
 import shutil
 import subprocess
 import sys
+from contextlib import contextmanager
+from dataclasses import dataclass
+from pathlib import Path, PurePath
 from typing import Iterator, List, TypeVar, Union
 
 import pytest
-from pytest import CaptureFixture
 from _pytest.capture import CaptureResult
+from pytest import CaptureFixture
 
 TEST_DIR = Path(__file__).parent.absolute()
 PROTOTYPE_DIR = TEST_DIR / "prototype"
@@ -66,31 +66,50 @@ def test_prototype_ok(tmp_path: Path, capfd: CaptureFixture[str]) -> None:
         subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
         cap = get_captured_lines(capfd)
         assert len(re.findall("Validation of .* completed", cap.out)) == 3
-        subprocess.run("docker-compose run --rm devtools maker validate".split(" "), check=True)
+        subprocess.run(
+            "docker-compose run --rm devtools maker validate".split(" "), check=True
+        )
         cap = get_captured_lines(capfd)
         assert len(re.findall("Validation of .* completed", cap.out)) == 3
         assert len(re.findall("Deployment helloworld is valid", cap.out)) == 3
 
 
 def test_prototype_overlay_override(tmp_path: Path, capfd: CaptureFixture[str]) -> None:
-    with ctx_prototype(tmp_path) as workdir:
-        subprocess.run("docker-compose run --rm devtools validate OVERLAYS=kubernetes/overlay/staging".split(" "), check=True)
+    with ctx_prototype(tmp_path) as _:
+        subprocess.run(
+            "docker-compose run --rm devtools validate OVERLAYS=kubernetes/overlay/staging".split(
+                " "
+            ),
+            check=True,
+        )
         cap = get_captured_lines(capfd)
         assert len(re.findall("Validation of .* completed", cap.out)) == 1
 
-        subprocess.run("docker-compose run --rm devtools validate OVERLAYS=".split(" "), check=True)
+        subprocess.run(
+            "docker-compose run --rm devtools validate OVERLAYS=".split(" "), check=True
+        )
         cap = get_captured_lines(capfd)
         assert sum("make: Nothing to be done" in line for line in cap.out_lines) == 1
 
 
 def test_prototype_fail_validate(tmp_path: Path, capfd: CaptureFixture[str]) -> None:
     with ctx_prototype(tmp_path) as workdir:
-        path = (workdir / "kubernetes/base/deployment.yaml")
+        path = workdir / "kubernetes/base/deployment.yaml"
         cnf = path.read_text()
-        cnf = re.sub(r'\s+ephemeral-storage:.*([\r\n])', r'\1', cnf) # Delete all lines with this limit preserving newline
+        cnf = re.sub(
+            r"\s+ephemeral-storage:.*([\r\n])", r"\1", cnf
+        )  # Delete all lines with this limit preserving newline
         path.write_text(cnf)
 
         with pytest.raises(subprocess.CalledProcessError):
-            subprocess.run("docker-compose run --rm devtools validate OVERLAYS=kubernetes/base".split(" "), check=True)
+            subprocess.run(
+                "docker-compose run --rm devtools validate OVERLAYS=kubernetes/base".split(
+                    " "
+                ),
+                check=True,
+            )
         cap = get_captured_lines(capfd)
-        assert sum("Ephemeral Storage limit is not set" in line for line in cap.out_lines) == 1
+        assert (
+            sum("Ephemeral Storage limit is not set" in line for line in cap.out_lines)
+            == 1
+        )

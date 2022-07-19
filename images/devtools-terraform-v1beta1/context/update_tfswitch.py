@@ -22,7 +22,9 @@ def lock_latest() -> None:
     with urlopen(release_url) as io:
         release = json.load(io)
 
-    logging.debug(f"release = %s", release)
+    logging.debug(
+        f"{release = }",
+    )
 
     latest_version = release["tag_name"]
     logging.info(f"{latest_version=}")
