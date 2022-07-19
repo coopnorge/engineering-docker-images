@@ -28,3 +28,27 @@ updates:
     directory: "/images/devtools-golang-v1beta1/context"
     schedule:
       interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "images/poetry-python3.8/context/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pip"
+    directory: "images/poetry-python3.8/context/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "images/poetry-python3.9/context/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pip"
+    directory: "images/poetry-python3.9/context/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "images/poetry-python3.10/context/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pip"
+    directory: "images/poetry-python3.10/context/"
+    schedule:
+      interval: "daily"

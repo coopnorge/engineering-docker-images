@@ -218,6 +218,27 @@
 				"tag": "22.04",
 				"digest": "b6b83d3c331794420340093eb706a6f152d9c1fa51b262d9bf34594887c2c7ac"
 			}
+		],
+		"images/poetry-python3.10/context/Dockerfile": [
+			{
+				"name": "docker.io/library/python",
+				"tag": "3.10.5",
+				"digest": "ce21f64c4c3ae5743ddd5f4d4d9ca5614fddcc4f8c6e32ff2a7ff9a2e8744e8d"
+			}
+		],
+		"images/poetry-python3.8/context/Dockerfile": [
+			{
+				"name": "docker.io/library/python",
+				"tag": "3.8.13",
+				"digest": "7d870123fe736cc912528a4f29c380d19f5efa29fc2de6b9d200cfbf92337df5"
+			}
+		],
+		"images/poetry-python3.9/context/Dockerfile": [
+			{
+				"name": "docker.io/library/python",
+				"tag": "3.9.13",
+				"digest": "2cea326d2eb1ea18f8846f722ae7fed6064f5c9912ebe615b47e3621c33e2097"
+			}
 		]
 	}
 }
