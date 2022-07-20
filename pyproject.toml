@@ -16,6 +16,7 @@ flake8 = ">=4.0.1"
 flake8-black = ">=0.3.3"
 pyproject-flake8 = {version = ">=0.0.1a4", allow-prereleases = true}
 mypy = ">=0.961"
+docker = "^5.0.3"
 
 [tool.black]
 target-version = ['py310']
