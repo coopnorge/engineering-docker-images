@@ -1,5 +1,5 @@
 FROM docker.io/safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622 AS docker-lock
-FROM golangci/golangci-lint:v1.46.2-alpine@sha256:6a09f1e87ecce4eab163470467cd88dab3a0efa31cb708ba6d514a6889816095 AS golangci-lint
+FROM golangci/golangci-lint:v1.47.1-alpine@sha256:319ec089d7506f6707abb81e94336abbb2997f98bbf48d6600f22efec0097f81 AS golangci-lint
 FROM docker.io/mikefarah/yq:4@sha256:98fbececf8319565b4bb4da07dd5341f057fc0c1f912c93f45fa4c1f675c28b9 AS yq
 
 
