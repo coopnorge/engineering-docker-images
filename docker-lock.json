@@ -163,8 +163,8 @@
 		"images/devtools-kubernetes-v1beta1/context/Dockerfile": [
 			{
 				"name": "docker.io/argoproj/argocd",
-				"tag": "v2.4.6",
-				"digest": "a0a6f3974427c826140b020a483181626e1dcf7280ae6eae2bce48e1a13e7577"
+				"tag": "v2.4.7",
+				"digest": "f887f854ab22f7f29f915aae2b765f2948d1555d61e9ce3ca9e659f8df22ab2b"
 			},
 			{
 				"name": "zegl/kube-score",
