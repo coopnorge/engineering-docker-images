@@ -17,8 +17,8 @@
 			},
 			{
 				"name": "docker.io/goodwithtech/dockle",
-				"tag": "v0.4.5",
-				"digest": "ebd36f6c92ac850408c7cbbf1eddf97e53565da9d661c5fb8ec184ad82a5358d",
+				"tag": "v0.4.6",
+				"digest": "534ecfe2204403e1b563d61b255ddd4762b20c9d72ce7af239fb1135be6c9569",
 				"dockerfile": "Dockerfile",
 				"service": "devtools"
 			},
@@ -45,8 +45,8 @@
 			},
 			{
 				"name": "docker.io/goodwithtech/dockle",
-				"tag": "v0.4.5",
-				"digest": "ebd36f6c92ac850408c7cbbf1eddf97e53565da9d661c5fb8ec184ad82a5358d",
+				"tag": "v0.4.6",
+				"digest": "534ecfe2204403e1b563d61b255ddd4762b20c9d72ce7af239fb1135be6c9569",
 				"dockerfile": "Dockerfile",
 				"service": "docker-lock"
 			},
@@ -73,8 +73,8 @@
 			},
 			{
 				"name": "docker.io/goodwithtech/dockle",
-				"tag": "v0.4.5",
-				"digest": "ebd36f6c92ac850408c7cbbf1eddf97e53565da9d661c5fb8ec184ad82a5358d",
+				"tag": "v0.4.6",
+				"digest": "534ecfe2204403e1b563d61b255ddd4762b20c9d72ce7af239fb1135be6c9569",
 				"dockerfile": "Dockerfile",
 				"service": "dockle"
 			},
@@ -101,8 +101,8 @@
 			},
 			{
 				"name": "docker.io/goodwithtech/dockle",
-				"tag": "v0.4.5",
-				"digest": "ebd36f6c92ac850408c7cbbf1eddf97e53565da9d661c5fb8ec184ad82a5358d",
+				"tag": "v0.4.6",
+				"digest": "534ecfe2204403e1b563d61b255ddd4762b20c9d72ce7af239fb1135be6c9569",
 				"dockerfile": "Dockerfile",
 				"service": "hadolint"
 			},
@@ -129,8 +129,8 @@
 			},
 			{
 				"name": "docker.io/goodwithtech/dockle",
-				"tag": "v0.4.5",
-				"digest": "ebd36f6c92ac850408c7cbbf1eddf97e53565da9d661c5fb8ec184ad82a5358d"
+				"tag": "v0.4.6",
+				"digest": "534ecfe2204403e1b563d61b255ddd4762b20c9d72ce7af239fb1135be6c9569"
 			},
 			{
 				"name": "docker.io/library/python",
