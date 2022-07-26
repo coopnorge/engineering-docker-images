@@ -50,6 +50,26 @@ Devtools images are intended for use in git repos to do validation and artifact 
   - [`ghcr.io/coopnorge/engineering-docker-images/e0/devtools-kubernetes-v1beta1`](https://github.com/coopnorge/engineering-docker-images/pkgs/container/engineering-docker-images%2Fe0%2Fdevtools-kubernetes-v1beta1)
   - [`europe-north1-docker.pkg.dev/engineering-production-af50/images/devtools-kubernetes-v1beta1`](https://console.cloud.google.com/artifacts/docker/engineering-production-af50/europe-north1/images/devtools-kubernetes-v1beta1)
 
+- `poetry-python3.8`: Development tools for poetry ecosystem and python 3.8.
+
+  [README](./images/poetry-python3.8/README.md).
+
+  - [`ghcr.io/coopnorge/engineering-docker-images/e0/poetry-python3.8`](https://github.com/coopnorge/engineering-docker-images/pkgs/container/engineering-docker-images%2Fe0%2Fpoetry-python3.8)
+  - [`europe-north1-docker.pkg.dev/engineering-production-af50/images/poetry-python3.8`](https://console.cloud.google.com/artifacts/docker/engineering-production-af50/europe-north1/images/poetry-python3.8)
+
+- `poetry-python3.9`: Development tools for poetry ecosystem and python 3.9.
+
+  [README](./images/poetry-python3.9/README.md).
+
+  - [`ghcr.io/coopnorge/engineering-docker-images/e0/poetry-python3.9`](https://github.com/coopnorge/engineering-docker-images/pkgs/container/engineering-docker-images%2Fe0%2Fpoetry-python3.9)
+  - [`europe-north1-docker.pkg.dev/engineering-production-af50/images/poetry-python3.9`](https://console.cloud.google.com/artifacts/docker/engineering-production-af50/europe-north1/images/poetry-python3.9)
+
+- `poetry-python3.10`: Development tools for poetry ecosystem and python 3.10.
+
+  [README](./images/poetry-python3.10/README.md).
+
+  - [`ghcr.io/coopnorge/engineering-docker-images/e0/poetry-python3.10`](https://github.com/coopnorge/engineering-docker-images/pkgs/container/engineering-docker-images%2Fe0%2Fpoetry-python3.10)
+  - [`europe-north1-docker.pkg.dev/engineering-production-af50/images/poetry-python3.10`](https://console.cloud.google.com/artifacts/docker/engineering-production-af50/europe-north1/images/poetry-python3.10)
 
 #### Security Considerations for devtools
 
