@@ -25,7 +25,7 @@
 			{
 				"name": "docker.io/library/python",
 				"tag": "3.10.5",
-				"digest": "ce21f64c4c3ae5743ddd5f4d4d9ca5614fddcc4f8c6e32ff2a7ff9a2e8744e8d",
+				"digest": "2f8af0b0adb15605c8015bd9015b1833a517757591cdf0c60604271a7664e8af",
 				"dockerfile": "Dockerfile",
 				"service": "devtools"
 			},
@@ -53,7 +53,7 @@
 			{
 				"name": "docker.io/library/python",
 				"tag": "3.10.5",
-				"digest": "ce21f64c4c3ae5743ddd5f4d4d9ca5614fddcc4f8c6e32ff2a7ff9a2e8744e8d",
+				"digest": "2f8af0b0adb15605c8015bd9015b1833a517757591cdf0c60604271a7664e8af",
 				"dockerfile": "Dockerfile",
 				"service": "docker-lock"
 			},
@@ -81,7 +81,7 @@
 			{
 				"name": "docker.io/library/python",
 				"tag": "3.10.5",
-				"digest": "ce21f64c4c3ae5743ddd5f4d4d9ca5614fddcc4f8c6e32ff2a7ff9a2e8744e8d",
+				"digest": "2f8af0b0adb15605c8015bd9015b1833a517757591cdf0c60604271a7664e8af",
 				"dockerfile": "Dockerfile",
 				"service": "dockle"
 			},
@@ -109,7 +109,7 @@
 			{
 				"name": "docker.io/library/python",
 				"tag": "3.10.5",
-				"digest": "ce21f64c4c3ae5743ddd5f4d4d9ca5614fddcc4f8c6e32ff2a7ff9a2e8744e8d",
+				"digest": "2f8af0b0adb15605c8015bd9015b1833a517757591cdf0c60604271a7664e8af",
 				"dockerfile": "Dockerfile",
 				"service": "hadolint"
 			}
@@ -135,7 +135,7 @@
 			{
 				"name": "docker.io/library/python",
 				"tag": "3.10.5",
-				"digest": "ce21f64c4c3ae5743ddd5f4d4d9ca5614fddcc4f8c6e32ff2a7ff9a2e8744e8d"
+				"digest": "2f8af0b0adb15605c8015bd9015b1833a517757591cdf0c60604271a7664e8af"
 			}
 		],
 		"images/devtools-golang-v1beta1/context/Dockerfile": [
@@ -223,21 +223,21 @@
 			{
 				"name": "docker.io/library/python",
 				"tag": "3.10.5",
-				"digest": "ce21f64c4c3ae5743ddd5f4d4d9ca5614fddcc4f8c6e32ff2a7ff9a2e8744e8d"
+				"digest": "2f8af0b0adb15605c8015bd9015b1833a517757591cdf0c60604271a7664e8af"
 			}
 		],
 		"images/poetry-python3.8/context/Dockerfile": [
 			{
 				"name": "docker.io/library/python",
 				"tag": "3.8.13",
-				"digest": "7d870123fe736cc912528a4f29c380d19f5efa29fc2de6b9d200cfbf92337df5"
+				"digest": "fbdfaed8b357b196f52ccf59343688c4c8e00409b8ce90748277b7fb23bd2d74"
 			}
 		],
 		"images/poetry-python3.9/context/Dockerfile": [
 			{
 				"name": "docker.io/library/python",
 				"tag": "3.9.13",
-				"digest": "2cea326d2eb1ea18f8846f722ae7fed6064f5c9912ebe615b47e3621c33e2097"
+				"digest": "6e53a82fa269eb8e20de049338db078ece51402d99f6931db8ecbaa3f647126a"
 			}
 		]
 	}
