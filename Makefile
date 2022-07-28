@@ -85,7 +85,7 @@ validate-dockerfile-%: ## Validate a specific dockerfile
 
 validate_dockerfile_targets=$(foreach image_name,$(IMAGE_NAMES),validate-dockerfile-$(image_name))
 .PHONY: validate-static
-validate-static: validate-images-digests $(validate_dockerfile_targets) validate-python ## Run static validation
+validate-static: $(validate_dockerfile_targets) validate-python ## Run static validation
 
 .PHONY: validate
 validate: validate-static test ## Validate everything
