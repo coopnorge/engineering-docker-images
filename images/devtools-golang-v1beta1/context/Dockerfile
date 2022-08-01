@@ -5,7 +5,7 @@ FROM docker.io/mikefarah/yq:4@sha256:98fbececf8319565b4bb4da07dd5341f057fc0c1f91
 
 # golangci-lint does not work with go1.18
 # https://github.com/golangci/golangci-lint/issues/2649
-FROM golang:1.18.4-bullseye@sha256:ae053a706707e43b41144afb7e436191ad2e337175a2adfb97ee8180c98831fd AS base
+FROM golang:1.18.4-bullseye@sha256:6689996f4aa27bdb565677edd0914f8147e699a8b613e9c6623c34cce6d0eac6 AS base
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
