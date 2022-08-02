@@ -101,6 +101,15 @@ docker container should have anyway in order to operate as intended. This being
 said, care should be taken to not use these images with a docker daemon that is
 running as root.
 
+### Utilities
+
+- `benthos-v4`: Benthos version 4
+
+  [README](./images/benthos-v4/README.md).
+
+  - [`ghcr.io/coopnorge/engineering-docker-images/e0/benthos-v4`](https://github.com/coopnorge/engineering-docker-images/pkgs/container/engineering-docker-images%2Fe0%2Fbenthos-v4)
+  - [`europe-north1-docker.pkg.dev/engineering-production-af50/images/benthos-v4`](https://console.cloud.google.com/artifacts/docker/engineering-production-af50/europe-north1/images/benthos-v4)
+
 ## Developing
 
 ### Image Tests
