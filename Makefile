@@ -70,8 +70,8 @@ py_source=$(shell find images/ -type f -name '*.py')
 
 validate-python: ## Validate Python code
 	poetry check
-	poetry run isort --check-only $(py_source)
-	poetry run black --config ./pyproject.toml --check $(py_source)
+	poetry run isort --check-only --diff $(py_source)
+	poetry run black --config ./pyproject.toml --check --diff $(py_source)
 	poetry run pflake8 $(py_source)
 	$(foreach file, $(py_source), poetry run mypy --show-error-codes --show-error-context --pretty $(file) &&) true
 
