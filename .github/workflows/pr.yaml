@@ -61,6 +61,9 @@ jobs:
           poetry install
       - name: Expose GitHub Runtime
         uses: crazy-max/ghaction-github-runtime@v2
+      - name: Validate python
+        run: |
+          make VERBOSE=all validate-python
       - name: Build images
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
