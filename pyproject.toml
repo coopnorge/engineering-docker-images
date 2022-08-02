@@ -34,6 +34,10 @@ explicit_package_bases = true
 namespace_packages = true
 mypy_path = "images"
 
+[[tool.mypy.overrides]]
+module = "docker.*"
+ignore_missing_imports = true
+
 [tool.pytest.ini_options]
 addopts = ["--capture=no", "--tb=native"]
 # https://docs.pytest.org/en/stable/customize.html

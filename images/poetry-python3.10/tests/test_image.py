@@ -1,6 +1,6 @@
-import docker  # type: ignore[import]
+import docker
 import pytest
-from docker.models.images import Image  # type: ignore[import]
+from docker.models.images import Image
 
 
 @pytest.fixture(scope="session")

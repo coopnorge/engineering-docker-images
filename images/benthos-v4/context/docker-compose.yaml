@@ -1,0 +1,7 @@
+version: "3"
+services:
+  devtools:
+    build:
+      context: .
+      dockerfile: Dockerfile
+volumes: {}
