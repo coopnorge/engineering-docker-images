@@ -81,10 +81,10 @@ def ctx_prototype(
         )
 
         subprocess.run(
-            "docker-compose down -v".split(" "),
+            "docker compose down -v".split(" "),
             check=True,
         )
-        run_cmd = "docker-compose run --rm".split(" ") + [
+        run_cmd = "docker compose run --rm".split(" ") + [
             "devtools",
             "bash",
             "-c",
@@ -154,7 +154,8 @@ def devtools_cmd(
     if args is None:
         args = []
     cmd = [
-        "docker-compose",
+        "docker",
+        "compose",
         "run",
         "--rm",
         *envargs_from_dict(envargs),

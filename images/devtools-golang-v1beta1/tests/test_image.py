@@ -40,12 +40,12 @@ def ctx_chdir(newdir: PathLikeT) -> Iterator[PathLikeT]:
 
 def test_prototype_ok() -> None:
     with ctx_chdir(PROTOTYPE_DIR):
-        subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
+        subprocess.run("docker compose run --rm devtools".split(" "), check=True)
         assert (PROTOTYPE_DIR / "coverage.out").exists()
         (PROTOTYPE_DIR / "coverage.out").unlink()
         assert not (PROTOTYPE_DIR / "coverage.out").exists()
         subprocess.run(
-            "docker-compose run --rm devtools maker validate".split(" "), check=True
+            "docker compose run --rm devtools maker validate".split(" "), check=True
         )
         assert (PROTOTYPE_DIR / "coverage.out").exists()
 
@@ -130,7 +130,7 @@ def test_alterations(
     expected_outputs: List[str],
 ) -> None:
     if command is None:
-        command = "docker-compose run --rm devtools".split(" ")
+        command = "docker compose run --rm devtools".split(" ")
     if files is None:
         files = {}
     with ctx_prototype(tmp_path) as workdir:
@@ -166,7 +166,7 @@ func TestThatFails(t *testing.T) {
 """
         )
         with pytest.raises(subprocess.CalledProcessError):
-            subprocess.run("docker-compose run --rm devtools".split(" "), check=True)
+            subprocess.run("docker compose run --rm devtools".split(" "), check=True)
         captured = capfd.readouterr()
         with capfd.disabled():
             sys.stdout.write("captured.out:\n")
@@ -201,7 +201,7 @@ func init() {
 """
         )
         subprocess.run(
-            "docker-compose run --rm devtools validate-fix".split(" "), check=True
+            "docker compose run --rm devtools validate-fix".split(" "), check=True
         )
 
         formatted_file = """\
@@ -253,4 +253,4 @@ def prototype_ro() -> Generator[Path, None, None]:
     ],
 )
 def test_commands_run(prototype_ro: Path, command: List[str]) -> None:
-    subprocess.run("docker-compose run --rm devtools".split(" ") + command, check=True)
+    subprocess.run("docker compose run --rm devtools".split(" ") + command, check=True)
