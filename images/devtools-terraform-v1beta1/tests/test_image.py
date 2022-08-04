@@ -135,17 +135,17 @@ class Captured:
     def all(self) -> str:
         return "\n".join(self.all_lines)
 
-
-def get_captured_lines(capfd: CaptureFixture[str]) -> Captured:
-    captured = capfd.readouterr()
-    out = captured.out
-    err = captured.err
-    with capfd.disabled():
-        sys.stdout.write("captured.out:\n")
-        sys.stdout.write(captured.out)
-        sys.stderr.write("captured.err:\n")
-        sys.stderr.write(captured.err)
-    return Captured(captured, out, out.splitlines(), err, err.splitlines())
+    @classmethod
+    def from_capfd(cls, capfd: CaptureFixture[str]) -> "Captured":
+        captured = capfd.readouterr()
+        out = captured.out
+        err = captured.err
+        with capfd.disabled():
+            sys.stdout.write("captured.out:\n")
+            sys.stdout.write(captured.out)
+            sys.stderr.write("captured.err:\n")
+            sys.stderr.write(captured.err)
+        return Captured(captured, out, out.splitlines(), err, err.splitlines())
 
 
 def devtools_cmd(
@@ -177,14 +177,14 @@ def test_prototype_ok(
         subprocess.run("find .".split(" "), check=True)
         subprocess.run(devtools_cmd(), check=True)
 
-        cap = get_captured_lines(capfd)
+        cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 2
         assert sum("tfsec" in line for line in cap.out_lines) == 2
         assert sum("tflint" in line for line in cap.out_lines) == 2
 
         subprocess.run(devtools_cmd(["maker", "validate"]), check=True)
 
-        cap = get_captured_lines(capfd)
+        cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 2
         assert sum("tfsec" in line for line in cap.out_lines) == 2
         assert sum("tflint" in line for line in cap.out_lines) == 2
@@ -200,7 +200,7 @@ def test_prototype_nocache(
         subprocess.run("find .".split(" "), check=True)
         subprocess.run(devtools_cmd(envargs={"TF_PLUGIN_CACHE_DIR": ""}), check=True)
 
-        cap = get_captured_lines(capfd)
+        cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 2
         assert sum("tfsec" in line for line in cap.out_lines) == 2
         assert sum("tflint" in line for line in cap.out_lines) == 2
@@ -220,7 +220,7 @@ def test_prototype_ok_no_module(
         subprocess.run("find .".split(" "), check=True)
         subprocess.run(devtools_cmd(), check=True)
 
-        cap = get_captured_lines(capfd)
+        cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 1
         assert sum("tfsec" in line for line in cap.out_lines) == 1
         assert sum("tflint" in line for line in cap.out_lines) == 1
@@ -240,7 +240,7 @@ def test_prototype_reinit_upgrade(
 
         subprocess.run(devtools_cmd(["validate"]), check=True)
 
-        cap = get_captured_lines(capfd)
+        cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 4
         assert sum("tfsec" in line for line in cap.out_lines) == 4
         assert sum("tflint" in line for line in cap.out_lines) == 4
@@ -255,7 +255,7 @@ def test_prototype_env_vars(
 
         subprocess.run(devtools_cmd(["validate", "TFDIRS="]), check=True)
 
-        cap = get_captured_lines(capfd)
+        cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 0
         assert sum("tfsec" in line for line in cap.out_lines) == 0
         assert sum("tflint" in line for line in cap.out_lines) == 0
@@ -266,7 +266,7 @@ def test_prototype_env_vars(
             check=True,
         )
 
-        cap = get_captured_lines(capfd)
+        cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 1
         assert sum("tfsec" in line for line in cap.out_lines) == 1
         assert sum("tflint" in line for line in cap.out_lines) == 1
@@ -278,7 +278,7 @@ def test_prototype_env_vars(
             check=True,
         )
 
-        cap = get_captured_lines(capfd)
+        cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 1
         assert sum("tfsec" in line for line in cap.out_lines) == 1
         assert sum("tflint" in line for line in cap.out_lines) == 1
@@ -301,7 +301,7 @@ data "null_data_source" "values" {
         with pytest.raises(subprocess.CalledProcessError):
             subprocess.run(devtools_cmd(), check=True)
 
-        cap = get_captured_lines(capfd)
+        cap = Captured.from_capfd(capfd)
         assert sum("+++ new/bad_fmt.tf" in line for line in cap.out_lines) == 1
 
 
@@ -342,7 +342,7 @@ resource "google_storage_bucket" "example" {
         )
         with pytest.raises(subprocess.CalledProcessError):
             subprocess.run(devtools_cmd(), check=True)
-        cap = get_captured_lines(capfd)
+        cap = Captured.from_capfd(capfd)
         assert "Missing required argument" in (cap.out + cap.err)
 
 
@@ -363,7 +363,7 @@ resource "google_storage_bucket" "example" {
         )
         with pytest.raises(subprocess.CalledProcessError):
             subprocess.run(devtools_cmd(), check=True)
-        cap = get_captured_lines(capfd)
+        cap = Captured.from_capfd(capfd)
         assert (
             sum(
                 "Bucket has uniform bucket level access disabled." in line
@@ -378,7 +378,7 @@ resource "google_storage_bucket" "example" {
         (workdir / ".tfsec-ignore").touch(exist_ok=True)
         (workdir / "eg_module" / ".tfsec-ignore").touch(exist_ok=True)
         subprocess.run(devtools_cmd(), check=True)
-        cap = get_captured_lines(capfd)
+        cap = Captured.from_capfd(capfd)
         assert (
             sum("potential problem(s) detected" in line for line in cap.out_lines) == 0
         )
@@ -405,7 +405,7 @@ resource "google_project_iam_binding" "iam_binding" {
         )
         with pytest.raises(subprocess.CalledProcessError):
             subprocess.run(devtools_cmd(), check=True)
-        cap = get_captured_lines(capfd)
+        cap = Captured.from_capfd(capfd)
         assert (
             sum(
                 "first.last@example.com is an invalid member format" in line
@@ -435,7 +435,7 @@ output:
         )
         with pytest.raises(subprocess.CalledProcessError):
             subprocess.run(devtools_cmd(), check=True)
-        cap = get_captured_lines(capfd)
+        cap = Captured.from_capfd(capfd)
         assert (
             sum("Error: README.md is out of date" in line for line in cap.all_lines)
             == 1
@@ -461,7 +461,7 @@ def test_prototype_fallback(
 
         subprocess.run(devtools_cmd(["validate"]), check=True)
 
-        cap = get_captured_lines(capfd)
+        cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 1
         assert sum("tfsec" in line for line in cap.out_lines) == 1
         assert sum("tflint" in line for line in cap.out_lines) == 1
@@ -515,7 +515,7 @@ def test_runs(
             xstack.enter_context(pytest.raises(subprocess.CalledProcessError))
         for command in commands:
             subprocess.run(devtools_cmd(command, envargs=env), check=True)
-    cap = get_captured_lines(capfd)
+    cap = Captured.from_capfd(capfd)
     for match_string, match_positive in matchers:
         found = (
             next((line for line in cap.all_lines if match_string in line), None)

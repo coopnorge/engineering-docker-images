@@ -1,6 +1,10 @@
 version: "3"
 services:
   devtools:
+    privileged: true
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
     build:
       context: .
       dockerfile: Dockerfile
@@ -8,5 +12,9 @@ services:
     volumes:
       - ${WORKSPACE_DIR:-../tests/prototype}:/srv/workspace:z,cached
       - xdg-cache-home:/root/.cache
+      - ./Makefile:/usr/local/share/devtools-golang/Makefile
+      - ${DOCKER_CONFIG:-~/.docker}:/root/.docker
+      - ./var:/srv/workspace/var
 volumes:
   xdg-cache-home: {}
+  workspace-var: {}

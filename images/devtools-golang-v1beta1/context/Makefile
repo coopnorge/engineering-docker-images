@@ -7,6 +7,13 @@ current_makefile_dir:=$(dir $(abspath $(current_makefile)))
 .PHONY: all
 all: validate  ## Do everything (default target)
 
+# Load settings
+$(if $(wildcard devtools-settings.mk),$(eval include devtools-settings.mk),)
+$(if $(wildcard devtools.env),$(eval include devtools.env),)
+$(if $(wildcard default.env),$(eval include default.env),)
+$(if $(wildcard .env),$(eval include .env),)
+$(if $(and $(environment),$(wildcard env.$(environment))),$(eval include env.$(environment)),)
+
 ########################################################################
 # boiler plate
 ########################################################################
@@ -24,15 +31,35 @@ __ORIGINAL_SHELL:=$(SHELL)
 SHELL=$(warning Building $@$(if $<, (from $<))$(if $?, ($? newer)))$(TIME) $(__ORIGINAL_SHELL)
 endif
 
+# checks if $(1) and $(2) is equal
+seq = $(if $(subst x$(1)x,,x$(2)x)$(subst x$(2)x,,x$(1)x),,T)
+# parse true|false to a make boolean
+parse_bool = $(if $(call seq,$(1),true),T,$(if $(call seq,$(1),false),,$(error invalid boolean value $(1))))
+# merge the list items in $2 with the seperator $1
+merge = $(strip $(if $2, $(if $(filter 1,$(words $2)),$2,$(firstword $2)$1$(call merge,$1,$(wordlist 2,$(words $2),$2)))))
+comma:=,
+
+skip=
+# skipable makes the targets passed to it skipable with skip=foo%
+# $(1): targets that should be skipable
+skipable=$(filter-out $(skip),$(1))
+
+define __newline
+
+
+endef
+
+
 ########################################################################
 # variables
 ########################################################################
+## Variable APP_NAME : The name of the application.
+## Variable APP_EXECUTABLE : The main executable of the application, defaults to APP_NAME
+APP_EXECUTABLE?=$(APP_NAME)
 
-PROJECT_TOOLS_DIR?=$(current_makefile_dir)var/tools/
-tools_dir=$(PROJECT_TOOLS_DIR)
-ifneq ($(tools_dir),)
-export PATH:=$(tools_dir):$(PATH)
-endif
+APP_DOCKERFILE?=build/package/Dockerfile
+BUILD_OCI?=$(if $(wildcard $(APP_DOCKERFILE)),true,false)
+
 XDG_CACHE_HOME?=$(HOME)/.cache
 
 # setting this so that it is more likely things will work on MacOS and Linux
@@ -40,9 +67,33 @@ export POSIXLY_CORRECT:=1
 
 golangci_lint=golangci-lint $(if $(filter all commands,$(VERBOSE)),-v)
 
+giti_description=$(shell git describe --tags --always)
+giti_commit_hash=$(shell git log -1 --format="%H")
+giti_url:=$(shell git remote get-url origin)
+dt_info:=$(shell date "+%Y-%m-%d %H:%M:%S%z")
+go_mod:=$(shell go list -m)
+go_ldflags= \
+	-ldflags \
+	"-X '$(go_mod)/internal/version.gitCommit=$(giti_commit_hash)' \
+	-X '$(go_mod)/internal/version.gitRemote=$(giti_url)' \
+	-X '$(go_mod)/internal/version.gitDesc=$(giti_description)' \
+	-X '$(go_mod)/internal/version.buildDT=$(dt_info)'" \
+
+go_build_flags=
+
+stamps_dir=var/stamps
+
+$(call dump_vars,APP_DOCKERFILE BUILD_OCI XDG_CACHE_HOME)
+
 ########################################################################
 # targets ...
 ########################################################################
+
+.PHONY: clean
+clean: ## clean build outputs
+clean:
+	rm -vr coverage.out || :
+	go clean
 
 .PHONY: validate
 validate: validate-static test  ## Run static and dynamic validation (tests)
@@ -58,18 +109,132 @@ validate-static:  ## Static code validation
 .PHONY: test
 test:  ## Dynamic code validation
 test coverage.out:
-	go test -race -cover $(if $(filter all commands,$(VERBOSE)),-v) ./... \
+	go test -cover \
+		-race \
+		$(go_build_flags) \
 		-coverprofile=coverage.out -covermode=atomic \
+		$(if $(filter all commands,$(VERBOSE)),-v) ./... \
 		$(if $(gotest_files),$(gotest_files),./...) \
 		$(gotest_args)
-
-.PHONY: build
-build: ## build source
-	go build -race -v ./...
 
 .PHONY: view-coverage
 view-coverage: coverage.out ## view coverage
 	go tool cover -html=$(<)
+
+.PHONY: build
+build: ## build source
+	go build -race $(go_build_flags) $(if $(filter all commands,$(VERBOSE)),-v) ./...
+
+.PHONY: install
+install: $(call skipable,validate) ## install everything
+	go install $(go_build_flags) $(go_ldflags) ./...
+
+.PHONY: publish
+publish: ## publish artifacts
+
+########################################################################
+# OCI
+########################################################################
+
+oci_rebuild=false
+oci_context_dir=var/oci_context
+oci_images_dir=var/oci_images
+oci_cache_dir=$(XDG_CACHE_HOME)/buildkit
+$(oci_context_dir)/% : %
+	cp $(<) $(@)
+
+clean: clean-oci-context clean-oci-images
+clean-oci-context: clean-$(oci_context_dir)/
+clean-oci-images: clean-$(oci_images_dir)/
+clean-stamps: clean-$(stamps_dir)/
+
+.PHONY: oci-context
+oci-context: | $(oci_context_dir)/
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+		go build $(go_build_flags) $(go_ldflags) $(if $(call parse_bool,$(oci_rebuild)),-a,) -v \
+		-o $(firstword $(|)) \
+		./...
+
+.PHONY: validate-dockerfile
+validate-dockerfile: $(stamps_dir)/Dockerfile.valid
+$(stamps_dir)/Dockerfile.valid: $(APP_DOCKERFILE) | $(stamps_dir)/
+	hadolint $(<)
+	touch $(@)
+
+oci_tag_prefix=
+
+oci_tag_suffixes_const = \
+	latest \
+
+oci_tag_suffixes_git = \
+	gitc-$(giti_commit_hash) \
+
+oci_tag_suffixes = \
+	$(oci_tag_suffixes_const) \
+	$(oci_tag_suffixes_git) \
+
+oci_refs_local=\
+	$(foreach oci_tag_suffix,\
+		$(oci_tag_suffixes),\
+		ocreg.invalid/$(APP_NAME):$(oci_tag_prefix)$(oci_tag_suffix))
+
+OCI_REF_NAMES?=
+OCI_REFS_REMOTE?=\
+	$(foreach oci_tag_suffix,\
+		$(oci_tag_suffixes),\
+		$(foreach oci_ref_name,$(OCI_REF_NAMES),$(oci_ref_name):$(oci_tag_prefix)$(oci_tag_suffix)))
+
+oci_refs = \
+	$(oci_refs_local) \
+	$(OCI_REFS_REMOTE) \
+
+oci_build_args ?= \
+	app_name=$(APP_NAME) \
+	$(if $(APP_EXECUTABLE),app_executable=$(APP_EXECUTABLE)) \
+
+buildctl=buildctl-daemonless.sh
+
+oci-build-stage-%: $(APP_DOCKERFILE) validate-dockerfile | $(oci_images_dir)/ $(oci_context_dir)/ $(oci_cache_dir)/
+	$(buildctl) build \
+		--export-cache type=local,dest=$(oci_cache_dir) \
+		--import-cache type=local,src=$(oci_cache_dir) \
+		--progress=plain \
+		--frontend dockerfile.v0 \
+		--opt filename=$(notdir $(<)) \
+		--local context=$(oci_context_dir) \
+		--local dockerfile=$(dir $(<)) \
+		--output $(oci_build_stage_output) \
+    	$(buildctl_extra_args) \
+		$(foreach oci_build_arg,$(oci_build_args),--opt build-arg:$(oci_build_arg)) \
+
+$(oci_images_dir)/stage-%.oci.tar: buildctl_extra_args=--opt target=$(*)
+$(oci_images_dir)/stage-%.oci.tar: oci_build_stage_output=type=docker,\"name=$(call merge,$(comma),$(oci_refs))\",dest=$(oci_images_dir)/stage-$(*).oci.tar
+$(oci_images_dir)/stage-%.oci.tar: oci-build-stage-%
+	echo $(<) :: $(@)
+
+
+$(oci_images_dir)/stage-runtime.oci.tar: $(call skipable,validate-dockerfile oci-context)
+$(oci_images_dir)/stage-runtime.oci.tar: docker_image_build_extra_args=$(foreach oci_tag,$(oci_refs),--tag $(oci_tag))
+
+.PHONY: build-oci
+build-oci: $(oci_images_dir)/stage-runtime.oci.tar
+
+.PHONY: validate-oci
+validate-oci: $(call skipable,build-oci)
+	dockle $(dockle_args) \
+		--input $(oci_images_dir)/stage-runtime.oci.tar
+
+push-oci: ## push the OCI image to registries
+push-oci: $(oci_images_dir)/stage-runtime.oci.tar
+	$(foreach oci_ref_remote,$(OCI_REFS_REMOTE),\
+		crane push $(<) $(oci_ref_remote)$(__newline))
+
+
+ifneq ($(call parse_bool,$(BUILD_OCI)),)
+validate: validate-dockerfile validate-oci
+build: build-oci
+publish: push-oci
+endif
 
 ########################################################################
 # docker-lock
@@ -91,12 +256,20 @@ docker-lock: ## Generate and rewrite digests of docker images
 	$(docker_lock) lock rewrite
 
 ########################################################################
-# utility
+# utility targets
 ########################################################################
 
 .PHONY: help
 help:
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@echo "Targets:"
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(current_makefile) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@echo "Variables:"
+	@{ grep -E '^## Variable .* : .*$$' $(current_makefile) || :; } | sort
+
+## clean directories
+.PHONY: clean-%/
+clean-%/:
+	@{ test -d $(*) && { set -x; rm -vr $(*); set +x; } } || echo "directory $(*) does not exist ... nothing to clean"
 
 ## create directories
 .PRECIOUS: %/

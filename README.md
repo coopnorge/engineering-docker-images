@@ -26,6 +26,8 @@ Devtools images are intended for use in git repos to do validation and artifact 
 
 - `devtools-golang-v1beta1`: Development tools for golang.
 
+  [README](./images/devtools-golang-v1beta1/README.md).
+
   [Usage example](./images/devtools-golang-v1beta1/tests/prototype/).
 
   - [`ghcr.io/coopnorge/engineering-docker-images/e0/devtools-golang-v1beta1`](https://github.com/coopnorge/engineering-docker-images/pkgs/container/engineering-docker-images%2Fe0%2Fdevtools-golang-v1beta1)
@@ -118,6 +120,16 @@ To tests images, the run file inside the image's test directory will be
 executed, for example, to test the `devtools-golang-v1beta1` image, the
 `images/devtools-golang-v1beta1/tests/run` file will be executed. This file can
 run any test framework.
+
+Each image should have a `README.md` in its `tests` directory that provides
+some additional testing instructions, e.g.
+`images/devtools-golang-v1beta1/tests/README.md`.
+
+### Using images while developing
+
+Images should have a `README.md` file inside their `context` directories with
+instructions on how to use the images during development, e.g.
+`images/devtools-golang-v1beta1/context/README.md`.
 
 ### Using devtools
 

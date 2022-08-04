@@ -1,3 +1,4 @@
+!build/
 var/
 
 #### vimdiff <(curl --silent -L https://github.com/github/gitignore/raw/main/Go.gitignore) .gitignore
