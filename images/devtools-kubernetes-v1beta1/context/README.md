@@ -1,4 +1,4 @@
 ```
-docker-compose build
-docker-compose run devtools bash
+docker compose build
+docker compose run devtools bash
 ```

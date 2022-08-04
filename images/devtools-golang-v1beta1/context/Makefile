@@ -75,7 +75,7 @@ view-coverage: coverage.out ## view coverage
 # docker-lock
 ########################################################################
 
-docker_compose=docker-compose
+docker_compose=docker compose
 docker_lock=$(docker_compose) run --rm -T docker-lock
 # docker_lock=docker-lock
 
