@@ -49,24 +49,20 @@ define __newline
 
 endef
 
-
 ########################################################################
 # variables
 ########################################################################
 ## Variable APP_NAME : The name of the application.
 ## Variable APP_EXECUTABLE : The main executable of the application, defaults to APP_NAME
 APP_EXECUTABLE?=$(APP_NAME)
-
 APP_DOCKERFILE?=build/package/Dockerfile
 BUILD_OCI?=$(if $(wildcard $(APP_DOCKERFILE)),true,false)
-
 XDG_CACHE_HOME?=$(HOME)/.cache
 
 # setting this so that it is more likely things will work on MacOS and Linux
 export POSIXLY_CORRECT:=1
 
 golangci_lint=golangci-lint $(if $(filter all commands,$(VERBOSE)),-v)
-
 giti_description=$(shell git describe --tags --always)
 giti_commit_hash=$(shell git log -1 --format="%H")
 giti_url:=$(shell git remote get-url origin)
@@ -82,8 +78,9 @@ go_ldflags= \
 go_build_flags=
 
 stamps_dir=var/stamps
+outputs_dir=var/outputs
 
-$(call dump_vars,APP_DOCKERFILE BUILD_OCI XDG_CACHE_HOME)
+$(call dump_vars,APP_EXECUTABLE APP_DOCKERFILE BUILD_OCI XDG_CACHE_HOME)
 
 ########################################################################
 # targets ...
@@ -91,7 +88,7 @@ $(call dump_vars,APP_DOCKERFILE BUILD_OCI XDG_CACHE_HOME)
 
 .PHONY: clean
 clean: ## clean build outputs
-clean:
+clean: clean-$(outputs_dir)/
 	rm -vr coverage.out || :
 	go clean
 
@@ -123,7 +120,22 @@ view-coverage: coverage.out ## view coverage
 
 .PHONY: build
 build: ## build source
-	go build -race $(go_build_flags) $(if $(filter all commands,$(VERBOSE)),-v) ./...
+	go build -race \
+		$(go_build_flags) \
+		$(go_ldflags) \
+		$(if $(filter all commands,$(VERBOSE)),-v) \
+		./...
+
+.PHONY: build-golang-outputs
+build: build-golang-outputs
+build-golang-outputs: ## build golang outputs
+build-golang-outputs: | $(outputs_dir)/
+	CGO_ENABLED=0 go build \
+		$(go_build_flags) \
+		$(go_ldflags) \
+		$(if $(filter all commands,$(VERBOSE)),-v) \
+		-o $(outputs_dir) \
+		./...
 
 .PHONY: install
 install: $(call skipable,validate) ## install everything
@@ -137,25 +149,22 @@ publish: ## publish artifacts
 ########################################################################
 
 oci_rebuild=false
-oci_context_dir=var/oci_context
+oci_context_dir?=.
 oci_images_dir=var/oci_images
 oci_cache_dir=$(XDG_CACHE_HOME)/buildkit
-$(oci_context_dir)/% : %
-	cp $(<) $(@)
 
 clean: clean-oci-context clean-oci-images
 clean-oci-context: clean-$(oci_context_dir)/
 clean-oci-images: clean-$(oci_images_dir)/
 clean-stamps: clean-$(stamps_dir)/
 
+
 .PHONY: oci-context
-oci-context: | $(oci_context_dir)/
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
-		go build $(go_build_flags) $(go_ldflags) $(if $(call parse_bool,$(oci_rebuild)),-a,) -v \
-		-o $(firstword $(|)) \
-		./...
+oci-context: ## prepare the OCI context
+oci-context: build-golang-outputs
 
 .PHONY: validate-dockerfile
+validate-dockerfile: ## validate the dockerfile
 validate-dockerfile: $(stamps_dir)/Dockerfile.valid
 $(stamps_dir)/Dockerfile.valid: $(APP_DOCKERFILE) | $(stamps_dir)/
 	hadolint $(<)
@@ -184,13 +193,19 @@ OCI_REFS_REMOTE?=\
 		$(oci_tag_suffixes),\
 		$(foreach oci_ref_name,$(OCI_REF_NAMES),$(oci_ref_name):$(oci_tag_prefix)$(oci_tag_suffix)))
 
+
 oci_refs = \
 	$(oci_refs_local) \
 	$(OCI_REFS_REMOTE) \
 
 oci_build_args ?= \
+	outputs_dir=$(outputs_dir) \
 	app_name=$(APP_NAME) \
 	$(if $(APP_EXECUTABLE),app_executable=$(APP_EXECUTABLE)) \
+	$(OCI_BUILD_ARGS) \
+
+$(call dump_vars,OCI_REF_NAMES OCI_REFS_REMOTE oci_build_args OCI_BUILD_ARGS)
+
 
 buildctl=buildctl-daemonless.sh
 
@@ -220,6 +235,7 @@ $(oci_images_dir)/stage-runtime.oci.tar: docker_image_build_extra_args=$(foreach
 build-oci: $(oci_images_dir)/stage-runtime.oci.tar
 
 .PHONY: validate-oci
+validate-oci: ## validate the OCI image
 validate-oci: $(call skipable,build-oci)
 	dockle $(dockle_args) \
 		--input $(oci_images_dir)/stage-runtime.oci.tar
@@ -228,7 +244,6 @@ push-oci: ## push the OCI image to registries
 push-oci: $(oci_images_dir)/stage-runtime.oci.tar
 	$(foreach oci_ref_remote,$(OCI_REFS_REMOTE),\
 		crane push $(<) $(oci_ref_remote)$(__newline))
-
 
 ifneq ($(call parse_bool,$(BUILD_OCI)),)
 validate: validate-dockerfile validate-oci
@@ -275,3 +290,6 @@ clean-%/:
 .PRECIOUS: %/
 %/:
 	mkdir -vp $(@)
+
+
+$(if $(wildcard devtools-targets.mk),$(eval include devtools-targets.mk),)

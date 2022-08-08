@@ -5,14 +5,17 @@
 Interface variables are configurable with environment variables.
 
 If any of the following files are found they will be loaded in the order they are
-listed in:
+listed in before any variables are defined:
 - `devtools-settings.mk`
 - `devtools.env`
 - `default.env`,
 - `.env`
 - `${ENVIRONMENT}.env`
 
-## Features and directories
+If `devtools-targets.mk` is present then it will be loaded after all targets
+are defined.
+
+## Features
 
 ### OCI image building
 
@@ -63,6 +66,6 @@ printenv GITHUB_TOKEN \
 ```
 
 **WARNING: SECURITY CONSIDERATION**: OCI building requires that the devtools
-container run in priviliged mode. For this to be more secure requires the use
-of a rootless OCI runtime (e.g. rootless dockerd).
+container run in priviliged mode. For this to be more secure of a rootless OCI
+runtime (e.g. rootless dockerd) should be used.
 

@@ -21,8 +21,9 @@ RUN \
     test -n "${app_name}"
 
 ARG app_executable=${app_name}
+ARG outputs_dir=var/outputs
 
-COPY --chown=root:root ${app_executable} /usr/local/bin/${app_executable}
+COPY --chown=root:root ${outputs_dir}/${app_executable} /usr/local/bin/${app_executable}
 
 RUN \
     chmod ugo-w /usr/local/bin/${app_executable}
