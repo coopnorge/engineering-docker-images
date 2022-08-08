@@ -1,9 +1,14 @@
 services:
   devtools:
     image: ${IMAGE_UNDER_TEST:-ocreg.invalid/coopnorge/engineering/image/devtools-golang-v1beta1:built}
+    privileged: true
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
     working_dir: /srv/workspace
     volumes:
       - .:/srv/workspace:z
-      - xdg-cache-home:/root/.cache
+      - ${_XDG_CACHE_DIR:-xdg-cache-home}:/root/.cache
+      - ${DOCKER_CONFIG:-~/.docker}:/root/.docker
 volumes:
     xdg-cache-home: {}

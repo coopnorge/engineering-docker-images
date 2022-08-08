@@ -4,11 +4,24 @@ import shutil
 import subprocess
 import sys
 import tempfile
-from contextlib import contextmanager
+from contextlib import ExitStack, contextmanager
+from dataclasses import dataclass
+from functools import cached_property
 from pathlib import Path, PurePath
-from typing import Dict, Generator, Iterator, List, Optional, TypeVar, Union
+from typing import (
+    Callable,
+    Generator,
+    Iterable,
+    Iterator,
+    List,
+    Optional,
+    Tuple,
+    TypeVar,
+    Union,
+)
 
 import pytest
+from _pytest.capture import CaptureResult
 from pytest import CaptureFixture
 
 TEST_DIR = Path(__file__).parent.absolute()
@@ -38,7 +51,7 @@ def ctx_chdir(newdir: PathLikeT) -> Iterator[PathLikeT]:
         os.chdir(cwd)
 
 
-def test_prototype_ok() -> None:
+def test_prototype_ok(capfd: CaptureFixture[str]) -> None:
     with ctx_chdir(PROTOTYPE_DIR):
         subprocess.run("docker compose run --rm devtools".split(" "), check=True)
         assert (PROTOTYPE_DIR / "coverage.out").exists()
@@ -49,15 +62,47 @@ def test_prototype_ok() -> None:
         )
         assert (PROTOTYPE_DIR / "coverage.out").exists()
 
+    cap = Captured.from_capfd(capfd)
+    assert "oci.tar" not in cap.all()
+
+
+@dataclass
+class Captured:
+    result: CaptureResult[str]
+    out: str
+    out_lines: List[str]
+    err: str
+    err_lines: List[str]
+
+    @cached_property
+    def all_lines(self) -> List[str]:
+        return self.out_lines + self.err_lines
+
+    def all(self) -> str:
+        return "\n".join(self.all_lines)
+
+    @classmethod
+    def from_capfd(cls, capfd: CaptureFixture[str]) -> "Captured":
+        captured = capfd.readouterr()
+        out = captured.out
+        err = captured.err
+        with capfd.disabled():
+            sys.stdout.write("captured.out:\n")
+            sys.stdout.write(captured.out)
+            sys.stderr.write("captured.err:\n")
+            sys.stderr.write(captured.err)
+        return Captured(captured, out, out.splitlines(), err, err.splitlines())
+
 
 @pytest.mark.parametrize(
-    ["command", "success", "files", "expected_outputs"],
+    ["command", "success", "mutators", "matchers"],
     [
-        (
+        pytest.param(
             None,
             False,
-            {
-                "bad_file.go": """\
+            (
+                lambda workdir: (workdir / "bad_file.go").write_text(
+                    """\
 package main
 
 func NoDocs() int {
@@ -68,14 +113,17 @@ func init() {
 	print(NoDocs())
 }
 """
-            },
-            ["exported function NoDocs should have comment or be unexported"],
+                )
+            ),
+            [("exported function NoDocs should have comment or be unexported", True)],
+            id="validate-exported-comment",
         ),
-        (
+        pytest.param(
             None,
             False,
-            {
-                "bad_file.go": """\
+            (
+                lambda workdir: (workdir / "bad_file.go").write_text(
+                    """\
 package main
 
 import "fmt"
@@ -89,67 +137,110 @@ func init() {
 	x, _ := GetError()
 	print(x)
 }
-""",
-            },
-            ["Error return value is not checked"],
+"""
+                )
+            ),
+            [("Error return value is not checked", True)],
+            id="validate-unchecked-return",
         ),
-        (
+        pytest.param(
             None,
             False,
-            {
-                "bad_file.go": """\
+            (
+                lambda workdir: (workdir / "bad_file.go").write_text(
+                    """\
 package main
 
 func UnusedFunc() int {
 	return 3
 }
 """
-            },
-            ["`UnusedFunc` is unused"],
+                )
+            ),
+            [("`UnusedFunc` is unused", True)],
+            id="validate-unchecked-return",
         ),
-        (
+        pytest.param(
             None,
             True,
-            {
-                ".golangci.yml": """\
+            [
+                (
+                    lambda workdir: (workdir / ".golangci.yml").write_text(
+                        """\
 linters:
   disable-all: true
   enable: [ misspell ]
 """
-            },
-            [""],
+                    )
+                ),
+                (
+                    lambda workdir: (workdir / "bad_file.go").write_text(
+                        """\
+package main
+
+func UnusedFunc() int {
+	return 3
+}
+"""
+                    )
+                ),
+            ],
+            [],
+            id="golangci-config-used",
+        ),
+        pytest.param(
+            None,
+            True,
+            [
+                (
+                    lambda workdir: (
+                        workdir / "build/package/Dockerfile.example"
+                    ).rename(workdir / "build/package/Dockerfile")
+                ),
+            ],
+            [
+                ("hadolint", True),
+                ("dockle", True),
+                ("var/oci_images/stage-runtime.oci.tar", True),
+            ],
+            id="docker-builds",
         ),
     ],
 )
 def test_alterations(
     tmp_path: Path,
     capfd: CaptureFixture[str],
+    mutators: Union[Iterable[Callable[[Path], None]], Callable[[Path], None]],
     command: Optional[List[str]],
     success: bool,
-    files: Optional[Dict[str, str]],
-    expected_outputs: List[str],
+    matchers: Iterable[Tuple[str, bool]],
 ) -> None:
     if command is None:
         command = "docker compose run --rm devtools".split(" ")
-    if files is None:
-        files = {}
-    with ctx_prototype(tmp_path) as workdir:
-        for file_name, file_content in files.items():
-            (workdir / file_name).write_text(file_content)
-        if success:
-            subprocess.run(command, check=True)
-        else:
-            with pytest.raises(subprocess.CalledProcessError):
-                subprocess.run(command, check=True)
-        captured = capfd.readouterr()
-        with capfd.disabled():
-            sys.stdout.write("captured.out:\n")
-            sys.stdout.write(captured.out)
-            sys.stderr.write("captured.err:\n")
-            sys.stderr.write(captured.err)
+    if not isinstance(mutators, Iterable):
+        mutators = [mutators]
+    with ExitStack() as xstack:
+        workdir = xstack.enter_context(ctx_prototype(tmp_path))
+        for mutator in mutators:
+            mutator(workdir)
+        if not success:
+            xstack.enter_context(pytest.raises(subprocess.CalledProcessError))
+        subprocess.run(command, check=True)
 
-        for expected_output in expected_outputs:
-            assert expected_output in (captured.out + captured.err)
+    cap = Captured.from_capfd(capfd)
+
+    for match_string, match_positive in matchers:
+        found = (
+            next((line for line in cap.all_lines if match_string in line), None)
+            is not None
+        )
+        if match_positive:
+            assert (
+                found
+            ), f"did not find {match_string} in output ...{found}\n{cap.all()}"
+        else:
+
+            assert not found, f"found {match_string} in output{found}\n{cap.all()}"
 
 
 def test_prototype_failing_tests(tmp_path: Path, capfd: CaptureFixture[str]) -> None:

@@ -4,3 +4,6 @@ ignored:
   # Ignoring this as pinning versions essentially breaks the utility provided
   # by dependabot and we can't pin ranges either.
   - DL3008
+  # Ignoring DL3029 as we use platform for images that don't have multiplatform
+  # support as a best effort measure.
+  - DL3029 # warning: Do not use --platform flag with FROM

@@ -1,0 +1,48 @@
+# https://docs.docker.com/engine/reference/builder/
+# https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/experimental.md
+# https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+
+FROM docker.io/alpine@sha256:e1c082e3d3c45cccac829840a25941e679c25d438cc8412c2fa221cf1a824e6a AS alpine
+
+FROM alpine AS runtime
+
+RUN \
+    apk --no-cache update &&\
+    apk --no-cache add \
+        tzdata \
+    && \
+    ln -vfs /usr/share/zoneinfo/UTC /etc/localtime && \
+    true
+
+ARG app_name
+
+RUN \
+    1>&2 echo "The app_name build arg should be set" && \
+    test -n "${app_name}"
+
+ARG app_executable=${app_name}
+ARG outputs_dir=var/outputs
+
+COPY --chown=root:root ${outputs_dir}/${app_executable} /usr/local/bin/${app_executable}
+
+RUN \
+    chmod ugo-w /usr/local/bin/${app_executable}
+
+ARG group_name=${app_name}
+ARG user_name=${app_name}
+ARG workdir=/var/opt/${app_name}
+
+RUN \
+    addgroup -S ${group_name} && \
+    adduser -S -H -D -h ${workdir} -G ${group_name} ${user_name} && \
+    mkdir -vp ${workdir} && \
+    chown -R ${user_name}:${group_name} ${workdir} && \
+    true
+
+USER ${user_name}:${group_name}
+WORKDIR ${workdir}
+
+ENV __dba_app_executable=${app_executable}
+ENV __dba_app_name=${app_name}
+
+ENTRYPOINT ["sh", "-c", "exec /usr/local/bin/${__dba_app_executable} \"${@}\"", "/usr/local/bin/${__dba_app_executable}"]
