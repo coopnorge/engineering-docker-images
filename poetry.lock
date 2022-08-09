@@ -226,8 +226,8 @@ optional = false
 python-versions = ">=3.6"
 
 [package.extras]
-dev = ["pre-commit", "tox"]
-testing = ["pytest", "pytest-benchmark"]
+testing = ["pytest-benchmark", "pytest"]
+dev = ["tox", "pre-commit"]
 
 [[package]]
 name = "py"
@@ -266,14 +266,14 @@ diagrams = ["railroad-diagrams", "jinja2"]
 
 [[package]]
 name = "pyproject-flake8"
-version = "0.0.1a4"
+version = "0.0.1a5"
 description = "pyproject-flake8 (`pflake8`), a monkey patching wrapper to connect flake8 with pyproject.toml configuration"
 category = "dev"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
-flake8 = "*"
+flake8 = "<5.0.0"
 tomli = {version = "*", markers = "python_version < \"3.11\""}
 
 [[package]]
@@ -368,7 +368,7 @@ test = ["websockets"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "56254224af994cdbb35f7a6aabc6d167c69cc83c426630afc30f1f23b271cfb6"
+content-hash = "c0873f710720ae0c32231a9c1bf89ce5934290d4e3c4ba561bd6162dc668e4ad"
 
 [metadata.files]
 atomicwrites = [
@@ -509,8 +509,8 @@ pyparsing = [
     {file = "pyparsing-3.0.9.tar.gz", hash = "sha256:2b020ecf7d21b687f219b71ecad3631f644a47f01403fa1d1036b0c6416d70fb"},
 ]
 pyproject-flake8 = [
-    {file = "pyproject-flake8-0.0.1a4.tar.gz", hash = "sha256:8ed9453f1d984cfe94c998f9840275359e29e7f435b8ddd188ae084e2dc1270c"},
-    {file = "pyproject_flake8-0.0.1a4-py2.py3-none-any.whl", hash = "sha256:1a8f94e18d08677ee780625049d9d00a9ee823661c6606caab8a383351037a75"},
+    {file = "pyproject-flake8-0.0.1a5.tar.gz", hash = "sha256:22542080ba90d4bd80ee060852db15a24aeea61c9a29ed7c16f5b59b0e47a03a"},
+    {file = "pyproject_flake8-0.0.1a5-py2.py3-none-any.whl", hash = "sha256:c843d760c49d7b270e9abda58a57765c031918a9d10da25aa43572f5d77cac43"},
 ]
 pytest = [
     {file = "pytest-7.1.2-py3-none-any.whl", hash = "sha256:13d0e3ccfc2b6e26be000cb6568c832ba67ba32e719443bfe725814d3c42433c"},
