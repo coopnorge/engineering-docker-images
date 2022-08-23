@@ -234,9 +234,9 @@ platformdirs==2.5.2 \
     --hash=sha256:027d8e83a2d7de06bbac4e5ef7e023c02b863d7ea5d079477e722bb41ab25788 \
     --hash=sha256:58c8abb07dcb441e6ee4b11d8df0ac856038f944ab98b7be6b27b2a3c7feef19
     # via virtualenv
-poetry==1.1.14 \
-    --hash=sha256:8b5a7676cda9b9e85c71743c672352cabcb6e2f647b6b88fa95e4f374bc8edce \
-    --hash=sha256:fbd0b2536b730cd1d7a1fabb3a292a2cc423c5da3d59c4db44335a449f5acd9a
+poetry==1.1.15 \
+    --hash=sha256:2f8f68bc02006386dd640d08e0ae483231501c6e727842a8a799c9ee376b98c2 \
+    --hash=sha256:a373848fd205f31b2f6bee6b87a201ea1e09ca573a2f40d0991539f564cedffd
     # via -r requirements-poetry.in
 poetry-core==1.0.8 \
     --hash=sha256:54b0fab6f7b313886e547a52f8bf52b8cf43e65b2633c65117f8755289061924 \
