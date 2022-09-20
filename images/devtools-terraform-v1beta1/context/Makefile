@@ -83,13 +83,13 @@ tf-reinit: tf-reinit-$(1)
 .PHONY: tf-reinit-$(1)
 tf-reinit-$(1): | $(tf_plugin_cache_dir_target)
 	cd $(1) && $$(tfswitch)
-	cd $(1) && $$(terraform) init
+	cd $(1) && $$(terraform) init $(terraform_init_args)
 
 tf-upgrade: tf-upgrade-$(1)
 .PHONY: tf-upgrade-$(1)
 tf-upgrade-$(1): | $(tf_plugin_cache_dir_target)
 	cd $(1) && $$(tfswitch)
-	cd $(1) && $$(terraform) init -upgrade
+	cd $(1) && $$(terraform) init -upgrade $(terraform_init_args)
 	cd $(1) && $$(terraform) providers lock $(terraform_providers_lock_args)
 
 tf-relock: tf-relock-$(1)
