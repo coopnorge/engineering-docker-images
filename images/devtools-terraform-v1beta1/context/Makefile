@@ -67,7 +67,8 @@ $(call dump_vars,tf_plugin_cache_dir_target TF_PLUGIN_CACHE_DIR)
 	cd $(*) && $(terraform) init $(terraform_init_args)
 
 tfsec=tfsec
-tflint=tflint --enable-plugin=google --enable-plugin=azurerm $(if $(filter all commands,$(VERBOSE)),--loglevel=trace)
+#tflint=tflint --enable-plugin=google --enable-plugin=azurerm $(if $(filter all commands,$(VERBOSE)),--loglevel=trace)
+tflint=echo tflint is disabled until 1.3.0 supported is fixed. Check https://github.com/terraform-linters/tflint/pull/1519
 tfdocs_check=terraform-docs . -c $(terraform_docs_config) --output-check
 tfdocs_generate=terraform-docs . -c $(terraform_docs_config)
 
