@@ -55,10 +55,11 @@ jobs:
           python-version: "3.10"
       - name: Setup Poetry
         uses: Gr1N/setup-poetry@v7
-      - id: toolchain
+      - name: Run Poetry Install
+        id: toolchain
         shell: bash
         run: |
-          poetry install
+          poetry install -vvv
       - uses: crazy-max/ghaction-github-runtime@v2.0.0
       - uses: docker/setup-qemu-action@v2.0.0
       - uses: docker/setup-buildx-action@v2.0.0
