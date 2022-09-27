@@ -5,6 +5,7 @@ FROM docker.io/hadolint/hadolint:v2.10.0@sha256:93f0afd12c3be5d732227c0226dd8e7b
 FROM --platform=linux/amd64 docker.io/goodwithtech/dockle:v0.4.6@sha256:534ecfe2204403e1b563d61b255ddd4762b20c9d72ce7af239fb1135be6c9569 AS dockle
 FROM docker.io/moby/buildkit:v0.10.4-rootless@sha256:fc81ed8d967a60bf0e6bff38d4cf9d40be6e815d559c5796c8428cd82fd05674 AS buildkit
 FROM gcr.io/go-containerregistry/crane:v0.11.0@sha256:40823185f184cfc2fed19318988ad5119f4d2fd1eadee51d8b2b365016a6c03b AS crane
+FROM docker.io/bufbuild/buf:1.7.0@sha256:21aaf6aae139b668fb23daeaef5b2b2172893a8a7d9071c8fd965cd7dd9764b1 AS buf
 FROM docker.io/library/golang:1.19.1-bullseye@sha256:c41345ea7f7b10a980cb3a8d67943a0c5ca2c4f8bf277f523e09ffee2ea6241d AS base
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -43,18 +44,6 @@ RUN \
     rm -rf /var/tmp/build && \
     true
 
-ARG buf_version=1.5.0
-
-COPY buf-fetch.sh buf-${buf_version}.sha256sum /var/tmp/build/
-
-RUN \
-    cd /var/tmp/build && \
-    . /usr/local/bin/goenv.sh && \
-    FILE_SELECTOR="$(uname -s)-$(uname -m)" FILE_VERSION="${buf_version}" OUTPUT_PATH=/usr/local/bin /var/tmp/build/buf-fetch.sh && \
-    buf --version && \
-    rm -rf /var/tmp/build/* && \
-    true
-
 COPY go.mod go.sum tools.go /var/tmp/build/
 
 RUN \
@@ -76,7 +65,7 @@ COPY --from=yq /usr/bin/yq /usr/local/bin/yq
 COPY --from=hadolint /bin/hadolint /usr/local/bin/hadolint
 COPY --from=dockle /usr/bin/dockle /usr/local/bin/dockle
 COPY --from=crane /ko-app/crane /usr/local/bin/
-
+COPY --from=buf /usr/local/bin/buf /usr/local/bin/
 COPY --from=buildkit /usr/bin/buildkit* /usr/bin/buildctl* /usr/bin/rootlesskit /usr/local/bin/
 
 COPY .golangci.yml /.golangci.yml
@@ -84,15 +73,15 @@ COPY .golangci.yml /.golangci.yml
 COPY maker /usr/local/bin/maker
 
 RUN \
-    ln -s /usr/local/bin/maker /usr/local/bin/help && \
-    ln -s /usr/local/bin/maker /usr/local/bin/validate && \
-    ln -s /usr/local/bin/maker /usr/local/bin/validate-fix && \
-    ln -s /usr/local/bin/maker /usr/local/bin/validate-static && \
-    ln -s /usr/local/bin/maker /usr/local/bin/test && \
-    ln -s /usr/local/bin/maker /usr/local/bin/build && \
-    ln -s /usr/local/bin/maker /usr/local/bin/publish && \
+    set -x; \
+    targets=(help validate validate-fix validate-static test validate-golang validate-golang-fix validate-golang-static test-golang build publish watch build-oci validate-oci push-oci); \
+    for target in "${targets[@]}"; \
+    do \
+        ln -s /usr/local/bin/maker "/usr/local/bin/${target}"; \
+    done && \
     true
 
-COPY Makefile /usr/local/share/devtools-golang/Makefile
+COPY Makefile /usr/local/share/devtools-golang/
+COPY Dockerfile.app /usr/local/share/devtools-golang/
 
 CMD ["validate", "build"]
