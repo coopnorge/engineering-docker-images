@@ -313,8 +313,8 @@ def write_google_versions_tf(workdir: Path) -> None:
 terraform {
   required_providers {
     null = {
-      source = "hashicorp/null"
-      # version = "~> 3.1.0"
+      source  = "hashicorp/null"
+      version = "~> 3.1.0"
     }
     google = {
       source  = "hashicorp/google"
