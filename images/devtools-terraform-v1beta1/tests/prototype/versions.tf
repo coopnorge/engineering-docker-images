@@ -3,7 +3,8 @@
 terraform {
   required_providers {
     null = {
-      source = "hashicorp/null"
+      source  = "hashicorp/null"
+      version = "> 0"
     }
   }
   required_version = "~> 1.0"
