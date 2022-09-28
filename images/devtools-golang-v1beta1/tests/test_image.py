@@ -188,23 +188,6 @@ func UnusedFunc() int {
             [],
             id="golangci-config-used",
         ),
-        pytest.param(
-            None,
-            True,
-            [
-                (
-                    lambda workdir: (
-                        workdir / "build/package/Dockerfile.example"
-                    ).rename(workdir / "build/package/Dockerfile")
-                ),
-            ],
-            [
-                ("hadolint", True),
-                ("dockle", True),
-                ("var/oci_images/stage-runtime.oci.tar", True),
-            ],
-            id="docker-builds",
-        ),
     ],
 )
 def test_alterations(
@@ -222,9 +205,11 @@ def test_alterations(
     with ExitStack() as xstack:
         workdir = xstack.enter_context(ctx_prototype(tmp_path))
         for mutator in mutators:
+            logging.debug("workdir = %s, mutator = %s", workdir, mutator)
             mutator(workdir)
         if not success:
             xstack.enter_context(pytest.raises(subprocess.CalledProcessError))
+        logging.debug("running %s", command)
         subprocess.run(command, check=True)
 
     cap = Captured.from_capfd(capfd)
@@ -239,8 +224,65 @@ def test_alterations(
                 found
             ), f"did not find {match_string} in output ...{found}\n{cap.all()}"
         else:
-
             assert not found, f"found {match_string} in output{found}\n{cap.all()}"
+
+
+@dataclass
+class TestHelper:
+    workdir: Path
+    capfd: CaptureFixture[str]
+
+    def __post_init__(self) -> None:
+        logging.debug(f"{self.workdir = }, {self.capfd = }")
+
+    def captured(self) -> Captured:
+        return Captured.from_capfd(self.capfd)
+
+    def run(
+        self,
+        command: Optional[List[str]] = None,
+        command_extra: Optional[List[str]] = None,
+    ) -> None:
+        if command is None:
+            command = "docker compose run --rm devtools".split(" ")
+        if command_extra is not None:
+            command.extend(command_extra)
+        subprocess.run(command, check=True)
+        logging.debug("running %s", command)
+
+
+@pytest.fixture(scope="function")
+def test_helper(
+    tmp_path: Path, capfd: CaptureFixture[str]
+) -> Generator[TestHelper, None, None]:
+    with ctx_prototype(tmp_path) as workdir:
+        logging.debug(f"{tmp_path = } {workdir = }")
+        yield TestHelper(workdir, capfd)
+        logging.debug("done ...")
+
+
+def append_to_file(file_path: Path, lines: Iterable[str]) -> None:
+    with file_path.open("a") as tio:
+        tio.writelines(lines)
+
+
+def test_docker_build_app_defined(test_helper: TestHelper) -> None:
+    workdir = test_helper.workdir
+    (workdir / "build/package/Dockerfile.example").rename(
+        workdir / "build/package/Dockerfile"
+    )
+    append_to_file(
+        (workdir / "build/package/Dockerfile"),
+        ["RUN echo 4eda66c7-5bbf-4fec-b855-8a208bb10760"],
+    )
+    append_to_file((workdir / "devtools.env"), ["BUILD_OCI=true"])
+    test_helper.run(command_extra=["bash", "-c", "time validate"])
+    captured = test_helper.captured()
+    assert "hadolint" in captured.all()
+    assert "dockle" in captured.all()
+    assert "var/oci_images/stage-runtime.oci.tar" in captured.all()
+    assert "Dockerfile.app" not in captured.all()
+    assert "4eda66c7-5bbf-4fec-b855-8a208bb10760" in captured.all()
 
 
 def test_prototype_failing_tests(tmp_path: Path, capfd: CaptureFixture[str]) -> None:
@@ -341,6 +383,7 @@ def prototype_ro() -> Generator[Path, None, None]:
         "mockgen -version".split(),
         "protoc-gen-go --version".split(),
         "protoc-gen-go-grpc -version".split(),
+        "buf --version".split(),
     ],
 )
 def test_commands_run(prototype_ro: Path, command: List[str]) -> None:

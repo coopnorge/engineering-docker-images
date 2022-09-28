@@ -38,8 +38,8 @@ are defined.
 - Variable `BUILD_OCI`: `true` or `false` indicating whether to build an
   OCI image.
 
-  Default: This defaults to `true` if a `APP_DOCKERFILE` is exists and to
-  `false` in other cases.
+  Default: This defaults to `true` if a user supplied `APP_DOCKERFILE` exists
+  and to `false` in other cases.
 
 - Variable `OCI_REF_NAMES`: The space seperated OCI reference names that the
   OCI image should be published as.

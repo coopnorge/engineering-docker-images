@@ -10,6 +10,9 @@ docker compose build
 # run the default target
 docker compose run --rm devtools
 
+# run the default target
+docker compose run --rm devtools watch
+
 # build and validate the OCI image
 docker compose run --rm -e APP_DOCKERFILE=build/package/Dockerfile.example devtools validate VERBOSE=all; \
 cat var/oci_images/stage-runtime.oci.tar | docker image load

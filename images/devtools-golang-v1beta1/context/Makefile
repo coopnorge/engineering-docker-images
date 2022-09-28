@@ -65,15 +65,15 @@ export POSIXLY_CORRECT:=1
 golangci_lint=golangci-lint $(if $(filter all commands,$(VERBOSE)),-v)
 giti_description=$(shell git describe --tags --always)
 giti_commit_hash=$(shell git log -1 --format="%H")
+giti_commit_date=$(shell git log -1 --format="%aI")
 giti_url:=$(shell git remote get-url origin)
-dt_info:=$(shell date "+%Y-%m-%d %H:%M:%S%z")
 go_mod:=$(shell go list -m)
 go_ldflags= \
 	-ldflags \
 	"-X '$(go_mod)/internal/version.gitCommit=$(giti_commit_hash)' \
 	-X '$(go_mod)/internal/version.gitRemote=$(giti_url)' \
 	-X '$(go_mod)/internal/version.gitDesc=$(giti_description)' \
-	-X '$(go_mod)/internal/version.buildDT=$(dt_info)'" \
+	-X '$(go_mod)/internal/version.gitCommitDate=$(giti_commit_date)'" \
 
 go_build_flags=
 
@@ -97,15 +97,35 @@ validate: validate-static test  ## Run static and dynamic validation (tests)
 
 .PHONY: validate-fix
 validate-fix:  ## Let the tooling fix what can be automatically fixed
-	$(golangci_lint) run  --fix ./...
-
 .PHONY: validate-static
-validate-static:  ## Static code validation
-	$(golangci_lint) run  ./...
-
+validate-static:  ## Static validation
 .PHONY: test
 test:  ## Dynamic code validation
-test coverage.out:
+.PHONY: publish
+publish: ## publish artifacts
+
+########################################################################
+# golang
+########################################################################
+
+validate-fix: validate-golang-fix
+.PHONY: validate-golang-fix
+validate-golang-fix:
+	$(golangci_lint) run  --fix ./...
+
+
+.PHONY: validate-golang-static
+validate-static: validate-golang-static
+validate-golang-static:
+	$(golangci_lint) run  ./...
+
+.PHONY: validate-golang
+validate: validate-golang
+validate-golang: validate-golang-static test-golang  ## Run static and dynamic validation (tests)
+
+.PHONY: test-golang
+test: test-golang
+test-golang coverage.out:
 	go test -cover \
 		-race \
 		$(go_build_flags) \
@@ -137,12 +157,20 @@ build-golang-outputs: | $(outputs_dir)/
 		-o $(outputs_dir) \
 		./...
 
+modd_cmd?=modd
+modd_args?=
+
+.PHONY: watch
+watch:
+	$(modd_cmd) $(modd_args)
+
 .PHONY: install
 install: $(call skipable,validate) ## install everything
 	go install $(go_build_flags) $(go_ldflags) ./...
 
-.PHONY: publish
-publish: ## publish artifacts
+.PHONY: run-golang
+run-golang:
+	go run $(go_ldflags) ./cmd/$(APP_EXECUTABLE) $(run_args)
 
 ########################################################################
 # OCI
@@ -165,10 +193,8 @@ oci-context: build-golang-outputs
 
 .PHONY: validate-dockerfile
 validate-dockerfile: ## validate the dockerfile
-validate-dockerfile: $(stamps_dir)/Dockerfile.valid
-$(stamps_dir)/Dockerfile.valid: $(APP_DOCKERFILE) | $(stamps_dir)/
+validate-dockerfile: $(APP_DOCKERFILE)
 	hadolint $(<)
-	touch $(@)
 
 oci_tag_prefix=
 
@@ -225,7 +251,7 @@ oci-build-stage-%: $(APP_DOCKERFILE) validate-dockerfile | $(oci_images_dir)/ $(
 $(oci_images_dir)/stage-%.oci.tar: buildctl_extra_args=--opt target=$(*)
 $(oci_images_dir)/stage-%.oci.tar: oci_build_stage_output=type=docker,\"name=$(call merge,$(comma),$(oci_refs))\",dest=$(oci_images_dir)/stage-$(*).oci.tar
 $(oci_images_dir)/stage-%.oci.tar: oci-build-stage-%
-	echo $(<) :: $(@)
+	@echo $(<) :: $(@)
 
 
 $(oci_images_dir)/stage-runtime.oci.tar: $(call skipable,validate-dockerfile oci-context)
@@ -246,6 +272,7 @@ push-oci: $(oci_images_dir)/stage-runtime.oci.tar
 		crane push $(<) $(oci_ref_remote)$(__newline))
 
 ifneq ($(call parse_bool,$(BUILD_OCI)),)
+$(info adding OCI targets ...)
 validate: validate-dockerfile validate-oci
 build: build-oci
 publish: push-oci
