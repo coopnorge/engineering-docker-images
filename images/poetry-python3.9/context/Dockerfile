@@ -29,10 +29,11 @@ ENV PYTHONUNBUFFERED=1 \
 ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 
 COPY requirements-poetry.txt requirements-poetry.txt
-RUN pip install \
-    --no-cache-dir \
-    --require-hashes  \
-    --verbose \
-    --use-pep517 \
-    --requirement requirements-poetry.txt && \
-    rm -rf requirements-poetry.txt
+RUN python3 -m venv $POETRY_HOME && \
+    $POETRY_HOME/bin/pip install \
+        --no-cache-dir \
+        --require-hashes  \
+        --verbose \
+        --use-pep517 \
+        --requirement requirements-poetry.txt && \
+        rm -rf requirements-poetry.txt
