@@ -1,0 +1,67 @@
+{
+	"composefiles": {
+		"docker-compose.yaml": [
+			{
+				"name": "plantuml/plantuml",
+				"tag": "1.2022.10",
+				"digest": "3d3d7b027213c911b3012c5818fcdd9e47bbe4503635b520bb10a563d1293c79",
+				"dockerfile": "Dockerfile",
+				"service": "npm-tools"
+			},
+			{
+				"name": "docker.io/library/node",
+				"tag": "18.10.0-bullseye",
+				"digest": "c48cf8c493930d6b5fbada793144b177113fefeda5397e99173938c59933285d",
+				"dockerfile": "Dockerfile",
+				"service": "npm-tools"
+			},
+			{
+				"name": "docker.io/library/python",
+				"tag": "3.10.7",
+				"digest": "e9c35537103a2801a30b15a77d4a56b35532c964489b125ec1ff24f3d5b53409",
+				"dockerfile": "Dockerfile",
+				"service": "npm-tools"
+			},
+			{
+				"name": "plantuml/plantuml",
+				"tag": "1.2022.10",
+				"digest": "3d3d7b027213c911b3012c5818fcdd9e47bbe4503635b520bb10a563d1293c79",
+				"dockerfile": "Dockerfile",
+				"service": "pip-tools"
+			},
+			{
+				"name": "docker.io/library/node",
+				"tag": "18.10.0-bullseye",
+				"digest": "c48cf8c493930d6b5fbada793144b177113fefeda5397e99173938c59933285d",
+				"dockerfile": "Dockerfile",
+				"service": "pip-tools"
+			},
+			{
+				"name": "docker.io/library/python",
+				"tag": "3.10.7",
+				"digest": "e9c35537103a2801a30b15a77d4a56b35532c964489b125ec1ff24f3d5b53409",
+				"dockerfile": "Dockerfile",
+				"service": "pip-tools"
+			}
+		]
+	},
+	"dockerfiles": {
+		"Dockerfile": [
+			{
+				"name": "plantuml/plantuml",
+				"tag": "1.2022.10",
+				"digest": "3d3d7b027213c911b3012c5818fcdd9e47bbe4503635b520bb10a563d1293c79"
+			},
+			{
+				"name": "docker.io/library/node",
+				"tag": "18.10.0-bullseye",
+				"digest": "c48cf8c493930d6b5fbada793144b177113fefeda5397e99173938c59933285d"
+			},
+			{
+				"name": "docker.io/library/python",
+				"tag": "3.10.7",
+				"digest": "e9c35537103a2801a30b15a77d4a56b35532c964489b125ec1ff24f3d5b53409"
+			}
+		]
+	}
+}
