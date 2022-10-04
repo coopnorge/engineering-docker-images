@@ -56,3 +56,15 @@ updates:
     directory: "images/benthos-v4/context/"
     schedule:
       interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "images/techdocs-cli/context/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pip"
+    directory: "images/techdocs-cli/context/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "images/techdocs-cli/context/"
+    schedule:
+      interval: "daily"
