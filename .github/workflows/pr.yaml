@@ -9,12 +9,44 @@ env:
   XDG_CACHE_HOME: ${{ github.workspace }}/.cache/xdg
   POETRY_CACHE_DIR: ${{ github.workspace }}/.cache/poetry
 jobs:
-  build:
+  setup:
     runs-on: ubuntu-latest
+    outputs:
+      image-names: ${{ steps.image-names.outputs.image-names }}
+      images-ci: ${{ steps.paths-filter.outputs.images }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: paths-filter
+        with:
+          base: main
+          list-files: json
+          filters: |
+            images:
+              - 'images/**'
+      - run: |
+          set -x
+          wget https://github.com/mikefarah/yq/releases/download/v4.25.2/yq_linux_amd64 -O ${GITHUB_WORKSPACE}/yq
+          chmod +x ${GITHUB_WORKSPACE}/yq
+      - id: image-names
+        shell: bash
+        run: |
+          images=$(echo ${{ steps.paths-filter.outputs.images_files }} | yq -o=json -I0 '.[] |= sub("images/([^/]+)/.*$", "${1}") | unique' -)
+          echo "$images"
+          echo "::set-output name=image-names::${images}"
+      - run: echo ${{ steps.image-names.outputs.image-names }}
+
+  image-ci:
+    runs-on: ubuntu-latest
+    needs: ["setup"]
+    if: ${{ needs.setup.outputs.images-ci == 'true' }}
     permissions:
       id-token: write
       packages: write
       contents: read
+    strategy:
+      matrix:
+        image: ${{ fromJSON(needs.setup.outputs.image-names) }}
     steps:
       - uses: actions/checkout@v3
       - name: Cache xdg
@@ -38,20 +70,6 @@ jobs:
           key: pyvenv-v1-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |
             pyvenv-v1-
-      - uses: dorny/paths-filter@v2
-        id: paths-filter
-        with:
-          base: main
-          list-files: shell
-          filters: |
-            images:
-              - 'images/**'
-      - id: image-names
-        shell: bash
-        run: |
-          image_names="$(printf "%s\n" ${{ steps.paths-filter.outputs.images_files }} | sed -E -e 's,^.*images/([^/]+)/.*$,\1,g' | sort | uniq | tr '\n' ' ')"
-          declare -p image_names
-          echo "::set-output name=image_names::${image_names}"
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -72,13 +90,13 @@ jobs:
       - name: Build images
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          IMAGE_NAMES: ${{ steps.image-names.outputs.image_names }}
+          IMAGE_NAMES: ${{ matrix.image }}
         run: |
           export docker_image_build_args="--cache-from type=gha --cache-to type=gha,mode=max"
           make VERBOSE=all validate-static build-images
       - name: Test images
         env:
-          IMAGE_NAMES: ${{ steps.image-names.outputs.image_names }}
+          IMAGE_NAMES: ${{ matrix.image }}
         run: |
           make VERBOSE=all -j4 test
       - name: Auth to GCP
@@ -95,8 +113,19 @@ jobs:
       - name: Push images
         if: github.ref == 'refs/heads/main'
         env:
-          IMAGE_NAMES: ${{ steps.image-names.outputs.image_names }}
+          IMAGE_NAMES: ${{ matrix.image }}
         run: |
           echo "${{ github.token }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
           make push-images oci_remote_ref_prefixes=ghcr.io/${{ github.repository }}/e0/
           make push-images oci_remote_ref_prefixes=europe-north1-docker.pkg.dev/engineering-production-af50/images/
+
+  build:
+    needs:
+      - image-ci
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1
+        name: "Catch errors"
+        if: |
+          needs.image-ci.result == 'failure'
