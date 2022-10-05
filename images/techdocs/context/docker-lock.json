@@ -11,14 +11,21 @@
 			{
 				"name": "docker.io/library/node",
 				"tag": "18.10.0-bullseye",
-				"digest": "c48cf8c493930d6b5fbada793144b177113fefeda5397e99173938c59933285d",
+				"digest": "bb3b9f1867edba6d8892758889e43b2f0205ebbd381969a2c45577d38281ac90",
+				"dockerfile": "Dockerfile",
+				"service": "npm-tools"
+			},
+			{
+				"name": "jdkato/vale",
+				"tag": "v2.20.2",
+				"digest": "2025a2fae1f200e08d7c8b518c5cd1a556bee0087e5373b2a525b5580bed66db",
 				"dockerfile": "Dockerfile",
 				"service": "npm-tools"
 			},
 			{
 				"name": "docker.io/library/python",
 				"tag": "3.10.7",
-				"digest": "e9c35537103a2801a30b15a77d4a56b35532c964489b125ec1ff24f3d5b53409",
+				"digest": "0ad99314ad35ab18f2fe76a21be3b501c9cbcf9966bb621a26082f3fa95c287d",
 				"dockerfile": "Dockerfile",
 				"service": "npm-tools"
 			},
@@ -32,14 +39,21 @@
 			{
 				"name": "docker.io/library/node",
 				"tag": "18.10.0-bullseye",
-				"digest": "c48cf8c493930d6b5fbada793144b177113fefeda5397e99173938c59933285d",
+				"digest": "bb3b9f1867edba6d8892758889e43b2f0205ebbd381969a2c45577d38281ac90",
+				"dockerfile": "Dockerfile",
+				"service": "pip-tools"
+			},
+			{
+				"name": "jdkato/vale",
+				"tag": "v2.20.2",
+				"digest": "2025a2fae1f200e08d7c8b518c5cd1a556bee0087e5373b2a525b5580bed66db",
 				"dockerfile": "Dockerfile",
 				"service": "pip-tools"
 			},
 			{
 				"name": "docker.io/library/python",
 				"tag": "3.10.7",
-				"digest": "e9c35537103a2801a30b15a77d4a56b35532c964489b125ec1ff24f3d5b53409",
+				"digest": "0ad99314ad35ab18f2fe76a21be3b501c9cbcf9966bb621a26082f3fa95c287d",
 				"dockerfile": "Dockerfile",
 				"service": "pip-tools"
 			}
@@ -55,12 +69,17 @@
 			{
 				"name": "docker.io/library/node",
 				"tag": "18.10.0-bullseye",
-				"digest": "c48cf8c493930d6b5fbada793144b177113fefeda5397e99173938c59933285d"
+				"digest": "bb3b9f1867edba6d8892758889e43b2f0205ebbd381969a2c45577d38281ac90"
+			},
+			{
+				"name": "jdkato/vale",
+				"tag": "v2.20.2",
+				"digest": "2025a2fae1f200e08d7c8b518c5cd1a556bee0087e5373b2a525b5580bed66db"
 			},
 			{
 				"name": "docker.io/library/python",
 				"tag": "3.10.7",
-				"digest": "e9c35537103a2801a30b15a77d4a56b35532c964489b125ec1ff24f3d5b53409"
+				"digest": "0ad99314ad35ab18f2fe76a21be3b501c9cbcf9966bb621a26082f3fa95c287d"
 			}
 		]
 	}

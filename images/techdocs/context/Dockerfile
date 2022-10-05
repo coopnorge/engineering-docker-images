@@ -1,6 +1,8 @@
+FROM docker.io/library/node:18.10.0-bullseye@sha256:bb3b9f1867edba6d8892758889e43b2f0205ebbd381969a2c45577d38281ac90 as node
+FROM jdkato/vale:v2.20.2@sha256:2025a2fae1f200e08d7c8b518c5cd1a556bee0087e5373b2a525b5580bed66db as vale
 FROM plantuml/plantuml:1.2022.10@sha256:3d3d7b027213c911b3012c5818fcdd9e47bbe4503635b520bb10a563d1293c79 as plantuml
-FROM docker.io/library/node:18.10.0-bullseye@sha256:c48cf8c493930d6b5fbada793144b177113fefeda5397e99173938c59933285d as node
-FROM docker.io/library/python:3.10.7@sha256:e9c35537103a2801a30b15a77d4a56b35532c964489b125ec1ff24f3d5b53409 as base
+
+FROM docker.io/library/python:3.10.7@sha256:0ad99314ad35ab18f2fe76a21be3b501c9cbcf9966bb621a26082f3fa95c287d as base
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -45,6 +47,7 @@ FROM base as npm-tools
 
 FROM base as techdocs-cli
 
+COPY --from=vale /bin/vale /bin/vale
 COPY --from=plantuml /opt/plantuml.jar /opt/plantuml.jar
 # hadolint ignore=SC2016
 RUN echo $'#!/bin/sh\n\njava -jar '/opt/plantuml.jar' ${@}' >> /usr/local/bin/plantuml && \
