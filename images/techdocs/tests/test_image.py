@@ -21,7 +21,11 @@ def build_image(
 
 @pytest.mark.parametrize(
     "cli_command,expected_ouput",
-    [("techdocs-cli --version", b"1.2.0"), ("markdownlint --version", b"0.32.2")],
+    [
+        ("techdocs-cli --version", b"1.2.0"),
+        ("markdownlint --version", b"0.32.2"),
+        ("vale --version", b"vale version v2.20.2"),
+    ],
 )
 def test_image_should_return_a_correct_techdocs_cli_version(
     docker_client: docker.DockerClient,
