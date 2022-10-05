@@ -19,37 +19,19 @@ def build_image(
     return image
 
 
-@pytest.fixture(scope="session")
-def expected_techdocs_cli_version() -> bytes:
-    return b"1.2.0"
-
-
+@pytest.mark.parametrize(
+    "cli_command,expected_ouput",
+    [("techdocs-cli --version", b"1.2.0"), ("markdownlint --version", b"0.32.2")],
+)
 def test_image_should_return_a_correct_techdocs_cli_version(
     docker_client: docker.DockerClient,
     build_image: Image,
-    expected_techdocs_cli_version: bytes,
+    cli_command: str,
+    expected_ouput: bytes,
 ) -> None:
-    actual_techdocs_cli_version = docker_client.containers.run(
+    actual_output = docker_client.containers.run(
         build_image.id,
-        command="techdocs-cli --version",
+        command=cli_command,
         remove=True,
     )
-    assert actual_techdocs_cli_version.startswith(expected_techdocs_cli_version)
-
-
-@pytest.fixture(scope="session")
-def expected_markdownlint_cli_version() -> bytes:
-    return b"0.32.2"
-
-
-def test_image_should_return_a_correct_markdownlint_cli_version(
-    docker_client: docker.DockerClient,
-    build_image: Image,
-    expected_markdownlint_cli_version: bytes,
-) -> None:
-    actual_markdownlint_cli_version = docker_client.containers.run(
-        build_image.id,
-        command="markdownlint --version",
-        remove=True,
-    )
-    assert actual_markdownlint_cli_version.startswith(expected_markdownlint_cli_version)
+    assert actual_output.startswith(expected_ouput)
