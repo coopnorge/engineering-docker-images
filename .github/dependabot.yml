@@ -57,14 +57,14 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "docker"
-    directory: "images/techdocs-cli/context/"
+    directory: "images/techdocs/context/"
     schedule:
       interval: "daily"
   - package-ecosystem: "pip"
-    directory: "images/techdocs-cli/context/"
+    directory: "images/techdocs/context/"
     schedule:
       interval: "daily"
   - package-ecosystem: "npm"
-    directory: "images/techdocs-cli/context/"
+    directory: "images/techdocs/context/"
     schedule:
       interval: "daily"
