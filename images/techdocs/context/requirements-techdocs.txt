@@ -213,16 +213,15 @@ mkdocs-awesome-pages-plugin==2.8.0 \
 mkdocs-ezlinks-plugin==0.1.14 \
     --hash=sha256:3e2085c16a850e022393e80194c17612e7b55de87fb45b3ffb618b5dfdb10811
     # via -r requirements-techdocs.in
-mkdocs-git-revision-date-localized-plugin==1.1.0 \
+mkdocs-git-revision-date-localized-plugin==1.1 \
     --hash=sha256:38517e2084229da1a1b9460e846c2748d238c2d79efd405d1b9174a87bd81d79 \
     --hash=sha256:4ba0e49abea3e9f6ee26e2623ff7283873da657471c61f1d0cfbb986f403316d
     # via -r requirements-techdocs.in
 mkdocs-glightbox==0.3.0 \
     --hash=sha256:cea3b79277144cb8dbdb1dcb3fc420e64c4357b2453941db1452c166ad9430ad
     # via -r requirements-techdocs.in
-mkdocs-htmlproofer-plugin==0.8.0 \
-    --hash=sha256:48db49ede2d94939b4773feaa8159f88803bf5edd87ea99c78665f8d61107651 \
-    --hash=sha256:914fa007df4182e22440c5d23670eba36392e7f58f99de728f3b1d7cfb4847c6
+mkdocs-htmlproofer-plugin==0.9.0 \
+    --hash=sha256:c56ae9f15bae4e4e414800c9c0793c86037d73aecede266699b4f32eee6ae37b
     # via -r requirements-techdocs.in
 mkdocs-kroki-plugin==0.3.0 \
     --hash=sha256:075980011d1c9a54819948f41a3a9ce5a3edc9d85e1bca331503391d043c7f1c \
