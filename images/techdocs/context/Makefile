@@ -11,6 +11,10 @@ docker_compose_run=$(docker_compose) run --rm -T
 help: ## show this message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+########################################################################
+# Image dependencies management targets
+########################################################################
+
 requirements-%.txt: requirements-%.in
 	$(docker_compose_run) pip-tools pip-compile \
 		--verbose \
@@ -26,3 +30,28 @@ requirements-techdocs.txt: ## Generate requirements-techdocs.txt
 package-lock.json: package.json ## Generate requirements-techdocs.txt
 	$(docker_compose_run) npm-tools npm install \
 		--package-lock-only
+
+########################################################################
+# TechDocs targets
+########################################################################
+
+.PHONY: validate
+validate: lint linguistics-check ## Validate the content
+
+.PHONY: lint
+lint: ## Check markdown syntax
+	markdownlint $(DOCS_DIR)
+
+.PHONY: linguistics-check
+linguistics-check: ## Check spelling, grammer and other linguistics issues
+	vale $(MARKDOWN_FILES)
+
+.PHONY: build
+build: ## Build the website
+	techdocs-cli generate --no-docker
+
+ENTITY := $(shell yq --no-doc '[.metadata.namespace // "default", .kind, .metadata.name] | join("/")' ./catalog-info.yaml)
+
+.PHONY: publish
+publish: site ## Publish the website to the TechDocs Bucket
+	techdocs-cli publish --publisher-type googleGcs --storage-name $(TECHDOCS_BUCKET) --entity $(ENTITY)

@@ -1,0 +1,22 @@
+---
+default: true
+
+# MD007/ul-indent - Unordered list indentation
+MD007:
+  indent: 4  # This is what works in mkdocs
+
+MD033: false
+
+# MD046/code-block-style - Code block style
+MD046: false
+
+
+MD013:
+  code_blocks: false
+  tables: false
+
+MD024:
+  allow_different_nesting: true
+
+# MD029- ignored to prevent errors when using code blocks within ordered lists
+MD029: false

@@ -70,5 +70,17 @@ RUN pip install \
     --requirement requirements-techdocs.txt && \
     rm -rf requirements-techdocs.txt
 
+COPY maker /usr/local/bin/maker
+RUN \
+    ln -rs /usr/local/bin/maker /usr/local/bin/help && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/validate && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/lint && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/linguistics-check && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/build && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/publish && \
+    true
+
+COPY Makefile /usr/local/share/techdocs/Makefile
+
 RUN mkdir /content
 WORKDIR /content
