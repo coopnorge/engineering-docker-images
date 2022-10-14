@@ -1,0 +1,13 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: test-prototype
+  description: This is a test protoype
+  annotations:
+    github.com/project-slug: example/test-prototype
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: library
+  lifecycle: experimental
+  owner: people
