@@ -2,7 +2,7 @@ FROM docker.io/safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5
 FROM golangci/golangci-lint:v1.48.0-alpine@sha256:e9ce901b7974d641d6288b070fc619d199a823d0f696563fec8be90f19789b57 AS golangci-lint
 FROM docker.io/mikefarah/yq:4@sha256:72d6139326c64b51e2006ea9bd9063cc5dcbb1eedf893bac88c69e467b687d6b AS yq
 FROM docker.io/hadolint/hadolint:v2.10.0@sha256:93f0afd12c3be5d732227c0226dd8e7bb84f79319a773d7f8519e55f958ba415 AS hadolint
-FROM --platform=linux/amd64 docker.io/goodwithtech/dockle:v0.4.6@sha256:534ecfe2204403e1b563d61b255ddd4762b20c9d72ce7af239fb1135be6c9569 AS dockle
+FROM --platform=linux/amd64 docker.io/goodwithtech/dockle:v0.4.7@sha256:97a57c34009cdff979184185f686c4664f34d8702b427a21d02b6ac67c045fbd AS dockle
 FROM docker.io/moby/buildkit:v0.10.4-rootless@sha256:fc81ed8d967a60bf0e6bff38d4cf9d40be6e815d559c5796c8428cd82fd05674 AS buildkit
 FROM gcr.io/go-containerregistry/crane:v0.11.0@sha256:40823185f184cfc2fed19318988ad5119f4d2fd1eadee51d8b2b365016a6c03b AS crane
 FROM docker.io/bufbuild/buf:1.8.0@sha256:0793bed84c08f77c9d558b1ebac5de915386eaf672f39c09c4f9cd0144558ba8 AS buf
