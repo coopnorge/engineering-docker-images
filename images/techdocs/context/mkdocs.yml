@@ -1,3 +1,4 @@
+site_name: Baseline
 plugins:
   - techdocs-core
   - htmlproofer:
