@@ -63,7 +63,7 @@ def test_lint(
         volumes=volumes,
         remove=True,
     )
-    assert actual_output == b"markdownlint docs/\n"
+    assert b"markdownlint --config=../markdownlint.yaml docs/\n" in actual_output
 
 
 def test_linguistics_check(
