@@ -81,6 +81,7 @@ RUN \
     true
 
 COPY Makefile /usr/local/share/techdocs/Makefile
+COPY mkdocs.yml /usr/local/share/techdocs/mkdocs.yml
 
 RUN mkdir /content
 WORKDIR /content
