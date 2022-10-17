@@ -49,7 +49,7 @@ linguistics-check: ## Check spelling, grammer and other linguistics issues
 .PHONY: build
 build: ## Build the website
 	mv mkdocs.yml ..
-	yq '. *= load("/usr/local/share/techdocs/mkdocs.yml")' ../mkdocs.yml > mkdocs.yml
+	yq '. *= load("../mkdocs.yml")' /usr/local/share/techdocs/mkdocs.yml > mkdocs.yml
 	techdocs-cli generate --no-docker
 	mv ../mkdocs.yml .
 
