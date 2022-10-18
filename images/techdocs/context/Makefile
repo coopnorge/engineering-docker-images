@@ -38,9 +38,17 @@ package-lock.json: package.json ## Generate requirements-techdocs.txt
 .PHONY: validate
 validate: lint linguistics-check ## Validate the content
 
+../markdownlint.yaml:
+	if [ -s .markdownlint.yaml ]; then \
+	    yq '. *= load(".markdownlint.yaml")' /usr/local/share/techdocs/markdownlint.yaml > $@ ;\
+	else \
+	    cp /usr/local/share/techdocs/markdownlint.yaml $@ ;\
+	fi
+	cat $@
+
 .PHONY: lint
-lint: ## Check markdown syntax
-	markdownlint $(DOCS_DIR)
+lint: ../markdownlint.yaml ## Check markdown syntax
+	markdownlint --config=../markdownlint.yaml $(DOCS_DIR)
 
 .PHONY: linguistics-check
 linguistics-check: ## Check spelling, grammer and other linguistics issues

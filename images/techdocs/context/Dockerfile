@@ -82,6 +82,7 @@ RUN \
 
 COPY Makefile /usr/local/share/techdocs/Makefile
 COPY mkdocs.yml /usr/local/share/techdocs/mkdocs.yml
+COPY markdownlint.yaml /usr/local/share/techdocs/markdownlint.yaml
 
 RUN mkdir /content
 WORKDIR /content
