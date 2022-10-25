@@ -10,6 +10,7 @@ services:
     volumes:
       - .:/srv/workspace:z
       - xdg-cache-home:/root/.cache
+      - poetry:/root/.local/share/pypoetry
       - /var/run/docker.sock:/var/run/docker.sock:z
     command: ["make", "all"]
     ports:
@@ -38,3 +39,4 @@ services:
       - .:/srv/workspace:z
 volumes:
     xdg-cache-home: {}
+    poetry: {}
