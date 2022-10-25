@@ -73,6 +73,13 @@ Devtools images are intended for use in git repos to do validation and artifact 
   - [`ghcr.io/coopnorge/engineering-docker-images/e0/poetry-python3.10`](https://github.com/coopnorge/engineering-docker-images/pkgs/container/engineering-docker-images%2Fe0%2Fpoetry-python3.10)
   - [`europe-north1-docker.pkg.dev/engineering-production-af50/images/poetry-python3.10`](https://console.cloud.google.com/artifacts/docker/engineering-production-af50/europe-north1/images/poetry-python3.10)
 
+- `poetry-python3.11`: Development tools for poetry ecosystem and python 3.11.
+
+[README](./images/poetry-python3.11/README.md).
+
+  - [`ghcr.io/coopnorge/engineering-docker-images/e0/poetry-python3.11`](https://github.com/coopnorge/engineering-docker-images/pkgs/container/engineering-docker-images%2Fe0%2Fpoetry-python3.11)
+  - [`europe-north1-docker.pkg.dev/engineering-production-af50/images/poetry-python3.11`](https://console.cloud.google.com/artifacts/docker/engineering-production-af50/europe-north1/images/poetry-python3.11)
+
 #### Security Considerations for devtools
 
 **WARNING**: The devtools images should only be used with rootless docker or
