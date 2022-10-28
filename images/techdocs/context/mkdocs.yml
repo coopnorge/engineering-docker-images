@@ -1,4 +1,7 @@
 site_name: Baseline
+repo_name: !ENV [REPO_NAME, null]
+repo_url: !ENV [REPO_URL, null]
+edit_url: !ENV [EDIT_URL, null]
 plugins:
   - techdocs-core
   - htmlproofer:
