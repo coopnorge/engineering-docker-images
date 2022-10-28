@@ -58,7 +58,7 @@ linguistics-check: ## Check spelling, grammer and other linguistics issues
 build: ## Build the website
 	mv mkdocs.yml ..
 	yq '. *= load("../mkdocs.yml")' /usr/local/share/techdocs/mkdocs.yml > mkdocs.yml
-	techdocs-cli generate --no-docker
+	export REPO_NAME=$(REPO_NAME) export REPO_URL=$(REPO_URL) && export EDIT_URL=$(EDIT_URL) && techdocs-cli generate --no-docker
 	mv ../mkdocs.yml .
 
 ENTITY := $(shell yq --no-doc '[.metadata.namespace // "default", .kind, .metadata.name] | join("/")' ./catalog-info.yaml)
