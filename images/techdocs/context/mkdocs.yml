@@ -1,4 +1,4 @@
-site_name: Baseline
+site_name: !ENV SITE_NAME
 repo_name: !ENV [REPO_NAME, null]
 repo_url: !ENV [REPO_URL, null]
 edit_url: !ENV [EDIT_URL, null]

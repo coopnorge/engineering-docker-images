@@ -54,12 +54,15 @@ lint: ../markdownlint.yaml ## Check markdown syntax
 linguistics-check: ## Check spelling, grammer and other linguistics issues
 	vale $(MARKDOWN_FILES)
 
+SITE_NAME := $(shell  yq --no-doc '.metadata.title // .metadata.name' ./catalog-info.yaml)
+
+.PHONY: mkdocs.yml
+mkdocs.yml: /usr/local/share/techdocs/mkdocs.yml
+	cp /usr/local/share/techdocs/mkdocs.yml mkdocs.yml
+
 .PHONY: build
-build: ## Build the website
-	mv mkdocs.yml ..
-	yq '. *= load("../mkdocs.yml")' /usr/local/share/techdocs/mkdocs.yml > mkdocs.yml
-	export REPO_NAME=$(REPO_NAME) export REPO_URL=$(REPO_URL) && export EDIT_URL=$(EDIT_URL) && techdocs-cli generate --no-docker
-	mv ../mkdocs.yml .
+build: mkdocs.yml ## Build the website
+	export SITE_NAME=$(SITE_NAME) && export REPO_NAME=$(REPO_NAME) export REPO_URL=$(REPO_URL) && export EDIT_URL=$(EDIT_URL) && techdocs-cli generate --no-docker
 
 ENTITY := $(shell yq --no-doc '[.metadata.namespace // "default", .kind, .metadata.name] | join("/")' ./catalog-info.yaml)
 
