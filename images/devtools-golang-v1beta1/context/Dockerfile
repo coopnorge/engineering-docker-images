@@ -3,7 +3,7 @@ FROM golangci/golangci-lint:v1.48.0-alpine@sha256:e9ce901b7974d641d6288b070fc619
 FROM docker.io/mikefarah/yq:4@sha256:f0e1e617c6bb1cf89728b65a95c72a287f3d5dc9a19e205c0f18a9c779c3a7ff AS yq
 FROM docker.io/hadolint/hadolint:v2.10.0@sha256:93f0afd12c3be5d732227c0226dd8e7bb84f79319a773d7f8519e55f958ba415 AS hadolint
 FROM --platform=linux/amd64 docker.io/goodwithtech/dockle:v0.4.9@sha256:2a5fc2c1a467dd229720baf6c002798e5a1f86ce37e5657bc9c4b2cc3503fd64 AS dockle
-FROM docker.io/moby/buildkit:v0.10.4-rootless@sha256:fc81ed8d967a60bf0e6bff38d4cf9d40be6e815d559c5796c8428cd82fd05674 AS buildkit
+FROM docker.io/moby/buildkit:v0.10.5-rootless@sha256:c47a65e0c9338e25a224c2fb9f57f5ac39e39d9913ec4a277dde3aea74062b72 AS buildkit
 FROM gcr.io/go-containerregistry/crane:v0.12.0@sha256:2437e5d62336bd068e58905d8ae507fad020d6ea2cfe3cf1a6d9a504713889a8 AS crane
 FROM docker.io/bufbuild/buf:1.9.0@sha256:24abb6b50fbdda65974f1b127b89e66c9d74c9e1415c4536a4755808ed679456 AS buf
 FROM docker.io/library/golang:1.19.2-bullseye@sha256:f2f6aa0f1feac983984a2d687417a358b6128511343c817f97e19dec30f49ad8 AS base
