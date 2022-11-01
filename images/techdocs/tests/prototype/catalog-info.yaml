@@ -3,6 +3,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: test-prototype
+  title: Test Prototype
   description: This is a test protoype
   annotations:
     github.com/project-slug: example/test-prototype
