@@ -5,14 +5,48 @@ in Inventory.
 
 ## Usage
 
-### Running a development server
+The image is designed to run in a repository containing TechDocs.
 
-```bash
-docker run -v $(pwd):/content -p 3000:3000 ghcr.io/coopnorge/engineering-docker-images/e0/techdocs techdocs-cli serve --no-docker -v
+### Docker compose configuration
+
+Add a `docker-compose.yaml` file to the repository.
+
+```yaml
+---
+services:
+  techdocs:
+    build:
+      context: docker-compose
+      dockerfile: Dockerfile
+      target: techdocs
+    working_dir: /content
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS:-}
+      GCLOUD_PROJECT: ${GCLOUD_PROJECT:-}
+    volumes:
+      - .:/content
+      - ${XDG_CACHE_HOME:-xdg-cache-home}:/root/.cache
+      - $HOME/.config/gcloud:/root/.config/gcloud
+      - ${GOOGLE_APPLICATION_CREDENTIALS:-nothing}:${GOOGLE_APPLICATION_CREDENTIALS:-/tmp/empty-GOOGLE_APPLICATION_CREDENTIALS}
+    ports:
+      - "127.0.0.1:3000:3000/tcp"
+      - "127.0.0.1:8000:8000/tcp"
+    command: serve
+volumes:
+  xdg-cache-home: { }
+  nothing: { }
 ```
 
-### Other targets
+### Running a preview site
 
 ```bash
-docker run -v $(pwd):/content ghcr.io/coopnorge/engineering-docker-images/e0/techdocs help
+docker compose up techdocs
+```
+
+Open your browser at http://localhost:3000/docs/default/component/local/
+
+###  List targets
+
+```bash
+docker compose run --rm techdocs help
 ```
