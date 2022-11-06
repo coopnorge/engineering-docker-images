@@ -1,11 +1,11 @@
 # https://www.gnu.org/software/make/manual/make.html
-SHELL=bash
+SHELL := bash
 .PHONY: default
 default:
 
-docker=docker
-docker_compose=$(docker) compose
-docker_compose_run=$(docker_compose) run --rm -T
+docker := docker
+docker_compose := $(docker) compose
+docker_compose_run := $(docker_compose) run --rm -T
 
 .PHONY: help
 help: ## show this message
