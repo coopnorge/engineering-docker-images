@@ -83,6 +83,24 @@ def test_linguistics_check(
     )
 
 
+def test_test_validate(
+    docker_client: docker.DockerClient,
+    build_image: Image,
+    volumes: dict[str, dict[str, str]],
+) -> None:
+    actual_output = docker_client.containers.run(
+        build_image.id,
+        command='validate DOCS_DIR="docs/" MARKDOWN_FILES="README.md docs/index.md"',
+        volumes=volumes,
+        remove=True,
+    )
+    assert b"markdownlint --config=../markdownlint.yaml docs/\n" in actual_output
+    assert (
+        b"vale README.md docs/index.md\n\xe2\x9c\x94 \x1b[31m0 errors\x1b[0m, \x1b[33m0 warnings\x1b[0m and \x1b[34m0 suggestions\x1b[0m in 2 files.\n"
+        in actual_output
+    )
+
+
 def test_build(
     docker_client: docker.DockerClient,
     build_image: Image,
