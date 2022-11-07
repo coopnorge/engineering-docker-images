@@ -70,6 +70,9 @@ build: mkdocs.yml ## Build the website
 
 ENTITY := $(shell yq --no-doc '[.metadata.namespace // "default", .kind, .metadata.name] | join("/")' ./catalog-info.yaml)
 
+serve: mkdocs.yml ## Run a preview site
+	export SITE_NAME="$(SITE_NAME)" && export REPO_NAME=$(REPO_NAME) export REPO_URL=$(REPO_URL) && export EDIT_URI=$(EDIT_URI) && techdocs-cli serve --no-docker
+
 .PHONY: publish
 publish: site ## Publish the website to the TechDocs Bucket
 	techdocs-cli publish --publisher-type googleGcs --storage-name $(TECHDOCS_BUCKET) --entity $(ENTITY)

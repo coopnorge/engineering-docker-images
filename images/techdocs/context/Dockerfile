@@ -10,7 +10,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN mkdir /srv/workspace
 WORKDIR /srv/workspace
 
-RUN apt-get update \
+RUN apt-get clean \
+    && apt-get update \
     && apt-get install --no-install-recommends -y \
         lsb-release=11.1.0 \
         apt-transport-https=2.2.4 \
@@ -77,6 +78,7 @@ RUN \
     ln -rs /usr/local/bin/maker /usr/local/bin/lint && \
     ln -rs /usr/local/bin/maker /usr/local/bin/linguistics-check && \
     ln -rs /usr/local/bin/maker /usr/local/bin/build && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/serve && \
     ln -rs /usr/local/bin/maker /usr/local/bin/publish && \
     true
 
