@@ -8,7 +8,6 @@ docker_compose := $(docker) compose
 docker_compose_run := $(docker_compose) run --rm -T
 
 BASE_BRANCH := origin/main
-DOCS_DIR := docs/
 MARKDOWN_FILES := $(shell git diff --name-only --diff-filter=ACMRT $(BASE_BRANCH) | grep .md$$)
 
 .PHONY: help
@@ -52,7 +51,7 @@ validate: lint linguistics-check ## Validate the content
 
 .PHONY: lint
 lint: ../markdownlint.yaml ## Check markdown syntax
-	markdownlint --config=../markdownlint.yaml $(DOCS_DIR)
+	markdownlint --config=../markdownlint.yaml $(MARKDOWN_FILES)
 
 .PHONY: linguistics-check
 linguistics-check: ## Check spelling, grammar and other linguistics issues
