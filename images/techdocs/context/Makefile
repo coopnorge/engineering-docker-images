@@ -8,7 +8,7 @@ docker_compose := $(docker) compose
 docker_compose_run := $(docker_compose) run --rm -T
 
 BASE_BRANCH := origin/main
-MARKDOWN_FILES := $(shell git diff --name-only --diff-filter=ACMRT $(BASE_BRANCH) | grep .md$$)
+MARKDOWN_FILES := $(shell git diff --name-only --diff-filter=ACMRT $(BASE_BRANCH) | grep .*\.md$$)
 
 .PHONY: help
 help: ## show this message
