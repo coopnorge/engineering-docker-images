@@ -47,7 +47,6 @@ validate: lint linguistics-check ## Validate the content
 	else \
 	    cp /usr/local/share/techdocs/markdownlint.yaml $@ ;\
 	fi
-	cat $@
 
 .PHONY: lint
 lint: ../markdownlint.yaml ## Check markdown syntax
