@@ -35,7 +35,7 @@ def volumes() -> dict[str, dict[str, str]]:
         ("techdocs-cli --version", b"1."),
         ("markdownlint --version", b"0.32."),
         ("vale --version", b"vale version v2."),
-        ("yq --version", b"yq (https://github.com/mikefarah/yq/) version 4."),
+        ("yq --version", b"yq (https://github.com/mikefarah/yq/) version v4."),
     ],
 )
 def test_image_should_return_a_correct_cli_tool_version(
