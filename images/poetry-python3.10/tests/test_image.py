@@ -5,7 +5,7 @@ from docker.models.images import Image
 
 @pytest.fixture(scope="session")
 def docker_client() -> docker.DockerClient:
-    return docker.DockerClient(base_url="unix:///var/run/docker.sock")
+    return docker.DockerClient.from_env()
 
 
 @pytest.fixture(scope="session", autouse=True)
