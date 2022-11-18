@@ -75,6 +75,8 @@ COPY maker /usr/local/bin/maker
 RUN \
     ln -rs /usr/local/bin/maker /usr/local/bin/help && \
     ln -rs /usr/local/bin/maker /usr/local/bin/validate && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/validate-fix && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/lint-fix && \
     ln -rs /usr/local/bin/maker /usr/local/bin/lint && \
     ln -rs /usr/local/bin/maker /usr/local/bin/linguistics-check && \
     ln -rs /usr/local/bin/maker /usr/local/bin/build && \
