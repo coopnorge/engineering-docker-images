@@ -1,5 +1,8 @@
+import logging
 import os
 import pathlib
+import re
+from typing import List, Pattern
 
 import docker
 import pytest
@@ -119,3 +122,42 @@ def test_build(
         b"info: Successfully generated docs from /content into /content/site using local mkdocs"
         in actual_output
     )
+
+
+@pytest.mark.parametrize(
+    ["cli_command", "expected_patterns", "unexpected_patterns"],
+    [
+        pytest.param(
+            ["lint-fix", "MARKDOWN_FILES=README.md docs/index.md"],
+            [re.compile("markdownlint.*--fix.*README.md")],
+            [],
+            id="test-lint-fix",
+        ),
+        pytest.param(
+            ["validate-fix", "MARKDOWN_FILES=README.md docs/index.md"],
+            [re.compile("markdownlint.*--fix.*README.md")],
+            [],
+            id="test-validate-fix",
+        ),
+    ],
+)
+def test_command_output(
+    docker_client: docker.DockerClient,
+    build_image: Image,
+    volumes: dict[str, dict[str, str]],
+    cli_command: List[str],
+    expected_patterns: List[Pattern[str]],
+    unexpected_patterns: List[Pattern[str]],
+) -> None:
+    logging.debug("cli_command = %s", cli_command)
+    actual_output = docker_client.containers.run(
+        build_image.id,
+        command=cli_command,
+        volumes=volumes,
+        remove=True,
+    )
+    logging.debug("actual_output = \n%s", actual_output.decode("utf-8"))
+    for expected_pattern in expected_patterns:
+        assert len(expected_pattern.findall(actual_output.decode("utf-8"))) >= 1
+    for unexpected_pattern in unexpected_patterns:
+        assert len(unexpected_pattern.findall(actual_output.decode("utf-8"))) == 0

@@ -20,6 +20,14 @@ services:
       - .:/srv/workspace:z
       - ${XDG_CACHE_HOME:-xdg-cache-home}:/root/.cache
     working_dir: /srv/workspace
-
+  self:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: "techdocs-cli"
+    working_dir: /content
+    volumes:
+      - ${WORKSPACE_DIR:-../tests/prototype}:/content:z,cached
+      - ${XDG_CACHE_HOME:-xdg-cache-home}:/root/.cache
 volumes:
   xdg-cache-home: {}
