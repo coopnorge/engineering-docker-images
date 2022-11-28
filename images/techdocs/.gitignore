@@ -305,3 +305,4 @@ cython_debug/
 
 tests/prototype/mkdocs.yml
 site/
+.vale
