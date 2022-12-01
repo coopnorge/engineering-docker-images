@@ -69,6 +69,20 @@ def test_lint(
     assert b"markdownlint --config=../markdownlint.yaml docs/\n" in actual_output
 
 
+def test_vale_sync(
+    docker_client: docker.DockerClient,
+    build_image: Image,
+    volumes: dict[str, dict[str, str]],
+) -> None:
+    actual_output = docker_client.containers.run(
+        build_image.id,
+        command="vale-sync",
+        volumes=volumes,
+        remove=True,
+    )
+    assert b"vale sync" in actual_output
+
+
 def test_linguistics_check(
     docker_client: docker.DockerClient,
     build_image: Image,
@@ -81,8 +95,8 @@ def test_linguistics_check(
         remove=True,
     )
     assert (
-        actual_output
-        == b"vale README.md docs/index.md\n\xe2\x9c\x94 \x1b[31m0 errors\x1b[0m, \x1b[33m0 warnings\x1b[0m and \x1b[34m0 suggestions\x1b[0m in 2 files.\n"
+        b"vale README.md docs/index.md\n\xe2\x9c\x94 \x1b[31m0 errors\x1b[0m, \x1b[33m0 warnings\x1b[0m and \x1b[34m0 suggestions\x1b[0m in 2 files.\n"
+        in actual_output
     )
 
 

@@ -59,8 +59,12 @@ lint: ../markdownlint.yaml ## Check markdown syntax
 lint-fix: ../markdownlint.yaml ## Fix auto-fixable markdownlint failures
 	markdownlint --fix --config=../markdownlint.yaml $(MARKDOWN_FILES)
 
+.PHONY: vale-sync
+vale-sync:
+	vale sync
+
 .PHONY: linguistics-check
-linguistics-check: ## Check spelling, grammar and other linguistics issues
+linguistics-check: vale-sync ## Check spelling, grammar and other linguistics issues
 	vale $(MARKDOWN_FILES)
 
 SITE_NAME := $(shell  yq --no-doc '.metadata.title // .metadata.name' ./catalog-info.yaml)
