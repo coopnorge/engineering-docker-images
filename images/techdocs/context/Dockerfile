@@ -15,6 +15,8 @@ RUN apt-get clean \
     && apt-get install --no-install-recommends -y \
         lsb-release=11.1.0 \
         apt-transport-https=2.2.4 \
+        busybox=1:1.30.1-6+b3 \
+        socat=1.7.4.1-3 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
