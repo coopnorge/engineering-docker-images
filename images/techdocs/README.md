@@ -21,17 +21,20 @@ services:
       target: techdocs
     working_dir: /content
     environment:
-      GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS:-}
       GCLOUD_PROJECT: ${GCLOUD_PROJECT:-}
     volumes:
       - .:/content
       - ${XDG_CACHE_HOME:-xdg-cache-home}:/root/.cache
-      - $HOME/.config/gcloud:/root/.config/gcloud
-      - ${GOOGLE_APPLICATION_CREDENTIALS:-nothing}:${GOOGLE_APPLICATION_CREDENTIALS:-/tmp/empty-GOOGLE_APPLICATION_CREDENTIALS}
+    secrets:
+      - source: google-application-credentials
+        target: /root/.config/gcloud/application_default_credentials.json
     ports:
       - "127.0.0.1:3000:3000/tcp"
       - "127.0.0.1:8000:8000/tcp"
     command: serve
+secrets:
+  google-application-credentials:
+    file: $GOOGLE_APPLICATION_CREDENTIALS
 volumes:
   xdg-cache-home: { }
   nothing: { }
