@@ -189,12 +189,6 @@ idna==3.3 \
     --hash=sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff \
     --hash=sha256:9d643ff0a55b762d5cdb124b8eaa99c66322e2157b69160bc32796e824360e6d
     # via requests
-importlib-metadata==4.13.0 \
-    --hash=sha256:8a8a81bcf996e74fee46f0d16bd3eaa382a7eb20fd82445c3ad11f4090334116 \
-    --hash=sha256:dd0173e8f150d6815e098fd354f6414b0f079af4644ddfe90c71e2fc6174346d
-    # via
-    #   keyring
-    #   poetry
 jeepney==0.8.0 \
     --hash=sha256:5efe48d255973902f6badc3ce55e2aa6c5c3b3bc642059ef3a91247bcfcc5806 \
     --hash=sha256:c0a454ad016ca575060802ee4d590dd912e35c122fa04e70306de3d076cce755
@@ -357,9 +351,9 @@ poetry-core==1.2.0 \
     # via
     #   poetry
     #   poetry-plugin-export
-poetry-dynamic-versioning[plugin]==0.21.1 \
-    --hash=sha256:0ba2a991a388f4ef202b0cf63629510cf64e7fef3ad232574f9598dd8c379d46 \
-    --hash=sha256:846ae837d4a81b3d2bf0a2433209f2d19b68b4dd5ecf1fd4996f0b1a667153c4
+poetry-dynamic-versioning[plugin]==0.21.2 \
+    --hash=sha256:1e31e0c0058222a299dd277a18eb680ca63ab77ba6ecdad88fcbe49e4cba2852 \
+    --hash=sha256:d8e0cefbc351833f694a373baaad9886f57be8339f08ba81a9c29366a582e45e
     # via -r requirements-poetry.in
 poetry-plugin-export==1.0.7 \
     --hash=sha256:dd9d4552e7113a86c97908c13b9a439cb46830f247c7e4969e46a0d8d70e4d3f \
@@ -475,7 +469,3 @@ webencodings==0.5.1 \
     --hash=sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78 \
     --hash=sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923
     # via html5lib
-zipp==3.10.0 \
-    --hash=sha256:4fcb6f278987a6605757302a6e40e896257570d11c51628968ccb2a47e80c6c1 \
-    --hash=sha256:7a7262fd930bd3e36c50b9a64897aec3fafff3dfdeec9623ae22b40e93f99bb8
-    # via importlib-metadata
