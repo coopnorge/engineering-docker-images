@@ -1,7 +1,7 @@
 mkdocs-awesome-pages-plugin==2.8.0
 mkdocs-ezlinks-plugin==0.1.14
 mkdocs-git-revision-date-localized-plugin==1.1
-mkdocs-glightbox==0.3.0
+mkdocs-glightbox==0.3.1
 mkdocs-htmlproofer-plugin==0.10.2
 mkdocs-kroki-plugin==0.3.0
 mkdocs-techdocs-core==1.1.7
