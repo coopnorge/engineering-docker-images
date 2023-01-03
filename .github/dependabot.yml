@@ -53,6 +53,14 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "docker"
+    directory: "images/poetry-python3.11/context/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pip"
+    directory: "images/poetry-python3.11/context/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
     directory: "images/benthos-v4/context/"
     schedule:
       interval: "daily"
