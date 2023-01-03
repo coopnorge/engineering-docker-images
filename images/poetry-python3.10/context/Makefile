@@ -14,20 +14,23 @@ help: ## show this message
 .PHONY: poetry-generate-requirements
 poetry-generate-requirements: requirements-poetry.in ## Generate requirements-poetry.txt
 	$(docker_compose_run) pip-tools pip-compile \
-		--verbose \
+		--allow-unsafe \
 		--annotate \
 		--generate-hashes \
+		--output-file requirements-poetry.txt \
 		--rebuild \
 		--resolver backtracking \
-		--output-file requirements-poetry.txt \
+		--verbose \
 		requirements-poetry.in
 
 pip-tools-generate-requirements: requirements-pip-tools.in ## Generate requirements-pip-tools.txt
 	$(docker_compose_run) pip-tools pip-compile \
-		--verbose \
+		--allow-unsafe \
 		--annotate \
 		--generate-hashes \
-		--rebuild \
 		--resolver backtracking \
 		--output-file requirements-pip-tools.txt \
+		--rebuild \
+		--resolver backtracking \
+		--verbose \
 		requirements-pip-tools.in
