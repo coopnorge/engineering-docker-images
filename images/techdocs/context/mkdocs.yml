@@ -12,7 +12,6 @@ plugins:
   - ezlinks:
       warn_ambiguities: true
   - kroki
-  - glightbox
 markdown_extensions:
   - admonition
   - attr_list
