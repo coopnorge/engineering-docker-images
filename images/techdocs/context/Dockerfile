@@ -3,7 +3,7 @@ FROM jdkato/vale:v2.21.2@sha256:2c5748f4eec47e0287774b37b06f5460398505abf6a9524d
 FROM plantuml/plantuml:1.2022.14@sha256:d0e7cf8538b3ff13696dbfc90365ab600509ffe61185cf150cd027793d69aaed as plantuml
 FROM mikefarah/yq:4.30.6@sha256:d4e1d060e248bdc3ac9e0fccfb4209e24ff42ed3d39beab33d3c3a19480b14fd as yq
 
-FROM docker.io/library/python:3.11.1@sha256:250990a809a15bb6a3e307fec72dead200c882c940523fb1694baa78eb0e47c6 as base
+FROM docker.io/library/python:3.11.1@sha256:a46b962871434568d186ef17ae7038055e17c670833ca5320fc107435fa146d7 as base
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
