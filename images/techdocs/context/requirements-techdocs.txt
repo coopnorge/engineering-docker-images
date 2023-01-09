@@ -139,7 +139,7 @@ mkdocs-awesome-pages-plugin==2.8.0 \
 mkdocs-ezlinks-plugin==0.1.14 \
     --hash=sha256:3e2085c16a850e022393e80194c17612e7b55de87fb45b3ffb618b5dfdb10811
     # via -r requirements-techdocs.in
-mkdocs-git-revision-date-localized-plugin==1.1.0 \
+mkdocs-git-revision-date-localized-plugin==1.1 \
     --hash=sha256:38517e2084229da1a1b9460e846c2748d238c2d79efd405d1b9174a87bd81d79 \
     --hash=sha256:4ba0e49abea3e9f6ee26e2623ff7283873da657471c61f1d0cfbb986f403316d
     # via -r requirements-techdocs.in
@@ -147,9 +147,9 @@ mkdocs-htmlproofer-plugin==0.10.2 \
     --hash=sha256:11faeeaf7b75dd503d72d6ccd47778c4e68e0949737768efab24b68ef651fd19 \
     --hash=sha256:e8be2d4769abc85e54e403482d85ffdb5c0ea306d2b091a20fcfa2577e00708d
     # via -r requirements-techdocs.in
-mkdocs-kroki-plugin==0.3.0 \
-    --hash=sha256:075980011d1c9a54819948f41a3a9ce5a3edc9d85e1bca331503391d043c7f1c \
-    --hash=sha256:5faf4d5711d5e9268f447083e14a59733376ab0b989e88b749915ad4caa2cd4a
+mkdocs-kroki-plugin==0.5.2 \
+    --hash=sha256:27f773e9a34b0a6cda0ecf281f1a6a415d903f3da90afa9ab5cf1dd3f2b927e5 \
+    --hash=sha256:e3886e579d96640a052befc29b4cf40cc840a6d96d23b2089f20676933c302de
     # via -r requirements-techdocs.in
 mkdocs-material==8.1.11 \
     --hash=sha256:03c9b202ed579899bbc7730d0f37e871fbc3a711d70549ca04ecb23adbb8164f \
@@ -267,7 +267,9 @@ pyyaml-env-tag==0.1 \
 requests==2.28.1 \
     --hash=sha256:7c5599b102feddaa661c826c56ab4fee28bfd17f5abca1ebbe3e7f19d7c97983 \
     --hash=sha256:8fefa2a1a1365bf5520aac41836fbee479da67864514bdb821f31ce07ce65349
-    # via mkdocs-htmlproofer-plugin
+    # via
+    #   mkdocs-htmlproofer-plugin
+    #   mkdocs-kroki-plugin
 six==1.16.0 \
     --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926 \
     --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254
