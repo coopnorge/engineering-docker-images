@@ -1,6 +1,6 @@
 FROM docker.io/library/node:18.10.0-bullseye@sha256:9d8a6466c6385e05f62f8ccf173e80209efb0ff4438f321f09ddf552b05af3ba as node
 FROM jdkato/vale:v2.21.3@sha256:fdfb3d353e589e247aa3facaa8f4d842b989811c32422874cd8358851da8a073 as vale
-FROM plantuml/plantuml:1.2022.14@sha256:d0e7cf8538b3ff13696dbfc90365ab600509ffe61185cf150cd027793d69aaed as plantuml
+FROM plantuml/plantuml:1.2023.0@sha256:2477e7b0f7b28ad2f62ac9587b7fcedde1bd97cdbeaad439013702282e8d6e02 as plantuml
 FROM mikefarah/yq:4.30.6@sha256:d4e1d060e248bdc3ac9e0fccfb4209e24ff42ed3d39beab33d3c3a19480b14fd as yq
 
 FROM docker.io/library/python:3.11.1@sha256:a46b962871434568d186ef17ae7038055e17c670833ca5320fc107435fa146d7 as base
