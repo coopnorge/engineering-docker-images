@@ -26,10 +26,6 @@ RUN \
 ARG app_executable=${app_name}
 ARG outputs_dir=var/outputs
 
-COPY --chown=root:root ${outputs_dir}/${app_executable} /usr/local/bin/${app_executable}
-
-RUN \
-    chmod ugo-w /usr/local/bin/${app_executable}
 
 ARG group_name=${app_name}
 ARG user_name=${app_name}
@@ -41,6 +37,11 @@ RUN \
     mkdir -vp ${workdir} && \
     chown -R ${user_name}:${group_name} ${workdir} && \
     true
+
+COPY --chown=root:root ${outputs_dir}/${app_executable} /usr/local/bin/${app_executable}
+
+RUN \
+    chmod ugo-w /usr/local/bin/${app_executable}
 
 USER ${user_name}:${group_name}
 WORKDIR ${workdir}

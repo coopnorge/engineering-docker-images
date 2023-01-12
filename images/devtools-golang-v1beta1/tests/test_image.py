@@ -51,21 +51,6 @@ def ctx_chdir(newdir: PathLikeT) -> Iterator[PathLikeT]:
         os.chdir(cwd)
 
 
-def test_prototype_ok(capfd: CaptureFixture[str]) -> None:
-    with ctx_chdir(PROTOTYPE_DIR):
-        subprocess.run("docker compose run --rm devtools".split(" "), check=True)
-        assert (PROTOTYPE_DIR / "coverage.out").exists()
-        (PROTOTYPE_DIR / "coverage.out").unlink()
-        assert not (PROTOTYPE_DIR / "coverage.out").exists()
-        subprocess.run(
-            "docker compose run --rm devtools maker validate".split(" "), check=True
-        )
-        assert (PROTOTYPE_DIR / "coverage.out").exists()
-
-    cap = Captured.from_capfd(capfd)
-    assert "oci.tar" not in cap.all()
-
-
 @dataclass
 class Captured:
     result: CaptureResult[str]
@@ -92,6 +77,54 @@ class Captured:
             sys.stderr.write("captured.err:\n")
             sys.stderr.write(captured.err)
         return Captured(captured, out, out.splitlines(), err, err.splitlines())
+
+
+@dataclass
+class TestHelper:
+    workdir: Path
+    capfd: CaptureFixture[str]
+
+    def __post_init__(self) -> None:
+        logging.debug(f"{self.workdir = }, {self.capfd = }")
+
+    def captured(self) -> Captured:
+        return Captured.from_capfd(self.capfd)
+
+    def run(
+        self,
+        command: Optional[List[str]] = None,
+        command_extra: Optional[List[str]] = None,
+    ) -> None:
+        if command is None:
+            command = "docker compose run --rm devtools".split(" ")
+        if command_extra is not None:
+            command.extend(command_extra)
+        subprocess.run(command, check=True)
+        logging.debug("running %s", command)
+
+
+@pytest.fixture(scope="function")
+def test_helper(
+    tmp_path: Path, capfd: CaptureFixture[str]
+) -> Generator[TestHelper, None, None]:
+    with ctx_prototype(tmp_path) as workdir:
+        logging.debug(f"{tmp_path = } {workdir = }")
+        yield TestHelper(workdir, capfd)
+        logging.debug("done ...")
+
+
+def test_prototype_ok(test_helper: TestHelper) -> None:
+    test_helper.run()
+    assert (test_helper.workdir / "coverage.out").exists()
+    (test_helper.workdir / "coverage.out").unlink()
+    assert not (test_helper.workdir / "coverage.out").exists()
+    test_helper.run(command_extra=["maker", "validate"])
+    assert (test_helper.workdir / "coverage.out").exists()
+
+    captured = test_helper.captured()
+    assert "oci.tar" not in captured.all()
+    assert "buf format --diff --exit-code" in captured.all()
+    assert "buf lint" in captured.all()
 
 
 @pytest.mark.parametrize(
@@ -227,40 +260,6 @@ def test_alterations(
             assert not found, f"found {match_string} in output{found}\n{cap.all()}"
 
 
-@dataclass
-class TestHelper:
-    workdir: Path
-    capfd: CaptureFixture[str]
-
-    def __post_init__(self) -> None:
-        logging.debug(f"{self.workdir = }, {self.capfd = }")
-
-    def captured(self) -> Captured:
-        return Captured.from_capfd(self.capfd)
-
-    def run(
-        self,
-        command: Optional[List[str]] = None,
-        command_extra: Optional[List[str]] = None,
-    ) -> None:
-        if command is None:
-            command = "docker compose run --rm devtools".split(" ")
-        if command_extra is not None:
-            command.extend(command_extra)
-        subprocess.run(command, check=True)
-        logging.debug("running %s", command)
-
-
-@pytest.fixture(scope="function")
-def test_helper(
-    tmp_path: Path, capfd: CaptureFixture[str]
-) -> Generator[TestHelper, None, None]:
-    with ctx_prototype(tmp_path) as workdir:
-        logging.debug(f"{tmp_path = } {workdir = }")
-        yield TestHelper(workdir, capfd)
-        logging.debug("done ...")
-
-
 def append_to_file(file_path: Path, lines: Iterable[str]) -> None:
     with file_path.open("a") as tio:
         tio.writelines(lines)
@@ -388,3 +387,17 @@ def prototype_ro() -> Generator[Path, None, None]:
 )
 def test_commands_run(prototype_ro: Path, command: List[str]) -> None:
     subprocess.run("docker compose run --rm devtools".split(" ") + command, check=True)
+
+
+def test_buf_failure(test_helper: TestHelper) -> None:
+    workdir = test_helper.workdir
+    (workdir / "spec/proto/example/greeter").rename(
+        workdir / "spec/proto/example/not_greeter"
+    )
+    with pytest.raises(subprocess.CalledProcessError):
+        test_helper.run(command_extra=["validate"])
+    captured = test_helper.captured()
+    assert (
+        'Files with package "example.greeter.v1" must be within a directory "example/greeter/v1" relative to root but were in directory "example/not_greeter/v1"'
+        in captured.all()
+    )

@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
-	"prototype/sum"
+
+	"example.com/prototype/sum"
 )
 
 func main() {

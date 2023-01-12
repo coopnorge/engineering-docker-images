@@ -1,23 +1,27 @@
 # https://www.gnu.org/software/make/manual/make.html
+
+# Configure the shell.
 SHELL=bash
 .SHELLFLAGS=-ec -o pipefail
+
+# Capture the current makefile.
 current_makefile:=$(lastword $(MAKEFILE_LIST))
 current_makefile_dir:=$(dir $(abspath $(current_makefile)))
 
+# Define the default target.
 .PHONY: all
-all: validate  ## Do everything (default target)
+all:
 
-# Load settings
-$(if $(wildcard devtools-settings.mk),$(eval include devtools-settings.mk),)
-$(if $(wildcard devtools.env),$(eval include devtools.env),)
-$(if $(wildcard default.env),$(eval include default.env),)
-$(if $(wildcard .env),$(eval include .env),)
-$(if $(and $(environment),$(wildcard env.$(environment))),$(eval include env.$(environment)),)
+# Load settings.
+$(if $(wildcard devtools-settings.mk),$(info loading devtools-settings.mk)$(eval include devtools-settings.mk),)
+$(if $(wildcard devtools.env),$(info loading devtools.env)$(eval include devtools.env),)
+$(if $(wildcard default.env),$(info loading default.env)$(eval include default.env),)
+$(if $(wildcard .env),$(info loading .env)$(eval include .env),)
+$(if $(and $(ENVIRONMENT),$(wildcard env.$(ENVIRONMENT))),$(info loading env.$(ENVIRONMENT))$(eval include env.$(ENVIRONMENT)),)
 
 ########################################################################
 # boiler plate
 ########################################################################
-
 ifneq ($(filter all vars,$(VERBOSE)),)
 dump_var=$(info var $(1)=$($(1)))
 dump_vars=$(foreach var,$(1),$(call dump_var,$(var)))
@@ -54,102 +58,138 @@ endef
 ########################################################################
 ## Variable APP_NAME : The name of the application.
 ## Variable APP_EXECUTABLE : The main executable of the application, defaults to APP_NAME
+## Variable ENVIRONMENT : The environment name to use. If set variables will be loaded from env.$(ENVIRONMENT)
+## Variable APP_DOCKERFILE : The path to the Dockerfile to use for building OCI images. Defaults to `build/package/Dockerfile`.
+## Variable BUILD_OCI : boolean (true,false) indicating if OCI should be built. Defaults to true if $(APP_DOCKERFILE) exists
+## Variable ENABLE_BUF: boolean (true,false) indicating if buf should be enabled. Defaults to true if buf.work.yaml exists
 APP_EXECUTABLE?=$(APP_NAME)
 APP_DOCKERFILE?=build/package/Dockerfile
 BUILD_OCI?=$(if $(wildcard $(APP_DOCKERFILE)),true,false)
 XDG_CACHE_HOME?=$(HOME)/.cache
+ENABLE_BUF?=$(if $(wildcard buf.work.yaml),true,false)
 
 # setting this so that it is more likely things will work on MacOS and Linux
 export POSIXLY_CORRECT:=1
 
-golangci_lint=golangci-lint $(if $(filter all commands,$(VERBOSE)),-v)
+# Get git information
 giti_description=$(shell git describe --tags --always)
 giti_commit_hash=$(shell git log -1 --format="%H")
 giti_commit_date=$(shell git log -1 --format="%aI")
 giti_url:=$(shell git remote get-url origin)
+
+# Define golang flags
 go_mod:=$(shell go list -m)
-go_ldflags= \
+go_ldflags?= \
 	-ldflags \
 	"-X '$(go_mod)/internal/version.gitCommit=$(giti_commit_hash)' \
 	-X '$(go_mod)/internal/version.gitRemote=$(giti_url)' \
 	-X '$(go_mod)/internal/version.gitDesc=$(giti_description)' \
 	-X '$(go_mod)/internal/version.gitCommitDate=$(giti_commit_date)'" \
 
-go_build_flags=
+go_build_flags?=
 
-stamps_dir=var/stamps
-outputs_dir=var/outputs
+localstatedir?=var
+generated_dir?=$(localstatedir)/generated
+stamps_dir?=$(localstatedir)/stamps
+outputs_dir?=$(localstatedir)/outputs
 
 $(call dump_vars,APP_EXECUTABLE APP_DOCKERFILE BUILD_OCI XDG_CACHE_HOME)
 
 ########################################################################
-# targets ...
+# generic targets
 ########################################################################
 
 .PHONY: clean
-clean: ## clean build outputs
-clean: clean-$(outputs_dir)/
-	rm -vr coverage.out || :
-	go clean
+clean: ## Clean outputs.
+clean: clean-$(localstatedir)/
 
-.PHONY: validate
-validate: validate-static test  ## Run static and dynamic validation (tests)
+.PHONY: configure
+configure: ## Configure the project.
+
+.PHONY: generate
+generate: ## Generate all intermediate code.
 
 .PHONY: validate-fix
-validate-fix:  ## Let the tooling fix what can be automatically fixed
+validate-fix: ## Fix auto-fixable validation errors.
+
 .PHONY: validate-static
-validate-static:  ## Static validation
+validate-static: ## Run static validation.
+
 .PHONY: test
-test:  ## Dynamic code validation
+test: ## Run the project's tests.
+
+.PHONY: validate
+validate: ## Validate everything.
+validate: validate-static test
+
+.PHONY: build
+build: ## Build the source.
+
+.PHONY: watch
+watch: ## Watch code for changes and re-validate.
+
+.PHONY: install
+install: ## Install globally.
+
 .PHONY: publish
-publish: ## publish artifacts
+publish: ## Publish artifacts.
+
+.PHONY: deploy
+deploy: ## Deploy the project.
+
+.PHONY: all
+all: ## Do everything.
+all: validate generate build
 
 ########################################################################
 # golang
 ########################################################################
 
-validate-fix: validate-golang-fix
-.PHONY: validate-golang-fix
-validate-golang-fix:
+golangci_lint=golangci-lint $(if $(filter all commands,$(VERBOSE)),-v)
+
+validate-fix: golang-validate-fix
+.PHONY: golang-validate-fix
+golang-validate-fix:
 	$(golangci_lint) run  --fix ./...
 
-
-.PHONY: validate-golang-static
-validate-static: validate-golang-static
-validate-golang-static:
+.PHONY: golang-validate-static
+validate-static: golang-validate-static
+golang-validate-static:
 	$(golangci_lint) run  ./...
 
-.PHONY: validate-golang
-validate: validate-golang
-validate-golang: validate-golang-static test-golang  ## Run static and dynamic validation (tests)
-
-.PHONY: test-golang
-test: test-golang
-test-golang coverage.out:
+.PHONY: golang-test
+test: golang-test
+golang-test: ## Test golang code.
+golang-test coverage.out: | $(localstatedir)/
 	go test -cover \
 		-race \
 		$(go_build_flags) \
 		-coverprofile=coverage.out -covermode=atomic \
-		$(if $(filter all commands,$(VERBOSE)),-v) ./... \
-		$(if $(gotest_files),$(gotest_files),./...) \
-		$(gotest_args)
+		$(gotest_args) \
+		$(if $(filter all commands,$(VERBOSE)),-v) \
+		$(if $(gotest_files),$(gotest_files),$(or $(CLI_ARGS),./...)) \
 
-.PHONY: view-coverage
-view-coverage: coverage.out ## view coverage
+
+.PHONY: golang-validate
+validate: golang-validate
+golang-validate: golang-validate-static golang-test  ## Run static and dynamic validation (tests).
+
+.PHONY: golang-view-coverage
+golang-view-coverage: coverage.out ## View golang coverage.
 	go tool cover -html=$(<)
 
-.PHONY: build
-build: ## build source
+.PHONY: golang-build
+golang-build: ## Build golang source.
 	go build -race \
 		$(go_build_flags) \
 		$(go_ldflags) \
 		$(if $(filter all commands,$(VERBOSE)),-v) \
 		./...
 
-.PHONY: build-golang-outputs
-build: build-golang-outputs
-build-golang-outputs: ## build golang outputs
-build-golang-outputs: | $(outputs_dir)/
+.PHONY: golang-build-outputs
+build: golang-build-outputs
+golang-build-outputs: ## Build golang outputs.
+golang-build-outputs: | $(outputs_dir)/
 	CGO_ENABLED=0 go build \
 		$(go_build_flags) \
 		$(go_ldflags) \
@@ -157,20 +197,74 @@ build-golang-outputs: | $(outputs_dir)/
 		-o $(outputs_dir) \
 		./...
 
+.PHONY: golang-generate
+generate: golang-generate
+golang-generate: ## Generate golang things.
+golang-generate:
+	go generate ./...
+
 modd_cmd?=modd
 modd_args?=
 
-.PHONY: watch
-watch:
+.PHONY: golang-watch
+watch: golang-watch
+golang-watch: ## Watch golang code for changes and rerun validation on changes.
 	$(modd_cmd) $(modd_args)
 
-.PHONY: install
-install: $(call skipable,validate) ## install everything
+.PHONY: golang-install
+golang-install: $(call skipable,validate) ## Install golang commands.
 	go install $(go_build_flags) $(go_ldflags) ./...
 
-.PHONY: run-golang
-run-golang:
-	go run $(go_ldflags) ./cmd/$(APP_EXECUTABLE) $(run_args)
+.PHONY: golang-run
+golang-run: ## Run main golang command
+	go run $(go_ldflags) ./cmd/$(APP_EXECUTABLE) $(run_args) $(CLI_ARGS)
+
+.PHONY: golang-clean
+clean: golang-clean
+golang-clean:
+	rm -f coverage.out
+	go clean
+
+########################################################################
+# buf targets
+########################################################################
+
+protbuf_dir=spec/proto
+buf=buf
+buf_format_args=
+
+.PHONY: buf-validate
+buf-validate: ## buf validation
+	$(buf) lint
+	$(buf) format --diff --exit-code $(buf_format_args)
+
+.PHONY: buf-validate-fix
+buf-validate-fix: ## fix auto-fixable buf validation errors
+	$(buf) format --write $(buf_format_args)
+
+.PHONY: buf-generate
+buf-generate: ## generate buf outputs
+	\rm -rv internal/generated/*proto*/ || :
+	$(buf) generate
+
+$(generated_dir)/main.dsc: | $(generated_dir)/
+	$(buf) build --as-file-descriptor-set -o $(@) -vv --debug
+
+.PHONY: buf-export
+buf-export: | $(localstatedir)/buf/ ## export proto files
+	$(buf) export -o $(localstatedir)/buf/exported
+
+.PHONY: buf-mod-update
+buf-mod-update: # Update buf modules
+	$(buf) mod update $(protbuf_dir)
+
+ifneq ($(call parse_bool,$(ENABLE_BUF)),)
+$(info adding Buf targets ...)
+validate: buf-validate
+validate-fix: buf-validate-fix
+generate: buf-generate
+generate: buf-export
+endif
 
 ########################################################################
 # OCI
@@ -178,22 +272,20 @@ run-golang:
 
 oci_rebuild=false
 oci_context_dir?=.
-oci_images_dir=var/oci_images
+oci_images_dir=$(localstatedir)/oci_images
 oci_cache_dir=$(XDG_CACHE_HOME)/buildkit
 
-clean: clean-oci-context clean-oci-images
-clean-oci-context: clean-$(oci_context_dir)/
-clean-oci-images: clean-$(oci_images_dir)/
-clean-stamps: clean-$(stamps_dir)/
-
+.PHONY: oci-clean-images
+clean: oci-clean-context
+oci-clean-images: clean-$(oci_images_dir)/
 
 .PHONY: oci-context
 oci-context: ## prepare the OCI context
-oci-context: build-golang-outputs
+oci-context: golang-build-outputs
 
-.PHONY: validate-dockerfile
-validate-dockerfile: ## validate the dockerfile
-validate-dockerfile: $(APP_DOCKERFILE)
+.PHONY: oci-dockerfile-validate
+oci-dockerfile-validate: ## validate the dockerfile
+oci-dockerfile-validate: $(APP_DOCKERFILE)
 	hadolint $(<)
 
 oci_tag_prefix=
@@ -232,10 +324,9 @@ oci_build_args ?= \
 
 $(call dump_vars,OCI_REF_NAMES OCI_REFS_REMOTE oci_build_args OCI_BUILD_ARGS)
 
-
 buildctl=buildctl-daemonless.sh
 
-oci-build-stage-%: $(APP_DOCKERFILE) validate-dockerfile | $(oci_images_dir)/ $(oci_context_dir)/ $(oci_cache_dir)/
+oci-build-stage-%: $(APP_DOCKERFILE) oci-dockerfile-validate | $(oci_images_dir)/ $(oci_context_dir)/ $(oci_cache_dir)/
 	$(buildctl) build \
 		--export-cache type=local,dest=$(oci_cache_dir) \
 		--import-cache type=local,src=$(oci_cache_dir) \
@@ -254,28 +345,28 @@ $(oci_images_dir)/stage-%.oci.tar: oci-build-stage-%
 	@echo $(<) :: $(@)
 
 
-$(oci_images_dir)/stage-runtime.oci.tar: $(call skipable,validate-dockerfile oci-context)
+$(oci_images_dir)/stage-runtime.oci.tar: $(call skipable,oci-dockerfile-validate oci-context)
 $(oci_images_dir)/stage-runtime.oci.tar: docker_image_build_extra_args=$(foreach oci_tag,$(oci_refs),--tag $(oci_tag))
 
-.PHONY: build-oci
-build-oci: $(oci_images_dir)/stage-runtime.oci.tar
+.PHONY: oci-build
+oci-build: $(oci_images_dir)/stage-runtime.oci.tar
 
 .PHONY: validate-oci
-validate-oci: ## validate the OCI image
-validate-oci: $(call skipable,build-oci)
+oci-validate: ## validate the OCI image
+oci-validate: $(call skipable,oci-build)
 	dockle $(dockle_args) \
 		--input $(oci_images_dir)/stage-runtime.oci.tar
 
-push-oci: ## push the OCI image to registries
-push-oci: $(oci_images_dir)/stage-runtime.oci.tar
+oci-push: ## push the OCI image to registries
+oci-push: $(oci_images_dir)/stage-runtime.oci.tar
 	$(foreach oci_ref_remote,$(OCI_REFS_REMOTE),\
 		crane push $(<) $(oci_ref_remote)$(__newline))
 
 ifneq ($(call parse_bool,$(BUILD_OCI)),)
 $(info adding OCI targets ...)
-validate: validate-dockerfile validate-oci
-build: build-oci
-publish: push-oci
+validate: oci-dockerfile-validate oci-validate
+build: oci-build
+publish: oci-push
 endif
 
 ########################################################################
@@ -302,21 +393,21 @@ docker-lock: ## Generate and rewrite digests of docker images
 ########################################################################
 
 .PHONY: help
-help:
+help: ## Show this message.
 	@echo "Targets:"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(current_makefile) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 	@echo "Variables:"
 	@{ grep -E '^## Variable .* : .*$$' $(current_makefile) || :; } | sort
 
-## clean directories
+## Clean directories
 .PHONY: clean-%/
 clean-%/:
 	@{ test -d $(*) && { set -x; rm -vr $(*); set +x; } } || echo "directory $(*) does not exist ... nothing to clean"
 
-## create directories
+## Create directories
 .PRECIOUS: %/
 %/:
 	mkdir -vp $(@)
 
 
-$(if $(wildcard devtools-targets.mk),$(eval include devtools-targets.mk),)
+$(if $(wildcard devtools-targets.mk),$(info loading devtools-targets.mk)$(eval include devtools-targets.mk),)
