@@ -13,7 +13,7 @@ help: ## show this message
 
 .PHONY: poetry-generate-requirements
 poetry-generate-requirements: requirements-poetry.in ## Generate requirements-poetry.txt
-	$(docker_compose_run) pip-tools pip-compile \
+	pip-compile \
 		--allow-unsafe \
 		--annotate \
 		--generate-hashes \
@@ -24,7 +24,7 @@ poetry-generate-requirements: requirements-poetry.in ## Generate requirements-po
 		requirements-poetry.in
 
 pip-tools-generate-requirements: requirements-pip-tools.in ## Generate requirements-pip-tools.txt
-	$(docker_compose_run) pip-tools pip-compile \
+	pip-compile \
 		--allow-unsafe \
 		--annotate \
 		--generate-hashes \
