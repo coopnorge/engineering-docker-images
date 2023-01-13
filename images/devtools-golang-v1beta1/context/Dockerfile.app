@@ -7,6 +7,7 @@ FROM docker.io/library/alpine:3@sha256:f271e74b17ced29b915d351685fd4644785c6d155
 
 FROM alpine AS runtime
 
+# hadolint disable=DL3018
 RUN \
     apk --no-cache update &&\
     apk --no-cache add \
