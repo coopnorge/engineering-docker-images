@@ -5,9 +5,12 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
+    image: ocreg.invalid/coopnorge/engineering/image/devtools-golang-v1beta1:built
     build:
       context: .
       dockerfile: Dockerfile
+    environment:
+      GOMODCACHE: /root/.cache/go-mod
     working_dir: /srv/workspace
     volumes:
       - ${WORKSPACE_DIR:-../tests/prototype}:/srv/workspace:z,cached

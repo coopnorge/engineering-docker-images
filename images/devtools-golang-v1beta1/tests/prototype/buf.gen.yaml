@@ -1,0 +1,32 @@
+# https://docs.buf.build/configuration/v1/buf-gen-yaml
+version: v1
+managed:
+  # https://docs.buf.build/generate/managed-mode
+  # https://docs.buf.build/tour/use-managed-mode
+  enabled: true
+  go_package_prefix:
+    default: example.com/prototype/internal/generated/proto
+    except:
+      - buf.build/googleapis/googleapis
+      - buf.build/grpc-ecosystem/grpc-gateway
+      - buf.build/grpc/grpc
+      - buf.build/envoyproxy/protoc-gen-validate
+      - buf.build/unitytestorg/gen-bq-schema
+plugins:
+  - name: go
+    # https://developers.google.com/protocol-buffers/docs/reference/go-generated
+    out: internal/generated/proto/
+    opt:
+      - paths=import
+      - module=example.com/prototype/internal/generated/proto
+  - name: go-grpc
+    out: internal/generated/proto/
+    opt:
+      - paths=import
+      - module=example.com/prototype/internal/generated/proto
+  - name: validate
+    out: internal/generated/proto/
+    opt:
+      - lang=go
+      - paths=import
+      - module=example.com/prototype/internal/generated/proto

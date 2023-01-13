@@ -1,0 +1,22 @@
+# https://docs.buf.build/configuration/v1/buf-yaml
+version: v1
+name: ""
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/grpc-ecosystem/grpc-gateway
+  - buf.build/grpc/grpc
+  - buf.build/envoyproxy/protoc-gen-validate
+  - buf.build/unitytestorg/gen-bq-schema
+build:
+  excludes: []
+lint:
+  use:
+    - DEFAULT
+  enum_zero_value_suffix: _UNSPECIFIED
+  rpc_allow_same_request_response: false
+  rpc_allow_google_protobuf_empty_requests: false
+  rpc_allow_google_protobuf_empty_responses: false
+  service_suffix: API
+breaking:
+  use:
+    - FILE

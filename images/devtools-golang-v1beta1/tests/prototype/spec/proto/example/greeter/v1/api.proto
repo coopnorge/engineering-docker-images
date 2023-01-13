@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package example.greeter.v1;
+
+// The greeting service definition.
+service GreeterAPI {
+  // Request a greeting.
+  rpc Greet(GreetRequest) returns (GreetResponse);
+}
+
+// The request message containing the name of the entity to be greeted.
+message GreetRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings.
+message GreetResponse {
+  string message = 1;
+}
