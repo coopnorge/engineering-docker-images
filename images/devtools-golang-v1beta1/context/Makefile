@@ -67,6 +67,7 @@ APP_DOCKERFILE?=build/package/Dockerfile
 BUILD_OCI?=$(if $(wildcard $(APP_DOCKERFILE)),true,false)
 XDG_CACHE_HOME?=$(HOME)/.cache
 ENABLE_BUF?=$(if $(wildcard buf.work.yaml),true,false)
+OCI_METADATA?=oci-metadata.json
 
 # setting this so that it is more likely things will work on MacOS and Linux
 export POSIXLY_CORRECT:=1
@@ -335,6 +336,7 @@ oci-build-stage-%: $(APP_DOCKERFILE) oci-dockerfile-validate | $(oci_images_dir)
 		--opt filename=$(notdir $(<)) \
 		--local context=$(oci_context_dir) \
 		--local dockerfile=$(dir $(<)) \
+		--metadata-file $(OCI_METADATA) \
 		--output $(oci_build_stage_output) \
     	$(buildctl_extra_args) \
 		$(foreach oci_build_arg,$(oci_build_args),--opt build-arg:$(oci_build_arg)) \
