@@ -378,6 +378,7 @@ def prototype_ro() -> Generator[Path, None, None]:
 @pytest.mark.parametrize(
     "command",
     [
+        "grpcurl --version".split(),
         "modd --version".split(),
         "mockgen -version".split(),
         "protoc-gen-go --version".split(),
