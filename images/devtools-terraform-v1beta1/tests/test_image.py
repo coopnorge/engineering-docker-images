@@ -212,7 +212,6 @@ def test_prototype_ok_no_module(
     capfd: CaptureFixture[str],
 ) -> None:
     with ctx_prototype(tmp_path, cache_dir if RAPID_TEST else None) as workdir:
-
         shutil.rmtree(workdir / "eg_module", ignore_errors=False)
         os.remove(workdir / "use_eg_module.tf")
 
@@ -252,7 +251,6 @@ def test_prototype_env_vars(
     capfd: CaptureFixture[str],
 ) -> None:
     with ctx_prototype(tmp_path, cache_dir) as workdir:
-
         subprocess.run(devtools_cmd(["validate", "TFDIRS="]), check=True)
 
         cap = Captured.from_capfd(capfd)
@@ -448,7 +446,6 @@ def test_prototype_fallback(
     capfd: CaptureFixture[str],
 ) -> None:
     with ctx_prototype(tmp_path, cache_dir) as workdir:
-
         for file in [*glob.glob("*"), *glob.glob(".*")]:
             file_path = workdir / file
             if file.endswith("docker-compose.yaml"):
@@ -526,5 +523,4 @@ def test_runs(
                 found
             ), f"did not find {match_string} in output ...{found}\n{cap.all()}"
         else:
-
             assert not found, f"found {match_string} in output{found}\n{cap.all()}"
