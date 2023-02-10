@@ -147,9 +147,9 @@ mkdocs-htmlproofer-plugin==0.10.2 \
     --hash=sha256:11faeeaf7b75dd503d72d6ccd47778c4e68e0949737768efab24b68ef651fd19 \
     --hash=sha256:e8be2d4769abc85e54e403482d85ffdb5c0ea306d2b091a20fcfa2577e00708d
     # via -r requirements-techdocs.in
-mkdocs-kroki-plugin==0.5.2 \
-    --hash=sha256:27f773e9a34b0a6cda0ecf281f1a6a415d903f3da90afa9ab5cf1dd3f2b927e5 \
-    --hash=sha256:e3886e579d96640a052befc29b4cf40cc840a6d96d23b2089f20676933c302de
+mkdocs-kroki-plugin==0.6.0 \
+    --hash=sha256:6f2fc16ea723f47bce02536833680e3db6638101b031480fda1e5ae4a920cfbc \
+    --hash=sha256:cc770d12098a25b648eb0de0ba3ccc3979c5ed5e011c74382e58407ae813c59f
     # via -r requirements-techdocs.in
 mkdocs-material==8.1.11 \
     --hash=sha256:03c9b202ed579899bbc7730d0f37e871fbc3a711d70549ca04ecb23adbb8164f \
