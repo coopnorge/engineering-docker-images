@@ -7,8 +7,8 @@ FROM docker.io/library/python:3.11.2@sha256:91778894494195bc996601622cfc2e545852
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-RUN mkdir /srv/workspace
-WORKDIR /srv/workspace
+RUN mkdir -p /usr/local/share/techdocs
+WORKDIR /usr/local/share/techdocs
 
 RUN apt-get clean \
     && apt-get update \
@@ -60,7 +60,7 @@ COPY package.json package.json
 COPY package-lock.json package-lock.json
 RUN npm install
 
-ENV PATH="${PATH}:/srv/workspace/node_modules/.bin/"
+ENV PATH="${PATH}:/usr/local/share/techdocs/node_modules/.bin/"
 
 COPY requirements-techdocs.txt requirements-techdocs.txt
 RUN pip install \
