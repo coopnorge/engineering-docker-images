@@ -25,9 +25,9 @@ services:
       context: .
       dockerfile: Dockerfile
       target: "techdocs-cli"
-    working_dir: /content
+    working_dir: /srv/workspace
     volumes:
-      - ${WORKSPACE_DIR:-../tests/prototype}:/content:z,cached
+      - ${WORKSPACE_DIR:-../tests/prototype}:/srv/workspace:z,cached
       - ${XDG_CACHE_HOME:-xdg-cache-home}:/root/.cache
 volumes:
   xdg-cache-home: {}
