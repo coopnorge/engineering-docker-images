@@ -1,4 +1,4 @@
 poetry==1.3.2
 keyrings.google-artifactregistry-auth==1.1.1
 poetry-dynamic-versioning[plugin]==0.21.3
-poetry-plugin-up==0.2.1
+poetry-plugin-up==0.2.2
