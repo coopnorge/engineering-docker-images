@@ -186,9 +186,7 @@ idna==3.3 \
 importlib-metadata==4.13.0 \
     --hash=sha256:8a8a81bcf996e74fee46f0d16bd3eaa382a7eb20fd82445c3ad11f4090334116 \
     --hash=sha256:dd0173e8f150d6815e098fd354f6414b0f079af4644ddfe90c71e2fc6174346d
-    # via
-    #   keyring
-    #   poetry
+    # via keyring
 jaraco-classes==3.2.3 \
     --hash=sha256:2353de3288bc6b82120752201c6b1c1a14b058267fa424ed5ce5984e3b922158 \
     --hash=sha256:89559fa5c1d3c34eff6f631ad80bb21f378dbcbb35dd161fd2c6b93f5be2f98a
@@ -369,9 +367,9 @@ poetry-plugin-export==1.2.0 \
     --hash=sha256:109fb43ebfd0e79d8be2e7f9d43ba2ae357c4975a18dfc0cfdd9597dd086790e \
     --hash=sha256:9a1dd42765408931d7831738749022651d43a2968b67c988db1b7a567dfe41ef
     # via poetry
-poetry-plugin-up==0.2.1 \
-    --hash=sha256:46e2e94afecfc8c46c6f6abe956d0d55a4f14cac98b1ad22abdf43ebe1132630 \
-    --hash=sha256:93c4618e5221f727a6b1b390f104374e6268c14309652a991f65d2fa051e7aa5
+poetry-plugin-up==0.2.2 \
+    --hash=sha256:51268e1d42b0a8ce2b14e36e25af8be2f57c07df1c151babb10687801fc72936 \
+    --hash=sha256:5c80e59177038ae2facc52af09bd0a7f55e58cf255fb8d153eb36cf1242a619b
     # via -r requirements-poetry.in
 ptyprocess==0.7.0 \
     --hash=sha256:4b41f3967fce3af57cc7e94b888626c18bf37a083e3651ca8feeb66d492fef35 \
@@ -540,10 +538,6 @@ six==1.16.0 \
     #   google-auth
     #   html5lib
     #   virtualenv
-tomli==2.0.1 \
-    --hash=sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc \
-    --hash=sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f
-    # via poetry
 tomlkit==0.11.1 \
     --hash=sha256:1c5bebdf19d5051e2e1de6cf70adfc5948d47221f097fcff7a3ffc91e953eaf5 \
     --hash=sha256:61901f81ff4017951119cd0d1ed9b7af31c821d6845c8c477587bbdcd5e5854e
