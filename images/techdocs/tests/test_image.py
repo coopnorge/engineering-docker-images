@@ -29,7 +29,7 @@ def build_image(
 def volumes() -> dict[str, dict[str, str]]:
     current_directory = pathlib.Path(__file__).parent.resolve()
     prototype = os.path.abspath(f"{current_directory}/prototype/")
-    return {prototype: {"bind": "/content", "mode": "rw"}}
+    return {prototype: {"bind": "/srv/workspace", "mode": "rw"}}
 
 
 @pytest.mark.parametrize(
@@ -133,7 +133,7 @@ def test_build(
         remove=True,
     )
     assert (
-        b"info: Successfully generated docs from /content into /content/site using local mkdocs"
+        b"info: Successfully generated docs from /srv/workspace into /srv/workspace/site using local mkdocs"
         in actual_output
     )
 
