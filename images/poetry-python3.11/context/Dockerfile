@@ -16,6 +16,8 @@ RUN pip install \
 
 FROM python as poetry
 
+WORKDIR /srv/workspace
+
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=off \
@@ -37,3 +39,5 @@ RUN python3 -m venv $POETRY_HOME && \
         --use-pep517 \
         --requirement requirements-poetry.txt && \
     rm -rf requirements-poetry.txt
+
+RUN git config --global --add safe.directory /srv/workspace
