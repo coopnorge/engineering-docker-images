@@ -19,12 +19,12 @@ services:
       context: docker-compose
       dockerfile: Dockerfile
       target: techdocs
-    working_dir: /content
+    working_dir: /srv/workspace
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS:-}
       GCLOUD_PROJECT: ${GCLOUD_PROJECT:-}
     volumes:
-      - .:/content
+      - .:/srv/workspace:z
       - ${XDG_CACHE_HOME:-xdg-cache-home}:/root/.cache
       - $HOME/.config/gcloud:/root/.config/gcloud
       - ${GOOGLE_APPLICATION_CREDENTIALS:-nothing}:${GOOGLE_APPLICATION_CREDENTIALS:-/tmp/empty-GOOGLE_APPLICATION_CREDENTIALS}
