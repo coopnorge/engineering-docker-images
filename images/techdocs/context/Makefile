@@ -7,8 +7,10 @@ docker := docker
 docker_compose := $(docker) compose
 docker_compose_run := $(docker_compose) run --rm -T
 
+CURRENT_DIR := $(shell pwd)
+
 BASE_BRANCH := origin/main
-MARKDOWN_FILES := $(shell git diff --name-only --diff-filter=ACMRT $(BASE_BRANCH) | grep .md$$)
+MARKDOWN_FILES ?= $(shell git diff --name-only --diff-filter=ACMRT $(BASE_BRANCH) | grep .md$$)
 
 .PHONY: help
 help: ## show this message
@@ -41,6 +43,15 @@ package-lock.json: package.json ## Generate requirements-techdocs.txt
 .PHONY: validate
 validate: lint linguistics-check ## Validate the content
 
+.PHONY: validate-pwd
+validate-pwd:
+	@if [[ $(CURRENT_DIR) = /srv/workspace ]] || [[ $(CURRENT_DIR) = /srv/workspace/* ]]; then \
+	    echo "Info: Workspace OK" 1>&2 ; \
+	else \
+	    echo "Error: Update docker compose working directory and volume to /srv/workspace" 1>&2 ; \
+	    exit 1; \
+	fi
+
 .PHONY: validate-fix
 validate-fix: lint-fix ## Fix auto-fixable validation errors
 
@@ -52,7 +63,7 @@ validate-fix: lint-fix ## Fix auto-fixable validation errors
 	fi
 
 .PHONY: lint
-lint: ../markdownlint.yaml ## Check markdown syntax
+lint: validate-pwd ../markdownlint.yaml ## Check markdown syntax
 	markdownlint --config=../markdownlint.yaml $(MARKDOWN_FILES)
 
 .PHONY: lint-fix
@@ -64,7 +75,7 @@ vale-sync:
 	vale sync
 
 .PHONY: linguistics-check
-linguistics-check: vale-sync ## Check spelling, grammar and other linguistics issues
+linguistics-check: validate-pwd vale-sync ## Check spelling, grammar and other linguistics issues
 	vale $(MARKDOWN_FILES)
 
 SITE_NAME := $(shell  yq --no-doc '.metadata.title // .metadata.name' ./catalog-info.yaml)

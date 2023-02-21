@@ -121,6 +121,33 @@ def test_test_validate(
     )
 
 
+@pytest.fixture()
+def wrong_volumes() -> dict[str, dict[str, str]]:
+    current_directory = pathlib.Path(__file__).parent.resolve()
+    prototype = os.path.abspath(f"{current_directory}/prototype/")
+    return {prototype: {"bind": "/srv/bad-workspace", "mode": "rw"}}
+
+
+def test_validate_wrong_pwd(
+    docker_client: docker.DockerClient,
+    build_image: Image,
+    wrong_volumes: dict[str, dict[str, str]],
+) -> None:
+    with pytest.raises(Exception) as excinfo:
+        docker_client.containers.run(
+            build_image.id,
+            command='validate MARKDOWN_FILES="README.md docs/index.md"',
+            volumes=wrong_volumes,
+            working_dir="/srv/bad-workspace",
+            remove=True,
+        )
+
+    assert (
+        "Error: Update docker compose working directory and volume to /srv/workspace"
+        in str(excinfo.value)
+    )
+
+
 def test_build(
     docker_client: docker.DockerClient,
     build_image: Image,
