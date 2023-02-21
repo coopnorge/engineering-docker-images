@@ -1,4 +1,4 @@
-FROM docker.io/library/python:3.9.16@sha256:5d0b605039499444251643500686a6e52f2549f4bb1b16cbbb67a4ea04f4c306 as python
+FROM docker.io/library/python:3.9.16@sha256:6f859d00a885892c341af52acc035654404f863ae41121ac42027d18dec5a86c as python
 
 WORKDIR /srv/workspace
 
