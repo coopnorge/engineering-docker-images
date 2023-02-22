@@ -51,9 +51,6 @@ RUN \
     true
 
 
-VOLUME /srv/workspace
-WORKDIR /srv/workspace
-
 COPY --from=golangci-lint /usr/bin/golangci-lint /usr/bin/golangci-lint
 COPY --from=grpcurl /bin/grpcurl /bin/grpcurl
 COPY --from=docker-lock /prod/docker-lock /usr/local/bin/docker-lock
@@ -86,5 +83,10 @@ RUN \
 
 COPY Makefile /usr/local/share/devtools-golang/
 COPY Dockerfile.app /usr/local/share/devtools-golang/
+
+RUN git config --global --add safe.directory /srv/workspace
+
+VOLUME /srv/workspace
+WORKDIR /srv/workspace
 
 CMD ["validate", "build"]
