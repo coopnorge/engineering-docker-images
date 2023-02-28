@@ -153,8 +153,8 @@
 			},
 			{
 				"name": "golangci/golangci-lint",
-				"tag": "v1.48.0-alpine",
-				"digest": "e9ce901b7974d641d6288b070fc619d199a823d0f696563fec8be90f19789b57"
+				"tag": "v1.51.0-alpine",
+				"digest": "a287ca89d0dbbfbbfb14996e7be3ac3f10f034c7fb4f560f845f623083d7067d"
 			},
 			{
 				"name": "docker.io/mikefarah/yq",
