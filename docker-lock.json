@@ -173,8 +173,8 @@
 			},
 			{
 				"name": "docker.io/moby/buildkit",
-				"tag": "v0.10.4-rootless",
-				"digest": "fc81ed8d967a60bf0e6bff38d4cf9d40be6e815d559c5796c8428cd82fd05674"
+				"tag": "v0.11.3-rootless",
+				"digest": "11b4d498ebe22a78df8ceff259e06fe226f3fa98acd20bdb38ebaa84e119be35"
 			},
 			{
 				"name": "gcr.io/go-containerregistry/crane",
