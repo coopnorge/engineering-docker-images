@@ -183,8 +183,8 @@
 			},
 			{
 				"name": "docker.io/bufbuild/buf",
-				"tag": "1.9.0",
-				"digest": "24abb6b50fbdda65974f1b127b89e66c9d74c9e1415c4536a4755808ed679456"
+				"tag": "1.15.0",
+				"digest": "d3a2fd8745fdc5545acc1d0d4211a7d5d991916ce8321fcf4612b6589a880373"
 			},
 			{
 				"name": "docker.io/library/golang",
