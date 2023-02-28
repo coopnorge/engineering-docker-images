@@ -190,7 +190,12 @@ func UnusedFunc() int {
 """
                 )
             ),
-            [("`UnusedFunc` is unused", True)],
+            [
+                (
+                    "exported: exported function UnusedFunc should have comment or be unexported (revive)",
+                    True,
+                )
+            ],
             id="validate-unchecked-return",
         ),
         pytest.param(
