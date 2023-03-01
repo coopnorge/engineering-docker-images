@@ -404,13 +404,7 @@ resource "google_project_iam_binding" "iam_binding" {
         with pytest.raises(subprocess.CalledProcessError):
             subprocess.run(devtools_cmd(), check=True)
         cap = Captured.from_capfd(capfd)
-        assert (
-            sum(
-                "first.last@example.com is an invalid member format" in line
-                for line in cap.out_lines
-            )
-            == 1
-        )
+        assert "invalid value for members.0" in cap.all()
 
 
 def test_prototype_tfdocs_fail(
