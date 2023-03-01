@@ -4,7 +4,7 @@ FROM ghcr.io/terraform-linters/tflint-bundle:v0.42.2.2@sha256:eb42e0eade042849e8
 FROM docker.io/aquasec/tfsec:v1.28.1@sha256:dfb84d16b1668701bf0932063e8ebb5a730cff38e08c7c1a689b02c3eee2e577 AS tfsec
 FROM docker.io/hashicorp/terraform:1.3.6@sha256:df0e0dd569697f24e8c207c22dbf1ef3ff386af750e9727a8713d4031c450fa3 AS terraform
 FROM quay.io/terraform-docs/terraform-docs:0.16.0@sha256:e24bf3fe70d15eeda95399f4fa5c70260cf4dfffbff4fb66931095d8d7ba9074 as tfdocs
-FROM docker.io/library/golang:1.20.1@sha256:2edf6aab2d57644f3fe7407132a0d1770846867465a39c2083770cf62734b05d as golang
+FROM docker.io/library/golang:1.20.1@sha256:13cc469331206a70ef5194ad85644ca81324d4f04ef6df3bf13500c99856de1d as golang
 
 RUN \
     go env > /usr/local/bin/goenv.sh && \
