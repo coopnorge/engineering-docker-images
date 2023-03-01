@@ -10,22 +10,22 @@
 			},
 			{
 				"name": "docker.io/hadolint/hadolint",
-				"tag": "v2.10.0",
-				"digest": "93f0afd12c3be5d732227c0226dd8e7bb84f79319a773d7f8519e55f958ba415",
+				"tag": "v2.12.0",
+				"digest": "30a8fd2e785ab6176eed53f74769e04f125afb2f74a6c52aef7d463583b6d45e",
 				"dockerfile": "Dockerfile",
 				"service": "devtools"
 			},
 			{
 				"name": "docker.io/goodwithtech/dockle",
-				"tag": "v0.4.7",
-				"digest": "97a57c34009cdff979184185f686c4664f34d8702b427a21d02b6ac67c045fbd",
+				"tag": "v0.4.11",
+				"digest": "79ef341552b293f13e7d915747b325c19f6ac47ed4d7bff2bff909fdd493acd7",
 				"dockerfile": "Dockerfile",
 				"service": "devtools"
 			},
 			{
 				"name": "docker.io/library/python",
-				"tag": "3.11.0",
-				"digest": "20416fc02584edd936eb740ac16c1aed4a765fccd99656f3d0b6d2e5ba725d66",
+				"tag": "3.11.2",
+				"digest": "208bd0911d0e1a9c810eba780224117f74cbb8fed4e0309d0376591c22b0f3d4",
 				"dockerfile": "Dockerfile",
 				"service": "devtools"
 			},
@@ -38,22 +38,22 @@
 			},
 			{
 				"name": "docker.io/hadolint/hadolint",
-				"tag": "v2.10.0",
-				"digest": "93f0afd12c3be5d732227c0226dd8e7bb84f79319a773d7f8519e55f958ba415",
+				"tag": "v2.12.0",
+				"digest": "30a8fd2e785ab6176eed53f74769e04f125afb2f74a6c52aef7d463583b6d45e",
 				"dockerfile": "Dockerfile",
 				"service": "docker-lock"
 			},
 			{
 				"name": "docker.io/goodwithtech/dockle",
-				"tag": "v0.4.7",
-				"digest": "97a57c34009cdff979184185f686c4664f34d8702b427a21d02b6ac67c045fbd",
+				"tag": "v0.4.11",
+				"digest": "79ef341552b293f13e7d915747b325c19f6ac47ed4d7bff2bff909fdd493acd7",
 				"dockerfile": "Dockerfile",
 				"service": "docker-lock"
 			},
 			{
 				"name": "docker.io/library/python",
-				"tag": "3.11.0",
-				"digest": "20416fc02584edd936eb740ac16c1aed4a765fccd99656f3d0b6d2e5ba725d66",
+				"tag": "3.11.2",
+				"digest": "208bd0911d0e1a9c810eba780224117f74cbb8fed4e0309d0376591c22b0f3d4",
 				"dockerfile": "Dockerfile",
 				"service": "docker-lock"
 			},
@@ -66,22 +66,22 @@
 			},
 			{
 				"name": "docker.io/hadolint/hadolint",
-				"tag": "v2.10.0",
-				"digest": "93f0afd12c3be5d732227c0226dd8e7bb84f79319a773d7f8519e55f958ba415",
+				"tag": "v2.12.0",
+				"digest": "30a8fd2e785ab6176eed53f74769e04f125afb2f74a6c52aef7d463583b6d45e",
 				"dockerfile": "Dockerfile",
 				"service": "dockle"
 			},
 			{
 				"name": "docker.io/goodwithtech/dockle",
-				"tag": "v0.4.7",
-				"digest": "97a57c34009cdff979184185f686c4664f34d8702b427a21d02b6ac67c045fbd",
+				"tag": "v0.4.11",
+				"digest": "79ef341552b293f13e7d915747b325c19f6ac47ed4d7bff2bff909fdd493acd7",
 				"dockerfile": "Dockerfile",
 				"service": "dockle"
 			},
 			{
 				"name": "docker.io/library/python",
-				"tag": "3.11.0",
-				"digest": "20416fc02584edd936eb740ac16c1aed4a765fccd99656f3d0b6d2e5ba725d66",
+				"tag": "3.11.2",
+				"digest": "208bd0911d0e1a9c810eba780224117f74cbb8fed4e0309d0376591c22b0f3d4",
 				"dockerfile": "Dockerfile",
 				"service": "dockle"
 			},
@@ -94,22 +94,22 @@
 			},
 			{
 				"name": "docker.io/hadolint/hadolint",
-				"tag": "v2.10.0",
-				"digest": "93f0afd12c3be5d732227c0226dd8e7bb84f79319a773d7f8519e55f958ba415",
+				"tag": "v2.12.0",
+				"digest": "30a8fd2e785ab6176eed53f74769e04f125afb2f74a6c52aef7d463583b6d45e",
 				"dockerfile": "Dockerfile",
 				"service": "hadolint"
 			},
 			{
 				"name": "docker.io/goodwithtech/dockle",
-				"tag": "v0.4.7",
-				"digest": "97a57c34009cdff979184185f686c4664f34d8702b427a21d02b6ac67c045fbd",
+				"tag": "v0.4.11",
+				"digest": "79ef341552b293f13e7d915747b325c19f6ac47ed4d7bff2bff909fdd493acd7",
 				"dockerfile": "Dockerfile",
 				"service": "hadolint"
 			},
 			{
 				"name": "docker.io/library/python",
-				"tag": "3.11.0",
-				"digest": "20416fc02584edd936eb740ac16c1aed4a765fccd99656f3d0b6d2e5ba725d66",
+				"tag": "3.11.2",
+				"digest": "208bd0911d0e1a9c810eba780224117f74cbb8fed4e0309d0376591c22b0f3d4",
 				"dockerfile": "Dockerfile",
 				"service": "hadolint"
 			}
@@ -124,25 +124,25 @@
 			},
 			{
 				"name": "docker.io/hadolint/hadolint",
-				"tag": "v2.10.0",
-				"digest": "93f0afd12c3be5d732227c0226dd8e7bb84f79319a773d7f8519e55f958ba415"
+				"tag": "v2.12.0",
+				"digest": "30a8fd2e785ab6176eed53f74769e04f125afb2f74a6c52aef7d463583b6d45e"
 			},
 			{
 				"name": "docker.io/goodwithtech/dockle",
-				"tag": "v0.4.7",
-				"digest": "97a57c34009cdff979184185f686c4664f34d8702b427a21d02b6ac67c045fbd"
+				"tag": "v0.4.11",
+				"digest": "79ef341552b293f13e7d915747b325c19f6ac47ed4d7bff2bff909fdd493acd7"
 			},
 			{
 				"name": "docker.io/library/python",
-				"tag": "3.11.0",
-				"digest": "20416fc02584edd936eb740ac16c1aed4a765fccd99656f3d0b6d2e5ba725d66"
+				"tag": "3.11.2",
+				"digest": "208bd0911d0e1a9c810eba780224117f74cbb8fed4e0309d0376591c22b0f3d4"
 			}
 		],
 		"images/benthos-v4/context/Dockerfile": [
 			{
 				"name": "docker.io/jeffail/benthos",
 				"tag": "4",
-				"digest": "cc3a710a8ca4f2bd570fc33eab943040a8b98e18946e83820c919e870f2dcaeb"
+				"digest": "7a5f4d9e3f8c6ef354d00f200ceb1195294bcfe6983b0244bb0aa67e7f6b9d1d"
 			}
 		],
 		"images/devtools-golang-v1beta1/context/Dockerfile": [
@@ -153,65 +153,70 @@
 			},
 			{
 				"name": "golangci/golangci-lint",
-				"tag": "v1.51.0-alpine",
-				"digest": "a287ca89d0dbbfbbfb14996e7be3ac3f10f034c7fb4f560f845f623083d7067d"
+				"tag": "v1.51-alpine",
+				"digest": "d4441632fdd9787214ebcfe026339adb9ab24a94026df18c8835893bfcdc9e27"
+			},
+			{
+				"name": "docker.io/fullstorydev/grpcurl",
+				"tag": "v1.8.7",
+				"digest": "d42ef512419560776bee5bb51e338a1734a0edb99f450b6d98fd98bcc93796f3"
 			},
 			{
 				"name": "docker.io/mikefarah/yq",
 				"tag": "4",
-				"digest": "22237bf6ac5e419bf225b9084867aa30222284df02bc73b04734c1a00778fa5d"
+				"digest": "3bdb5e6db331583864ffe89e8ba55288a9dfe116cf622ff4eac65745a87a3903"
 			},
 			{
 				"name": "docker.io/hadolint/hadolint",
-				"tag": "v2.10.0",
-				"digest": "93f0afd12c3be5d732227c0226dd8e7bb84f79319a773d7f8519e55f958ba415"
+				"tag": "v2.12.0",
+				"digest": "30a8fd2e785ab6176eed53f74769e04f125afb2f74a6c52aef7d463583b6d45e"
 			},
 			{
 				"name": "docker.io/goodwithtech/dockle",
-				"tag": "v0.4.7",
-				"digest": "97a57c34009cdff979184185f686c4664f34d8702b427a21d02b6ac67c045fbd"
+				"tag": "v0.4.11",
+				"digest": "79ef341552b293f13e7d915747b325c19f6ac47ed4d7bff2bff909fdd493acd7"
 			},
 			{
 				"name": "docker.io/moby/buildkit",
 				"tag": "v0.11.3-rootless",
-				"digest": "11b4d498ebe22a78df8ceff259e06fe226f3fa98acd20bdb38ebaa84e119be35"
+				"digest": "1e61e92773befbaffc45e06094203814e31528e650b4a0901cf65b7a452e7d6f"
 			},
 			{
 				"name": "gcr.io/go-containerregistry/crane",
-				"tag": "v0.11.0",
-				"digest": "40823185f184cfc2fed19318988ad5119f4d2fd1eadee51d8b2b365016a6c03b"
+				"tag": "v0.13.0",
+				"digest": "9ddb050949d8e9a37a96d7f9762095c332e015246200dc2984481f1771602fba"
 			},
 			{
 				"name": "docker.io/bufbuild/buf",
 				"tag": "1.15.0",
-				"digest": "d3a2fd8745fdc5545acc1d0d4211a7d5d991916ce8321fcf4612b6589a880373"
+				"digest": "966e0c5705850e7b1ce3dd34f3994a47ff14e769caf2fb521f86f0301d329542"
 			},
 			{
 				"name": "docker.io/library/golang",
-				"tag": "1.19.2-bullseye",
-				"digest": "80ede0f12980ec4fc580fa651aabff041d46d1255b323fa0b740ecbce9f89256"
+				"tag": "1.20.1-bullseye",
+				"digest": "d35d4e6ee0e1627bbeaa6c2e7e35d49f9ae25cbe8c41a00ead262c0903c69978"
 			}
 		],
 		"images/devtools-kubernetes-v1beta1/context/Dockerfile": [
 			{
 				"name": "docker.io/argoproj/argocd",
-				"tag": "v2.4.15",
-				"digest": "85c7efc3e7f60fc0a6c039bf9aa303f4ae04172401c8bc48f34a82ec3ad99141"
+				"tag": "v2.6.3",
+				"digest": "0fd690bd7b89bd6f947b4000de33abd53ebcd36b57216f1c675a1127707b5eef"
 			},
 			{
 				"name": "zegl/kube-score",
-				"tag": "v1.14.0",
-				"digest": "df26b2d3978be960b41e8c09906a38f3e5ad7ef3c63b8770c693dc3405005299"
+				"tag": "v1.16.1",
+				"digest": "2e46cd36a08c1c6eb90c4e8e87c61c22d9402c3f73a25a9c9645df909b79897f"
 			},
 			{
 				"name": "golang",
-				"tag": "1.19.2",
-				"digest": "25de7b6b28219279a409961158c547aadd0960cf2dcbc533780224afa1157fd4"
+				"tag": "1.20.1",
+				"digest": "13cc469331206a70ef5194ad85644ca81324d4f04ef6df3bf13500c99856de1d"
 			},
 			{
 				"name": "docker.io/library/ubuntu",
 				"tag": "22.04",
-				"digest": "7cfe75438fc77c9d7235ae502bf229b15ca86647ac01c844b272b56326d56184"
+				"digest": "9a0bdde4188b896a372804be2384015e90e3f84906b750c1a53539b585fbbe7f"
 			}
 		],
 		"images/devtools-terraform-v1beta1/context/Dockerfile": [
@@ -222,18 +227,18 @@
 			},
 			{
 				"name": "ghcr.io/terraform-linters/tflint-bundle",
-				"tag": "v0.41.0.1",
-				"digest": "c1a9ab620e8d1473ee564a7b971a6fa02b7bc7a7d9842123c6fd0aac6548fe18"
+				"tag": "v0.42.2.2",
+				"digest": "eb42e0eade042849e8c6436c328aaadd9ba21a1a002fd594c4d411f0eb557ee6"
 			},
 			{
 				"name": "docker.io/aquasec/tfsec",
-				"tag": "v1.28.0",
-				"digest": "a3cb23500ec6ebd9cc25bd619b6af659b07d504a8910b673859579b3e0852d59"
+				"tag": "v1.28.1",
+				"digest": "dfb84d16b1668701bf0932063e8ebb5a730cff38e08c7c1a689b02c3eee2e577"
 			},
 			{
 				"name": "docker.io/hashicorp/terraform",
-				"tag": "1.3.2",
-				"digest": "79ad82e6159889e9ebb781a87f9e7e212b693713eb8114ef4d45e7d383373056"
+				"tag": "1.3.6",
+				"digest": "df0e0dd569697f24e8c207c22dbf1ef3ff386af750e9727a8713d4031c450fa3"
 			},
 			{
 				"name": "quay.io/terraform-docs/terraform-docs",
@@ -242,41 +247,41 @@
 			},
 			{
 				"name": "docker.io/library/golang",
-				"tag": "1.19.2",
-				"digest": "25de7b6b28219279a409961158c547aadd0960cf2dcbc533780224afa1157fd4"
+				"tag": "1.20.1",
+				"digest": "13cc469331206a70ef5194ad85644ca81324d4f04ef6df3bf13500c99856de1d"
 			},
 			{
 				"name": "docker.io/library/ubuntu",
 				"tag": "22.04",
-				"digest": "7cfe75438fc77c9d7235ae502bf229b15ca86647ac01c844b272b56326d56184"
+				"digest": "9a0bdde4188b896a372804be2384015e90e3f84906b750c1a53539b585fbbe7f"
 			}
 		],
 		"images/poetry-python3.10/context/Dockerfile": [
 			{
 				"name": "docker.io/library/python",
-				"tag": "3.10.7",
-				"digest": "53e577204d362233ee92aeb5119449271f5eb24f99c61464efe9167ddbc8640f"
+				"tag": "3.10.10",
+				"digest": "421f8ad31fdb03677d40092118ce687399245d5757283f25bff914f0b3af89da"
 			}
 		],
 		"images/poetry-python3.11/context/Dockerfile": [
 			{
 				"name": "docker.io/library/python",
-				"tag": "3.11.0",
-				"digest": "20416fc02584edd936eb740ac16c1aed4a765fccd99656f3d0b6d2e5ba725d66"
+				"tag": "3.11.2",
+				"digest": "208bd0911d0e1a9c810eba780224117f74cbb8fed4e0309d0376591c22b0f3d4"
 			}
 		],
 		"images/poetry-python3.8/context/Dockerfile": [
 			{
 				"name": "docker.io/library/python",
-				"tag": "3.8.15",
-				"digest": "298ac24487c9bc85360173a285cf3ca213dafa252e3777a971391c745cbe4a23"
+				"tag": "3.8.16",
+				"digest": "8bfe365ca738c4bc988d8c66571514972565b5abb3a04c0c342f976def6a962c"
 			}
 		],
 		"images/poetry-python3.9/context/Dockerfile": [
 			{
 				"name": "docker.io/library/python",
-				"tag": "3.9.15",
-				"digest": "af98802e9d29e9593433953b3533a787d902e9346bd7cfefc5caa27cdb1282f3"
+				"tag": "3.9.16",
+				"digest": "fc49b0b2ba630f57e5dde88537c682152bcc8863a49545116fd662cb25d7cfc7"
 			}
 		],
 		"images/techdocs/context/Dockerfile": [
@@ -287,23 +292,23 @@
 			},
 			{
 				"name": "jdkato/vale",
-				"tag": "v2.20.2",
-				"digest": "2025a2fae1f200e08d7c8b518c5cd1a556bee0087e5373b2a525b5580bed66db"
+				"tag": "v2.22.0",
+				"digest": "c1ba7c9b0c9f728604d6c0769f25337441303616f037b12c54eda450100acb87"
 			},
 			{
 				"name": "plantuml/plantuml",
-				"tag": "1.2022.12",
-				"digest": "658d63ac409ab3a813278f40c6a974998017180e2614c41120623b62045c41ac"
+				"tag": "1.2023.1",
+				"digest": "a74ce6ad77a98211117c8a12a8d5e6f1cba2d44f109c281e8e7e2ab54957e3c4"
 			},
 			{
 				"name": "mikefarah/yq",
-				"tag": "4.28.2",
-				"digest": "22237bf6ac5e419bf225b9084867aa30222284df02bc73b04734c1a00778fa5d"
+				"tag": "4.30.6",
+				"digest": "d4e1d060e248bdc3ac9e0fccfb4209e24ff42ed3d39beab33d3c3a19480b14fd"
 			},
 			{
 				"name": "docker.io/library/python",
-				"tag": "3.10.7",
-				"digest": "53e577204d362233ee92aeb5119449271f5eb24f99c61464efe9167ddbc8640f"
+				"tag": "3.11.2",
+				"digest": "208bd0911d0e1a9c810eba780224117f74cbb8fed4e0309d0376591c22b0f3d4"
 			}
 		]
 	}
