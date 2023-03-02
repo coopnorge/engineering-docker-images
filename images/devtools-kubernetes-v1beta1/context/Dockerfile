@@ -13,9 +13,10 @@ RUN \
     apt-get update && \
     apt-get install -y \
         --no-install-recommends \
-        make \
         ca-certificates \
         curl \
+        git \
+        make \
         && \
     rm -vr /var/lib/apt/lists/* && \
     true
@@ -85,5 +86,7 @@ RUN \
     true
 
 COPY Makefile /usr/local/share/devtools-kubernetes/Makefile
+
+RUN git config --system --add safe.directory /srv/workspace
 
 CMD ["validate"]

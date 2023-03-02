@@ -13,8 +13,9 @@ WORKDIR /usr/local/share/techdocs
 RUN apt-get clean \
     && apt-get update \
     && apt-get install --no-install-recommends -y \
-        lsb-release=11.1.0 \
         apt-transport-https=2.2.4 \
+        git \
+        lsb-release=11.1.0 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -88,6 +89,8 @@ RUN \
 COPY Makefile /usr/local/share/techdocs/Makefile
 COPY mkdocs.yml /usr/local/share/techdocs/mkdocs.yml
 COPY markdownlint.yaml /usr/local/share/techdocs/markdownlint.yaml
+
+RUN git config --system --add safe.directory /srv/workspace
 
 VOLUME /srv/workspace
 WORKDIR /srv/workspace
