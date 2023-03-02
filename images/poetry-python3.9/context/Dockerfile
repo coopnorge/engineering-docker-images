@@ -40,4 +40,4 @@ RUN python3 -m venv $POETRY_HOME && \
         --requirement requirements-poetry.txt && \
         rm -rf requirements-poetry.txt
 
-RUN git config --global --add safe.directory /srv/workspace
+RUN git config --system --add safe.directory /srv/workspace

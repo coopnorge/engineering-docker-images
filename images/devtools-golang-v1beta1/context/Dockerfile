@@ -20,15 +20,15 @@ RUN \
     apt-get update && \
     apt-get install -y \
         --no-install-recommends \
-        make \
-        socat \
-        curl \
-        ca-certificates \
         busybox \
-        rsync \
-        protobuf-compiler \
+        ca-certificates \
+        curl \
         git \
         jq \
+        make \
+        protobuf-compiler \
+        rsync \
+        socat \
         && \
     rm -vr /var/lib/apt/lists/* && \
     true
@@ -84,7 +84,7 @@ RUN \
 COPY Makefile /usr/local/share/devtools-golang/
 COPY Dockerfile.app /usr/local/share/devtools-golang/
 
-RUN git config --global --add safe.directory /srv/workspace
+RUN git config --system --add safe.directory /srv/workspace
 
 VOLUME /srv/workspace
 WORKDIR /srv/workspace

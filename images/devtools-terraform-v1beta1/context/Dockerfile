@@ -18,12 +18,12 @@ RUN \
     apt-get update && \
     apt-get install -y \
         --no-install-recommends \
+        busybox \
+        ca-certificates \
+        curl \
+        git \
         make \
         socat \
-        git \
-        curl \
-        ca-certificates \
-        busybox \
         && \
     rm -vr /var/lib/apt/lists/* && \
     true
@@ -80,5 +80,7 @@ RUN \
     true
 
 COPY Makefile /usr/local/share/devtools-terraform/Makefile
+
+RUN git config --system --add safe.directory /srv/workspace
 
 CMD ["validate"]
