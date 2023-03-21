@@ -12,3 +12,17 @@ spec:
   type: library
   lifecycle: experimental
   owner: people
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: test-prototype-2
+  title: Test Prototype 2
+  description: This is a test protoype
+  annotations:
+    github.com/project-slug: example/test-prototype
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: library
+  lifecycle: experimental
+  owner: people
