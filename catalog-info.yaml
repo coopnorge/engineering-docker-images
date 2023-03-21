@@ -1,0 +1,142 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: engineering-docker-images
+  title: Engineering Docker Images
+  description: Devtools and other useful container images
+  annotations:
+    github.com/project-slug: coopnorge/engineering-docker-images
+spec:
+  owner: engineering
+  domain: platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: benthos-v4
+  description: |
+    This is a mirror of the latest version 4 of Benthos and is provided so that
+    Benthos can be used with cloud run which needs the image to be on a Google
+    registry.
+  annotations:
+    github.com/project-slug: coopnorge/engineering-docker-images
+spec:
+  type: library
+  lifecycle: experimental
+  owner: engineering
+  system: engineering-docker-images
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: devtools-golang-v1beta1
+  annotations:
+    github.com/project-slug: coopnorge/engineering-docker-images
+  tags:
+    - devtools
+    - go
+spec:
+  type: library
+  lifecycle: experimental
+  owner: engineering
+  system: engineering-docker-images
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: devtools-kubernetes-v1beta1
+  annotations:
+    github.com/project-slug: coopnorge/engineering-docker-images
+  tags:
+    - devtools
+    - kubernetes
+spec:
+  type: library
+  lifecycle: experimental
+  owner: cloud-platform
+  system: engineering-docker-images
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: devtools-terraform-v1beta1
+  annotations:
+    github.com/project-slug: coopnorge/engineering-docker-images
+  tags:
+    - devtools
+    - terraform
+spec:
+  type: library
+  lifecycle: experimental
+  owner: cloud-platform
+  system: engineering-docker-images
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: poetry-python3.10
+  annotations:
+    github.com/project-slug: coopnorge/engineering-docker-images
+  tags:
+    - python
+spec:
+  type: library
+  lifecycle: production
+  owner: cloud-platform
+  system: engineering-docker-images
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: poetry-python3.11
+  annotations:
+    github.com/project-slug: coopnorge/engineering-docker-images
+  tags:
+    - python
+spec:
+  type: library
+  lifecycle: production
+  owner: cloud-platform
+  system: engineering-docker-images
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: poetry-python3.8
+  annotations:
+    github.com/project-slug: coopnorge/engineering-docker-images
+  tags:
+    - python
+spec:
+  type: library
+  lifecycle: production
+  owner: cloud-platform
+  system: engineering-docker-images
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: poetry-python3.9
+  annotations:
+    github.com/project-slug: coopnorge/engineering-docker-images
+  tags:
+    - python
+spec:
+  type: library
+  lifecycle: production
+  owner: cloud-platform
+  system: engineering-docker-images
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: techdocs
+  annotations:
+    github.com/project-slug: coopnorge/engineering-docker-images
+  tags:
+    - techdocs
+spec:
+  type: library
+  lifecycle: production
+  owner: cloud-platform
+  system: engineering-docker-images
