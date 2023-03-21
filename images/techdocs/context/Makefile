@@ -78,7 +78,7 @@ vale-sync:
 linguistics-check: validate-pwd vale-sync ## Check spelling, grammar and other linguistics issues
 	vale $(MARKDOWN_FILES)
 
-SITE_NAME := $(shell  yq --no-doc '.metadata.title // .metadata.name' ./catalog-info.yaml)
+SITE_NAME := $(shell yq --no-doc 'select(document_index == 0) | .metadata.title // .metadata.name' ./catalog-info.yaml)
 
 .PHONY: mkdocs.yml
 mkdocs.yml: /usr/local/share/techdocs/mkdocs.yml
@@ -88,7 +88,7 @@ mkdocs.yml: /usr/local/share/techdocs/mkdocs.yml
 build: mkdocs.yml ## Build the website
 	export SITE_NAME="$(SITE_NAME)" && export REPO_NAME=$(REPO_NAME) export REPO_URL=$(REPO_URL) && export EDIT_URI=$(EDIT_URI) && techdocs-cli generate --no-docker
 
-ENTITY := $(shell yq --no-doc '[.metadata.namespace // "default", .kind, .metadata.name] | join("/")' ./catalog-info.yaml)
+ENTITY := $(shell yq --no-doc 'select(document_index == 0) | [.metadata.namespace // "default", .kind, .metadata.name] | join("/")' ./catalog-info.yaml)
 
 serve: mkdocs.yml ## Run a preview site
 	export SITE_NAME="$(SITE_NAME)" && export REPO_NAME=$(REPO_NAME) export REPO_URL=$(REPO_URL) && export EDIT_URI=$(EDIT_URI) && techdocs-cli serve --no-docker
