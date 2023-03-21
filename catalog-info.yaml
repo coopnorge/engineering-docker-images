@@ -5,6 +5,7 @@ metadata:
   title: Engineering Docker Images
   description: Devtools and other useful container images
   annotations:
+    backstage.io/techdocs-ref: dir:.
     github.com/project-slug: coopnorge/engineering-docker-images
 spec:
   owner: engineering
