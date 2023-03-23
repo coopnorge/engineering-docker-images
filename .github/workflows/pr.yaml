@@ -119,13 +119,23 @@ jobs:
           make push-images oci_remote_ref_prefixes=ghcr.io/${{ github.repository }}/e0/
           make push-images oci_remote_ref_prefixes=europe-north1-docker.pkg.dev/engineering-production-af50/images/
 
+  techdocs:
+    permissions:
+      contents: read
+      id-token: write
+      packages: read
+    name: TechDocs
+    uses: coopnorge/github-workflow-techdocs/.github/workflows/techdocs.yaml@v0
+
   build:
     needs:
       - image-ci
+      - techdocs
     if: always()
     runs-on: ubuntu-latest
     steps:
       - run: exit 1
         name: "Catch errors"
         if: |
-          needs.image-ci.result == 'failure'
+          needs.image-ci.result == 'failure' ||
+          needs.techdocs.result == 'failure'
