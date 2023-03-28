@@ -45,6 +45,14 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "docker"
+    directory: "images/poetry-python3.9/context/docker-compose"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pip"
+    directory: "images/poetry-python3.9/context/docker-compose"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
     directory: "images/poetry-python3.10/context/"
     schedule:
       interval: "daily"
@@ -53,11 +61,27 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "docker"
+    directory: "images/poetry-python3.10/context/docker-compose"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pip"
+    directory: "images/poetry-python3.10/context/docker-compose"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
     directory: "images/poetry-python3.11/context/"
     schedule:
       interval: "daily"
   - package-ecosystem: "pip"
     directory: "images/poetry-python3.11/context/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "images/poetry-python3.11/context/docker-compose"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pip"
+    directory: "images/poetry-python3.11/context/docker-compose"
     schedule:
       interval: "daily"
   - package-ecosystem: "docker"
