@@ -15,17 +15,16 @@ of Poetry and base python image.
 > **Optional:** update a timestamp of `requirements.in`
 >
 > ```shell
-> touch requirements.txt
+> touch requirements.in
 > ```
 
-2.2 Re-generate `requirements.txt`
+2. Re-generate `requirements.txt`
 
-    ```
+    ```shell
     docker compose run --rm pip-tools make generate-requirements
     ``
 
 ## Running tests
-
 
 ```bash
 ## Run from repo root
