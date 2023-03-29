@@ -23,9 +23,11 @@ def build_image(
 def expected_python_version() -> bytes:
     return b"Python 3.11"
 
+
 @pytest.fixture(scope="session")
 def expected_pip_compile_version() -> bytes:
     return b"pip-compile, version 6"
+
 
 def test_image_should_return_a_correct_python_version(
     docker_client: docker.DockerClient,
