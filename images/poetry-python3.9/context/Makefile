@@ -3,16 +3,14 @@ SHELL=bash
 .PHONY: default
 default:
 
-docker=docker
-docker_compose=$(docker) compose
-docker_compose_run=$(docker_compose) run --rm -T
-
 .PHONY: help
 help: ## show this message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: poetry-generate-requirements
-poetry-generate-requirements: requirements-poetry.in ## Generate requirements-poetry.txt
+poetry-generate-requirements: requirements-poetry.txt ## Generate requirements-poetry.txt
+
+requirements-poetry.txt: requirements-poetry.in
 	pip-compile \
 		--allow-unsafe \
 		--annotate \
@@ -23,7 +21,10 @@ poetry-generate-requirements: requirements-poetry.in ## Generate requirements-po
 		--verbose \
 		requirements-poetry.in
 
-pip-tools-generate-requirements: docker-compose/requirements-pip-tools.in ## Generate requirements-pip-tools.txt
+.PHONY: pip-tools-generate-requirements
+pip-tools-generate-requirements: docker-compose/requirements-pip-tools.txt ## Generate requirements-pip-tools.txt
+
+docker-compose/requirements-pip-tools.txt: requirements-pip-tools.in
 	pip-compile \
 		--allow-unsafe \
 		--annotate \
