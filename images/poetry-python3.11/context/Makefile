@@ -19,14 +19,14 @@ poetry-generate-requirements: requirements-poetry.in ## Generate requirements-po
 		--verbose \
 		requirements-poetry.in
 
-pip-tools-generate-requirements: requirements-pip-tools.in ## Generate requirements-pip-tools.txt
+pip-tools-generate-requirements: docker-compose/requirements-pip-tools.in ## Generate requirements-pip-tools.txt
 	pip-compile \
 		--allow-unsafe \
 		--annotate \
 		--generate-hashes \
 		--resolver backtracking \
-		--output-file requirements-pip-tools.txt \
+		--output-file docker-compose/requirements-pip-tools.txt \
 		--rebuild \
 		--resolver backtracking \
 		--verbose \
-		requirements-pip-tools.in
+		docker-compose/requirements-pip-tools.in

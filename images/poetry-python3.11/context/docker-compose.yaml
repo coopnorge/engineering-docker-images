@@ -3,7 +3,7 @@ version: "3.8"
 services:
   pip-tools:
     build:
-      context: .
+      context: docker-compose
       dockerfile: Dockerfile
       target: "pip-tools"
     volumes:
