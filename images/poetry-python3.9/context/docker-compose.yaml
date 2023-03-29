@@ -1,11 +1,8 @@
-version: "3.8"
-
 services:
-  pip-tools:
+  devtools:
     build:
-      context: docker-compose
+      context: .
       dockerfile: Dockerfile
-      target: "pip-tools"
     volumes:
       - .:/srv/workspace:z
       - ${XDG_CACHE_HOME:-xdg-cache-home}:/root/.cache

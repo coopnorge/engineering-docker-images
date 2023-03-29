@@ -1,7 +1,5 @@
 FROM docker.io/library/python:3.9.16@sha256:7ac171271f185d4f05824b68ab1995981872e8f9b0cac262fe7da138fbd82e9a as python
 
-FROM python as poetry
-
 WORKDIR /srv/workspace
 
 ENV PYTHONUNBUFFERED=1 \
@@ -16,14 +14,15 @@ ENV PYTHONUNBUFFERED=1 \
     VENV_PATH="/srv/workspace/.venv"
 ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 
-COPY requirements-poetry.txt requirements-poetry.txt
+COPY requirements.txt requirements.txt
+
 RUN python3 -m venv $POETRY_HOME && \
     $POETRY_HOME/bin/pip install \
         --no-cache-dir \
         --require-hashes  \
         --verbose \
         --use-pep517 \
-        --requirement requirements-poetry.txt && \
-        rm -rf requirements-poetry.txt
+        --requirement requirements.txt && \
+    rm -rf requirements.txt
 
 RUN git config --system --add safe.directory /srv/workspace
