@@ -15,12 +15,13 @@ docker compose build devtools
 
 and then
 
-```
+```shell
 docker compose run --rm devtools make generate-requirements
 ```
 
 >**Note** If you want to force the generation of the requirements,
 > update the timestamp of the `requirements.in`
+>
 > ```shell
 > touch requirements.in
 > ```
