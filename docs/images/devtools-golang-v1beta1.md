@@ -1,6 +1,12 @@
 # Golang development tools
 
-## Configuration
+## Usage
+
+```console
+docker-compose run --rm golang-devtools help
+```
+
+### Configuration
 
 Interface variables are configurable with environment variables.
 
@@ -15,6 +21,39 @@ listed in before any variables are defined:
 
 If `devtools-targets.mk` is present then it will be loaded after all targets
 are defined.
+
+```yaml title="docker-compose.yml"
+services:
+  golang-devtools:
+    build:
+      context: docker-compose
+      target: golang-devtools
+      dockerfile: Dockerfile
+    privileged: true
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    volumes:
+      - .:/srv/workspace:z
+      - ${DOCKER_CONFIG:-~/.docker}:/root/.docker
+      - ${GIT_CONFIG:-~/.gitconfig}:${GIT_CONFIG_GUEST:-/root/.gitconfig}
+      - ${SSH_CONFIG:-~/.ssh}:/root/.ssh
+      - ${XDG_CACHE_HOME:-xdg-cache-home}:/root/.cache
+    environment:
+      SERVICE_PORT: ":50051"
+      SHUTDOWN_TIMEOUT: 5s
+      GOMODCACHE: /root/.cache/go-mod
+    ports:
+      - "50051:50051"
+    networks:
+      - default
+    working_dir: /srv/workspace
+    command: "golang-run"
+networks:
+  default:
+volumes:
+    xdg-cache-home: {}
+```
 
 ## Features
 
