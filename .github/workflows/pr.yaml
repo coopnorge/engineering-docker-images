@@ -9,7 +9,7 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     outputs:
-      image-names: ${{ steps.image-names.outputs.image-names }}
+      image-names: ${{ steps.image-names.outputs.image_names }}
       images-ci: ${{ steps.paths-filter.outputs.images }}
     steps:
       - uses: actions/checkout@v3
@@ -30,8 +30,8 @@ jobs:
         run: |
           images=$(echo ${{ steps.paths-filter.outputs.images_files }} | yq -o=json -I0 '.[] |= sub("images/([^/]+)/.*$", "${1}") | unique' -)
           echo "$images"
-          echo "::set-output name=image-names::${images}"
-      - run: echo ${{ steps.image-names.outputs.image-names }}
+          echo "IMAGE_NAMES=${images}" >> $GITHUB_OUTPUT
+      - run: echo ${{ steps.image-names.outputs.image_names }}
 
   image-ci:
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
       contents: read
     strategy:
       matrix:
-        image: ${{ fromJSON(needs.setup.outputs.image-names) }}
+        image: ${{ fromJSON(needs.setup.outputs.image_names) }}
     steps:
       - uses: actions/checkout@v3
       - name: Cache xdg
