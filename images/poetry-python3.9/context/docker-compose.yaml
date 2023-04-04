@@ -1,8 +1,9 @@
+version: "3.8"
+
 services:
   devtools:
     build:
-      context: .
-      dockerfile: Dockerfile
+      target: "poetry"
     volumes:
       - .:/srv/workspace:z
       - ${XDG_CACHE_HOME:-xdg-cache-home}:/root/.cache
