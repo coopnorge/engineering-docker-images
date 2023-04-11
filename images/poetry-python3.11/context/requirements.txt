@@ -480,9 +480,9 @@ pluggy==1.0.0 \
     --hash=sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159 \
     --hash=sha256:74134bbf457f031a36d68416e1509f34bd5ccc019f0bcc952c7b909d06b37bd3
     # via keyrings-google-artifactregistry-auth
-poetry==1.4.1 \
-    --hash=sha256:9a0c9f5f862678d475ac2fd2451ea612facd02efb054bb758763893f7d85053e \
-    --hash=sha256:c0c24de00b8e42eb7f4bba9803a59720a299e1805ecf699e0823a30f9a8edb1f
+poetry==1.4.2 \
+    --hash=sha256:0bd580a42482579635e774c5286ef73b8df3427567123cdb128b286cec671b3c \
+    --hash=sha256:c39c483cde7930915c992f932c163994ce3d870765efb8235ad0139cd65f0c5b
     # via
     #   -r requirements.in
     #   poetry-dynamic-versioning
