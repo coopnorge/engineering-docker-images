@@ -16,14 +16,14 @@ ENV PYTHONUNBUFFERED=1 \
     VENV_PATH="/srv/workspace/.venv"
 ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 
-COPY requirements-poetry.txt requirements-poetry.txt
+COPY requirements.txt requirements.txt
 RUN python3 -m venv $POETRY_HOME && \
     $POETRY_HOME/bin/pip install \
         --no-cache-dir \
         --require-hashes  \
         --verbose \
         --use-pep517 \
-        --requirement requirements-poetry.txt && \
-    rm -rf requirements-poetry.txt
+        --requirement requirements.txt && \
+    rm -rf requirements.txt
 
 RUN git config --system --add safe.directory /srv/workspace

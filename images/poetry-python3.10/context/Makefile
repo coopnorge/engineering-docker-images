@@ -7,31 +7,16 @@ default:
 help: ## show this message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: poetry-generate-requirements
-poetry-generate-requirements: requirements-poetry.txt ## Generate requirements-poetry.txt
+.PHONY: generate-requirements
+generate-requirements: requirements.txt ## Generate requirements-poetry.txt
 
-requirements-poetry.txt: requirements-poetry.in
+requirements.txt: requirements.in
 	pip-compile \
 		--allow-unsafe \
 		--annotate \
 		--generate-hashes \
-		--output-file requirements-poetry.txt \
+		--output-file requirements.txt \
 		--rebuild \
 		--resolver backtracking \
 		--verbose \
-		requirements-poetry.in
-
-.PHONY: pip-tools-generate-requirements
-pip-tools-generate-requirements: docker-compose/requirements-pip-tools.txt ## Generate requirements-pip-tools.txt
-
-docker-compose/requirements-pip-tools.txt: requirements-pip-tools.in
-	pip-compile \
-		--allow-unsafe \
-		--annotate \
-		--generate-hashes \
-		--resolver backtracking \
-		--output-file docker-compose/requirements-pip-tools.txt \
-		--rebuild \
-		--resolver backtracking \
-		--verbose \
-		docker-compose/requirements-pip-tools.in
+		requirements.in

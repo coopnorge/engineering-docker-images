@@ -1,11 +1,9 @@
 version: "3.8"
 
 services:
-  pip-tools:
+  devtools:
     build:
-      context: docker-compose
-      dockerfile: Dockerfile
-      target: "pip-tools"
+      target: "poetry"
     volumes:
       - .:/srv/workspace:z
       - ${XDG_CACHE_HOME:-xdg-cache-home}:/root/.cache
