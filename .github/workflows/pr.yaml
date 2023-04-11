@@ -46,7 +46,7 @@ jobs:
       contents: read
     strategy:
       matrix:
-        image: ${{ fromJSON(needs.setup.outputs.image_names) }}
+        image: ${{ fromJSON(needs.setup.outputs.image-names) }}
     steps:
       - uses: actions/checkout@v3
       - name: Cache xdg
