@@ -9,7 +9,7 @@ require (
 	github.com/golang/mock v1.6.0
 	github.com/pseudomuto/protoc-gen-doc v1.5.1
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.3.0
-	google.golang.org/protobuf v1.28.1
+	google.golang.org/protobuf v1.30.0
 )
 
 require (
