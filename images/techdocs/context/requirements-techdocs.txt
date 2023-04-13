@@ -132,9 +132,9 @@ mkdocs==1.4.0 \
     #   mkdocs-material
     #   mkdocs-monorepo-plugin
     #   mkdocs-techdocs-core
-mkdocs-awesome-pages-plugin==2.8.0 \
-    --hash=sha256:6b21ad4f41aecbe89e3a9a51f8837892cc7ce8ca0f9f4e0a355d56159ace3d68 \
-    --hash=sha256:af7e327e14b2eea3b2735c37428e33a528ecd2d9ae2296dc0f1632f0f3bc28f7
+mkdocs-awesome-pages-plugin==2.9.0 \
+    --hash=sha256:783dddf7d42aba632324a2e5267ff13ca5a42ba9f4f37996d963f1b518f9009f \
+    --hash=sha256:845a90b6ee0b00e641ff21a1599ad92805cfd12982c855686a79ef1c63454cc9
     # via -r requirements-techdocs.in
 mkdocs-ezlinks-plugin==0.1.14 \
     --hash=sha256:3e2085c16a850e022393e80194c17612e7b55de87fb45b3ffb618b5dfdb10811
