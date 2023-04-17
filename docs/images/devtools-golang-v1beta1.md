@@ -22,6 +22,10 @@ listed in before any variables are defined:
 If `devtools-targets.mk` is present then it will be loaded after all targets
 are defined.
 
+```Dockerfile title="docker-compose/Dockerfile"
+FROM ghcr.io/coopnorge/engineering-docker-images/e0/devtools-golang-v1beta1:latest@sha256:7e54fe41351af1b7b4cdf75c2cb8251f80b89845b49179ae2003b200b3054369 AS golang-devtools
+```
+
 ```yaml title="docker-compose.yml"
 services:
   golang-devtools:
