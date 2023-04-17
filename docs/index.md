@@ -36,3 +36,33 @@ of the invoking user, which is the exact privliges which the process in the
 docker container should have anyway in order to operate as intended. This being
 said, care should be taken to not use these images with a docker daemon that is
 running as root.
+
+## Dockerfile for referencing the Engineering Docker Images
+
+`/docker-compose/Dockerfile` is used to reference Engineering Docker Images.
+
+## Depandabot image update configuration
+
+To use Dependabot to keep the Engineering Docker Images in your repository up
+to date. Add the following to the repository Dependabot configuration
+file.
+
+```yaml title=".github/dependabot.yaml"
+---
+version: 2
+
+registries:
+  coop-ghcr:
+    type: docker-registry
+    url: ghcr.io
+    username: CoopGithubServiceaccount
+    password: ${{ secrets.DEPENDABOT_GHCR_PULL }}
+
+updates:
+  - package-ecosystem: "docker"
+    directory: "/docker-compose"
+    schedule:
+      interval: "daily"
+    registries:
+      - coop-ghcr
+```
