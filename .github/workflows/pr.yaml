@@ -101,7 +101,7 @@ jobs:
           make VERBOSE=all -j4 test
       - name: Auth to GCP
         if: github.ref == 'refs/heads/main'
-        uses: "google-github-actions/auth@v1.0.0"
+        uses: "google-github-actions/auth@v1.1.0"
         with:
           workload_identity_provider: projects/943318002566/locations/global/workloadIdentityPools/github-actions/providers/github-actions-provider
           service_account: gha-docker-images@engineering-production-af50.iam.gserviceaccount.com
