@@ -94,6 +94,13 @@ jobs:
         run: |
           export docker_image_build_args="--cache-from type=gha --cache-to type=gha,mode=max"
           make VERBOSE=all validate-static build-images
+      - name: Tag images
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          IMAGE_NAMES: ${{ matrix.image }}
+        run: |
+          make tag-images oci_remote_ref_prefixes=ghcr.io/${{ github.repository }}/e0/
+          make tag-images oci_remote_ref_prefixes=europe-north1-docker.pkg.dev/engineering-production-af50/images/
       - name: Test images
         env:
           IMAGE_NAMES: ${{ matrix.image }}

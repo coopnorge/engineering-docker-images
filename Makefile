@@ -30,6 +30,11 @@ __ORIGINAL_SHELL:=$(SHELL)
 SHELL=$(warning Building $@$(if $<, (from $<))$(if $?, ($? newer)))$(TIME) $(__ORIGINAL_SHELL)
 endif
 
+giti_commit_hash=$(shell git log -1 --format="%H")
+
+oci_tag_suffixes_git = \
+	gitc-$(giti_commit_hash) \
+
 define __newline
 
 
@@ -111,9 +116,9 @@ test_image_targets=$(foreach image_name,$(IMAGE_NAMES),test-image-$(image_name))
 test: $(test_image_targets) ## Test all images
 
 .PHONY: tag-image-%
-tag-image-%:
+tag-image-%: build-image-%
 	$(foreach oci_remote_ref_prefix,$(oci_remote_ref_prefixes),\
-		$(docker) tag $(oci_local_ref_prefix)$(*):built $(oci_remote_ref_prefix)$(*):latest $(__newline))
+		$(docker) tag $(oci_local_ref_prefix)$(*):built $(oci_remote_ref_prefix)$(*):$(oci_tag_suffixes_git) $(__newline))
 
 tag_image_targets=$(foreach image_name,$(IMAGE_NAMES),tag-image-$(image_name))
 .PHONY: tag-images
@@ -122,7 +127,7 @@ tag-images: $(tag_image_targets) ## Tag all images
 .PHONY: push-image-%
 push-image-%: tag-image-% ## Push a specific image
 	$(foreach oci_remote_ref_prefix,$(oci_remote_ref_prefixes),\
-		$(docker) push $(oci_remote_ref_prefix)$(*):latest $(__newline))
+		$(docker) push $(oci_remote_ref_prefix)$(*):$(oci_tag_suffixes_git) $(__newline))
 
 push_image_targets=$(foreach image_name,$(IMAGE_NAMES),push-image-$(image_name))
 push-images: $(push_image_targets) ## Push all images
