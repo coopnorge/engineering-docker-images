@@ -29,14 +29,6 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "docker"
-    directory: "images/poetry-python3.8/context/"
-    schedule:
-      interval: "daily"
-  - package-ecosystem: "pip"
-    directory: "images/poetry-python3.8/context/"
-    schedule:
-      interval: "daily"
-  - package-ecosystem: "docker"
     directory: "images/poetry-python3.9/context/"
     schedule:
       interval: "daily"
