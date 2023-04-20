@@ -118,7 +118,8 @@ test: $(test_image_targets) ## Test all images
 .PHONY: tag-image-%
 tag-image-%: build-image-%
 	$(foreach oci_remote_ref_prefix,$(oci_remote_ref_prefixes),\
-		$(docker) tag $(oci_local_ref_prefix)$(*):built $(oci_remote_ref_prefix)$(*):$(oci_tag_suffixes_git) $(__newline))
+		$(docker) tag $(oci_local_ref_prefix)$(*):built $(oci_remote_ref_prefix)$(*):$(oci_tag_suffixes_git) $(__newline) \
+		$(docker) tag $(oci_local_ref_prefix)$(*):built $(oci_remote_ref_prefix)$(*):latest $(__newline))
 
 tag_image_targets=$(foreach image_name,$(IMAGE_NAMES),tag-image-$(image_name))
 .PHONY: tag-images
@@ -127,7 +128,8 @@ tag-images: $(tag_image_targets) ## Tag all images
 .PHONY: push-image-%
 push-image-%: tag-image-% ## Push a specific image
 	$(foreach oci_remote_ref_prefix,$(oci_remote_ref_prefixes),\
-		$(docker) push $(oci_remote_ref_prefix)$(*):$(oci_tag_suffixes_git) $(__newline))
+		$(docker) push $(oci_remote_ref_prefix)$(*):$(oci_tag_suffixes_git) $(__newline) \
+		$(docker) push $(oci_remote_ref_prefix)$(*):$tag $(__newline))
 
 push_image_targets=$(foreach image_name,$(IMAGE_NAMES),push-image-$(image_name))
 push-images: $(push_image_targets) ## Push all images
