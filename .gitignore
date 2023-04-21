@@ -155,3 +155,7 @@ cython_debug/
 
 .vale/
 mkdocs.yml
+
+
+# Node dependencies
+node_modules/

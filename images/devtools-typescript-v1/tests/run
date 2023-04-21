@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+script_dirname="$( dirname -- "${0}" )"
+cmd=(poetry run pytest "${script_dirname}" "${@}")
+printf " %q" "${cmd[@]}"; echo
+exec "${cmd[@]}"
