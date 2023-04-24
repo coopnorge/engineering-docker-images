@@ -110,7 +110,7 @@ metadata:
     - python
 spec:
   type: library
-  lifecycle: production
+  lifecycle: deprecated
   owner: cloud-platform
   system: engineering-docker-images
 ---
