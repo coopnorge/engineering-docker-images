@@ -1,1 +1,1 @@
-FROM docker.io/jeffail/benthos:4@sha256:ec9b635d10bf267eb5b5c4c348b36752af1a5444ba768aefc6ca2c92ae2e22dd
+FROM docker.io/jeffail/benthos:4@sha256:d0ad553d8ab5c848e8766c994180dcddc4aaa1209279bf19672d7070b3267a30
