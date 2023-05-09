@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/abice/go-enum v0.5.6
-	github.com/cortesi/modd v0.0.0-20230109161829-ebf5f294cb93
+	github.com/cortesi/modd v0.8.1
 	github.com/envoyproxy/protoc-gen-validate v0.10.1
 	github.com/golang/mock v1.6.0
 	github.com/pseudomuto/protoc-gen-doc v1.5.1
@@ -21,7 +21,7 @@ require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/alecthomas/units v0.0.0-20211218093645-b94a6e3cc137 // indirect
 	github.com/bmatcuk/doublestar v1.3.4 // indirect
-	github.com/cortesi/moddwatch v0.0.0-20210323234936-df014e95c743 // indirect
+	github.com/cortesi/moddwatch v0.1.0 // indirect
 	github.com/cortesi/termlog v0.0.0-20210222042314-a1eec763abec // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/fatih/color v1.13.0 // indirect
@@ -40,7 +40,7 @@ require (
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/mwitkow/go-proto-validators v0.3.2 // indirect
 	github.com/pseudomuto/protokit v0.2.1 // indirect
-	github.com/rjeczalik/notify v0.0.0-20181126183243-629144ba06a1 // indirect
+	github.com/rjeczalik/notify v0.9.3 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/spf13/afero v1.9.3 // indirect
@@ -52,7 +52,7 @@ require (
 	golang.org/x/mod v0.9.0 // indirect
 	golang.org/x/net v0.8.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
-	golang.org/x/sys v0.6.0 // indirect
+	golang.org/x/sys v0.7.0 // indirect
 	golang.org/x/term v0.6.0 // indirect
 	golang.org/x/text v0.8.0 // indirect
 	golang.org/x/tools v0.7.0 // indirect
