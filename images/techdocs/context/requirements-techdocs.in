@@ -3,5 +3,6 @@ mkdocs-ezlinks-plugin==0.1.14
 mkdocs-git-revision-date-localized-plugin==1.2.0
 mkdocs-htmlproofer-plugin==0.13.1
 mkdocs-kroki-plugin==0.6.1
+mkdocs-table-reader-plugin==2.0
 mkdocs-techdocs-core==1.1.7
 pymdown-extensions==9.3
