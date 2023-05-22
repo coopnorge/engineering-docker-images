@@ -37,11 +37,24 @@ docker container should have anyway in order to operate as intended. This being
 said, care should be taken to not use these images with a docker daemon that is
 running as root.
 
-## Dockerfile for referencing the Engineering Docker Images
+### Usage
+
+!!! note "Docker Desktop on Apple Silicon"
+    For certain images to function property x86/amd64 emulation using Rosetta 2
+    must be enabled.
+
+    1. Go into the Docker Desktop settings.
+    2. In "General" enable "**Use Virtualization framework**".
+       ![Image of the setting to enable "Use Virtualization framework"](./resources/docker-desktop-mac-virtualization-framework.png "Use Virtualization framework")
+    3. In "Feature in development section" enable "**Use Rosetta for x86/amd64
+       emulation on Apple Silicon**".
+       ![Image of the setting to enable "Use Rosetta for x86/amd64 emulation on Apple Silicon"](./resources/docker-desktop-mac-rosetta-settings.png "Use Rosetta for x86/amd64 emulation on Apple Silicon")
+
+### Dockerfile for referencing the Engineering Docker Images
 
 `/docker-compose/Dockerfile` is used to reference Engineering Docker Images.
 
-## Depandabot image update configuration
+### Depandabot image update configuration
 
 To use Dependabot to keep the Engineering Docker Images in your repository up
 to date. Add the following to the repository Dependabot configuration
