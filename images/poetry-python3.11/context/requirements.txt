@@ -270,9 +270,9 @@ dunamai==1.16.0 \
     --hash=sha256:bfe8e23cc5a1ceed1c7f791674ea24cf832a53a5da73f046eeb43367ccfc3f77 \
     --hash=sha256:dc92d817f3bc155e8b129e8c705c36bb15a7e950e2698a93aea142732a888e98
     # via poetry-dynamic-versioning
-filelock==3.10.7 \
-    --hash=sha256:892be14aa8efc01673b5ed6589dbccb95f9a8596f0507e232626155495c18105 \
-    --hash=sha256:bde48477b15fde2c7e5a0713cbe72721cb5a5ad32ee0b8f419907960b9d75536
+filelock==3.12.0 \
+    --hash=sha256:ad98852315c2ab702aeb628412cbf7e95b7ce8c3bf9565670b4eaecf1db370a9 \
+    --hash=sha256:fc03ae43288c013d2ea83c8597001b1129db351aad9c57fe2409327916b8e718
     # via
     #   poetry
     #   virtualenv
@@ -470,9 +470,9 @@ pkginfo==1.9.6 \
     --hash=sha256:4b7a555a6d5a22169fcc9cf7bfd78d296b0361adad412a346c1226849af5e546 \
     --hash=sha256:8fd5896e8718a4372f0ea9cc9d96f6417c9b986e23a4d116dda26b62cc29d046
     # via poetry
-platformdirs==2.6.2 \
-    --hash=sha256:83c8f6d04389165de7c9b6f0c682439697887bca0aa2f1c87ef1826be3584490 \
-    --hash=sha256:e1fea1fe471b9ff8332e229df3cb7de4f53eeea4998d3b6bfff542115e998bd2
+platformdirs==3.5.1 \
+    --hash=sha256:412dae91f52a6f84830f39a8078cecd0e866cb72294a5c66808e74d5e88d251f \
+    --hash=sha256:e2378146f1964972c03c085bb5662ae80b2b8c06226c54b2ff4aa9483e8a13a5
     # via
     #   poetry
     #   virtualenv
@@ -480,17 +480,17 @@ pluggy==1.0.0 \
     --hash=sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159 \
     --hash=sha256:74134bbf457f031a36d68416e1509f34bd5ccc019f0bcc952c7b909d06b37bd3
     # via keyrings-google-artifactregistry-auth
-poetry==1.4.2 \
-    --hash=sha256:0bd580a42482579635e774c5286ef73b8df3427567123cdb128b286cec671b3c \
-    --hash=sha256:c39c483cde7930915c992f932c163994ce3d870765efb8235ad0139cd65f0c5b
+poetry==1.5.0 \
+    --hash=sha256:4fc7d37cf400739dcfcbb666db97fd74c46eaae119dd6ed9c8d5dd7e32c6f06a \
+    --hash=sha256:e66c728b3c645a12c24f553a3e60f3b1ee425aa4a09c331dd372ff14e0976d26
     # via
     #   -r requirements.in
     #   poetry-dynamic-versioning
     #   poetry-plugin-export
     #   poetry-plugin-up
-poetry-core==1.5.2 \
-    --hash=sha256:832d40a1ea5fd10c0f648d0575cadddc8b79f06f91d83a1f1a73a7e1dfacfbd7 \
-    --hash=sha256:c6556c3b1ec5b8668e6ef5a4494726bc41d31907339425e194e78a6178436c14
+poetry-core==1.6.0 \
+    --hash=sha256:a9c7296a12d6c8e4f8aa50a66ef3c967b2b50fba634da144d358e676fad9989f \
+    --hash=sha256:ff96620579f02ec30ee9f789fa5dfdcddd9ab4ac848394f6f8f2f4e88306b534
     # via
     #   poetry
     #   poetry-plugin-export
@@ -498,9 +498,9 @@ poetry-dynamic-versioning[plugin]==0.21.5 \
     --hash=sha256:4f299e4bfe780e0dd85e8e9ed3ddfa42d050447a36ac8f5e8c1ebd66f66c82cc \
     --hash=sha256:aa3ff2883394daf80d0cfb1e12d10ecdedc407a8b7c296545ad8b6124979dffc
     # via -r requirements.in
-poetry-plugin-export==1.3.0 \
-    --hash=sha256:61ae5ec1db233aba947a48e1ce54c6ff66afd0e1c87195d6bce64c73a5ae658c \
-    --hash=sha256:6e5919bf84afcb08cdd419a03f909f490d8671f00633a3c6df8ba09b0820dc2f
+poetry-plugin-export==1.3.1 \
+    --hash=sha256:941d7ba02a59671d6327b16dc6deecc9262477abbc120d728a500cf125bc1e06 \
+    --hash=sha256:d949742757a8a5f0b5810495bffaf4ed8a767f2e2ffda9887cf72f896deabf84
     # via poetry
 poetry-plugin-up==0.3.0 \
     --hash=sha256:1444d6bc8660c9257a7ca87db77be3adeb17b870980f9929713f33d376d172f3 \
@@ -701,9 +701,9 @@ urllib3==1.26.15 \
     #   dulwich
     #   poetry
     #   requests
-virtualenv==20.21.0 \
-    --hash=sha256:31712f8f2a17bd06234fa97fdf19609e789dd4e3e4bf108c3da71d710651adbc \
-    --hash=sha256:f50e3e60f990a0757c9b68333c9fdaa72d7188caa417f96af9e52407831a3b68
+virtualenv==20.23.0 \
+    --hash=sha256:6abec7670e5802a528357fdc75b26b9f57d5d92f29c5462ba0fbe45feacc685e \
+    --hash=sha256:a85caa554ced0c0afbd0d638e7e2d7b5f92d23478d05d17a76daeac8f279f924
     # via poetry
 webencodings==0.5.1 \
     --hash=sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78 \
