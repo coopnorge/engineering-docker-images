@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.3
 FROM docker.io/argoproj/argocd:v2.6.9@sha256:1bbbcce7f6af098ce68c5223fd78477a04f41ca7c7cec3682c65c7faf884a546 as argocd
 FROM zegl/kube-score:v1.16.1@sha256:2e46cd36a08c1c6eb90c4e8e87c61c22d9402c3f73a25a9c9645df909b79897f as kube-score
-FROM golang:1.20.4@sha256:685a22e459f9516f27d975c5cc6accc11223ee81fdfbbae60e39cc3b87357306 as golang
+FROM golang:1.20.4@sha256:690e4135bf2a4571a572bfd5ddfa806b1cb9c3dea0446ebadaf32bc2ea09d4f9 as golang
 
 RUN \
     go env > /usr/local/bin/goenv.sh && \
