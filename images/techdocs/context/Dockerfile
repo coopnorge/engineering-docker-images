@@ -1,4 +1,4 @@
-FROM docker.io/library/node:18.10.0-bullseye@sha256:9d8a6466c6385e05f62f8ccf173e80209efb0ff4438f321f09ddf552b05af3ba as node
+FROM docker.io/library/node:20.2.0-bullseye@sha256:14f0471d0478fbb9177d0f9e8c146dc872273dcdcfc7fea93a27ed81fc6b0e96 as node
 FROM jdkato/vale:v2.27.0@sha256:8b92de3714c2e6ddfd6ed4c36191fd0c899de1a722e2d2f27f9a5a69d5a765d9 as vale
 FROM plantuml/plantuml:1.2023.8@sha256:9e24908088d0adf0f48062df5891e32bd552ef5262214a5533d448aafd98f485 as plantuml
 FROM mikefarah/yq:4.34.1@sha256:414a2cd52d0ac9c03cbaeb2b1e07bab9ed551d25b4578d4a4dccaffb82406fba as yq
@@ -24,7 +24,6 @@ COPY --from=node /usr/local/include/node /usr/local/include/node
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=node /usr/local/share/doc/node /usr/local/share/doc/node
 COPY --from=node /usr/local/share/man/man1/node.1 /usr/local/share/man/man1/node.1
-COPY --from=node /usr/local/share/systemtap/tapset/node.stp /usr/local/share/systemtap/tapset/node.stp
 RUN ln -s /usr/local/lib/node_modules/corepack/dist/corepack.js /usr/local/bin/corepack \
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
     && ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
