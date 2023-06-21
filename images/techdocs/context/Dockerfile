@@ -30,7 +30,10 @@ RUN ln -s /usr/local/lib/node_modules/corepack/dist/corepack.js /usr/local/bin/c
     && ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
+    openjdk-17-jdk-headless=17.0.6+10-1~deb11u1 \
     openjdk-17-jdk=17.0.6+10-1~deb11u1 \
+    openjdk-17-jre-headless=17.0.6+10-1~deb11u1 \
+    openjdk-17-jre=17.0.6+10-1~deb11u1 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
