@@ -36,7 +36,7 @@ def volumes() -> dict[str, dict[str, str]]:
     "cli_command,expected_ouput",
     [
         ("techdocs-cli --version", b"1."),
-        ("markdownlint --version", b"0.34."),
+        ("markdownlint --version", b"0.35."),
         ("vale --version", b"vale version v2."),
         ("yq --version", b"yq (https://github.com/mikefarah/yq/) version v4."),
     ],
