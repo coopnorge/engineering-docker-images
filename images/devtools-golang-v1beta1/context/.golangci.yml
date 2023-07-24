@@ -1,4 +1,6 @@
 # https://golangci-lint.run/usage/configuration/
+run:
+  timeout: 5m
 linters:
   disable-all: true
   enable:
