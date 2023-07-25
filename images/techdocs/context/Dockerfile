@@ -1,5 +1,5 @@
 FROM docker.io/library/node:20.5.0-bullseye@sha256:89c55b9a52efe93d59f768feb8a45a797ba68ebb251125b206d9782d7070c965 as node
-FROM jdkato/vale:v2.27.0@sha256:8b92de3714c2e6ddfd6ed4c36191fd0c899de1a722e2d2f27f9a5a69d5a765d9 as vale
+FROM jdkato/vale:v2.28.1@sha256:068f1b91fc5d6d82612c985ae39355fd3f9c5f9424a421b527eddfbdaec40ddd as vale
 FROM plantuml/plantuml:1.2023.10@sha256:4c61fab9444f42cfd21ba3559b2728001821c4a6c9d26dcd24025cd6f9e7c3a0 as plantuml
 FROM mikefarah/yq:4.34.2@sha256:85b9d54e306fd9aa58251669f8005140c93a6299e9357d94e494a83fe8ba790a as yq
 
