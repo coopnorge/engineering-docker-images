@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@techdocs/cli": "1.4.3",
+    "@techdocs/cli": "1.4.4",
     "markdownlint": "^0.29.0",
     "markdownlint-cli": "^0.35.0"
   }
