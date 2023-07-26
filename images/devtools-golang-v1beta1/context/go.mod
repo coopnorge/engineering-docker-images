@@ -3,7 +3,7 @@ module github.com/coopnorge/engineering-docker-images/images/devtools-golang-v1b
 go 1.17
 
 require (
-	github.com/abice/go-enum v0.5.6
+	github.com/abice/go-enum v0.5.7
 	github.com/cortesi/modd v0.8.1
 	github.com/envoyproxy/protoc-gen-validate v1.0.2
 	github.com/golang/mock v1.6.0
@@ -35,7 +35,7 @@ require (
 	github.com/lyft/protoc-gen-star/v2 v2.0.3 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
-	github.com/mattn/goveralls v0.0.11 // indirect
+	github.com/mattn/goveralls v0.0.12 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/mwitkow/go-proto-validators v0.3.2 // indirect
@@ -45,17 +45,17 @@ require (
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/spf13/afero v1.9.3 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
-	github.com/urfave/cli/v2 v2.25.1 // indirect
+	github.com/urfave/cli/v2 v2.25.7 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
-	golang.org/x/crypto v0.10.0 // indirect
+	golang.org/x/crypto v0.11.0 // indirect
 	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616 // indirect
-	golang.org/x/mod v0.11.0 // indirect
-	golang.org/x/net v0.11.0 // indirect
+	golang.org/x/mod v0.12.0 // indirect
+	golang.org/x/net v0.12.0 // indirect
 	golang.org/x/sync v0.3.0 // indirect
-	golang.org/x/sys v0.9.0 // indirect
-	golang.org/x/term v0.9.0 // indirect
-	golang.org/x/text v0.10.0 // indirect
-	golang.org/x/tools v0.10.0 // indirect
+	golang.org/x/sys v0.10.0 // indirect
+	golang.org/x/term v0.10.0 // indirect
+	golang.org/x/text v0.11.0 // indirect
+	golang.org/x/tools v0.11.0 // indirect
 	golang.org/x/tools/cmd/cover v0.1.0-deprecated // indirect
 	google.golang.org/genproto v0.0.0-20230110181048-76db0878b65f // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6 // indirect
