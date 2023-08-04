@@ -6,6 +6,30 @@
 docker-compose run --rm golang-devtools help
 ```
 
+### Prerequisites
+
+#### Local Go configuration
+
+To allow the container to access private go modules over SSH your Git
+configuration must be compatible.
+
+1. Generate an RSA key pair and upload the public key to
+   [GitHub](https://github.com/settings/keys).
+
+   ```console
+   ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+   ```
+
+2. Configure git to access the repositories over SSH instead of HTTPS
+
+    ```console title="Example"
+    git config --global url."git@github.com:example/".insteadOf "https://github.com/example/"
+    ```
+
+    ```console title="Coop specific"
+    git config --global url."git@github.com:coopnorge/".insteadOf "https://github.com/coopnorge/"
+    ```
+
 ### Configuration
 
 Interface variables are configurable with environment variables.
