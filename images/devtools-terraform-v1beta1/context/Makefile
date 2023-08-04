@@ -112,7 +112,7 @@ validate-tf-$(1): | $(1)/.terraform $(if $(TF_NO_PROVIDERS),,$(1)/.terraform/pro
 	cd $(1) && $$(terraform) validate
 	test -e "$(1)/.tfsec-ignore" || $$(tfsec) $(1)
 	[ ! -f "$(1)/$(terraform_docs_config)" ] || (echo "Validating documentation" ; $$(tfdocs_check) )
-	$$(tflint) $(1)
+	$$(tflint) --chdir=$(1)
 
 endef
 
