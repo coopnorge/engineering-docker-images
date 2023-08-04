@@ -13,9 +13,9 @@ WORKDIR /usr/local/share/techdocs
 RUN apt-get clean \
     && apt-get update \
     && apt-get install --no-install-recommends -y \
-        apt-transport-https=2.2.4 \
+        apt-transport-https=2.6.1 \
         git \
-        lsb-release=11.1.0 \
+        lsb-release=12.0-1 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -30,10 +30,10 @@ RUN ln -s /usr/local/lib/node_modules/corepack/dist/corepack.js /usr/local/bin/c
     && ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
-    openjdk-17-jdk-headless=17.0.6+10-1~deb11u1 \
-    openjdk-17-jdk=17.0.6+10-1~deb11u1 \
-    openjdk-17-jre-headless=17.0.6+10-1~deb11u1 \
-    openjdk-17-jre=17.0.6+10-1~deb11u1 \
+    openjdk-17-jdk-headless=17.0.8+7-1~deb12u1 \
+    openjdk-17-jdk=17.0.8+7-1~deb12u1 \
+    openjdk-17-jre-headless=17.0.8+7-1~deb12u1 \
+    openjdk-17-jre=17.0.8+7-1~deb12u1 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
