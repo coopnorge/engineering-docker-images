@@ -3,7 +3,7 @@ FROM jdkato/vale:v2.28.1@sha256:068f1b91fc5d6d82612c985ae39355fd3f9c5f9424a421b5
 FROM plantuml/plantuml:1.2023.10@sha256:4c61fab9444f42cfd21ba3559b2728001821c4a6c9d26dcd24025cd6f9e7c3a0 as plantuml
 FROM mikefarah/yq:4.34.2@sha256:85b9d54e306fd9aa58251669f8005140c93a6299e9357d94e494a83fe8ba790a as yq
 
-FROM docker.io/library/python:3.11.3@sha256:3a619e3c96fd4c5fc5e1998fd4dcb1f1403eb90c4c6409c70d7e80b9468df7df as base
+FROM docker.io/library/python:3.11.4@sha256:9a1b705aecedc76e8bf87dfca091d7093df3f2dd4765af6c250134ce4298a584 as base
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -13,9 +13,9 @@ WORKDIR /usr/local/share/techdocs
 RUN apt-get clean \
     && apt-get update \
     && apt-get install --no-install-recommends -y \
-        apt-transport-https=2.2.4 \
+        apt-transport-https=2.6.1 \
         git \
-        lsb-release=11.1.0 \
+        lsb-release=12.0-1 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -30,10 +30,10 @@ RUN ln -s /usr/local/lib/node_modules/corepack/dist/corepack.js /usr/local/bin/c
     && ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
-    openjdk-17-jdk-headless=17.0.6+10-1~deb11u1 \
-    openjdk-17-jdk=17.0.6+10-1~deb11u1 \
-    openjdk-17-jre-headless=17.0.6+10-1~deb11u1 \
-    openjdk-17-jre=17.0.6+10-1~deb11u1 \
+    openjdk-17-jdk-headless=17.0.8+7-1~deb12u1 \
+    openjdk-17-jdk=17.0.8+7-1~deb12u1 \
+    openjdk-17-jre-headless=17.0.8+7-1~deb12u1 \
+    openjdk-17-jre=17.0.8+7-1~deb12u1 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
