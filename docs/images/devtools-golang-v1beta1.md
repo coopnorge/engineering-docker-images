@@ -20,6 +20,9 @@ configuration must be compatible.
    ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
    ```
 
+   Make sure to not set a passphrase, and to `Configure SSO` to Authorize the
+   key for use with coopnorge after you have added it to GitHub.
+
 2. Configure git to access the repositories over SSH instead of HTTPS
 
     ```console title="Example"
@@ -34,8 +37,8 @@ configuration must be compatible.
 
 Interface variables are configurable with environment variables.
 
-If any of the following files are found they will be loaded in the order they are
-listed in before any variables are defined:
+If any of the following files are found they will be loaded in the order they
+are listed in before any variables are defined:
 
 - `devtools-settings.mk`
 - `devtools.env`
@@ -43,8 +46,8 @@ listed in before any variables are defined:
 - `.env`
 - `${ENVIRONMENT}.env`
 
-If `devtools-targets.mk` is present then it will be loaded after all targets
-are defined.
+If `devtools-targets.mk` is present then it will be loaded after all targets are
+defined.
 
 ```Dockerfile title="docker-compose/Dockerfile"
 FROM ghcr.io/coopnorge/engineering-docker-images/e0/devtools-golang-v1beta1:latest@sha256:7e54fe41351af1b7b4cdf75c2cb8251f80b89845b49179ae2003b200b3054369 AS golang-devtools
@@ -88,15 +91,15 @@ volumes:
 ### OCI image building
 
 !!! warning "Security Consideration"
-    OCI building requires that the devtools container run in priviliged mode. For
-    this to be more secure of a rootless OCI runtime (e.g. rootless dockerd) should
-    be used.
+    OCI building requires that the devtools container run in privileged mode.
+    For this to be more secure of a rootless OCI runtime
+    (e.g. rootless dockerd) should be used.
 
 The `Dockerfile` must have a stage named `runtime`, and this is the stage that
 will be pushed when running `publish`.
 
-When pushing docker images credentials from `~/.docker/config.json` will be used,
-and these can be set using commands like:
+When pushing docker images credentials from `~/.docker/config.json` will be
+used, and these can be set using commands like:
 
 ```bash
 gcloud --verbosity debug auth print-access-token \
@@ -124,14 +127,13 @@ printenv GITHUB_TOKEN \
 
   Default: `build/package/Dockerfile`.
 
-- `BUILD_OCI`: `true` or `false` indicating whether to build an
-  OCI image.
+- `BUILD_OCI`: `true` or `false` indicating whether to build an OCI image.
 
   Default: This defaults to `true` if a user supplied `APP_DOCKERFILE` exists
   and to `false` in other cases.
 
-- `OCI_REF_NAMES`: The space seperated OCI reference names that the
-  OCI image should be published as.
+- `OCI_REF_NAMES`: The space seperated OCI reference names that the OCI image
+  should be published as.
 
   e.g.
   `OCI_REF_NAMES=europe-docker.pkg.dev/sandbox-i^Cn-aucamp-e332/common-docker/golang-devtools-prototype`
