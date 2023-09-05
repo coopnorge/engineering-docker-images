@@ -12,7 +12,7 @@ jobs:
       image-names: ${{ steps.image-names.outputs.image_names }}
       images-ci: ${{ steps.paths-filter.outputs.images }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v2
         id: paths-filter
         with:
@@ -48,7 +48,7 @@ jobs:
       matrix:
         image: ${{ fromJSON(needs.setup.outputs.image-names) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Cache xdg
         uses: actions/cache@v3
         with:
