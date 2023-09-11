@@ -12,6 +12,7 @@ FROM docker.io/library/golang:1.21.1-bullseye@sha256:436969571fa091f02d34bf2b9bc
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN \
+    go env -w GOPRIVATE=github.com/coopnorge/* && \
     go env > /usr/local/bin/goenv.sh && \
     true
 
@@ -85,8 +86,7 @@ COPY Makefile /usr/local/share/devtools-golang/
 COPY Dockerfile.app /usr/local/share/devtools-golang/
 
 RUN git config --system --add safe.directory /srv/workspace; \
-    git config --system url."git@github.com:coopnorge/".insteadOf "https://github.com/coopnorge/"; \
-    go env -w GOPRIVATE=github.com/coopnorge/*
+    git config --system url."git@github.com:coopnorge/".insteadOf "https://github.com/coopnorge/";
 
 VOLUME /srv/workspace
 WORKDIR /srv/workspace
