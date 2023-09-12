@@ -85,7 +85,6 @@ COPY Makefile /usr/local/share/devtools-golang/
 COPY Dockerfile.app /usr/local/share/devtools-golang/
 
 RUN git config --system --add safe.directory /srv/workspace; \
-    git config --system url."git@github.com:coopnorge/".insteadOf "https://github.com/coopnorge/"; \
     go env -w GOPRIVATE=github.com/coopnorge/*
 
 VOLUME /srv/workspace
