@@ -1,0 +1,59 @@
+policy:
+  approval:
+  - CI
+  - or:
+    - Dependabot update
+    - Code change
+
+approval_rules:
+- name: CI
+  if:
+    has_successful_status:
+      - "build"
+- name: Dependabot update
+  requires:
+    count: 1
+    teams:
+    - "coopnorge/engineering"
+  options:
+    invalidate_on_push: true
+    request_review:
+      enabled: true
+      mode: all-users
+    methods:
+      github_review: true
+  if:
+    only_has_contributors_in:
+      users:
+      - "dependabot[bot]"
+    only_changed_files:
+      paths:
+      - ".*Dockerfile$"
+      - ".*go.mod$"
+      - ".*go.sum$"
+      - ".*package-lock.json$"
+      - ".*package.json$"
+      - ".*poetry.lock$"
+      - ".*pyproject.toml$"
+      - ".*requirements.*.in$"
+      - ".*requirements.*.txt$"
+      - "^.github/workflows/.*$"
+    has_valid_signatures_by_keys:
+      key_ids: ["4AEE18F83AFDEB23"]
+
+- name: Code change
+  if:
+    changed_files:
+      paths:
+        - ".*"
+  requires:
+    count: 2
+    teams:
+    - "coopnorge/engineering"
+  options:
+    invalidate_on_push: true
+    request_review:
+      enabled: true
+      mode: random-users
+    methods:
+      github_review: true
