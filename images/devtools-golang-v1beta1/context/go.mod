@@ -43,6 +43,7 @@ require (
 	github.com/pseudomuto/protokit v0.2.1 // indirect
 	github.com/rjeczalik/notify v0.9.3 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
+	github.com/sanposhiho/gomockhandler v1.4.4 // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/spf13/afero v1.9.3 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
