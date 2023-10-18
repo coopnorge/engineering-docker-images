@@ -386,6 +386,7 @@ def prototype_ro() -> Generator[Path, None, None]:
         "grpcurl --version".split(),
         "modd --version".split(),
         "mockgen -version".split(),
+        "gomockhandler -h".split(),
         "protoc-gen-go --version".split(),
         "protoc-gen-go-grpc -version".split(),
         "buf --version".split(),
