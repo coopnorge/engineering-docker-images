@@ -46,6 +46,7 @@ RUN \
     protoc-gen-go --version && \
     protoc-gen-doc --version && \
     mockgen --version && \
+    gomockhandler -h && \
     go-enum --help >/dev/null && \
     modd --version && \
     true
