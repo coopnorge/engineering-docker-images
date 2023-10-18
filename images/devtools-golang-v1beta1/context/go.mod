@@ -7,6 +7,7 @@ require (
 	github.com/cortesi/modd v0.8.1
 	github.com/envoyproxy/protoc-gen-validate v1.0.2
 	github.com/pseudomuto/protoc-gen-doc v1.5.1
+	github.com/sanposhiho/gomockhandler v1.4.4
 	go.uber.org/mock v0.3.0
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.3.0
 	google.golang.org/protobuf v1.31.0
@@ -43,7 +44,6 @@ require (
 	github.com/pseudomuto/protokit v0.2.1 // indirect
 	github.com/rjeczalik/notify v0.9.3 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
-	github.com/sanposhiho/gomockhandler v1.4.4 // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/spf13/afero v1.9.3 // indirect
 	github.com/spf13/cast v1.3.1 // indirect

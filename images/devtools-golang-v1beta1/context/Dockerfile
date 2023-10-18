@@ -19,17 +19,17 @@ RUN \
 RUN \
     apt-get update && \
     apt-get install -y \
-        --no-install-recommends \
-        busybox \
-        ca-certificates \
-        curl \
-        git \
-        jq \
-        make \
-        protobuf-compiler \
-        rsync \
-        socat \
-        && \
+    --no-install-recommends \
+    busybox \
+    ca-certificates \
+    curl \
+    git \
+    jq \
+    make \
+    protobuf-compiler \
+    rsync \
+    socat \
+    && \
     rm -vr /var/lib/apt/lists/* && \
     true
 
@@ -46,6 +46,7 @@ RUN \
     protoc-gen-go --version && \
     protoc-gen-doc --version && \
     mockgen --version && \
+    which gomockhandler && \
     go-enum --help >/dev/null && \
     modd --version && \
     true
@@ -68,16 +69,16 @@ COPY maker /usr/local/bin/maker
 RUN \
     set -x; \
     targets=( \
-        help \
-        validate validate-fix validate-static test \
-        generate build publish watch clean \
-        golang-validate golang-validate-fix golang-validate-static golang-test golang-generate golang-run \
-        oci-build oci-validate oci-push \
-        buf-validate buf-generate \
+    help \
+    validate validate-fix validate-static test \
+    generate build publish watch clean \
+    golang-validate golang-validate-fix golang-validate-static golang-test golang-generate golang-run \
+    oci-build oci-validate oci-push \
+    buf-validate buf-generate \
     ); \
     for target in "${targets[@]}"; \
     do \
-        ln -s /usr/local/bin/maker "/usr/local/bin/${target}"; \
+    ln -s /usr/local/bin/maker "/usr/local/bin/${target}"; \
     done && \
     true
 
