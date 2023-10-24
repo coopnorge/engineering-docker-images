@@ -62,12 +62,14 @@ endef
 ## Variable APP_DOCKERFILE : The path to the Dockerfile to use for building OCI images. Defaults to `build/package/Dockerfile`.
 ## Variable BUILD_OCI : boolean (true,false) indicating if OCI should be built. Defaults to true if $(APP_DOCKERFILE) exists
 ## Variable ENABLE_BUF: boolean (true,false) indicating if buf should be enabled. Defaults to true if buf.work.yaml exists
+## Variable DELVE_PORT: integer for which port Delve should start the debug-server on. Defaults to 4000.
 APP_EXECUTABLE?=$(APP_NAME)
 APP_DOCKERFILE?=build/package/Dockerfile
 BUILD_OCI?=$(if $(wildcard $(APP_DOCKERFILE)),true,false)
 XDG_CACHE_HOME?=$(HOME)/.cache
 ENABLE_BUF?=$(if $(wildcard buf.work.yaml),true,false)
 OCI_METADATA?=oci-metadata.json
+DELVE_PORT?=4000
 
 # setting this so that it is more likely things will work on MacOS and Linux
 export POSIXLY_CORRECT:=1
@@ -219,6 +221,12 @@ golang-install: $(call skipable,validate) ## Install golang commands.
 .PHONY: golang-run
 golang-run: ## Run main golang command
 	go run $(go_ldflags) ./cmd/$(APP_EXECUTABLE) $(run_args) $(CLI_ARGS)
+
+
+.PHONY: golang-debug
+golang-debug: golang-build-outputs
+golang-debug: ## Debug main golang command
+	/usr/local/bin/dlv --listen=:$(DELVE_PORT) --headless=true --log=true --accept-multiclient --api-version=2 exec $(outputs_dir)/$(APP_EXECUTABLE) 
 
 .PHONY: golang-clean
 clean: golang-clean

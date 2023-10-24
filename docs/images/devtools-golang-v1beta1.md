@@ -140,3 +140,7 @@ printenv GITHUB_TOKEN \
   `europe-docker.pkg.dev/sandbox-i^Cn-aucamp-e332/common-docker/golang-devtools-prototype:latest`
   and
   `europe-docker.pkg.dev/sandbox-i^Cn-aucamp-e332/common-docker/golang-devtools-prototype:gitc-${git_hash}`.
+
+- `DELVE_PORT`: The port the Delve server should listen to.
+
+  Default: `4000`.
