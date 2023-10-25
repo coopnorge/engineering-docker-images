@@ -72,7 +72,7 @@ RUN \
         help \
         validate validate-fix validate-static test \
         generate build publish watch clean \
-        golang-validate golang-validate-fix golang-validate-static golang-test golang-generate golang-run \
+        golang-validate golang-validate-fix golang-validate-static golang-test golang-generate golang-run golang-build golang-debug \
         oci-build oci-validate oci-push \
         buf-validate buf-generate \
     ); \
