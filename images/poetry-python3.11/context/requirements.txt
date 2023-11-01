@@ -14,10 +14,12 @@ build==0.10.0 \
     # via
     #   pip-tools
     #   poetry
-cachecontrol[filecache]==0.12.11 \
-    --hash=sha256:2c75d6a8938cb1933c75c50184549ad42728a27e9f6b92fd677c3151aa72555b \
-    --hash=sha256:a5b9fcc986b184db101aa280b42ecdcdfc524892596f606858e0b7a8b4d9e144
-    # via poetry
+cachecontrol[filecache]==0.13.1 \
+    --hash=sha256:95dedbec849f46dda3137866dc28b9d133fc9af55f5b805ab1291833e4457aa4 \
+    --hash=sha256:f012366b79d2243a6118309ce73151bf52a38d4a5dac8ea57f09bd29087e506b
+    # via
+    #   cachecontrol
+    #   poetry
 cachetools==5.3.0 \
     --hash=sha256:13dfddc7b8df938c21a940dfa6557ce6e94a2f1cdfa58eb90c805721d58f2c14 \
     --hash=sha256:429e1a1e845c008ea6c85aa35d4b98b65d6a9763eeef3e37e92728a12d1de9d4
@@ -278,16 +280,12 @@ filelock==3.12.0 \
     --hash=sha256:ad98852315c2ab702aeb628412cbf7e95b7ce8c3bf9565670b4eaecf1db370a9 \
     --hash=sha256:fc03ae43288c013d2ea83c8597001b1129db351aad9c57fe2409327916b8e718
     # via
-    #   poetry
+    #   cachecontrol
     #   virtualenv
 google-auth==2.17.0 \
     --hash=sha256:45ba9b4b3e49406de3c5451697820694b2f6ce8a6b75bb187852fdae231dab94 \
     --hash=sha256:f51d26ebb3e5d723b9a7dbd310b6c88654ef1ad1fc35750d1fdba48ca4d82f52
     # via keyrings-google-artifactregistry-auth
-html5lib==1.1 \
-    --hash=sha256:0d78f8fde1c230e99fe37986a60526d7049ed4bf8a9fadbad5f00e22e58e041d \
-    --hash=sha256:b2e5b40261e20f354d198eae92afc10d750afb487ed5e50f9c4eaf07c184146f
-    # via poetry
 idna==3.4 \
     --hash=sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4 \
     --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2
@@ -318,9 +316,9 @@ jsonschema==4.17.3 \
     --hash=sha256:0f864437ab8b6076ba6707453ef8f98a6a0d512a80e93f8abdb676f737ecb60d \
     --hash=sha256:a870ad254da1a8ca84b6a2905cac29d265f805acc57af304784962a2aa6508f6
     # via poetry
-keyring==23.13.1 \
-    --hash=sha256:771ed2a91909389ed6148631de678f82ddc73737d85a927f382a8a1b157898cd \
-    --hash=sha256:ba2e15a9b35e21908d0aaf4e0a47acc52d6ae33444df0da2b49d41a46ef6d678
+keyring==24.2.0 \
+    --hash=sha256:4901caaf597bfd3bbd78c9a0c7c4c29fcd8310dab2cffefe749e916b6527acd6 \
+    --hash=sha256:ca0746a19ec421219f4d713f848fa297a661a8a8c1504867e55bfb5e09091509
     # via
     #   keyrings-google-artifactregistry-auth
     #   poetry
@@ -328,12 +326,6 @@ keyrings-google-artifactregistry-auth==1.1.2 \
     --hash=sha256:bd6abb72740d2dfeb4a5c03c3b105c6f7dba169caa29dee3959694f1f02c77de \
     --hash=sha256:e3f18b50fa945c786593014dc225810d191671d4f5f8e12d9259e39bad3605a3
     # via -r requirements.in
-lockfile==0.12.2 \
-    --hash=sha256:6aed02de03cba24efabcd600b30540140634fc06cfa603822d508d5361e9f799 \
-    --hash=sha256:6c3cb24f344923d30b2785d5ad75182c8ea7ac1b6171b08657258ec7429d50fa
-    # via
-    #   cachecontrol
-    #   poetry
 markupsafe==2.1.2 \
     --hash=sha256:0576fe974b40a400449768941d5d0858cc624e3249dfd1e0c33674e5c7ca7aed \
     --hash=sha256:085fd3201e7b12809f9e6e9bc1e5c96a368c8523fad5afb02afe3c051ae4afcc \
@@ -484,27 +476,29 @@ pluggy==1.0.0 \
     --hash=sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159 \
     --hash=sha256:74134bbf457f031a36d68416e1509f34bd5ccc019f0bcc952c7b909d06b37bd3
     # via keyrings-google-artifactregistry-auth
-poetry==1.5.1 \
-    --hash=sha256:cc7ea4524d1a11558006224bfe8ba8ed071417d4eb5ef6c89decc6a37d437eeb \
-    --hash=sha256:dfc7ce3a38ae216c0465694e2e674bef6eb1a2ba81aa47a26f9dc03362fe2f5f
+poetry==1.6.1 \
+    --hash=sha256:0ab9b1a592731cc8b252b8d6aaeea19c72cc0a109d7468b829ad57e6c48039d2 \
+    --hash=sha256:9b4cb6079c08cc0d91e8cba18a6bd4d4f7d7830263a7fb18ecb3faa77937c988
     # via
     #   -r requirements.in
     #   poetry-dynamic-versioning
     #   poetry-plugin-export
     #   poetry-plugin-up
-poetry-core==1.6.1 \
-    --hash=sha256:0f9b0de39665f36d6594657e7d57b6f463cc10f30c28e6d1c3b9ff54c26c9ac3 \
-    --hash=sha256:70707340447dee0e7f334f9495ae652481c67b32d8d218f296a376ac2ed73573
+poetry-core==1.7.0 \
+    --hash=sha256:38e174cdb00a84ee4a1cab66a378b435747f72414f5573bc18cfc3850a94df38 \
+    --hash=sha256:8f679b83bd9c820082637beca1204124d5d2a786e4818da47ec8acefd0353b74
     # via
     #   poetry
     #   poetry-plugin-export
 poetry-dynamic-versioning[plugin]==1.1.1 \
     --hash=sha256:514583297394bcb6ca5b3b0cdd831229b1fc95e0d21e24b9302b5d1a677aa4ee \
     --hash=sha256:c62127584be46613938595c309034775cbe4772b0b93740dbd70dcb90d8d1396
-    # via -r requirements.in
-poetry-plugin-export==1.4.0 \
-    --hash=sha256:5d9186d6f77cf2bf35fc96bd11fe650cc7656e515b17d99cb65018d50ba22589 \
-    --hash=sha256:f16974cd9f222d4ef640fa97a8d661b04d4fb339e51da93973f1bc9d578e183f
+    # via
+    #   -r requirements.in
+    #   poetry-dynamic-versioning
+poetry-plugin-export==1.6.0 \
+    --hash=sha256:091939434984267a91abf2f916a26b00cff4eee8da63ec2a24ba4b17cf969a59 \
+    --hash=sha256:2dce6204c9318f1f6509a11a03921fb3f461b201840b59f1c237b6ab454dabcf
     # via poetry
 poetry-plugin-up==0.5.0 \
     --hash=sha256:2bd3a7e5da8bf8250f54dcf95b38941a104dc1538d451ec15b4642fe3334bc36 \
@@ -685,9 +679,7 @@ shellingham==1.5.0.post1 \
 six==1.16.0 \
     --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926 \
     --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254
-    # via
-    #   google-auth
-    #   html5lib
+    # via google-auth
 tomlkit==0.11.7 \
     --hash=sha256:5325463a7da2ef0c6bbfefb62a3dc883aebe679984709aee32a317907d0a8d3c \
     --hash=sha256:f392ef70ad87a672f02519f99967d28a4d3047133e2d1df936511465fbb3791d
@@ -703,16 +695,11 @@ urllib3==1.26.18 \
     --hash=sha256:f8ecc1bba5667413457c529ab955bf8c67b45db799d159066261719e328580a0
     # via
     #   dulwich
-    #   poetry
     #   requests
 virtualenv==20.23.0 \
     --hash=sha256:6abec7670e5802a528357fdc75b26b9f57d5d92f29c5462ba0fbe45feacc685e \
     --hash=sha256:a85caa554ced0c0afbd0d638e7e2d7b5f92d23478d05d17a76daeac8f279f924
     # via poetry
-webencodings==0.5.1 \
-    --hash=sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78 \
-    --hash=sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923
-    # via html5lib
 wheel==0.38.1 \
     --hash=sha256:7a95f9a8dc0924ef318bd55b616112c70903192f524d120acc614f59547a9e1f \
     --hash=sha256:ea041edf63f4ccba53ad6e035427997b3bb10ee88a4cd014ae82aeb9eea77bb9
