@@ -500,9 +500,9 @@ poetry-plugin-export==1.6.0 \
     --hash=sha256:091939434984267a91abf2f916a26b00cff4eee8da63ec2a24ba4b17cf969a59 \
     --hash=sha256:2dce6204c9318f1f6509a11a03921fb3f461b201840b59f1c237b6ab454dabcf
     # via poetry
-poetry-plugin-up==0.5.0 \
-    --hash=sha256:2bd3a7e5da8bf8250f54dcf95b38941a104dc1538d451ec15b4642fe3334bc36 \
-    --hash=sha256:d1d064e3f8c3e262da121028ebb7883845283dd7fb423cb9c794a062d0b67daf
+poetry-plugin-up==0.7.0 \
+    --hash=sha256:2559d22524135ecf9d0e664ea2a3deee2a05a3e450ee6368cc8a11dc823f5a80 \
+    --hash=sha256:6d9208d39e82598ba07a8c136ebcdc8fa8e66da4d825f3684e310a9d3e8f03b1
     # via -r requirements.in
 ptyprocess==0.7.0 \
     --hash=sha256:4b41f3967fce3af57cc7e94b888626c18bf37a083e3651ca8feeb66d492fef35 \
