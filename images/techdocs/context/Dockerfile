@@ -16,6 +16,7 @@ RUN apt-get clean \
         apt-transport-https=2.6.1 \
         git \
         lsb-release=12.0-1 \
+        graphviz \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
