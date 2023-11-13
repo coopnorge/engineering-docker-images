@@ -1,13 +1,13 @@
 FROM docker.io/safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622 AS docker-lock
-FROM golangci/golangci-lint:v1.54-alpine@sha256:e950721f6ae622dcc041f57cc0b61c3a78d4bbfc588facfc8b0166901a9f4848 AS golangci-lint
-FROM docker.io/fullstorydev/grpcurl:v1.8.8@sha256:caef4105620e160522cfd66b809339be5189f790cb099c2d3333283475648fdb AS grpcurl
+FROM golangci/golangci-lint:v1.55-alpine@sha256:22e4dd2bba6ad3c6ef918432b92329b51e82d55e470d268d315bfff6a160bceb AS golangci-lint
+FROM docker.io/fullstorydev/grpcurl:v1.8.9@sha256:0d7a60796532e13aaf2b734ee8797a37ed1e4d40aa6dc41cb3e949577c6c7fb1 AS grpcurl
 FROM docker.io/mikefarah/yq:4@sha256:54e3310f27cb1776b2d2a8c66e4644fe5691a066c62583c82e6eadeb531a3c6c AS yq
 FROM docker.io/hadolint/hadolint:v2.12.0@sha256:30a8fd2e785ab6176eed53f74769e04f125afb2f74a6c52aef7d463583b6d45e AS hadolint
 FROM --platform=linux/amd64 docker.io/goodwithtech/dockle:v0.4.13@sha256:2e933954456219021389d1eec5fd09b35d89ff17fe7445abc0fc5748f71d7ae1 AS dockle
-FROM docker.io/moby/buildkit:v0.12.2-rootless@sha256:bea93e450ad9cfd4bbbc846ebceba3382a9f9128fa7ae43afa00bc50ad026a32 AS buildkit
+FROM docker.io/moby/buildkit:v0.12.3-rootless@sha256:1e4f2dde8f98019c021badb5909025c18aea83d4ce620e0c5c5b1c926d7f0dc0 AS buildkit
 FROM gcr.io/go-containerregistry/crane:v0.15.2@sha256:be47a641ac6b98004251e1dccdd6fe8cbfca233d1239c751d3eb142608ab3fee AS crane
-FROM docker.io/bufbuild/buf:1.27.0@sha256:7d99f8b47cc9290bca4ac35bf56e87f530d3f03ecb42d784795b1db0a5130c59 AS buf
-FROM docker.io/library/golang:1.21.1-bullseye@sha256:18f57bdd1d188ade1226471393b5c3ced4639c6c772fd94853ea7abd9eb158f7 AS base
+FROM docker.io/bufbuild/buf:1.27.2@sha256:5749a37036f9d36bb03fa26e35509be299055db87972a7e43451f912ec1f30da AS buf
+FROM docker.io/library/golang:1.21.4-bullseye@sha256:31848c4f02b08469e159ea1ee664a3f29602418b13e7d67dfd4560d169e14d55 AS base
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -46,6 +46,7 @@ RUN \
     protoc-gen-go --version && \
     protoc-gen-doc --version && \
     mockgen --version && \
+    gomockhandler -h && \
     go-enum --help >/dev/null && \
     modd --version && \
     true
@@ -71,7 +72,7 @@ RUN \
         help \
         validate validate-fix validate-static test \
         generate build publish watch clean \
-        golang-validate golang-validate-fix golang-validate-static golang-test golang-generate golang-run \
+        golang-validate golang-validate-fix golang-validate-static golang-test golang-generate golang-run golang-build golang-debug \
         oci-build oci-validate oci-push \
         buf-validate buf-generate \
     ); \

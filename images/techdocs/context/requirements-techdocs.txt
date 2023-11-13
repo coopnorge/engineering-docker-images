@@ -36,9 +36,9 @@ gitdb==4.0.9 \
     --hash=sha256:8033ad4e853066ba6ca92050b9df2f89301b8fc8bf7e9324d412a63f8bf1a8fd \
     --hash=sha256:bac2fd45c0a1c9cf619e63a90d62bdc63892ef92387424b855792a6cabe789aa
     # via gitpython
-gitpython==3.1.35 \
-    --hash=sha256:9cbefbd1789a5fe9bcf621bb34d3f441f3a90c8461d377f84eda73e721d9b06b \
-    --hash=sha256:c19b4292d7a1d3c0f653858db273ff8a6614100d1eb1528b014ec97286193c09
+gitpython==3.1.37 \
+    --hash=sha256:5f4c4187de49616d710a77e98ddf17b4782060a1788df441846bddefbb89ab33 \
+    --hash=sha256:f9b9ddc0761c125d5780eab2d64be4873fc6817c2899cbcb34b02344bdc7bc54
     # via mkdocs-git-revision-date-localized-plugin
 httplib2==0.20.4 \
     --hash=sha256:58a98e45b4b1a48273073f905d2961666ecf0fbac4250ea5b47aef259eb5c585 \
@@ -140,9 +140,9 @@ mkdocs-awesome-pages-plugin==2.9.2 \
 mkdocs-ezlinks-plugin==0.1.14 \
     --hash=sha256:3e2085c16a850e022393e80194c17612e7b55de87fb45b3ffb618b5dfdb10811
     # via -r requirements-techdocs.in
-mkdocs-git-revision-date-localized-plugin==1.2.0 \
-    --hash=sha256:540b9c930d8d48630c090b72ac2c3900ac2ed0799b23738a33b88e31f5198fe7 \
-    --hash=sha256:7752edd7c4dcaa9383e9a5b6a4f729831a62d604b0c43b319331127720c6a2bf
+mkdocs-git-revision-date-localized-plugin==1.2.1 \
+    --hash=sha256:d57dc99d67af917899e69c392f1ebccd1779fa243d641255469b03f8a3596b96 \
+    --hash=sha256:fc5b23a9d572cbba0114e9e17152001d01724990cb308830e58291fa614faf73
     # via -r requirements-techdocs.in
 mkdocs-htmlproofer-plugin==1.0.0 \
     --hash=sha256:2a2276569ddf27fd8b0797719c932d88108181468ef958a96a98590c1a652531 \
@@ -164,9 +164,9 @@ mkdocs-monorepo-plugin==1.0.4 \
     --hash=sha256:3772e8f29bf06ab7cfe739fd4dccd46f4113c946b3857e0a3e16b34d6b987d95 \
     --hash=sha256:a1a690b509ddb2f5d96d4d9055a4f31c2d5933bbed4f89d69f87d5bd4e45a9c3
     # via mkdocs-techdocs-core
-mkdocs-table-reader-plugin==2.0.1 \
-    --hash=sha256:bfeb246a76c273c7745833be747e20b067abc3dafd720f658521ddf23b53cbf7 \
-    --hash=sha256:e1701a5df1fd64a6ea331b3ec5fae74de618086db89bfb03eb1d67517d435059
+mkdocs-table-reader-plugin==2.0.3 \
+    --hash=sha256:7d1abb3838ac2ab7b1a5a5cc7f40a4e966a77defa7a7ae1f2137efd185b96752 \
+    --hash=sha256:e14136a6103d43030215491ff0a6cdcf8f92a78c3bac32a509e4cf2b365ef529
     # via -r requirements-techdocs.in
 mkdocs-techdocs-core==1.1.7 \
     --hash=sha256:9fd3efa08973a67c34e60a4f7e06ca3f1d47b437425a1d3cfff2b2639f2113a1 \
@@ -362,9 +362,9 @@ tzdata==2023.3 \
     --hash=sha256:11ef1e08e54acb0d4f95bdb1be05da659673de4acbd21bf9c69e94cc5e907a3a \
     --hash=sha256:7e65763eef3120314099b6939b5546db7adce1e7d6f2e179e3df563c70511eda
     # via pandas
-urllib3==1.26.17 \
-    --hash=sha256:24d6a242c28d29af46c3fae832c36db3bbebcc533dd1bb549172cd739c82df21 \
-    --hash=sha256:94a757d178c9be92ef5539b8840d48dc9cf1b2709c9d6b588232a055c524458b
+urllib3==1.26.18 \
+    --hash=sha256:34b97092d7e0a3a8cf7cd10e386f401b3737364026c45e622aa02903dffe0f07 \
+    --hash=sha256:f8ecc1bba5667413457c529ab955bf8c67b45db799d159066261719e328580a0
     # via requests
 watchdog==2.1.9 \
     --hash=sha256:083171652584e1b8829581f965b9b7723ca5f9a2cd7e20271edf264cfd7c1412 \
