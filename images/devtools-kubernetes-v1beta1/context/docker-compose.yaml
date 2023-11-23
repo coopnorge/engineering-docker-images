@@ -8,5 +8,6 @@ services:
     volumes:
       - ${WORKSPACE_DIR:-../tests/prototype}:/srv/workspace:z,cached
       - xdg-cache-home:/root/.cache
+      - ${HOME}/.argocd:/root/.argocd
 volumes:
   xdg-cache-home: {}
