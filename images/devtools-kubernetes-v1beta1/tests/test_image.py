@@ -59,4 +59,3 @@ def get_captured_lines(capfd: CaptureFixture[str]) -> Captured:
         sys.stderr.write("captured.err:\n")
         sys.stderr.write(captured.err)
     return Captured(captured, out, out.splitlines(), err, err.splitlines())
-
