@@ -7,19 +7,19 @@ FROM golang:1.21.4@sha256:4521f9de32e00d8e860a008f5f5fcc98c38e9e80609044aa10fa3f
 
 COPY --from=yq /usr/bin/yq /usr/local/bin/yq
 
-WORKDIR /build
-COPY go.mod go.sum tools.go /build
+WORKDIR /build/
+COPY go.mod go.sum tools.go /build/
 RUN \
     cd $(go mod download -json github.com/magefile/mage | yq .Dir)  && \
     go run bootstrap.go
 
-WORKDIR /build
+WORKDIR /build/
 RUN \
     cd $(go mod download -json github.com/homeport/dyff | yq .Dir)/cmd/dyff  && \
     go build -o /go/bin/dyff
 
 COPY ./magefiles /magefiles
-WORKDIR /magefiles
+WORKDIR /magefiles/
 RUN \
     go test --tags mage && \
     mage -compile  ./mage-k8s
