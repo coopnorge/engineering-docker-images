@@ -8,6 +8,12 @@ FROM docker.io/mikefarah/yq:4.40.3@sha256:0a6345aca567beebf887caca6750fae276ab20
 FROM golang:1.21.4@sha256:4521f9de32e00d8e860a008f5f5fcc98c38e9e80609044aa10fa3fe599bec955 as buildenv
 
 COPY --from=yq /usr/bin/yq /usr/local/bin/yq
+COPY --from=kube-score /kube-score /usr/local/bin/kube-score
+COPY --from=argocd /usr/local/bin/argocd /usr/local/bin/argocd
+COPY --from=argocd /usr/local/bin/helm /usr/local/bin/helm
+COPY --from=argocd /usr/local/bin/kustomize /usr/local/bin/kustomize
+COPY --from=kubeconform /kubeconform /usr/local/bin/kubeconform
+
 
 WORKDIR /build
 COPY go.mod go.sum tools.go /build/
@@ -41,8 +47,6 @@ RUN \
         && \
     rm -vr /var/lib/apt/lists/* && \
     true
-
-
 
 COPY --from=kube-score /kube-score /usr/local/bin/kube-score
 COPY --from=argocd /usr/local/bin/argocd /usr/local/bin/argocd
