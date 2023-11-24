@@ -1,15 +1,12 @@
 import logging
 import os
-import re
 import shutil
-import subprocess
 import sys
 from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path, PurePath
 from typing import Iterator, List, TypeVar, Union
 
-import pytest
 from _pytest.capture import CaptureResult
 from pytest import CaptureFixture
 
