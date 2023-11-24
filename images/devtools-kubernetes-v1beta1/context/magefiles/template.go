@@ -29,11 +29,17 @@ func renderHelm(source ArgoCDAppSource) (string, error) {
 	pwd, _ := os.Getwd()
 	os.Chdir(source.Path)
 	fmt.Println("rendering helm templates to: " + dir)
-	sh.Run("helm", "dependency", "build")
-	sh.Run("helm", "template",
+	err = sh.Run("helm", "dependency", "build")
+	if err != nil {
+		return "", err
+	}
+	err = sh.Run("helm", "template",
 		"-f", strings.Join(source.Helm.ValueFiles, ","),
 		"--output-dir", dir,
 		".")
+	if err != nil {
+		return "", err
+	}
 	os.Chdir(pwd)
 	return dir, nil
 }
@@ -44,7 +50,10 @@ func renderKustomize(path string) (string, error) {
 		return "", err
 	}
 	fmt.Println("rendering kustomize templates: " + dir)
-	sh.Run("kustomize", "build", "path", "--output", dir)
+	err = sh.Run("kustomize", "build", path, "--output", dir)
+	if err != nil {
+		return "", err
+	}
 	return dir, nil
 }
 

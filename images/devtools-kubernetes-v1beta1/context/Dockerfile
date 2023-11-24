@@ -21,13 +21,11 @@ RUN \
 COPY ./magefiles /magefiles
 WORKDIR /magefiles
 RUN \
+    go test --tags mage && \
     mage -compile  ./mage-k8s
 
 
-#FROM docker.io/library/ubuntu:22.04@sha256:2b7412e6465c3c7fc5bb21d3e6f1917c167358449fecac8176c6e496e5c1f05f AS base
-
 FROM golang:1.21.4@sha256:4521f9de32e00d8e860a008f5f5fcc98c38e9e80609044aa10fa3fe599bec955 as base
-# https://packages.ubuntu.com/search?keywords=busybox&searchon=names&suite=focal&section=all
 RUN \
     apt-get update && \
     apt-get install -y \

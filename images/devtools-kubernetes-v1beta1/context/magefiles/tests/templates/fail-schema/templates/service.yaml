@@ -1,0 +1,22 @@
+---
+# Source: ok/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: RELEASE-NAME-ok
+  labels:
+    helm.sh/chart: ok-0.1.0
+    app.kubernetes.io/name: ok
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: ok
+    app.kubernetes.io/instance: RELEASE-NAME

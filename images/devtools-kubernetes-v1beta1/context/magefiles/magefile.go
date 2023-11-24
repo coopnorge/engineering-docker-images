@@ -76,7 +76,6 @@ func kubeConform(paths string) error {
 		"-strict",
 		"-verbose",
 		"-ignore-missing-schemas",
-		"-kubernetes-version", "1.25",
 		"-schema-location", "default",
 		"-schema-location", "https://raw.githubusercontent.com/coopnorge/kubernetes-schemas/main/api-production/'{{ .ResourceKind }}{{ .KindSuffix }}.json'"}
 	out, err := sh.Output("kubeconform", append(cmdOptions, strings.Split(paths, ",")...)...)
