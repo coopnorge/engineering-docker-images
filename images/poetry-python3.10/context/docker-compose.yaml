@@ -2,12 +2,20 @@ version: "3.8"
 
 services:
   devtools:
+    privileged: true
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    image: ocreg.invalid/coopnorge/engineering/image/poetry-python3.10:built
     build:
-      target: "poetry"
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - .:/srv/workspace:z
       - ${XDG_CACHE_HOME:-xdg-cache-home}:/root/.cache
+      - ${DOCKER_CONFIG:-~/.docker}:/root/.docker
+      - ./Makefile:/usr/local/share/poetry-python3.10/Makefile
     working_dir: /srv/workspace
 
 volumes:
-  xdg-cache-home: { }
+  xdg-cache-home: {}
