@@ -59,4 +59,4 @@ RUN git config --system --add safe.directory /srv/workspace
 VOLUME /srv/workspace
 WORKDIR /srv/workspace
 
-CMD ["validate"]
+CMD ["poetry-install", "validate"]
