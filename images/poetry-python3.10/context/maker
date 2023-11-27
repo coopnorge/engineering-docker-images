@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+script_basename="$( basename -- "${0}" )"
+
+if [[ ${script_basename} == maker || ${script_basename} == */maker ]]
+then
+    target=()
+else
+    target=("${script_basename}")
+fi
+
+exec make -f "/usr/local/share/poetry-python3.10/Makefile" "${target[@]}" "${@}"

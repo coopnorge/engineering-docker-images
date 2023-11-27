@@ -1,6 +1,10 @@
 FROM docker.io/library/python:3.10.13@sha256:8ec8392b89de63e0a9a87c1ad6adabe3a6a574f68ac5d43f730755569438a55e as python
+FROM docker.io/hadolint/hadolint:v2.12.0@sha256:30a8fd2e785ab6176eed53f74769e04f125afb2f74a6c52aef7d463583b6d45e AS hadolint
+FROM --platform=linux/amd64 docker.io/goodwithtech/dockle:v0.4.13@sha256:2e933954456219021389d1eec5fd09b35d89ff17fe7445abc0fc5748f71d7ae1 AS dockle
 
-FROM python as poetry
+FROM python as base
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 WORKDIR /srv/workspace
 
@@ -16,6 +20,9 @@ ENV PYTHONUNBUFFERED=1 \
     VENV_PATH="/srv/workspace/.venv"
 ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 
+COPY --from=hadolint /bin/hadolint /usr/local/bin/hadolint
+COPY --from=dockle /usr/bin/dockle /usr/local/bin/dockle
+
 COPY requirements.txt requirements.txt
 RUN python3 -m venv $POETRY_HOME && \
     $POETRY_HOME/bin/pip install \
@@ -26,4 +33,30 @@ RUN python3 -m venv $POETRY_HOME && \
         --requirement requirements.txt && \
     rm -rf requirements.txt
 
+COPY .flake8 .flake8
+COPY mypy.ini mypy.ini
+
+COPY maker /usr/local/bin/maker
+
+COPY Makefile /usr/local/share/poetry-python3.10/
+
+RUN \
+    set -x; \
+    targets=( \
+        help \
+        poetry-install \
+        validate validate-static validate-fix \
+        test test-verbose \
+    ); \
+    for target in "${targets[@]}"; \
+    do \
+        ln -s /usr/local/bin/maker "/usr/local/bin/${target}"; \
+    done && \
+    true
+
 RUN git config --system --add safe.directory /srv/workspace
+
+VOLUME /srv/workspace
+WORKDIR /srv/workspace
+
+CMD ["validate"]
