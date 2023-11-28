@@ -37,9 +37,22 @@ type ArgoCDApp struct {
 func getArgoCDDeployments(repoURL string) ([]ArgoCDApp, error) {
 	var argoCDAppList []ArgoCDApp
 	env := map[string]string{}
+
 	if token, ok := os.LookupEnv("ARGOCD_API_TOKEN"); ok {
+        server, ok := env["ARGOCD_SERVER_NAME"]
+		if !ok {
+			return nil, fmt.Errorf("When using ARGOCD_API_TOKEN, you are also required to set ARGOCD_SERVER_NAME")
+		}
 		env["ARGOCD_API_TOKEN"] = token
+		env["ARGOCD_SERVER_NAME"] = server
+	} else {
+		err := sh.Run("argocd","context")
+		if err != nil {
+			fmt.Println("Make use $HOME/.argocd is correctly mounted or use ARGOCD_API_TOKEN env var")
+			return nil, err
+		}
 	}
+
 	appYaml, err := sh.OutputWith(env, "argocd", "--grpc-web", "app", "list", "-r", repoURL, "-o", "yaml")
 	if err != nil {
 		return nil, err
