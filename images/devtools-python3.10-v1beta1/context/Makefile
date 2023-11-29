@@ -134,7 +134,7 @@ oci-context: oci-context-wheel
 
 .PHONY: oci-context-wheel
 oci-context-wheel: ## build the OCI context wheel
-oci-context-wheel: | $(outputs_dir)/
+oci-context-wheel:
 	$(poetry) build --format wheel
 
 
@@ -186,6 +186,7 @@ buildctl=buildctl-daemonless.sh
 
 oci-build-stage-%: $(APP_DOCKERFILE) oci-dockerfile-validate
 	echo $(<) :: $(@)
+	mkdir -p $(oci_images_dir)
 	$(buildctl) build \
 		--export-cache type=local,dest=$(oci_cache_dir) \
 		--import-cache type=local,src=$(oci_cache_dir) \
