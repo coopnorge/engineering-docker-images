@@ -155,3 +155,4 @@ cython_debug/
 
 .vale/
 mkdocs.yml
+.DS_Store
