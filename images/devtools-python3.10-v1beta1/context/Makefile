@@ -86,7 +86,8 @@ configure: poetry-install ## configure the project
 	@if [ ! -f "mypy.ini" ]; then \
 		cp /usr/local/share/devtools-python3.10-v1beta1/mypy.ini .; \
 	fi
-	cp /usr/local/share/devtools-python3.10-v1beta1/entrypoint.sh .; \
+
+.PHONY: poetry-install
 poetry-install: ## installs the project dependencies
 	$(poetry) install
 
