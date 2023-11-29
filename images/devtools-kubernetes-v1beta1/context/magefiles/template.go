@@ -14,8 +14,8 @@ import (
 func renderTemplate(app ArgoCDApp) (string, error) {
 	if app.Spec.Source.Helm.ReleaseName != "" {
 		return renderHelm(app.Spec.Source)
-	} else if _, err := os.Stat(app.Spec.Source.Path + "/kustomize.yaml"); err == nil {
-		return renderKustomize(app.Spec.Source.Helm.ReleaseName)
+	} else if _, err := os.Stat(app.Spec.Source.Path + "/kustomization.yaml"); err == nil {
+		return renderKustomize(app.Spec.Source.Path)
 	} else {
 		return app.Spec.Source.Path, nil
 	}
