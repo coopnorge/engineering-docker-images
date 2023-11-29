@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  devtools:
+    privileged: true
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    image: ocreg.invalid/coopnorge/engineering/image/devtools-python3.10-v1beta1:built
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/srv/workspace:z,cached
+      - ${XDG_CACHE_HOME:-xdg-cache-home}:/root/.cache
+      - ${DOCKER_CONFIG:-~/.docker}:/root/.docker
+      - ./Makefile:/usr/local/share/devtools-python3.10-v1beta1/Makefile
+      - ./var:/srv/workspace/var
+    working_dir: /srv/workspace
+
+volumes:
+  xdg-cache-home: {}
+  workspace-var: {}
