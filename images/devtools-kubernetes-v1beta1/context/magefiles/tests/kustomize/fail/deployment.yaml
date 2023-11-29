@@ -1,0 +1,97 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld
+  labels:
+    app: helloworld
+    version: v1
+    tags.datadoghq.com/service: "helloworld"
+    tags.datadoghq.com/version: "v1"
+  annotations:
+    kube-score/ignore: pod-networkpolicy, pod-probes
+spec:
+  selector:
+    matchLabels:
+      app: helloworld
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: helloworld
+        version: v1
+        tags.datadoghq.com/service: "helloworld"
+        tags.datadoghq.com/version: "v1"
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - helloworld
+              topologyKey: failure-domain.beta.kubernetes.io/zone
+          - weight: 80
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - helloworld
+              topologyKey: kubernetes.io/hostname
+      containers:
+      - name: helloworld
+        image: europe-docker.pkg.dev/helloworld-shared-0918/helloworld/helloworld:replaceme
+        env:
+        - name: SERVICE_PORT
+          value: ":3000"
+        - name: SHUTDOWN_TIMEOUT
+          value: "5s"
+        - name: DD_SERVICE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['tags.datadoghq.com/service']
+        - name: DD_VERSION
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['tags.datadoghq.com/version']
+        - name: TEST_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: helloworld-secret
+              key: my-kubernetes-secret-name
+        resources:
+          limits:
+            cpu: 400m
+            memory: 200Mi
+            ephemeral-storage: 1Gi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+            ephemeral-storage: 1Gi
+        imagePullPolicy: Always
+        securityContext:
+          runAsGroup: 65534
+          runAsUser: 65534
+          readOnlyRootFilesystem: true
+        ports:
+        - containerPort: 3000
+        readinessProbe:
+          tcpSocket:
+            port: 3000
+        livenessProbe:
+          tcpSocket:
+            port: 3000
+        volumeMounts:
+        - name: dsdsocket
+          mountPath: /var/run/datadog
+          readOnly: true
+      volumes:
+      - hostPath:
+          path: /var/run/datadog/
+        name: dsdsocket

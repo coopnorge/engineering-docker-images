@@ -1,0 +1,36 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: helloworld
+spec:
+  gateways:
+  - istio-system/gateway-grpc
+  - istio-system/gateway-http
+  http:
+  - match:
+    - gateways:
+        - istio-system/gateway-grpc
+      uri:
+        prefix: /coopnorge.helloworld.v1beta1.HelloWorldAPI
+    route:
+      - destination:
+          host: helloworld
+          port:
+            number: 3000
+  - match:
+      - gateways:
+          - istio-system/gateway-http
+        uri:
+          prefix: /helloworld/
+      - gateways:
+          - istio-system/gateway-http
+        uri:
+          prefix: /helloworld
+    rewrite:
+      uri: "/"
+    route:
+      - destination:
+          host: helloworld
+          port:
+            number: 3000

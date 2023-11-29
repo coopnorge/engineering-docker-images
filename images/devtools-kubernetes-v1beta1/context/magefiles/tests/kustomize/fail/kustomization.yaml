@@ -1,0 +1,10 @@
+apiVersion: kusiasdftomize.config.k8s.io/v1beta1
+kind: Kustomlkajtion
+
+resources:
+  - deployment.yaml
+  - externalsecret.yaml
+  - service.yaml
+  - serviceentry.yaml
+  - virtualservice.yaml
+  - pod-disruption-budget.yaml
