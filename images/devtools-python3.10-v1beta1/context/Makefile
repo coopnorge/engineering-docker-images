@@ -3,7 +3,7 @@
 SHELL=bash
 .SHELLFLAGS=-ec -o pipefail
 PYTHON_BIN?=python
-py_source=./src ./tests
+py_source?=./src ./tests
 
 # Load settings.
 $(if $(wildcard devtools-settings.mk),$(info loading devtools-settings.mk)$(eval include devtools-settings.mk),)
