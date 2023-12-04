@@ -82,3 +82,11 @@ updates:
     directory: "images/techdocs/context/"
     schedule:
       interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "images/devtools-python3.10-v1beta1/context/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pip"
+    directory: "images/devtools-python3.10-v1beta1/context/"
+    schedule:
+      interval: "daily"
