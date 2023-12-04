@@ -3,7 +3,7 @@ FROM docker.io/hadolint/hadolint:v2.12.0@sha256:30a8fd2e785ab6176eed53f74769e04f
 FROM --platform=linux/amd64 docker.io/goodwithtech/dockle:v0.4.13@sha256:2e933954456219021389d1eec5fd09b35d89ff17fe7445abc0fc5748f71d7ae1 AS dockle
 FROM docker.io/moby/buildkit:v0.12.4-rootless@sha256:90095c7852a746c3f35d8cee504e053fdc6a1daf1faa382dcc7ecd830337343a AS buildkit
 FROM gcr.io/go-containerregistry/crane:v0.15.2@sha256:be47a641ac6b98004251e1dccdd6fe8cbfca233d1239c751d3eb142608ab3fee AS crane
-FROM docker.io/mikefarah/yq:4@sha256:829bbc4d276ecac5c8df73d6900c5b2c1d74b5ff26129b6562276fb32fde8680 AS yq
+FROM docker.io/mikefarah/yq:4@sha256:b3c09254ef3687fdd679a690b7861e24ee23fb9519f8cb428bf969dd9fe5401e AS yq
 
 FROM python as base
 
