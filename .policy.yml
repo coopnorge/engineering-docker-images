@@ -1,15 +1,10 @@
 policy:
   approval:
-  - CI
   - or:
     - Dependabot update
     - Code change
 
 approval_rules:
-- name: CI
-  if:
-    has_successful_status:
-      - "build"
 - name: Dependabot update
   requires:
     count: 1
