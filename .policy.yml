@@ -24,6 +24,7 @@ approval_rules:
     only_changed_files:
       paths:
       - ".*Dockerfile$"
+      - ".*Dockerfile.app$"
       - ".*go.mod$"
       - ".*go.sum$"
       - ".*package-lock.json$"
