@@ -8,11 +8,6 @@ FROM docker.io/mikefarah/yq:4.40.4@sha256:b3c09254ef3687fdd679a690b7861e24ee23fb
 FROM golang:1.21.5@sha256:58e14a93348a3515c2becc54ebd35302128225169d166b7c6802451ab336c907 as buildenv
 
 COPY --from=yq /usr/bin/yq /usr/local/bin/yq
-COPY --from=kube-score /kube-score /usr/local/bin/kube-score
-COPY --from=argocd /usr/local/bin/argocd /usr/local/bin/argocd
-COPY --from=argocd /usr/local/bin/helm /usr/local/bin/helm
-COPY --from=argocd /usr/local/bin/kustomize /usr/local/bin/kustomize
-COPY --from=kubeconform /kubeconform /usr/local/bin/kubeconform
 
 WORKDIR /build
 COPY go.mod go.sum tools.go /build/
@@ -28,7 +23,6 @@ RUN \
 COPY ./magefiles /magefiles
 WORKDIR /magefiles
 RUN \
-    go test --tags mage && \
     mage -compile  ./mage-k8s
 
 
