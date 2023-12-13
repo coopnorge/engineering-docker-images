@@ -41,6 +41,9 @@ RUN \
 
 COPY --chown=root:root ${outputs_dir}/${app_executable} /usr/local/bin/${app_executable}
 
+# The following line will be replaced by COPY statements for resource paths if any are provided in $APP_RESOURCE_PATHS
+# @app_resource_commands
+
 RUN \
     chmod ugo-w /usr/local/bin/${app_executable}
 
