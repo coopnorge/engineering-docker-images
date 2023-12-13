@@ -153,6 +153,13 @@ printenv GITHUB_TOKEN \
 
   Default: `build/package/Dockerfile`.
 
+- `APPEND_APP_DOCKERFILE`: `true` or `false` indicating whether to append the
+  supplied Dockerfile in `APP_DOCKERFILE` to the one provided by the devtool.
+
+  Allows for simple customisations.
+
+  Default: `false`.
+
 - `BUILD_OCI`: `true` or `false` indicating whether to build an OCI image.
 
   Default: This defaults to `true` if a user supplied `APP_DOCKERFILE` exists
