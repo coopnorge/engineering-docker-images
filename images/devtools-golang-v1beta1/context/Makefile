@@ -60,11 +60,13 @@ endef
 ## Variable APP_EXECUTABLE : The main executable of the application, defaults to APP_NAME
 ## Variable ENVIRONMENT : The environment name to use. If set variables will be loaded from env.$(ENVIRONMENT)
 ## Variable APP_DOCKERFILE : The path to the Dockerfile to use for building OCI images. Defaults to `build/package/Dockerfile`.
+## Variable APPEND_APP_DOCKERFILE : boolean(true,false) indicating if the $(APP_DOCKERFILE) should be appended to the devtool supplied Dockerfile.
 ## Variable BUILD_OCI : boolean (true,false) indicating if OCI should be built. Defaults to true if $(APP_DOCKERFILE) exists
 ## Variable ENABLE_BUF: boolean (true,false) indicating if buf should be enabled. Defaults to true if buf.work.yaml exists
 ## Variable DELVE_PORT: integer for which port Delve should start the debug-server on. Defaults to 4000.
 APP_EXECUTABLE?=$(APP_NAME)
 APP_DOCKERFILE?=build/package/Dockerfile
+APPEND_APP_DOCKERFILE?=false
 BUILD_OCI?=$(if $(wildcard $(APP_DOCKERFILE)),true,false)
 XDG_CACHE_HOME?=$(HOME)/.cache
 ENABLE_BUF?=$(if $(wildcard buf.work.yaml),true,false)
@@ -91,12 +93,13 @@ go_ldflags?= \
 
 go_build_flags?=
 
+share_dir?=/usr/local/share/devtools-golang
 localstatedir?=var
 generated_dir?=$(localstatedir)/generated
 stamps_dir?=$(localstatedir)/stamps
 outputs_dir?=$(localstatedir)/outputs
 
-$(call dump_vars,APP_EXECUTABLE APP_DOCKERFILE BUILD_OCI XDG_CACHE_HOME)
+$(call dump_vars,APP_EXECUTABLE APP_DOCKERFILE APPEND_APP_DOCKERFILE BUILD_OCI XDG_CACHE_HOME)
 
 ########################################################################
 # generic targets
@@ -279,6 +282,9 @@ endif
 # OCI
 ########################################################################
 
+combined_dockerfile_path=$(localstatedir)/Dockerfile.combined
+app_final_dockerfile=$(if $(call parse_bool,$(APPEND_APP_DOCKERFILE)),$(combined_dockerfile_path),$(APP_DOCKERFILE))
+
 oci_rebuild=false
 oci_context_dir?=.
 oci_images_dir=$(localstatedir)/oci_images
@@ -294,7 +300,7 @@ oci-context: golang-build-outputs
 
 .PHONY: oci-dockerfile-validate
 oci-dockerfile-validate: ## validate the dockerfile
-oci-dockerfile-validate: $(APP_DOCKERFILE)
+oci-dockerfile-validate: $(app_final_dockerfile)
 	hadolint $(<)
 
 oci_tag_prefix=
@@ -333,9 +339,14 @@ oci_build_args ?= \
 
 $(call dump_vars,OCI_REF_NAMES OCI_REFS_REMOTE oci_build_args OCI_BUILD_ARGS)
 
+ifneq ($(call parse_bool,$(APPEND_APP_DOCKERFILE)),)
+$(combined_dockerfile_path): $(share_dir)/Dockerfile.app $(APP_DOCKERFILE)
+	cat $^ > $(combined_dockerfile_path)
+endif
+
 buildctl=buildctl-daemonless.sh
 
-oci-build-stage-%: $(APP_DOCKERFILE) oci-dockerfile-validate | $(oci_images_dir)/ $(oci_context_dir)/ $(oci_cache_dir)/
+oci-build-stage-%: $(app_final_dockerfile) oci-dockerfile-validate | $(oci_images_dir)/ $(oci_context_dir)/ $(oci_cache_dir)/
 	$(buildctl) build \
 		--export-cache type=local,dest=$(oci_cache_dir) \
 		--import-cache type=local,src=$(oci_cache_dir) \

@@ -94,8 +94,35 @@ volumes:
     For this to be more secure of a rootless OCI runtime
     (e.g. rootless dockerd) should be used.
 
-The `Dockerfile` must have a stage named `runtime`, and this is the stage that
-will be pushed when running `publish`.
+This devtool provides a simple Dockerfile which should cover typical service use
+cases. To use it set the `APP_DOCKERFILE` variable to
+`/usr/local/share/devtools-golang/Dockerfile.app`. Complex use cases can
+otherwise supply their own Dockerfile.
+
+A `Dockerfile` supplied by `APP_DOCKERFILE` must have a stage named `runtime`,
+and this is the stage that will be pushed when running the `publish` make
+target.
+
+It is possible to supplement the devtool-supplied Dockerfile by appending
+additional commands. This is particularly useful when only a small set of
+customisations are required. To do this:
+
+- Provide a Dockerfile with the additional commands, and set its path in
+  `APP_DOCKERFILE`.
+- Set `APPEND_APP_DOCKERFILE=true`
+
+In the above case the provided Dockerfile will be concatenated to the
+devtool-supplied one. As such it is not necessary to begin the Dockerfile with a
+`FROM` statement.
+
+Example Dockerfile.app when extending the devtool-supplied one:
+
+```Dockerfile
+# APPEND_APP_DOCKERFILE has been set. The following commands are appended to
+# the devtools app Docker image.
+
+COPY --chown=root:root app-resources /usr/local/your-app/resources
+```
 
 When pushing docker images credentials from `~/.docker/config.json` will be
 used, and these can be set using commands like:

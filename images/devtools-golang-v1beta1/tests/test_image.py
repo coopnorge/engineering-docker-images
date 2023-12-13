@@ -267,7 +267,8 @@ def test_alterations(
 
 def append_to_file(file_path: Path, lines: Iterable[str]) -> None:
     with file_path.open("a") as tio:
-        tio.writelines(lines)
+        for line in lines:
+            tio.writelines(f"{line}\n")
 
 
 def test_docker_build_app_defined(test_helper: TestHelper) -> None:
@@ -286,7 +287,29 @@ def test_docker_build_app_defined(test_helper: TestHelper) -> None:
     assert "dockle" in captured.all()
     assert "var/oci_images/stage-runtime.oci.tar" in captured.all()
     assert "Dockerfile.app" not in captured.all()
+    assert "Dockerfile.combined" not in captured.all()
     assert "4eda66c7-5bbf-4fec-b855-8a208bb10760" in captured.all()
+
+
+def test_docker_build_app_append(test_helper: TestHelper) -> None:
+    workdir = test_helper.workdir
+    append_to_file(
+        (workdir / "build/package/Dockerfile"),
+        ["RUN echo 7b747541-343e-4908-a760-b35cd2e703b6"],
+    )
+    append_to_file(
+        (workdir / "devtools.env"),
+        ["BUILD_OCI=true", "APPEND_APP_DOCKERFILE=true"],
+    )
+    test_helper.run(command_extra=["bash", "-c", "time validate"])
+    captured = test_helper.captured()
+    assert "var/oci_images/stage-runtime.oci.tar" in captured.all()
+    assert "Dockerfile.combined" in captured.all()
+    assert "7b747541-343e-4908-a760-b35cd2e703b6" in captured.all()
+
+    with (workdir / "var/Dockerfile.combined").open() as df:
+        found = "7b747541-343e-4908-a760-b35cd2e703b6" in df.read()
+        assert found
 
 
 def test_prototype_failing_tests(tmp_path: Path, capfd: CaptureFixture[str]) -> None:
