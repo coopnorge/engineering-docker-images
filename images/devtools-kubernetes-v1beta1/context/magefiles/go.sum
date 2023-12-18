@@ -1,3 +1,5 @@
+github.com/coopnorge/mage-kubernetes-lib v0.0.0-20231206133238-dbad32fcd39c h1:1EJhKe8h9yiTjyqNna1Yu67DqIz+iVrL4Zl58yMiMXo=
+github.com/coopnorge/mage-kubernetes-lib v0.0.0-20231206133238-dbad32fcd39c/go.mod h1:X78a7FTW2yZFY0+92GoATQfJka1oUjqL15fElWazjs0=
 github.com/magefile/mage v1.15.0 h1:BvGheCMAsG3bWUDbZ8AyXXpCNwU9u5CB6sM+HNb9HYg=
 github.com/magefile/mage v1.15.0/go.mod h1:z5UZb/iS3GoOSn0JgWuiw7dxlurVYTu+/jHXqQg881A=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
