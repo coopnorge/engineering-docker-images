@@ -254,9 +254,9 @@ def test_prototype_env_vars(
         subprocess.run(devtools_cmd(["validate", "TFDIRS="]), check=True)
 
         cap = Captured.from_capfd(capfd)
-        assert sum("No problems detected" in line for line in cap.out_lines) == 0
-        assert sum("tfsec" in line for line in cap.out_lines) == 0
-        assert sum("tflint" in line for line in cap.out_lines) == 0
+        assert sum("No problems detected" in line for line in cap.out_lines) == 1
+        assert sum("tfsec" in line for line in cap.out_lines) == 1
+        assert sum("tflint" in line for line in cap.out_lines) == 1
 
         (workdir / "blank").mkdir()
         subprocess.run(
@@ -280,6 +280,84 @@ def test_prototype_env_vars(
         assert sum("No problems detected" in line for line in cap.out_lines) == 1
         assert sum("tfsec" in line for line in cap.out_lines) == 1
         assert sum("tflint" in line for line in cap.out_lines) == 1
+
+
+def test_dir_exclusion_behavior(
+    tmp_path: Path,
+    cache_dir: Optional[Path],
+    capfd: CaptureFixture[str],
+) -> None:
+    with ctx_prototype(tmp_path, cache_dir):  # as workdir:
+        # default values
+        subprocess.run(devtools_cmd(), check=True)
+        cap = Captured.from_capfd(capfd)
+        assert (
+            sum("TFDIRS_EXCLUDE=%/examples %/example" == line for line in cap.out_lines)
+            == 1
+        )
+        assert sum("TFDIRS=. ./eg_module" == line for line in cap.out_lines) == 1
+
+        # TFDIRS_EXCLUDE override using env var
+        subprocess.run(
+            devtools_cmd(
+                ["validate"], envargs={"TFDIRS_EXCLUDE": "./eg_exclusion_module"}
+            ),
+        )
+        cap = Captured.from_capfd(capfd)
+        assert (
+            sum(
+                "TFDIRS_EXCLUDE=./eg_exclusion_module" == line for line in cap.out_lines
+            )
+            == 1
+        )
+        assert (
+            sum(
+                "TFDIRS=. ./eg_module ./example ./examples" == line
+                for line in cap.out_lines
+            )
+            == 1
+        )
+
+        # TFDIRS_EXCLUDE override using command line
+        subprocess.run(
+            devtools_cmd(["validate", "TFDIRS_EXCLUDE=./eg_exclusion_module"]),
+        )
+        cap = Captured.from_capfd(capfd)
+        assert (
+            sum(
+                "TFDIRS_EXCLUDE=./eg_exclusion_module" == line for line in cap.out_lines
+            )
+            == 1
+        )
+        assert (
+            sum(
+                "TFDIRS=. ./eg_module ./example ./examples" == line
+                for line in cap.out_lines
+            )
+            == 1
+        )
+
+        # check if TFDIRS_EXCLUDE is applied if TFDIRS is set via env var
+        subprocess.run(
+            devtools_cmd(["validate"], envargs={"TFDIRS": "./ ./example ./examples"}),
+        )
+        cap = Captured.from_capfd(capfd)
+        assert sum("TFDIRS=./" == line for line in cap.out_lines) == 1
+        assert (
+            sum("TFDIRS_EXCLUDE=%/examples %/example" == line for line in cap.out_lines)
+            == 1
+        )
+
+        # check if TFDIRS_EXCLUDE is applied if TFDIRS is set via command line
+        subprocess.run(
+            devtools_cmd(["validate", "TFDIRS=./ ./example ./examples"]),
+        )
+        cap = Captured.from_capfd(capfd)
+        assert sum("TFDIRS=./" == line for line in cap.out_lines) == 1
+        assert (
+            sum("TFDIRS_EXCLUDE=%/examples %/example" == line for line in cap.out_lines)
+            == 1
+        )
 
 
 def test_prototype_fail_fmt(

@@ -41,10 +41,16 @@ terraform_docs_config=terraform-docs.yml
 TFDIRS_EXCLUDE?=%/examples %/example
 $(info TFDIRS_EXCLUDE=$(TFDIRS_EXCLUDE))
 
-TFDIRS?=$(filter-out $(TFDIRS_EXCLUDE), \
-	$(or $(shell find . -name .terraform -prune -o \( -name '*.tf' -print \) \
-		| sed 's|/[^/]\{1,\}$$||g' \
-		| sort | uniq),.))
+# Find directories containing Terraform files if TFDIRS is not already set
+TFDIRS?=$(shell find . -name .terraform -prune -o \( -name '*.tf' -print \) \
+	| sed 's|/[^/]\{1,\}$$||g' \
+	| sort | uniq)
+
+# Filter out the directories specified in TFDIRS_EXCLUDE
+override TFDIRS := $(filter-out $(TFDIRS_EXCLUDE),$(TFDIRS))
+
+# If TFDIRS is still empty, default to the current directory
+override TFDIRS := $(or $(TFDIRS),.)
 
 TF_NO_PROVIDERS=
 
