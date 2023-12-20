@@ -254,9 +254,9 @@ def test_prototype_env_vars(
         subprocess.run(devtools_cmd(["validate", "TFDIRS="]), check=True)
 
         cap = Captured.from_capfd(capfd)
-        assert sum("No problems detected" in line for line in cap.out_lines) == 0
-        assert sum("tfsec" in line for line in cap.out_lines) == 0
-        assert sum("tflint" in line for line in cap.out_lines) == 0
+        assert sum("No problems detected" in line for line in cap.out_lines) == 1
+        assert sum("tfsec" in line for line in cap.out_lines) == 1
+        assert sum("tflint" in line for line in cap.out_lines) == 1
 
         (workdir / "blank").mkdir()
         subprocess.run(
