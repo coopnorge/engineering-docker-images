@@ -74,7 +74,7 @@ $(call dump_vars,tf_plugin_cache_dir_target TF_PLUGIN_CACHE_DIR)
 
 tfsec=tfsec
 tflint=tflint --enable-plugin=google --enable-plugin=azurerm  --disable-rule=terraform_unused_declarations $(if $(filter all commands,$(VERBOSE)),--loglevel=trace)
-tfdocs_version=terraform-docs --version
+tfdocs_version=$(shell terraform-docs --version)
 tfdocs_check=terraform-docs . -c $(terraform_docs_config) --output-check
 tfdocs_generate=terraform-docs . -c $(terraform_docs_config)
 
