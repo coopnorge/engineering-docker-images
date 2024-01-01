@@ -6,7 +6,7 @@ require (
 	github.com/abice/go-enum v0.5.8
 	github.com/cortesi/modd v0.8.1
 	github.com/envoyproxy/protoc-gen-validate v1.0.2
-	github.com/go-delve/delve v1.21.2
+	github.com/go-delve/delve v1.22.0
 	github.com/pseudomuto/protoc-gen-doc v1.5.1
 	github.com/sanposhiho/gomockhandler v1.4.4
 	go.uber.org/mock v0.4.0
@@ -28,24 +28,24 @@ require (
 	github.com/cortesi/termlog v0.0.0-20210222042314-a1eec763abec // indirect
 	github.com/cosiner/argv v0.1.0 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
-	github.com/derekparker/trie v0.0.0-20221213183930-4c74548207f4 // indirect
+	github.com/derekparker/trie v0.0.0-20230829180723-39f4de51ef7d // indirect
 	github.com/fatih/color v1.13.0 // indirect
+	github.com/go-delve/gore v0.11.6 // indirect
 	github.com/go-delve/liner v1.2.3-0.20220127212407-d32d89dd2a5d // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
-	github.com/google/go-dap v0.9.1 // indirect
+	github.com/google/go-dap v0.11.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
-	github.com/hashicorp/golang-lru v0.5.4 // indirect
+	github.com/hashicorp/golang-lru v1.0.2 // indirect
 	github.com/huandu/xstrings v1.4.0 // indirect
 	github.com/iancoleman/strcase v0.2.0 // indirect
 	github.com/imdario/mergo v0.3.13 // indirect
-	github.com/inconshreveable/mousetrap v1.0.0 // indirect
-	github.com/konsorten/go-windows-terminal-sequences v1.0.3 // indirect
+	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/labstack/gommon v0.4.0 // indirect
 	github.com/lyft/protoc-gen-star/v2 v2.0.3 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.17 // indirect
+	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.13 // indirect
 	github.com/mattn/goveralls v0.0.12 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
@@ -56,28 +56,29 @@ require (
 	github.com/rjeczalik/notify v0.9.3 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect
-	github.com/sirupsen/logrus v1.6.0 // indirect
+	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/spf13/afero v1.9.3 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
-	github.com/spf13/cobra v1.1.3 // indirect
+	github.com/spf13/cobra v1.7.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/urfave/cli/v2 v2.25.7 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
-	go.starlark.net v0.0.0-20220816155156-cfacd8902214 // indirect
-	golang.org/x/arch v0.0.0-20190927153633-4e8777c89be4 // indirect
+	go.starlark.net v0.0.0-20231101134539-556fd59b42f6 // indirect
+	golang.org/x/arch v0.6.0 // indirect
 	golang.org/x/crypto v0.17.0 // indirect
 	golang.org/x/exp v0.0.0-20230224173230-c95f2b4c22f2 // indirect
 	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616 // indirect
-	golang.org/x/mod v0.12.0 // indirect
+	golang.org/x/mod v0.14.0 // indirect
 	golang.org/x/net v0.17.0 // indirect
-	golang.org/x/sync v0.3.0 // indirect
+	golang.org/x/sync v0.4.0 // indirect
 	golang.org/x/sys v0.15.0 // indirect
 	golang.org/x/term v0.15.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
-	golang.org/x/tools v0.13.0 // indirect
+	golang.org/x/tools v0.14.0 // indirect
 	golang.org/x/tools/cmd/cover v0.1.0-deprecated // indirect
 	google.golang.org/genproto v0.0.0-20230110181048-76db0878b65f // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 	mvdan.cc/sh/v3 v3.6.0 // indirect
 )
