@@ -91,7 +91,9 @@ go_ldflags?= \
 	-X '$(go_mod)/internal/version.gitDesc=$(giti_description)' \
 	-X '$(go_mod)/internal/version.gitCommitDate=$(giti_commit_date)'" \
 
-go_build_flags?=
+# https://github.com/DataDog/dd-trace-go/releases/tag/v1.59.0
+# v1.59.0 of the Go datadog library we use now require us to supply some shared libraries (libdl.so.2 and libm.so.6), or disable Datadog WAF.
+go_build_flags?=-tags='datadog.no_waf'
 
 localstatedir?=var
 generated_dir?=$(localstatedir)/generated
