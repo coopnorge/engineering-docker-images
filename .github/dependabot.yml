@@ -39,6 +39,14 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "gomod"
+    directory: "/images/devtools-kubernetes-v1beta1/context"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gomod"
+    directory: "/images/devtools-kubernetes-v1beta1/context/magefiles"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gomod"
     directory: "/images/devtools-golang-v1beta1/context"
     schedule:
       interval: "daily"

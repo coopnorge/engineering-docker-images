@@ -3,7 +3,7 @@
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
 
 FROM docker.io/redboxoss/scuttle:1.3.7@sha256:23939d3bff7616b47341c13bb3c644991c05253c95bb70b174a259817c2711dd AS scuttle
-FROM docker.io/library/alpine:3@sha256:eece025e432126ce23f223450a0326fbebde39cdf496a85d8c016293fc851978 AS alpine
+FROM docker.io/library/alpine:3@sha256:51b67269f354137895d43f3b3d810bfacd3945438e94dc5ac55fdac340352f48 AS alpine
 
 FROM alpine AS runtime
 
@@ -40,6 +40,9 @@ RUN \
     true
 
 COPY --chown=root:root ${outputs_dir}/${app_executable} /usr/local/bin/${app_executable}
+
+# The following line will be replaced by COPY statements for resource paths if any are provided in $APP_RESOURCE_PATHS
+# @app_resource_commands
 
 RUN \
     chmod ugo-w /usr/local/bin/${app_executable}

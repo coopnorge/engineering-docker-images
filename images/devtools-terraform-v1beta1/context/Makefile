@@ -41,10 +41,16 @@ terraform_docs_config=terraform-docs.yml
 TFDIRS_EXCLUDE?=%/examples %/example
 $(info TFDIRS_EXCLUDE=$(TFDIRS_EXCLUDE))
 
-TFDIRS?=$(filter-out $(TFDIRS_EXCLUDE), \
-	$(or $(shell find . -name .terraform -prune -o \( -name '*.tf' -print \) \
-		| sed 's|/[^/]\{1,\}$$||g' \
-		| sort | uniq),.))
+# Find directories containing Terraform files if TFDIRS is not already set
+TFDIRS?=$(shell find . -name .terraform -prune -o \( -name '*.tf' -print \) \
+	| sed 's|/[^/]\{1,\}$$||g' \
+	| sort | uniq)
+
+# Filter out the directories specified in TFDIRS_EXCLUDE
+override TFDIRS := $(filter-out $(TFDIRS_EXCLUDE),$(TFDIRS))
+
+# If TFDIRS is still empty, default to the current directory
+override TFDIRS := $(or $(TFDIRS),.)
 
 TF_NO_PROVIDERS=
 
@@ -68,6 +74,7 @@ $(call dump_vars,tf_plugin_cache_dir_target TF_PLUGIN_CACHE_DIR)
 
 tfsec=tfsec
 tflint=tflint --enable-plugin=google --enable-plugin=azurerm  --disable-rule=terraform_unused_declarations $(if $(filter all commands,$(VERBOSE)),--loglevel=trace)
+tfdocs_version=$(shell terraform-docs --version)
 tfdocs_check=terraform-docs . -c $(terraform_docs_config) --output-check
 tfdocs_generate=terraform-docs . -c $(terraform_docs_config)
 
@@ -111,7 +118,7 @@ validate-tf-$(1): | $(1)/.terraform $(if $(TF_NO_PROVIDERS),,$(1)/.terraform/pro
 	cd $(1) && $$(terraform) fmt -check -recursive -diff
 	cd $(1) && $$(terraform) validate
 	test -e "$(1)/.tfsec-ignore" || $$(tfsec) $(1)
-	[ ! -f "$(1)/$(terraform_docs_config)" ] || (echo "Validating documentation" ; $$(tfdocs_check) )
+	[ ! -f "$(1)/$(terraform_docs_config)" ] || (echo "Validating documentation with $$(tfdocs_version)" ; $$(tfdocs_check) )
 	$$(tflint) --chdir=$(1)
 
 endef

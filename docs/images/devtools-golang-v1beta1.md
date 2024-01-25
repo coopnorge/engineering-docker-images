@@ -52,7 +52,7 @@ defined.
 FROM ghcr.io/coopnorge/engineering-docker-images/e0/devtools-golang-v1beta1:latest@sha256:7e54fe41351af1b7b4cdf75c2cb8251f80b89845b49179ae2003b200b3054369 AS golang-devtools
 ```
 
-```yaml title="docker-compose.yml"
+```yaml title="docker-compose.yaml"
 services:
   golang-devtools:
     build:
@@ -94,8 +94,19 @@ volumes:
     For this to be more secure of a rootless OCI runtime
     (e.g. rootless dockerd) should be used.
 
-The `Dockerfile` must have a stage named `runtime`, and this is the stage that
-will be pushed when running `publish`.
+This devtool provides a simple Dockerfile which should cover typical service use
+cases. To use it set the `APP_DOCKERFILE` variable to
+`/usr/local/share/devtools-golang/Dockerfile.app`. Complex use cases can
+otherwise supply their own Dockerfile.
+
+A `Dockerfile` supplied by `APP_DOCKERFILE` must have a stage named `runtime`,
+and this is the stage that will be pushed when running the `publish` make
+target.
+
+When using the devtool-supplied Dockerfile, it is possible to copy additional
+resource files required by an application to the application's working directory
+(`/var/opt/${APP_NAME}`), see `APP_RESOURCE_PATHS` below. This requires that the
+devtool-supplied Dockerfile is specified in `APP_DOCKERFILE`.
 
 When pushing docker images credentials from `~/.docker/config.json` will be
 used, and these can be set using commands like:
@@ -125,6 +136,11 @@ printenv GITHUB_TOKEN \
 - `APP_DOCKERFILE`: The dockerfile to use when building an OCI image.
 
   Default: `build/package/Dockerfile`.
+
+- `APP_RESOURCE_PATHS`: A space-separated list of paths to copy to the
+  application's working directory. Paths will be chowned to `root`:`root`.
+
+  Default: unset.
 
 - `BUILD_OCI`: `true` or `false` indicating whether to build an OCI image.
 
