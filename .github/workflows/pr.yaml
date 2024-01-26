@@ -13,7 +13,7 @@ jobs:
       images-ci: ${{ steps.paths-filter.outputs.images }}
     steps:
       - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v2
+      - uses: dorny/paths-filter@v3
         id: paths-filter
         with:
           base: main
