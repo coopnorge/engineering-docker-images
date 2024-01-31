@@ -166,9 +166,9 @@ mkdocs-monorepo-plugin==1.0.4 \
     --hash=sha256:3772e8f29bf06ab7cfe739fd4dccd46f4113c946b3857e0a3e16b34d6b987d95 \
     --hash=sha256:a1a690b509ddb2f5d96d4d9055a4f31c2d5933bbed4f89d69f87d5bd4e45a9c3
     # via mkdocs-techdocs-core
-mkdocs-table-reader-plugin==2.0.3 \
-    --hash=sha256:7d1abb3838ac2ab7b1a5a5cc7f40a4e966a77defa7a7ae1f2137efd185b96752 \
-    --hash=sha256:e14136a6103d43030215491ff0a6cdcf8f92a78c3bac32a509e4cf2b365ef529
+mkdocs-table-reader-plugin==2.1.0 \
+    --hash=sha256:b98041627b4982c5a5c6dac6f2e97767c53658771eed926057aa48c61a4e494f \
+    --hash=sha256:cef5a1127e2c04955d5716e67ede66971a0a5ee3dd5386af6cba53c707c78b8b
     # via -r requirements-techdocs.in
 mkdocs-techdocs-core==1.1.7 \
     --hash=sha256:9fd3efa08973a67c34e60a4f7e06ca3f1d47b437425a1d3cfff2b2639f2113a1 \
