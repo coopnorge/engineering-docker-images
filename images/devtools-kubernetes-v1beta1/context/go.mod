@@ -3,14 +3,14 @@ module github.com/coopnorge/engineering-docker-images/images/devtools-kubernetes
 go 1.21.4
 
 require (
-	github.com/homeport/dyff v1.7.0
+	github.com/homeport/dyff v1.7.1
 	github.com/magefile/mage v1.15.0
 )
 
 require (
 	github.com/BurntSushi/toml v1.3.2 // indirect
 	github.com/gonvenience/bunt v1.3.5 // indirect
-	github.com/gonvenience/neat v1.3.12 // indirect
+	github.com/gonvenience/neat v1.3.13 // indirect
 	github.com/gonvenience/term v1.0.2 // indirect
 	github.com/gonvenience/text v1.0.7 // indirect
 	github.com/gonvenience/wrap v1.2.0 // indirect
@@ -27,8 +27,8 @@ require (
 	github.com/texttheater/golang-levenshtein v1.0.1 // indirect
 	github.com/virtuald/go-ordered-json v0.0.0-20170621173500-b18e6e673d74 // indirect
 	golang.org/x/sync v0.6.0 // indirect
-	golang.org/x/sys v0.16.0 // indirect
-	golang.org/x/term v0.16.0 // indirect
+	golang.org/x/sys v0.17.0 // indirect
+	golang.org/x/term v0.17.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
