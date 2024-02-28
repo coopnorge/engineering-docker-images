@@ -40,3 +40,81 @@ images/devtools-terraform-v1beta1/context/update_tfswitch.py
 This will download the checksums for the latest version of `terraform-switcher`
 and then replace the version of `terraform-switcher` in the Dockerfile with the
 latest version number.
+
+## Configuration
+
+Add the following line to your `devtools/Dockerfile`:
+
+```Dockerfile title="devtools/Dockerfile"
+FROM ghcr.io/coopnorge/engineering-docker-images/e0/devtools-terraform-v1beta1:latest@sha256:e18031952ade602b87f5c1a4e6d5b426497b66bac1ff28de28144e00752da94d AS terraform-devtools
+```
+
+Then, add the following section to your `docker-compose.yaml`:
+
+```yaml title="docker-compose.yaml"
+version: "3.7"
+
+services:
+  terraform-devtools:
+    build:
+      context: devtools
+      target: terraform-devtools
+    working_dir: /srv/workspace
+    command: validate terraform_init_args="-backend=false"
+    volumes:
+      - .:/srv/workspace:z
+      - xdg-cache-home:/root/.cache
+      - $HOME/.terraform.d:/root/.terraform.d/
+volumes:
+  xdg-cache-home: {}
+```
+
+To make sure that the image hash specified in `Dockerfile` above is updated
+automatically, make sure you have the following configured in dependabot
+config file:
+
+```yaml title=".github/dependabot.yaml"
+registries:
+  # ...
+  coop-ghcr:
+    type: docker-registry
+    url: ghcr.io
+    username: CoopGithubServiceaccount
+    password: ${{ secrets.DEPENDABOT_GHCR_PULL }}
+
+updates:
+  # ...
+  - package-ecosystem: "docker"
+    directory: "devtools/"
+    registries:
+      - coop-ghcr
+    schedule:
+      interval: "daily"
+```
+
+In addition to the above, make sure your Terraform providers and modules are
+also auto-updated:
+
+```yaml title=".github/dependabot.yaml"
+registries:
+  # ...
+  coop-terraform:
+    type: terraform-registry
+    url: https://app.spacelift.io
+    token: ${{ secrets.SPACELIFT_READ_TOKEN }}
+
+updates:
+  # ...
+  - package-ecosystem: "terraform"
+    directory: "/infrastructure/terraform"
+    registries:
+      - coop-terraform
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "terraform"
+    directory: "/infrastructure/terraform-shared"
+    registries:
+      - coop-terraform
+    schedule:
+      interval: "daily"
+```
