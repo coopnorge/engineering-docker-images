@@ -40,3 +40,31 @@ images/devtools-terraform-v1beta1/context/update_tfswitch.py
 This will download the checksums for the latest version of `terraform-switcher`
 and then replace the version of `terraform-switcher` in the Dockerfile with the
 latest version number.
+
+## Configuration
+
+Add the following line to your `devtools/Dockerfile`:
+
+```Dockerfile title="devtools/Dockerfile"
+FROM ghcr.io/coopnorge/engineering-docker-images/e0/devtools-terraform-v1beta1:latest@sha256:e18031952ade602b87f5c1a4e6d5b426497b66bac1ff28de28144e00752da94d AS terraform-devtools
+```
+
+Then, add the following section to your `docker-compose.yaml`:
+
+```yaml title="docker-compose.yaml"
+version: "3.7"
+
+services:
+  terraform-devtools:
+    build:
+      context: devtools
+      target: terraform-devtools
+    working_dir: /srv/workspace
+    command: validate terraform_init_args="-backend=false"
+    volumes:
+      - .:/srv/workspace:z
+      - xdg-cache-home:/root/.cache
+      - $HOME/.terraform.d:/root/.terraform.d/
+volumes:
+  xdg-cache-home: {}
+```
