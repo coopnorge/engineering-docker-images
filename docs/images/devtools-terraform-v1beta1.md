@@ -69,11 +69,13 @@ volumes:
   xdg-cache-home: {}
 ```
 
-To make sure that the image hash specified in `Dockerfile` above is updated automatically, make sure you have the
-following configured in dependabot config file:
+To make sure that the image hash specified in `Dockerfile` above is updated
+automatically, make sure you have the following configured in dependabot
+config file:
 
 ```yaml title=".github/dependabot.yaml"
 registries:
+  # ...
   coop-ghcr:
     type: docker-registry
     url: ghcr.io
@@ -81,10 +83,38 @@ registries:
     password: ${{ secrets.DEPENDABOT_GHCR_PULL }}
 
 updates:
+  # ...
   - package-ecosystem: "docker"
     directory: "devtools/"
     registries:
       - coop-ghcr
+    schedule:
+      interval: "daily"
+```
+
+In addition to the above, make sure your Terraform providers and modules are
+also auto-updated:
+
+```yaml title=".github/dependabot.yaml"
+registries:
+  # ...
+  coop-terraform:
+    type: terraform-registry
+    url: https://app.spacelift.io
+    token: ${{ secrets.SPACELIFT_READ_TOKEN }}
+
+updates:
+  # ...
+  - package-ecosystem: "terraform"
+    directory: "/infrastructure/terraform"
+    registries:
+      - coop-terraform
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "terraform"
+    directory: "/infrastructure/terraform-shared"
+    registries:
+      - coop-terraform
     schedule:
       interval: "daily"
 ```
