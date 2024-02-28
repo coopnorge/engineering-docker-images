@@ -68,3 +68,23 @@ services:
 volumes:
   xdg-cache-home: {}
 ```
+
+To make sure that the image hash specified in `Dockerfile` above is updated automatically, make sure you have the
+following configured in dependabot config file:
+
+```yaml title=".github/dependabot.yaml"
+registries:
+  coop-ghcr:
+    type: docker-registry
+    url: ghcr.io
+    username: CoopGithubServiceaccount
+    password: ${{ secrets.DEPENDABOT_GHCR_PULL }}
+
+updates:
+  - package-ecosystem: "docker"
+    directory: "devtools/"
+    registries:
+      - coop-ghcr
+    schedule:
+      interval: "daily"
+```
