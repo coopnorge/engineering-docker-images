@@ -146,9 +146,9 @@ mkdocs-git-revision-date-localized-plugin==1.2.4 \
     --hash=sha256:08fd0c6f33c8da9e00daf40f7865943113b3879a1c621b2bbf0fa794ffe997d3 \
     --hash=sha256:1f94eb510862ef94e982a2910404fa17a1657ecf29f45a07b0f438c00767fc85
     # via -r requirements-techdocs.in
-mkdocs-htmlproofer-plugin==1.0.0 \
-    --hash=sha256:2a2276569ddf27fd8b0797719c932d88108181468ef958a96a98590c1a652531 \
-    --hash=sha256:88c354180c62a55bd5e14cf5231c4df83393a58f3477cc9a265b4308cd76907b
+mkdocs-htmlproofer-plugin==1.1.0 \
+    --hash=sha256:4d33778ca70fdec4bb4c73ebc0dc871d054cde70d8835a8281fbdf9a3de8ad41 \
+    --hash=sha256:64ee019ce316ea4df276387d58049d43c50aba1108c99d3dbe14c5458357a723
     # via -r requirements-techdocs.in
 mkdocs-kroki-plugin==0.7.1 \
     --hash=sha256:5ad7b07384a90151f0b8f0dc64c43691ea017994221bccd3431c9f278d61055e \
