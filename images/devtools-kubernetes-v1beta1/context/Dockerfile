@@ -5,7 +5,7 @@ FROM zegl/kube-score:v1.18.0@sha256:1b23495ad2528e51d7f6e5936072bbf9f2953312308a
 FROM ghcr.io/yannh/kubeconform:v0.6.4@sha256:e68a0b638c6e9b76f1b7d58b4ec94340ef3b6601db25b2e40b29e3ac2d68e4bf as kubeconform
 FROM docker.io/mikefarah/yq:4.42.1@sha256:245b4cb44eeb6185c2e9773243333ced6521a071fbb8533e8db930b33d065177 as yq
 
-FROM golang:1.22.1@sha256:34ce21a9696a017249614876638ea37ceca13cdd88f582caad06f87a8aa45bf3 as buildenv
+FROM golang:1.22.1@sha256:0b55ab82ac2a54a6f8f85ec8b943b9e470c39e32c109b766bbc1b801f3fa8d3b as buildenv
 
 COPY --from=yq /usr/bin/yq /usr/local/bin/yq
 
@@ -26,7 +26,7 @@ RUN \
     mage -compile  ./mage-k8s
 
 
-FROM golang:1.22.1@sha256:34ce21a9696a017249614876638ea37ceca13cdd88f582caad06f87a8aa45bf3 as base
+FROM golang:1.22.1@sha256:0b55ab82ac2a54a6f8f85ec8b943b9e470c39e32c109b766bbc1b801f3fa8d3b as base
 RUN \
     apt-get update && \
     apt-get install -y \
