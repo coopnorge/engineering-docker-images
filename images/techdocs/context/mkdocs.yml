@@ -4,6 +4,10 @@ repo_url: !ENV [REPO_URL, null]
 edit_uri: !ENV [EDIT_URI, null]
 plugins:
   - techdocs-core
+  - git-committers:
+      enabled: !ENV [AUTHORS, true]
+      repository: !ENV REPO_NAME
+      branch: main
   - htmlproofer:
       validate_external_urls: false
   - git-revision-date-localized:

@@ -155,7 +155,7 @@ def test_build(
 ) -> None:
     actual_output = docker_client.containers.run(
         build_image.id,
-        command='build REPO_NAME=example/test REPO_URL="http://github.com/example/test" EDIT_URL="edit/main/docs"',
+        command='build REPO_NAME=example/test REPO_URL="http://github.com/example/test" EDIT_URL="edit/main/docs" AUTHORS=false',
         volumes=volumes,
         remove=True,
     )

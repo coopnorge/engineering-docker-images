@@ -98,12 +98,12 @@ mkdocs.yml: /usr/local/share/techdocs/mkdocs.yml
 
 .PHONY: build
 build: mkdocs.yml ## Build the website
-	export SITE_NAME="$(SITE_NAME)" && export REPO_NAME=$(REPO_NAME) export REPO_URL=$(REPO_URL) && export EDIT_URI=$(EDIT_URI) && techdocs-cli generate --no-docker
+	export SITE_NAME="$(SITE_NAME)" && export REPO_NAME=$(REPO_NAME) export REPO_URL=$(REPO_URL) && export EDIT_URI=$(EDIT_URI) && export AUTHORS=$(AUTHORS) && techdocs-cli generate --no-docker
 
 ENTITY := $(shell yq --no-doc 'select(document_index == 0) | [.metadata.namespace // "default", .kind, .metadata.name] | join("/")' ./catalog-info.yaml)
 
 serve: mkdocs.yml ## Run a preview site
-	export SITE_NAME="$(SITE_NAME)" && export REPO_NAME=$(REPO_NAME) export REPO_URL=$(REPO_URL) && export EDIT_URI=$(EDIT_URI) && techdocs-cli serve --no-docker
+	export SITE_NAME="$(SITE_NAME)" && export REPO_NAME=$(REPO_NAME) export REPO_URL=$(REPO_URL) && export EDIT_URI=$(EDIT_URI) && export AUTHORS=$(AUTHORS) && techdocs-cli serve --no-docker
 
 .PHONY: publish
 publish: site ## Publish the website to the TechDocs Bucket
