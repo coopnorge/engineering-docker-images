@@ -6,7 +6,7 @@ FROM docker.io/hadolint/hadolint:v2.12.0@sha256:30a8fd2e785ab6176eed53f74769e04f
 FROM --platform=linux/amd64 docker.io/goodwithtech/dockle:v0.4.14@sha256:68f7473909b49013f97984e9917fb7edd0c440bf15e38f41449860f8a2680d51 AS dockle
 FROM docker.io/moby/buildkit:v0.13.2-rootless@sha256:cf1c082979eec06a0eff50cd9b20172a0bf8bfe9af3bb9f8261d439f5af07ce1 AS buildkit
 FROM gcr.io/go-containerregistry/crane:v0.15.2@sha256:be47a641ac6b98004251e1dccdd6fe8cbfca233d1239c751d3eb142608ab3fee AS crane
-FROM docker.io/bufbuild/buf:1.30.1@sha256:fe441f13aa28d6a14400af1393ddc18e907ba30fdf146628bbabead45ff71ce0 AS buf
+FROM docker.io/bufbuild/buf:1.31.0@sha256:657b34a1af5992fc91ecda848568d0c2e47b4dbeb381b987798060bf70dc9a78 AS buf
 FROM docker.io/library/golang:1.22.2-bookworm@sha256:d0902bacefdde1cf45528c098d14e55d78c107def8a22d148eabd71582d7a99f AS base
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
