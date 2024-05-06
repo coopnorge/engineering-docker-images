@@ -254,9 +254,9 @@ mkdocs-awesome-pages-plugin==2.9.2 \
 mkdocs-ezlinks-plugin==0.1.14 \
     --hash=sha256:3e2085c16a850e022393e80194c17612e7b55de87fb45b3ffb618b5dfdb10811
     # via -r requirements-techdocs.in
-mkdocs-git-revision-date-localized-plugin==1.2.4 \
-    --hash=sha256:08fd0c6f33c8da9e00daf40f7865943113b3879a1c621b2bbf0fa794ffe997d3 \
-    --hash=sha256:1f94eb510862ef94e982a2910404fa17a1657ecf29f45a07b0f438c00767fc85
+mkdocs-git-revision-date-localized-plugin==1.2.5 \
+    --hash=sha256:0c439816d9d0dba48e027d9d074b2b9f1d7cd179f74ba46b51e4da7bb3dc4b9b \
+    --hash=sha256:d796a18b07cfcdb154c133e3ec099d2bb5f38389e4fd54d3eb516a8a736815b8
     # via -r requirements-techdocs.in
 mkdocs-htmlproofer-plugin==1.2.1 \
     --hash=sha256:6afb8f0dd1f243f480f49ff5648155d78050a9f79702061006b3d293d3058e1b \
