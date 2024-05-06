@@ -1,4 +1,4 @@
-FROM docker.io/library/node:21.7.3-bullseye@sha256:75f835fab243ac596d90f859e9871a9546eaebf788d03b276a8e4ecb1ee7dadf as node
+FROM docker.io/library/node:22.1.0-bullseye@sha256:fa4d3d113be95066b59c5efc92dda069c38e96b17b363449a4a9d6a5c7e66dad as node
 FROM jdkato/vale:v2.30.0@sha256:fa750d24d5e7c0be0e5d1adc06e9e98135d0440a73a6aa0609a58e3ce2b4491b as vale
 FROM plantuml/plantuml:1.2024.4@sha256:1e0cb0cf56ef794e91823904fb8680c62828c0edb0e943cd46a2f17bfb8316b4 as plantuml
 FROM mikefarah/yq:4.43.1@sha256:a7df369b3129dc6e1343b86e5e2f5bdee0853631b5de8221deaffd59358237ee as yq
