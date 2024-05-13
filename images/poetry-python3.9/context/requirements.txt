@@ -468,9 +468,9 @@ pip-tools==7.4.1 \
     --hash=sha256:4c690e5fbae2f21e87843e89c26191f0d9454f362d8acdbd695716493ec8b3a9 \
     --hash=sha256:864826f5073864450e24dbeeb85ce3920cdfb09848a3d69ebf537b521f14bcc9
     # via -r requirements.in
-pkginfo==1.9.6 \
-    --hash=sha256:4b7a555a6d5a22169fcc9cf7bfd78d296b0361adad412a346c1226849af5e546 \
-    --hash=sha256:8fd5896e8718a4372f0ea9cc9d96f6417c9b986e23a4d116dda26b62cc29d046
+pkginfo==1.10.0 \
+    --hash=sha256:5df73835398d10db79f8eecd5cd86b1f6d29317589ea70796994d49399af6297 \
+    --hash=sha256:889a6da2ed7ffc58ab5b900d888ddce90bce912f2d2de1dc1c26f4cb9fe65097
     # via poetry
 platformdirs==3.7.0 \
     --hash=sha256:87fbf6473e87c078d536980ba970a472422e94f17b752cfad17024c18876d481 \
@@ -482,9 +482,9 @@ pluggy==1.0.0 \
     --hash=sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159 \
     --hash=sha256:74134bbf457f031a36d68416e1509f34bd5ccc019f0bcc952c7b909d06b37bd3
     # via keyrings-google-artifactregistry-auth
-poetry==1.8.2 \
-    --hash=sha256:49cceb3838104647c3e1021f3a4f13c6053704cc18d33f849a90fe687a29cb73 \
-    --hash=sha256:b42b400d9a803af6e788a30a6f3e9998020b77860e28df20647eb10b6f414910
+poetry==1.8.3 \
+    --hash=sha256:67f4eb68288eab41e841cc71a00d26cf6bdda9533022d0189a145a34d0a35f48 \
+    --hash=sha256:88191c69b08d06f9db671b793d68f40048e8904c0718404b63dcc2b5aec62d13
     # via
     #   -r requirements.in
     #   poetry-dynamic-versioning
