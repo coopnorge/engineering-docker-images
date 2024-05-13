@@ -2,7 +2,7 @@
 # syntax=docker/dockerfile:1.3
 FROM docker.io/argoproj/argocd:v2.6.15@sha256:58ebb4ed23c8db4cd4cc3f954f8d94c4b4e3d9669c0751c484108d22b86d52de as argocd
 FROM zegl/kube-score:v1.18.0@sha256:1b23495ad2528e51d7f6e5936072bbf9f2953312308abacfc5f3a2bd92249202 as kube-score
-FROM ghcr.io/yannh/kubeconform:v0.6.4@sha256:e68a0b638c6e9b76f1b7d58b4ec94340ef3b6601db25b2e40b29e3ac2d68e4bf as kubeconform
+FROM ghcr.io/yannh/kubeconform:v0.6.6@sha256:e4c69e6966a4842196ad3babc6f4c869d4ee51dc306fcf012faf10b25bb63a9c as kubeconform
 FROM docker.io/mikefarah/yq:4.43.1@sha256:a7df369b3129dc6e1343b86e5e2f5bdee0853631b5de8221deaffd59358237ee as yq
 
 FROM golang:1.22.2@sha256:d5302d40dc5fbbf38ec472d1848a9d2391a13f93293a6a5b0b87c99dc0eaa6ae as buildenv
