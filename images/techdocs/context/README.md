@@ -13,3 +13,4 @@ docker compose run --rm self
 # get help
 docker compose run --rm self help
 ```
+
