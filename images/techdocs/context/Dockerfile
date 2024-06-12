@@ -5,6 +5,9 @@ FROM mikefarah/yq:4.44.1@sha256:bcb889a1f9bdb0613c8a054542d02360c2b1b35521041be3
 
 FROM docker.io/library/python:3.12.3@sha256:3966b81808d864099f802080d897cef36c01550472ab3955fdd716d1c665acd6 as base
 
+# Bust the cache
+RUN echo "Bust the cache"
+
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN mkdir -p /usr/local/share/techdocs
