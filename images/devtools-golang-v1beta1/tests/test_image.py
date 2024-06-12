@@ -85,7 +85,7 @@ class TestHelper:
     capfd: CaptureFixture[str]
 
     def __post_init__(self) -> None:
-        logging.debug(f"{self.workdir = }, {self.capfd = }")
+        logging.debug(f"{self.workdir=}, {self.capfd=}")
 
     def captured(self) -> Captured:
         return Captured.from_capfd(self.capfd)
@@ -108,7 +108,7 @@ def test_helper(
     tmp_path: Path, capfd: CaptureFixture[str]
 ) -> Generator[TestHelper, None, None]:
     with ctx_prototype(tmp_path) as workdir:
-        logging.debug(f"{tmp_path = } {workdir = }")
+        logging.debug(f"{tmp_path=} {workdir=}")
         yield TestHelper(workdir, capfd)
         logging.debug("done ...")
 
