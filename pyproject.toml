@@ -9,13 +9,13 @@ authors = []
 python = "^3.10"
 
 [tool.poetry.dev-dependencies]
-pytest = ">=7.1.2"
-isort = ">=5.10.1"
-black = ">=22.6.0"
-flake8 = ">=4.0.1"
-flake8-black = ">=0.3.3"
-pyproject-flake8 = {version = ">=0.0.1a4", allow-prereleases = true}
-mypy = ">=0.961"
+pytest = ">=8.2.2"
+isort = ">=5.13.2"
+black = ">=24.4.2"
+flake8 = ">=7.0.0"
+flake8-black = ">=0.3.6"
+pyproject-flake8 = ">=7.0.0"
+mypy = ">=1.10.0"
 docker = ">=7.1.0"
 
 [tool.isort]

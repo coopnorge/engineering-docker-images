@@ -23,7 +23,7 @@ def lock_latest() -> None:
         release = json.load(io)
 
     logging.debug(
-        f"{release = }",
+        f"{release=}",
     )
 
     latest_version = release["tag_name"]
@@ -36,17 +36,17 @@ def lock_latest() -> None:
     checksums_url: str = checksums_assets["browser_download_url"]
     checksums_filename: str = checksums_assets["name"]
     checksums_path = SCRIPT_DIR_PATH / checksums_filename
-    logging.debug(f"{checksums_url = } {checksums_filename = } {checksums_path = }")
+    logging.debug(f"{checksums_url=} {checksums_filename=} {checksums_path=}")
 
     # Clean old checksum files.
 
     for checksum_file in SCRIPT_DIR_PATH.glob("*_checksums.txt"):
-        logging.info(f"removing {checksum_file = }")
+        logging.info(f"removing {checksum_file=}")
         os.unlink(checksum_file)
 
     # Dowload latest checksum file
     with urlopen(checksums_url) as rio, checksums_path.open("wb+") as lio:
-        logging.info(f"downloading {checksums_url = } to {checksums_path = }")
+        logging.info(f"downloading {checksums_url=} to {checksums_path=}")
         shutil.copyfileobj(rio, lio)
 
     # Update version in dockerfile
