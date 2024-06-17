@@ -11,7 +11,7 @@ require (
 	github.com/sanposhiho/gomockhandler v1.5.1
 	go.uber.org/mock v0.4.0
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.4.0
-	google.golang.org/protobuf v1.34.1
+	google.golang.org/protobuf v1.34.2
 )
 
 require (
