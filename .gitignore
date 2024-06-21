@@ -154,5 +154,6 @@ cython_debug/
 #.idea/
 
 .vale/
+./images/techdocs/tests/prototype/.vale
 mkdocs.yml
 .DS_Store
