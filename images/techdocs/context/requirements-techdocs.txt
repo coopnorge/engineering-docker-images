@@ -262,9 +262,9 @@ mkdocs-htmlproofer-plugin==1.2.1 \
     --hash=sha256:6afb8f0dd1f243f480f49ff5648155d78050a9f79702061006b3d293d3058e1b \
     --hash=sha256:8cc2f60366191fb8b870fa6ae3a5f7b9b622fd81e83afd0d4d66cbf23362cb0e
     # via -r requirements-techdocs.in
-mkdocs-kroki-plugin==0.8.0 \
-    --hash=sha256:7450fcc02151d4e5ba8433599e75e1cd45bff11666c539ed63d69d544012e899 \
-    --hash=sha256:7f63de62dafec07e10231f13e3b7038565f341a5e117f4e5084e782d5168dbeb
+mkdocs-kroki-plugin==0.8.1 \
+    --hash=sha256:c0a56e2429ab0b80bd3874c72ac1953768f99e2976a38619ae9b0d61d5dab394 \
+    --hash=sha256:d323ef51685e98ad514d5ee6aa95a76195950791b6fbb0496dc515824fa50b7a
     # via -r requirements-techdocs.in
 mkdocs-link-marker==0.1.3 \
     --hash=sha256:6d8760c819a376650675f02c7de82f5fbc0a992e7ed3239955cc01021a1af779 \
@@ -576,6 +576,10 @@ requests==2.32.0 \
     #   mkdocs-kroki-plugin
     #   mkdocs-material
     #   plantuml-markdown
+result==0.17.0 \
+    --hash=sha256:49fd668b4951ad15800b8ccefd98b6b94effc789607e19c65064b775570933e8 \
+    --hash=sha256:b73da420c0cb1a3bf741dbd41ff96dedafaad6a1b3ef437a9e33e380bb0d91cf
+    # via mkdocs-kroki-plugin
 six==1.16.0 \
     --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926 \
     --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254
