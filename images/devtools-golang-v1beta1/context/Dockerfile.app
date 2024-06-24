@@ -3,7 +3,7 @@
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
 
 FROM docker.io/redboxoss/scuttle:1.3.7@sha256:23939d3bff7616b47341c13bb3c644991c05253c95bb70b174a259817c2711dd AS scuttle
-FROM docker.io/library/alpine:3@sha256:77726ef6b57ddf65bb551896826ec38bc3e53f75cdde31354fbffb4f25238ebd AS alpine
+FROM docker.io/library/alpine:3@sha256:b89d9c93e9ed3597455c90a0b88a8bbb5cb7188438f70953fede212a0c4394e0 AS alpine
 
 FROM alpine AS runtime
 
