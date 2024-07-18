@@ -1,4 +1,4 @@
-FROM docker.io/library/python:3.9.19@sha256:2016df4760e0081ecc2c0f731f51f42f16c26a96fb86dc64b0696f192d940cbc as python
+FROM docker.io/library/python:3.9.19@sha256:e298e2e898691a938073f670dac8ef1a551c83344b67b5d8e32d1fbc8e0b57f8 as python
 
 FROM python as poetry
 
