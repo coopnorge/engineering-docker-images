@@ -6,6 +6,6 @@ poetry-plugin-up==0.7.1
 flake8==7.1.0
 codespell==2.3.0
 pydantic==2.7.4
-mypy==1.10.0
+mypy==1.10.1
 jeepney==0.8.0
 SecretStorage==3.3.3
