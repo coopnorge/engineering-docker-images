@@ -38,7 +38,7 @@ volumes:
 ```
 
 ```Dockerfile title="docker-compose/Dockerfile"
-FROM ghcr.io/coopnorge/engineering-docker-images/e0/techdocs:latest@sha256:68ce8f1b1745d587dbd542b1e8d4974eacf513ea2adffa1d566e76cca071417c as techdocs
+FROM ghcr.io/coopnorge/engineering-docker-images/e0/techdocs:latest@sha256:68ce8f1b1745d587dbd542b1e8d4974eacf513ea2adffa1d566e76cca071417c AS techdocs
 ```
 
 ### Running a preview site
