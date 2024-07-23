@@ -2,7 +2,7 @@ module mage
 
 go 1.21
 
-require github.com/coopnorge/mage-kubernetes-lib v0.4.2
+require github.com/coopnorge/mage-kubernetes-lib v0.5.0
 
 require (
 	dario.cat/mergo v1.0.0 // indirect
