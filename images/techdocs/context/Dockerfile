@@ -1,9 +1,9 @@
 FROM docker.io/library/node:22.5.1-bullseye@sha256:989f465b77e9ca45debacfaebc4299b2be99d347c51c2ed907c6284b86f893b5 AS node
 FROM jdkato/vale:v3.4.2@sha256:da6a0901858421b282aa8d935e72831c84cebf716ae4e276658e9e5d382fad20 AS vale
-FROM plantuml/plantuml:1.2024.5@sha256:1d0bffdefca5fcebda68ffdb0a66f402ed214a74a9d115f93c70e29c1d1e57cf AS plantuml
+FROM plantuml/plantuml:1.2024.6@sha256:313f2702bf341545ab19d4cb07eb44d3d651e2089d303af1b1d228a8365312b7 AS plantuml
 FROM mikefarah/yq:4.44.2@sha256:2ecaeeff15976cd00c4627f119b592b5c9311b7080beff469211606c42c6cbd2 AS yq
 
-FROM docker.io/library/python:3.12.4@sha256:f6d04873f0a67146854270e5f6513ed5e0165557c1b10689f1a20e9e65c8fe8e AS base
+FROM docker.io/library/python:3.12.4@sha256:100002d992a6b588261d6e1651adcde1dd08347916065c7a87ee459a65fe919a AS base
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
