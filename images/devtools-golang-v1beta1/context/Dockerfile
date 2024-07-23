@@ -4,7 +4,7 @@ FROM docker.io/fullstorydev/grpcurl:v1.9.1@sha256:8bc96d11c8c08388b30cffafd177a1
 FROM docker.io/mikefarah/yq:4@sha256:2ecaeeff15976cd00c4627f119b592b5c9311b7080beff469211606c42c6cbd2 AS yq
 FROM docker.io/hadolint/hadolint:v2.12.0@sha256:30a8fd2e785ab6176eed53f74769e04f125afb2f74a6c52aef7d463583b6d45e AS hadolint
 FROM --platform=linux/amd64 docker.io/goodwithtech/dockle:v0.4.14@sha256:68f7473909b49013f97984e9917fb7edd0c440bf15e38f41449860f8a2680d51 AS dockle
-FROM docker.io/moby/buildkit:v0.14.1-rootless@sha256:3cd8fa799bbe1044ad4bdfc2f9679750a33ddcbaf4154222029df36f3e31c5af AS buildkit
+FROM docker.io/moby/buildkit:v0.15.0-rootless@sha256:a21868169f7f0d71d3bddcf6ac186f67c0c277f2730223d166c55d07a26c89bd AS buildkit
 FROM gcr.io/go-containerregistry/crane:v0.15.2@sha256:be47a641ac6b98004251e1dccdd6fe8cbfca233d1239c751d3eb142608ab3fee AS crane
 FROM docker.io/bufbuild/buf:1.34.0@sha256:a7742b527afca0529b840b1c0e595385f736f3c09561a73c110a657411007220 AS buf
 FROM docker.io/library/golang:1.22.5-bookworm@sha256:6c2780255bb7b881e904e303be0d7a079054160b2ce1efde446693c0850a39ad AS base
