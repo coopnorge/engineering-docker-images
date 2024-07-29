@@ -41,6 +41,8 @@ COPY --from=golang /usr/local/bin/goenv.sh /usr/local/bin/goenv.sh
 COPY --from=docker-lock /prod/docker-lock /usr/local/bin/docker-lock
 COPY --from=tfdocs /usr/local/bin/terraform-docs /usr/local/bin/terraform-docs
 
+COPY trivy-tf-scan /usr/local/bin/trivy-tf-scan
+
 COPY terraform-switcher_${tfswitcher_version}_checksums.txt /var/tmp/terraform-switcher_${tfswitcher_version}_checksums.txt
 
 

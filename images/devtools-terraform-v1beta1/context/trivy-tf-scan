@@ -1,0 +1,30 @@
+#!/bin/bash
+
+scan_file() {
+  local file="$1"
+  echo "Scanning $file"
+  trivy --cache-dir /tmp/trivy/ config --exit-code 1 "$file"
+}
+
+scan_directory() {
+  local dir="$1"
+  find "$dir" -type f \( -name "*.tf" -o -name "*.lock.hcl" \) | while read tf_file; do
+    scan_file "$tf_file"
+  done
+}
+
+if [ $# -eq 0 ]; then
+  echo "Usage: $0 <file|directory>"
+  exit 1
+fi
+
+target="$1"
+
+if [ -f "$target" ]; then
+  scan_file "$target"
+elif [ -d "$target" ]; then
+  scan_directory "$target"
+else
+  echo "$target is not a valid file or directory."
+  exit 1
+fi
