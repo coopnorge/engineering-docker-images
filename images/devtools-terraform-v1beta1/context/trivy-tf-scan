@@ -1,14 +1,20 @@
 #!/bin/bash
 
+# a flag to track errors
+error_occurred=false
+
 scan_file() {
   local file="$1"
   echo "Scanning $file"
-  trivy --cache-dir /tmp/trivy/ config --exit-code 1 "$file"
+
+  if ! trivy --cache-dir /tmp/trivy/ config --exit-code 1 "$file"; then
+    error_occurred=true
+  fi
 }
 
 scan_directory() {
   local dir="$1"
-  find "$dir" -type f \( -name "*.tf" -o -name "*.lock.hcl" \) | while read tf_file; do
+  for tf_file in $(find "$dir" -type f \( -name "*.tf" -o -name "*.lock.hcl" \)); do
     scan_file "$tf_file"
   done
 }
@@ -27,4 +33,13 @@ elif [ -d "$target" ]; then
 else
   echo "$target is not a valid file or directory."
   exit 1
+fi
+
+# Exit with an error code if any scans failed
+if [ "$error_occurred" = true ]; then
+  echo "One or more scans failed."
+  exit 1
+else
+  echo "All scans completed successfully."
+  exit 0
 fi
