@@ -179,14 +179,14 @@ def test_prototype_ok(
 
         cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 2
-        assert sum("tfsec" in line for line in cap.out_lines) == 2
+        assert sum("trivy" in line for line in cap.out_lines) == 2
         assert sum("tflint" in line for line in cap.out_lines) == 2
 
         subprocess.run(devtools_cmd(["maker", "validate"]), check=True)
 
         cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 2
-        assert sum("tfsec" in line for line in cap.out_lines) == 2
+        assert sum("trivy" in line for line in cap.out_lines) == 2
         assert sum("tflint" in line for line in cap.out_lines) == 2
 
 
@@ -202,7 +202,7 @@ def test_prototype_nocache(
 
         cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 2
-        assert sum("tfsec" in line for line in cap.out_lines) == 2
+        assert sum("trivy" in line for line in cap.out_lines) == 2
         assert sum("tflint" in line for line in cap.out_lines) == 2
 
 
@@ -221,7 +221,7 @@ def test_prototype_ok_no_module(
 
         cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 1
-        assert sum("tfsec" in line for line in cap.out_lines) == 1
+        assert sum("trivy" in line for line in cap.out_lines) == 1
         assert sum("tflint" in line for line in cap.out_lines) == 1
 
 
@@ -241,7 +241,7 @@ def test_prototype_reinit_upgrade(
 
         cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 4
-        assert sum("tfsec" in line for line in cap.out_lines) == 4
+        assert sum("trivy" in line for line in cap.out_lines) == 4
         assert sum("tflint" in line for line in cap.out_lines) == 4
 
 
@@ -255,7 +255,7 @@ def test_prototype_env_vars(
 
         cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 1
-        assert sum("tfsec" in line for line in cap.out_lines) == 1
+        assert sum("trivy" in line for line in cap.out_lines) == 1
         assert sum("tflint" in line for line in cap.out_lines) == 1
 
         (workdir / "blank").mkdir()
@@ -266,7 +266,7 @@ def test_prototype_env_vars(
 
         cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 1
-        assert sum("tfsec" in line for line in cap.out_lines) == 1
+        assert sum("trivy" in line for line in cap.out_lines) == 1
         assert sum("tflint" in line for line in cap.out_lines) == 1
 
         subprocess.run(
@@ -278,7 +278,7 @@ def test_prototype_env_vars(
 
         cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 1
-        assert sum("tfsec" in line for line in cap.out_lines) == 1
+        assert sum("trivy" in line for line in cap.out_lines) == 1
         assert sum("tflint" in line for line in cap.out_lines) == 1
 
 
@@ -422,7 +422,7 @@ resource "google_storage_bucket" "example" {
         assert "Missing required argument" in (cap.out + cap.err)
 
 
-def test_prototype_tfsec_failed_and_skip(
+def test_prototype_trivy_failed_and_skip(
     tmp_path: Path,
     cache_dir: Optional[Path],
     capfd: CaptureFixture[str],
@@ -532,7 +532,7 @@ def test_prototype_fallback(
 
         cap = Captured.from_capfd(capfd)
         assert sum("No problems detected" in line for line in cap.out_lines) == 1
-        assert sum("tfsec" in line for line in cap.out_lines) == 1
+        assert sum("trivy" in line for line in cap.out_lines) == 1
         assert sum("tflint" in line for line in cap.out_lines) == 1
 
 
