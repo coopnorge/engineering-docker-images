@@ -1,6 +1,6 @@
-FROM docker.io/library/python:3.11.9@sha256:c5254471e6073d8942091227f469302f85b30d4b23077226f135360491f5226a as python
+FROM docker.io/library/python:3.11.9@sha256:a46ef4ef9f9d4fee62ad368f9526552a0a99e90882d246cdefe50d356e3a74dd AS python
 
-FROM python as poetry
+FROM python AS poetry
 
 WORKDIR /srv/workspace
 
