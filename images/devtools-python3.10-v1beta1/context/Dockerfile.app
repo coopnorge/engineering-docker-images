@@ -1,4 +1,4 @@
-FROM docker.io/python:3.10-slim@sha256:a2c9b8dd3da225debeb156176c111752499d152b7505146c1373364766d762a4 as python
+FROM docker.io/python:3.10-slim@sha256:a2c9b8dd3da225debeb156176c111752499d152b7505146c1373364766d762a4 AS python
 
 FROM python AS runtime
 
@@ -16,7 +16,7 @@ RUN \
         /tmp/*.whl && \
     rm -rf /tmp && \
     pip show ${app_name}
-    
+
 
 ARG group_name=${app_name}
 ARG user_name=${app_name}
