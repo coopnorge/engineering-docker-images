@@ -20,8 +20,13 @@ scan_directory() {
 }
 
 if [ $# -eq 0 ]; then
-  echo "Usage: $0 <file|directory>"
-  exit 1
+    echo "Usage: $0 <file|directory>"
+    echo "  <file>      : Path to a single .tf or .lock.hcl file to scan"
+    echo "  <directory> : Path to a directory containing .tf or .lock.hcl files to scan"
+    echo "Example:"
+    echo "  $0 /path/to/terraform/files/"
+    echo "  $0 /path/to/main.tf"
+    exit 1
 fi
 
 target="$1"
