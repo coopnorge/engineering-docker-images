@@ -10,8 +10,8 @@
   lock file and then run `terraform providers lock` in each Terraform
   directory.
 
-- `.tfsec-ignore` file: If this file is present in a directory with Terraform
-    files then tfsec will not be used on the directory.
+- `.tfsec-ignore` or `.trivy-ignore` file: If this file is present in a directory
+  with Terraform files then trivy will not be used on the directory.
 
 - `TFDIRS` environment variable: This is a space-separated list of directories
   for which Terraform validation will be run.

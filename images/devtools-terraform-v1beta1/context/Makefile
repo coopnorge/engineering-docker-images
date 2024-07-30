@@ -72,7 +72,7 @@ $(call dump_vars,tf_plugin_cache_dir_target TF_PLUGIN_CACHE_DIR)
 	cd $(*) && $(tfswitch)
 	cd $(*) && $(terraform) init $(terraform_init_args)
 
-tfsec=tfsec
+trivy=trivy-tf-scan
 tflint=tflint --enable-plugin=google --enable-plugin=azurerm  --disable-rule=terraform_unused_declarations $(if $(filter all commands,$(VERBOSE)),--loglevel=trace)
 tfdocs_version=$(shell terraform-docs --version)
 tfdocs_check=terraform-docs . -c $(terraform_docs_config) --output-check
@@ -117,7 +117,7 @@ validate-tf-$(1): | $(1)/.terraform $(if $(TF_NO_PROVIDERS),,$(1)/.terraform/pro
 	cd $(1) && $$(tfswitch)
 	cd $(1) && $$(terraform) fmt -check -recursive -diff
 	cd $(1) && $$(terraform) validate
-	test -e "$(1)/.tfsec-ignore" || $$(tfsec) $(1)
+	test -e "$(1)/.tfsec-ignore" || test -e "$(1)/.trivy-ignore" || $$(trivy) $(1)
 	[ ! -f "$(1)/$(terraform_docs_config)" ] || (echo "Validating documentation with $$(tfdocs_version)" ; $$(tfdocs_check) )
 	$$(tflint) --chdir=$(1)
 
