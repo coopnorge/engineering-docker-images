@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/abice/go-enum v0.6.0
 	github.com/cortesi/modd v0.8.1
-	github.com/envoyproxy/protoc-gen-validate v1.0.4
+	github.com/envoyproxy/protoc-gen-validate v1.1.0
 	github.com/go-delve/delve v1.23.0
 	github.com/pseudomuto/protoc-gen-doc v1.5.1
 	github.com/sanposhiho/gomockhandler v1.5.1
@@ -42,7 +42,7 @@ require (
 	github.com/imdario/mergo v0.3.13 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/labstack/gommon v0.4.1 // indirect
-	github.com/lyft/protoc-gen-star/v2 v2.0.3 // indirect
+	github.com/lyft/protoc-gen-star/v2 v2.0.4-0.20230330145011-496ad1ac90a4 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.13 // indirect
