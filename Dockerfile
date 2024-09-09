@@ -1,7 +1,7 @@
 FROM docker.io/safewaters/docker-lock:0.8.10@sha256:e87cfa64db3ceb8e5d14ec41136b068e2335fdcdfbb890fa20dd091e82735d04 AS docker-lock
 FROM docker.io/hadolint/hadolint:v2.12.0@sha256:30a8fd2e785ab6176eed53f74769e04f125afb2f74a6c52aef7d463583b6d45e AS hadolint
 FROM docker.io/goodwithtech/dockle:v0.4.14@sha256:68f7473909b49013f97984e9917fb7edd0c440bf15e38f41449860f8a2680d51 AS dockle
-FROM docker.io/library/python:3.12.5@sha256:e3d5b6f95ce66923b5e48a06ee5755abb097de96a8617c3f2f7d431d48e63d35 AS python
+FROM docker.io/library/python:3.12.5@sha256:11aa4b620c15f855f66f02a7f3c1cd9cf843cc10f3edbcf158e5ebcd98d1f549 AS python
 
 FROM python AS devtools
 
