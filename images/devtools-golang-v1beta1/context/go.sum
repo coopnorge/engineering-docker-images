@@ -254,8 +254,8 @@ github.com/rogpeppe/go-internal v1.9.0 h1:73kH8U+JUqXU8lRuOHeVHaa/SZPifC7BkcraZV
 github.com/rogpeppe/go-internal v1.9.0/go.mod h1:WtVeX8xhTBvf0smdhujwtBcq4Qrzq/fJaraNFVN+nFs=
 github.com/russross/blackfriday/v2 v2.1.0 h1:JIOH55/0cWyOuilr9/qlrm0BSXldqnqwMsf35Ld67mk=
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
-github.com/sanposhiho/gomockhandler v1.5.1 h1:g58ZkipSIiKNdllsSwo/NBOeUMONIo125BFLEKXpqq8=
-github.com/sanposhiho/gomockhandler v1.5.1/go.mod h1:I4cmAHBbKTnQ3U7rHellS76CxxcEKpxuqlHGGFHaTEw=
+github.com/sanposhiho/gomockhandler v1.6.0 h1:CwnU48yDhD0xqfC3wQxFbdtdrLTz85JbcEsMztvmWWc=
+github.com/sanposhiho/gomockhandler v1.6.0/go.mod h1:I4cmAHBbKTnQ3U7rHellS76CxxcEKpxuqlHGGFHaTEw=
 github.com/shopspring/decimal v1.2.0 h1:abSATXmQEYyShuxI4/vyW3tV1MrKAJzCZ/0zLUXYbsQ=
 github.com/shopspring/decimal v1.2.0/go.mod h1:DKyhrW/HYNuLGql+MJL6WCR6knT2jwCFRcu2hWCYk4o=
 github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
