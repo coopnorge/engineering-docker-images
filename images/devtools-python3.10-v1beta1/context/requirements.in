@@ -5,7 +5,7 @@ poetry-dynamic-versioning[plugin]==1.4.1
 poetry-plugin-up==0.7.2
 flake8==7.1.1
 codespell==2.3.0
-pydantic==2.9.1
+pydantic==2.9.2
 mypy==1.11.2
 jeepney==0.8.0
 SecretStorage==3.3.3
