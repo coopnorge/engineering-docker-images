@@ -1,4 +1,4 @@
-FROM docker.io/library/python:3.10.15@sha256:08a49662edbfff8a296e2db2cb3235e117d1caeb09c32cba65011a2de0306440 AS python
+FROM docker.io/library/python:3.10.15@sha256:aaacc373f21abcbc67a22d203dab7fb797c016cc4c1daa7d2dec359dcbf4aea1 AS python
 FROM docker.io/hadolint/hadolint:v2.12.0@sha256:30a8fd2e785ab6176eed53f74769e04f125afb2f74a6c52aef7d463583b6d45e AS hadolint
 FROM --platform=linux/amd64 docker.io/goodwithtech/dockle:v0.4.14@sha256:68f7473909b49013f97984e9917fb7edd0c440bf15e38f41449860f8a2680d51 AS dockle
 
