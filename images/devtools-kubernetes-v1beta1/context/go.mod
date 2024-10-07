@@ -3,7 +3,7 @@ module github.com/coopnorge/engineering-docker-images/images/devtools-kubernetes
 go 1.22
 
 require (
-	github.com/homeport/dyff v1.9.1
+	github.com/homeport/dyff v1.9.2
 	github.com/magefile/mage v1.15.0
 )
 
