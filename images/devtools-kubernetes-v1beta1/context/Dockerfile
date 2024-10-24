@@ -4,6 +4,7 @@ FROM docker.io/argoproj/argocd:v2.6.15@sha256:58ebb4ed23c8db4cd4cc3f954f8d94c4b4
 FROM zegl/kube-score:v1.19.0@sha256:94137f32ce139dc9fbdbbd380249025e4d378c282ff151a100b981cdeeb923b6 AS kube-score
 FROM ghcr.io/yannh/kubeconform:v0.6.7@sha256:0925177fb05b44ce18574076141b5c3d83235e1904d3f952182ac99ddc45762c AS kubeconform
 FROM docker.io/mikefarah/yq:4.44.3@sha256:5b3d851bf28b04ef902fee86305f4dd7e063919c1cafedab2042adb16221c025 AS yq
+FROM ghcr.io/kyverno/kyverno-cli:sha256-d609f896083f7671b284f07cabeff2975194636b468ad4762f2a74c4870504a5.att AS kyverno
 
 FROM golang:1.23.2@sha256:a7f2fc9834049c1f5df787690026a53738e55fc097cd8a4a93faa3e06c67ee32 AS buildenv
 
@@ -50,7 +51,8 @@ COPY --from=argocd /usr/local/bin/kustomize /usr/local/bin/kustomize
 COPY --from=kubeconform /kubeconform /usr/local/bin/kubeconform
 COPY --from=buildenv /magefiles/mage-k8s /usr/local/bin/mage-k8s
 COPY --from=buildenv /go/bin/mage /usr/local/bin/mage
-COPY --from=buildenv /go/bin/dyff /usr/local/bin/dyff
+COPY --from=buildenv /go/bin/dyff /usr/local/bin/dyff 
+COPY --from=kyverno /kyverno /usr/local/bin/kyverno
 
 COPY ./magefiles /magefiles
 
