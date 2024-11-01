@@ -64,6 +64,11 @@ tf_plugin_cache_dir_target=$(if $(TF_PLUGIN_CACHE_DIR),$(TF_PLUGIN_CACHE_DIR)/,)
 
 $(call dump_vars,tf_plugin_cache_dir_target TF_PLUGIN_CACHE_DIR)
 
+TRIVY_CACHE_DIR?=/tmp/.cache.trivy
+trivy_cache_dir_target=$(if $(TRIVY_CACHE_DIR),$(TRIVY_CACHE_DIR)/,)
+
+$(call dump_vars,trivy_plugin_cache_dir_target TRIVY_CACHE_DIR)
+
 .terraform .terraform/providers: | $(tf_plugin_cache_dir_target)
 	$(tfswitch)
 	$(terraform) init $(terraform_init_args)
@@ -72,7 +77,17 @@ $(call dump_vars,tf_plugin_cache_dir_target TF_PLUGIN_CACHE_DIR)
 	cd $(*) && $(tfswitch)
 	cd $(*) && $(terraform) init $(terraform_init_args)
 
-trivy=trivy --cache-dir /tmp/.cache.trivy/ config --exit-code 1 --misconfig-scanners=terraform
+.trivy: | $(trivy_cache_dir_target)
+	cd /tmp
+	mkdir -vp $(trivy_cache_dir_target)bundle
+	# If the trivy cache for the bundle is empty, extract the one included in the image
+	if [ -z "$$(ls -A $(trivy_cache_dir_target)bundle > /dev/null 2>&1)" ]; then \
+		tar -xzf /var/trivy-checks-db.tar.gz -C $(trivy_cache_dir_target)bundle; \
+	fi
+	# Try to update. If the update fails, the error is ignored and, the checks-db included in the image is used.
+	- oras pull $(TRIVY_CHECKS_DB) && tar -xzf bundle.tar.gz -C $(trivy_cache_dir_target)bundle
+
+trivy=trivy --cache-dir $(trivy_cache_dir_target) config --exit-code 1 --misconfig-scanners=terraform
 tflint=tflint --enable-plugin=google --enable-plugin=azurerm  --disable-rule=terraform_unused_declarations $(if $(filter all commands,$(VERBOSE)),--loglevel=trace)
 tfdocs_version=$(shell terraform-docs --version)
 tfdocs_check=terraform-docs . -c $(terraform_docs_config) --output-check
@@ -113,7 +128,7 @@ tf-docs-$(1):
 
 validate: validate-tf-$(1)
 .PHONY: validate-tf-$(1)
-validate-tf-$(1): | $(1)/.terraform $(if $(TF_NO_PROVIDERS),,$(1)/.terraform/providers) $(tf_plugin_cache_dir_target)
+validate-tf-$(1): | $(1)/.terraform $(if $(TF_NO_PROVIDERS),,$(1)/.terraform/providers) $(tf_plugin_cache_dir_target) .trivy
 	cd $(1) && $$(tfswitch)
 	cd $(1) && $$(terraform) fmt -check -recursive -diff
 	cd $(1) && $$(terraform) validate
