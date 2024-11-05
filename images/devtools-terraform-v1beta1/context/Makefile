@@ -132,7 +132,8 @@ validate-tf-$(1): | $(1)/.terraform $(if $(TF_NO_PROVIDERS),,$(1)/.terraform/pro
 	cd $(1) && $$(tfswitch)
 	cd $(1) && $$(terraform) fmt -check -recursive -diff
 	cd $(1) && $$(terraform) validate
-	test -e "$(1)/.tfsec-ignore" || test -e "$(1)/.trivy-ignore" || $$(trivy) --ignorefile="$(1)/.trivyignore" "$(1)"
+	test -e "$(1)/.tfsec-ignore" || test -e "$(1)/.trivy-ignore" || \
+        (test -e "$(1)/.trivyignore" && $$(trivy) --ignorefile="$(1)/.trivyignore" "$(1)" || $$(trivy) "$(1)")
 	[ ! -f "$(1)/$(terraform_docs_config)" ] || (echo "Validating documentation with $$(tfdocs_version)" ; $$(tfdocs_check) )
 	$$(tflint) --chdir=$(1)
 
