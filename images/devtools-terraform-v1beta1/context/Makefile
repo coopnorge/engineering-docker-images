@@ -78,14 +78,22 @@ $(call dump_vars,trivy_plugin_cache_dir_target TRIVY_CACHE_DIR)
 	cd $(*) && $(terraform) init $(terraform_init_args)
 
 .trivy: | $(trivy_cache_dir_target)
-	cd /tmp
-	mkdir -vp $(trivy_cache_dir_target)bundle
-	# If the trivy cache for the bundle is empty, extract the one included in the image
-	if [ -z "$$(ls -A $(trivy_cache_dir_target)bundle > /dev/null 2>&1)" ]; then \
-		tar -xzf /var/trivy-checks-db.tar.gz -C $(trivy_cache_dir_target)bundle; \
+	mkdir -vp $(trivy_cache_dir_target)policy/content/
+	# If the trivy cache for the policies is empty, extract the one included in the image
+	POLICY_CONTENT=$$(ls -A $(trivy_cache_dir_target)policy/content/); \
+	if [ "$$POLICY_CONTENT" = "" ]; then \
+		tar -xzf /var/trivy-checks-db.tar.gz -C $(trivy_cache_dir_target)policy/content/; \
+		cp /var/trivy-checks-metadata.json $(trivy_cache_dir_target)policy/metadata.json; \
 	fi
-	# Try to update. If the update fails, the error is ignored and, the checks-db included in the image is used.
-	- oras pull $(TRIVY_CHECKS_DB) && tar -xzf bundle.tar.gz -C $(trivy_cache_dir_target)bundle
+	# Try to update. If the update fails, the checks db included in the image (extracted above) is used.
+	- DIGEST=$$(oras pull $(TRIVY_CHECKS_DB) | grep Digest | cut -d' ' -f2); \
+	DOWNLOADED_AT=$$(date +"%Y-%m-%dT%H:%M:%S.%6N%:z"); \
+	if [ -z "$$DIGEST" ]; then \
+		echo "Failed to download trivy-checks db"; \
+	else \
+		tar -xzf bundle.tar.gz -C $(trivy_cache_dir_target)policy/content/; \
+		echo "{\"Digest\":\"$$DIGEST\",\"DownloadedAt\":\"$$DOWNLOADED_AT\"}" > $(trivy_cache_dir_target)policy/metadata.json; \
+	fi
 
 trivy=trivy --cache-dir $(trivy_cache_dir_target) config --exit-code 1 --misconfig-scanners=terraform
 tflint=tflint --enable-plugin=google --enable-plugin=azurerm  --disable-rule=terraform_unused_declarations $(if $(filter all commands,$(VERBOSE)),--loglevel=trace)

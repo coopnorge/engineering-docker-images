@@ -178,13 +178,13 @@ def test_prototype_ok(
         subprocess.run(devtools_cmd(), check=True)
 
         cap = Captured.from_capfd(capfd)
-        assert sum("trivy" in line for line in cap.out_lines) == 6
+        assert sum("trivy" in line for line in cap.out_lines) == 7
         assert sum("tflint" in line for line in cap.out_lines) == 2
 
         subprocess.run(devtools_cmd(["maker", "validate"]), check=True)
 
         cap = Captured.from_capfd(capfd)
-        assert sum("trivy" in line for line in cap.out_lines) >= 2
+        assert sum("trivy" in line for line in cap.out_lines) == 7
         assert sum("tflint" in line for line in cap.out_lines) == 2
 
 
@@ -199,7 +199,7 @@ def test_prototype_nocache(
         subprocess.run(devtools_cmd(envargs={"TF_PLUGIN_CACHE_DIR": ""}), check=True)
 
         cap = Captured.from_capfd(capfd)
-        assert sum("trivy" in line for line in cap.out_lines) == 6
+        assert sum("trivy" in line for line in cap.out_lines) == 7
         assert sum("tflint" in line for line in cap.out_lines) == 2
 
 
@@ -217,7 +217,7 @@ def test_prototype_ok_no_module(
         subprocess.run(devtools_cmd(), check=True)
 
         cap = Captured.from_capfd(capfd)
-        assert sum("trivy" in line for line in cap.out_lines) == 5
+        assert sum("trivy" in line for line in cap.out_lines) == 6
         assert sum("tflint" in line for line in cap.out_lines) == 1
 
 
@@ -236,7 +236,7 @@ def test_prototype_reinit_upgrade(
         subprocess.run(devtools_cmd(["validate"]), check=True)
 
         cap = Captured.from_capfd(capfd)
-        assert sum("trivy" in line for line in cap.out_lines) == 12
+        assert sum("trivy" in line for line in cap.out_lines) == 14
         assert sum("tflint" in line for line in cap.out_lines) == 4
 
 
@@ -249,7 +249,7 @@ def test_prototype_env_vars(
         subprocess.run(devtools_cmd(["validate", "TFDIRS="]), check=True)
 
         cap = Captured.from_capfd(capfd)
-        assert sum("trivy" in line for line in cap.out_lines) == 5
+        assert sum("trivy" in line for line in cap.out_lines) == 6
         assert sum("tflint" in line for line in cap.out_lines) == 1
 
         (workdir / "blank").mkdir()
@@ -259,7 +259,7 @@ def test_prototype_env_vars(
         )
 
         cap = Captured.from_capfd(capfd)
-        assert sum("trivy" in line for line in cap.out_lines) >= 1
+        assert sum("trivy" in line for line in cap.out_lines) == 6
         assert sum("tflint" in line for line in cap.out_lines) == 1
 
         subprocess.run(
@@ -270,7 +270,7 @@ def test_prototype_env_vars(
         )
 
         cap = Captured.from_capfd(capfd)
-        assert sum("trivy" in line for line in cap.out_lines) >= 1
+        assert sum("trivy" in line for line in cap.out_lines) == 6
         assert sum("tflint" in line for line in cap.out_lines) == 1
 
 
@@ -518,7 +518,7 @@ def test_prototype_fallback(
         subprocess.run(devtools_cmd(["validate"]), check=True)
 
         cap = Captured.from_capfd(capfd)
-        assert sum("trivy" in line for line in cap.out_lines) == 5
+        assert sum("trivy" in line for line in cap.out_lines) == 6
         assert sum("tflint" in line for line in cap.out_lines) == 1
 
 

@@ -88,8 +88,11 @@ COPY Makefile /usr/local/share/devtools-terraform/Makefile
 RUN git config --system --add safe.directory /srv/workspace
 
 # Include the current version of trivy checks db in the image
-RUN cd /var && \
-    oras pull $TRIVY_CHECKS_DB && \
-    mv /var/bundle.tar.gz /var/trivy-checks-db.tar.gz
+SHELL ["/bin/bash", "-exo", "pipefail", "-c"]
+RUN DIGEST=$(oras pull $TRIVY_CHECKS_DB | grep Digest | cut -d' ' -f2) && \
+    mv bundle.tar.gz /var/trivy-checks-db.tar.gz && \
+    DOWNLOADED_AT=$(date +"%Y-%m-%dT%H:%M:%S.%6N%:z") && \
+    echo "{\"Digest\":\"$DIGEST\",\"DownloadedAt\":\"$DOWNLOADED_AT\"}" > /var/trivy-checks-metadata.json
+
 
 CMD ["validate"]
