@@ -4,7 +4,6 @@ FROM docker.io/argoproj/argocd:v2.6.15@sha256:58ebb4ed23c8db4cd4cc3f954f8d94c4b4
 FROM zegl/kube-score:v1.19.0@sha256:94137f32ce139dc9fbdbbd380249025e4d378c282ff151a100b981cdeeb923b6 AS kube-score
 FROM ghcr.io/yannh/kubeconform:v0.6.7@sha256:0925177fb05b44ce18574076141b5c3d83235e1904d3f952182ac99ddc45762c AS kubeconform
 FROM docker.io/mikefarah/yq:4.44.3@sha256:5b3d851bf28b04ef902fee86305f4dd7e063919c1cafedab2042adb16221c025 AS yq
-FROM ghcr.io/kyverno/kyverno-cli:sha256-f2296e837a89bc318e6c28e6f31f89c6327b0b60c71f4a1994c402f5967bfb40.att AS kyverno
 
 FROM golang:1.23.2@sha256:ad5c126b5cf501a8caef751a243bb717ec204ab1aa56dc41dc11be089fafcb4f AS buildenv
 
@@ -25,7 +24,12 @@ COPY ./magefiles /magefiles
 WORKDIR /magefiles
 RUN \
     mage -compile  ./mage-k8s
-
+    
+WORKDIR /build
+RUN \
+    curl -LO https://github.com/kyverno/kyverno/releases/download/v1.12.0/kyverno-cli_v1.12.0_linux_x86_64.tar.gz && \
+    tar -xvf kyverno-cli_v1.12.0_linux_x86_64.tar.gz && \
+    cp kyverno /usr/local/bin/
 
 FROM golang:1.23.2@sha256:ad5c126b5cf501a8caef751a243bb717ec204ab1aa56dc41dc11be089fafcb4f AS base
 RUN \
@@ -41,8 +45,7 @@ RUN \
         && \
     rm -vr /var/lib/apt/lists/* && \
     true
-
-
+    
 
 COPY --from=kube-score /kube-score /usr/local/bin/kube-score
 COPY --from=argocd /usr/local/bin/argocd /usr/local/bin/argocd
@@ -52,7 +55,6 @@ COPY --from=kubeconform /kubeconform /usr/local/bin/kubeconform
 COPY --from=buildenv /magefiles/mage-k8s /usr/local/bin/mage-k8s
 COPY --from=buildenv /go/bin/mage /usr/local/bin/mage
 COPY --from=buildenv /go/bin/dyff /usr/local/bin/dyff 
-COPY --from=kyverno /kyverno /usr/local/bin/kyverno
 
 COPY ./magefiles /magefiles
 
