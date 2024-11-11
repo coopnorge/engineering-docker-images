@@ -64,6 +64,11 @@ tf_plugin_cache_dir_target=$(if $(TF_PLUGIN_CACHE_DIR),$(TF_PLUGIN_CACHE_DIR)/,)
 
 $(call dump_vars,tf_plugin_cache_dir_target TF_PLUGIN_CACHE_DIR)
 
+TRIVY_CACHE_DIR?=/tmp/.cache.trivy
+trivy_cache_dir_target=$(if $(TRIVY_CACHE_DIR),$(TRIVY_CACHE_DIR)/,)
+
+$(call dump_vars,trivy_plugin_cache_dir_target TRIVY_CACHE_DIR)
+
 .terraform .terraform/providers: | $(tf_plugin_cache_dir_target)
 	$(tfswitch)
 	$(terraform) init $(terraform_init_args)
@@ -72,7 +77,25 @@ $(call dump_vars,tf_plugin_cache_dir_target TF_PLUGIN_CACHE_DIR)
 	cd $(*) && $(tfswitch)
 	cd $(*) && $(terraform) init $(terraform_init_args)
 
-trivy=TRIVY_DB_REPOSITORY=public.ecr.aws/aquasecurity/trivy-db trivy --cache-dir /tmp/.cache.trivy/ config --exit-code 1 --misconfig-scanners=terraform
+.trivy: | $(trivy_cache_dir_target)
+	mkdir -vp $(trivy_cache_dir_target)policy/content/
+	# If the trivy cache for the policies is empty, extract the one included in the image
+	POLICY_CONTENT=$$(ls -A $(trivy_cache_dir_target)policy/content/); \
+	if [ "$$POLICY_CONTENT" = "" ]; then \
+		tar -xzf /var/trivy-checks-db.tar.gz -C $(trivy_cache_dir_target)policy/content/; \
+		cp /var/trivy-checks-metadata.json $(trivy_cache_dir_target)policy/metadata.json; \
+	fi
+	# Try to update. If the update fails, the checks db included in the image (extracted above) is used.
+	- DIGEST=$$(oras pull $(TRIVY_CHECKS_DB) | grep Digest | cut -d' ' -f2); \
+	DOWNLOADED_AT=$$(date +"%Y-%m-%dT%H:%M:%S.%6N%:z"); \
+	if [ -z "$$DIGEST" ]; then \
+		echo "Failed to download trivy-checks db"; \
+	else \
+		tar -xzf bundle.tar.gz -C $(trivy_cache_dir_target)policy/content/; \
+		echo "{\"Digest\":\"$$DIGEST\",\"DownloadedAt\":\"$$DOWNLOADED_AT\"}" > $(trivy_cache_dir_target)policy/metadata.json; \
+	fi
+
+trivy=trivy --cache-dir $(trivy_cache_dir_target) config --exit-code 1 --misconfig-scanners=terraform
 tflint=tflint --enable-plugin=google --enable-plugin=azurerm  --disable-rule=terraform_unused_declarations $(if $(filter all commands,$(VERBOSE)),--loglevel=trace)
 tfdocs_version=$(shell terraform-docs --version)
 tfdocs_check=terraform-docs . -c $(terraform_docs_config) --output-check
@@ -113,11 +136,12 @@ tf-docs-$(1):
 
 validate: validate-tf-$(1)
 .PHONY: validate-tf-$(1)
-validate-tf-$(1): | $(1)/.terraform $(if $(TF_NO_PROVIDERS),,$(1)/.terraform/providers) $(tf_plugin_cache_dir_target)
+validate-tf-$(1): | $(1)/.terraform $(if $(TF_NO_PROVIDERS),,$(1)/.terraform/providers) $(tf_plugin_cache_dir_target) .trivy
 	cd $(1) && $$(tfswitch)
 	cd $(1) && $$(terraform) fmt -check -recursive -diff
 	cd $(1) && $$(terraform) validate
-	test -e "$(1)/.tfsec-ignore" || test -e "$(1)/.trivy-ignore" || $$(trivy) $(1)
+	test -e "$(1)/.tfsec-ignore" || test -e "$(1)/.trivy-ignore" || \
+        (test -e "$(1)/.trivyignore" && $$(trivy) --ignorefile="$(1)/.trivyignore" "$(1)" || $$(trivy) "$(1)")
 	[ ! -f "$(1)/$(terraform_docs_config)" ] || (echo "Validating documentation with $$(tfdocs_version)" ; $$(tfdocs_check) )
 	$$(tflint) --chdir=$(1)
 
