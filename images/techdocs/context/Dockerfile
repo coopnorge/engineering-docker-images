@@ -30,11 +30,14 @@ RUN ln -s /usr/local/lib/node_modules/corepack/dist/corepack.js /usr/local/bin/c
     && ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
+ENV JDK_VERSION=17
+ENV JDK_PACKAGE_VERSION=17.0.13+11-2~deb12u1
+
 RUN apt-get update && apt-get install --no-install-recommends -y \
-    openjdk-17-jdk-headless=17.0.12+7-2~deb12u1 \
-    openjdk-17-jdk=17.0.12+7-2~deb12u1 \
-    openjdk-17-jre-headless=17.0.12+7-2~deb12u1 \
-    openjdk-17-jre=17.0.12+7-2~deb12u1 \
+    openjdk-${JDK_VERSION}-jdk-headless=${JDK_PACKAGE_VERSION} \
+    openjdk-${JDK_VERSION}-jdk=${JDK_PACKAGE_VERSION} \
+    openjdk-${JDK_VERSION}-jre-headless=${JDK_PACKAGE_VERSION} \
+    openjdk-${JDK_VERSION}-jre=${JDK_PACKAGE_VERSION} \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
