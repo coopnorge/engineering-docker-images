@@ -47,6 +47,7 @@ COPY requirements-pip-tools.txt requirements-pip-tools.txt
 RUN pip install \
     --no-cache-dir \
     --require-hashes \
+    --no-deps \
     --verbose \
     --use-pep517 \
     --requirement requirements-pip-tools.txt && \
@@ -73,6 +74,7 @@ COPY requirements-techdocs.txt requirements-techdocs.txt
 RUN pip install \
     --no-cache-dir \
     --require-hashes \
+    --no-deps \
     --verbose \
     --use-pep517 \
     --requirement requirements-techdocs.txt && \
