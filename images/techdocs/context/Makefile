@@ -32,6 +32,17 @@ requirements-%.txt: requirements-%.in
 requirements-pip-tools.txt: ## Generate requirements-pip-tools.txt
 requirements-techdocs.txt: ## Generate requirements-techdocs.txt
 
+update-python-packages-pip-tools: requirements-pip-tools.in
+	$(docker_compose_run) pip-tools pip-compile \
+		--upgrade \
+		--verbose \
+		--annotate \
+		--generate-hashes \
+		--rebuild \
+		--resolver backtracking \
+		--output-file requirements-pip-tools.txt \
+		$(<)
+
 .PHONY: update-python-packages-techdocs
 update-python-packages-techdocs: requirements-techdocs.in
 	$(docker_compose_run) pip-tools pip-compile \
