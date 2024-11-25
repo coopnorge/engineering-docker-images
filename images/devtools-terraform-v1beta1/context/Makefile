@@ -42,7 +42,14 @@ TFDIRS_EXCLUDE?=%/examples %/example
 $(info TFDIRS_EXCLUDE=$(TFDIRS_EXCLUDE))
 
 # Find directories containing Terraform files if TFDIRS is not already set
-TFDIRS?=$(shell find . -name .terraform -prune -o \( -name '*.tf' -print \) \
+# Directories to exclude in find. We are not expecting tf files in these and saves a lot of time when running locally.
+TF_FIND_EXCLUDE_DIRS := \( -name node_modules -o -name .venv -o -name .git -o -name .terraform \)
+
+# Find command to locate .tf files while excluding certain directories
+FIND_TF_FILES := find . $(TF_FIND_EXCLUDE_DIRS) -prune -o \( -name '*.tf' -print \)
+
+# Extract unique directories containing .tf files
+TFDIRS ?= $(shell $(FIND_TF_FILES) \
 	| sed 's|/[^/]\{1,\}$$||g' \
 	| sort | uniq)
 
