@@ -21,6 +21,11 @@ RUN \
     cd $(go mod download -json github.com/homeport/dyff | yq .Dir)/cmd/dyff  && \
     go build -o /go/bin/dyff
 
+RUN \
+git clone --depth 1 https://github.com/coopnorge/mage-kubernetes-lib.git /tmp/mage-kubernetes-lib && \
+mkdir -p /kyverno-policies && \
+cp -r /tmp/mage-kubernetes-lib/kyverno-policies/* /kyverno-policies/
+
 COPY ./magefiles /magefiles
 WORKDIR /magefiles
 RUN \
@@ -51,9 +56,11 @@ COPY --from=kubeconform /kubeconform /usr/local/bin/kubeconform
 COPY --from=buildenv /magefiles/mage-k8s /usr/local/bin/mage-k8s
 COPY --from=buildenv /go/bin/mage /usr/local/bin/mage
 COPY --from=buildenv /go/bin/dyff /usr/local/bin/dyff 
+COPY --from=buildenv /kyverno-policies /kyverno-policies
 COPY --from=kyverno /ko-app/kubectl-kyverno /usr/local/bin/kyverno
 
 COPY ./magefiles /magefiles
+
 
 VOLUME /srv/workspace
 WORKDIR /srv/workspace
