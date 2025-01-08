@@ -51,7 +51,6 @@ RUN \
     modd --version && \
     true
 
-
 COPY --from=golangci-lint /usr/bin/golangci-lint /usr/bin/golangci-lint
 COPY --from=grpcurl /bin/grpcurl /bin/grpcurl
 COPY --from=docker-lock /prod/docker-lock /usr/local/bin/docker-lock
