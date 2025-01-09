@@ -6,7 +6,7 @@ description = ""
 authors = []
 requires-python = "^3.10"
 
-[poetry.group.dev.dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = ">=8.2.2"
 isort = ">=5.13.2"
 black = ">=24.4.2"
