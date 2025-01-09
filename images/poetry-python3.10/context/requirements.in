@@ -9,3 +9,4 @@ pydantic==2.10.4
 mypy==1.14.1
 jeepney==0.8.0
 SecretStorage==3.3.3
+poetry-plugin-export==1.8.0
