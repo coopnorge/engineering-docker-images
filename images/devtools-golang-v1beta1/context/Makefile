@@ -162,7 +162,7 @@ golang-validate-fix:
 .PHONY: golang-validate-static
 validate-static: golang-validate-static
 golang-validate-static:
-	$(golangci_lint) run  ./... 
+	$(golangci_lint) run  ./...
 
 .PHONY: golang-test
 test: golang-test
