@@ -568,9 +568,9 @@ poetry-plugin-export==1.6.0 \
     --hash=sha256:091939434984267a91abf2f916a26b00cff4eee8da63ec2a24ba4b17cf969a59 \
     --hash=sha256:2dce6204c9318f1f6509a11a03921fb3f461b201840b59f1c237b6ab454dabcf
     # via poetry
-poetry-plugin-up==0.8.0 \
-    --hash=sha256:990b8743ffcb747b0b5aec13238178977f34db0c3d378c4d57fa7ae9c3464aa2 \
-    --hash=sha256:b5e11bd5f0d42e263feae11aa1b18bc1609098f251e21f22285d5ddc157ec7f6
+poetry-plugin-up==0.9.0 \
+    --hash=sha256:4d9f043de2b9339a0e1da9ca117c7d4021f8e2f4bbd97735fc2008644c4ba6d1 \
+    --hash=sha256:b9f2ef3be331fd69e27eeb9a66da72260f9c0d0e5d146699a1124bb880cc72dc
     # via -r requirements.in
 ptyprocess==0.7.0 \
     --hash=sha256:4b41f3967fce3af57cc7e94b888626c18bf37a083e3651ca8feeb66d492fef35 \
