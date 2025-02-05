@@ -230,7 +230,7 @@ golang-run: ## Run main golang command
 .PHONY: golang-debug
 golang-debug: golang-build-outputs
 golang-debug: ## Debug main golang command
-	/usr/local/bin/dlv --listen=:$(DELVE_PORT) --headless=true --log=true --accept-multiclient --api-version=2 exec $(outputs_dir)/$(APP_EXECUTABLE) 
+	/usr/local/bin/dlv --listen=:$(DELVE_PORT) --headless=true --log=true --accept-multiclient --api-version=2 exec $(outputs_dir)/$(APP_EXECUTABLE)
 
 .PHONY: golang-clean
 clean: golang-clean
@@ -307,14 +307,10 @@ oci-dockerfile-validate: $(app_final_dockerfile)
 
 oci_tag_prefix=
 
-oci_tag_suffixes_const = \
-	latest \
-
 oci_tag_suffixes_git = \
 	gitc-$(giti_commit_hash) \
 
 oci_tag_suffixes = \
-	$(oci_tag_suffixes_const) \
 	$(oci_tag_suffixes_git) \
 
 oci_refs_local=\
