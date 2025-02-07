@@ -149,15 +149,14 @@ oci-dockerfile-validate: $(APP_DOCKERFILE)
 
 oci_tag_prefix=
 
-oci_tag_suffixes_const = \
-	latest \
+OCI_TAG_SUFFIX_USER=
 
 oci_tag_suffixes_git = \
 	gitc-$(giti_commit_hash) \
 
 oci_tag_suffixes = \
-	$(oci_tag_suffixes_const) \
 	$(oci_tag_suffixes_git) \
+	$(OCI_TAG_SUFFIX_USER) \
 
 oci_refs_local=\
 	$(foreach oci_tag_suffix,\
