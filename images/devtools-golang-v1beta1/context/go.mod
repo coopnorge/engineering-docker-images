@@ -1,6 +1,6 @@
 module github.com/coopnorge/engineering-docker-images/images/devtools-golang-v1beta1/context/gotools
 
-go 1.22.0
+go 1.23.0
 
 require (
 	github.com/abice/go-enum v0.6.0
