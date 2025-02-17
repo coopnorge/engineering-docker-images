@@ -335,6 +335,8 @@ oci_refs = \
 oci_build_args ?= \
 	outputs_dir=$(outputs_dir) \
 	app_name=$(APP_NAME) \
+	DD_GIT_REPOSITORY_URL=$(giti_url) \
+	DD_GIT_COMMIT_SHA=$(giti_commit_hash) \
 	$(if $(APP_EXECUTABLE),app_executable=$(APP_EXECUTABLE)) \
 	$(OCI_BUILD_ARGS) \
 
