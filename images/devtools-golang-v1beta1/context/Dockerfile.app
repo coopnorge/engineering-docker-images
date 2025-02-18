@@ -27,7 +27,6 @@ RUN \
 ARG app_executable=${app_name}
 ARG outputs_dir=var/outputs
 
-
 ARG group_name=${app_name}
 ARG user_name=${app_name}
 ARG workdir=/var/opt/${app_name}
@@ -52,6 +51,14 @@ WORKDIR ${workdir}
 
 ENV __dba_app_executable=${app_executable}
 ENV __dba_app_name=${app_name}
+
+# Setup Datadog and APM commit tracking
+# https://app.datadoghq.eu/source-code/setup/apm
+ARG DD_GIT_REPOSITORY_URL
+ARG DD_GIT_COMMIT_SHA
+
+ENV DD_GIT_REPOSITORY_URL=${DD_GIT_REPOSITORY_URL}
+ENV DD_GIT_COMMIT_SHA=${DD_GIT_COMMIT_SHA}
 
 HEALTHCHECK CMD ["sh", "-c", "exec /usr/local/bin/${__dba_app_executable} healthcheck"]
 ENTRYPOINT ["sh", "-c", "exec /usr/local/bin/${__dba_app_executable} \"${@}\"", "/usr/local/bin/${__dba_app_executable}"]
