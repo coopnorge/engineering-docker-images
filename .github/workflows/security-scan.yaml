@@ -11,3 +11,8 @@ jobs:
     with:
       code-scanning-timeout-minutes: 15
     secrets: inherit
+    permissions:
+      contents: read
+      actions: read
+      packages: read
+      security-events: write
