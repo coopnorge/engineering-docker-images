@@ -6,7 +6,7 @@ env:
   POETRY_CACHE_DIR: ${{ github.workspace }}/.cache/poetry
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       image-names: ${{ steps.image-names.outputs.image_names }}
       images-ci: ${{ steps.paths-filter.outputs.images }}
@@ -36,7 +36,7 @@ jobs:
       contents: read
       pull-requests: read
   image-ci:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: ["setup"]
     if: ${{ needs.setup.outputs.images-ci == 'true' }}
     concurrency:
@@ -142,7 +142,7 @@ jobs:
       - image-ci
       - techdocs
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - run: exit 1
         name: "Catch errors"
