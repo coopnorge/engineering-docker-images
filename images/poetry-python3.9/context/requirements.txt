@@ -275,9 +275,9 @@ dulwich==0.21.3 \
     --hash=sha256:e7b8cb38a93de87b980f882f0dcd19f2e3ad43216f34e06916315cb3a03e6964 \
     --hash=sha256:f4f8ff776ca38ce272d9c164a7f77db8a54a8cad6d9468124317adf8732be07d
     # via poetry
-dunamai==1.21.1 \
-    --hash=sha256:d7fea28ad2faf20a6ca5ec121e5c68e55eec6b8ada23d9c387e4e7a574cc559f \
-    --hash=sha256:fe303541463648b8197c495decf62cd8f15234fb6d891a5f295015e452f656c8
+dunamai==1.23.1 \
+    --hash=sha256:0b5712fc63bfb235263d912bfc5eb84590ba2201bb737268d25a5dbad7085489 \
+    --hash=sha256:2611b0b9105a5797149ef82f4968a01dd912bdac857d49fc06856a4cfa58cf78
     # via poetry-dynamic-versioning
 fastjsonschema==2.18.1 \
     --hash=sha256:06dc8680d937628e993fa0cd278f196d20449a1adc087640710846b324d422ea \
@@ -496,9 +496,9 @@ poetry-core==1.9.1 \
     # via
     #   poetry
     #   poetry-plugin-export
-poetry-dynamic-versioning[plugin]==1.7.1 \
-    --hash=sha256:70a4a54bee89aef276e3f2f8841f10a6f140b19c5aeb371a1a6095f84fcbe7b1 \
-    --hash=sha256:7304b8459af7b7114cd83429827c4d3d8b7d29df4129dde8dff61c76f93faaa3
+poetry-dynamic-versioning[plugin]==1.8.0 \
+    --hash=sha256:81b8814d3cf9b86a6d1287a09e6351b062057ecda0d0ea698e94c1486043aa5a \
+    --hash=sha256:f1cd8c8b480544b1d6531e84aa0afcb68683c6a9a2a43a1c97f5f7749f9c883c
     # via -r requirements.in
 poetry-plugin-export==1.8.0 \
     --hash=sha256:1fa6168a85d59395d835ca564bc19862a7c76061e60c3e7dfaec70d50937fc61 \
