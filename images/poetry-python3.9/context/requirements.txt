@@ -496,9 +496,9 @@ poetry-core==1.9.1 \
     # via
     #   poetry
     #   poetry-plugin-export
-poetry-dynamic-versioning[plugin]==1.8.0 \
-    --hash=sha256:81b8814d3cf9b86a6d1287a09e6351b062057ecda0d0ea698e94c1486043aa5a \
-    --hash=sha256:f1cd8c8b480544b1d6531e84aa0afcb68683c6a9a2a43a1c97f5f7749f9c883c
+poetry-dynamic-versioning[plugin]==1.8.2 \
+    --hash=sha256:3758a0b12228230ce384fbb303948c5e405e1d33c3bbe1ba71144c15f5e7a8de \
+    --hash=sha256:d14de13d426ac28e98f4519aac7f4aa857e7b97ad9d7a4c72293377033065f44
     # via -r requirements.in
 poetry-plugin-export==1.8.0 \
     --hash=sha256:1fa6168a85d59395d835ca564bc19862a7c76061e60c3e7dfaec70d50937fc61 \
