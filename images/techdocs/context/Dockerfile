@@ -1,5 +1,5 @@
 FROM docker.io/library/node:23.10.0-bookworm@sha256:990d0ab35ae15d8a322ee1eeaf4f7cf14e367d3d0ee2f472704b7b3df4c9e7c1 AS node
-FROM jdkato/vale:v3.4.2@sha256:da6a0901858421b282aa8d935e72831c84cebf716ae4e276658e9e5d382fad20 AS vale
+FROM jdkato/vale:v3.10.0@sha256:0d4f9352d87b87afdefa5003ddad6d1e5a0b745db7a75d2958701ed0603fcf01 AS vale
 FROM plantuml/plantuml:1.2025.2@sha256:62c11f4cec2c430a435df8b2892f9b1a7654393c8ef2086faaca32cc16151370 AS plantuml
 FROM mikefarah/yq:4.45.1@sha256:2c100efaca06e95ffe452cfe9bfc0048b493f0f3a072d5fe06f828c638d9462b AS yq
 FROM docker.io/library/python:3.12.7-bookworm@sha256:db1afbfdc089b792bed227d70e1b1607c16bacb391f1257b7af1f0e6b2384480 AS base
