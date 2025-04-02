@@ -2,6 +2,8 @@ module github.com/coopnorge/engineering-docker-images/images/devtools-golang-v1b
 
 go 1.23.0
 
+toolchain go1.24.1
+
 require (
 	github.com/abice/go-enum v0.6.1
 	github.com/cortesi/modd v0.8.1
@@ -11,7 +13,7 @@ require (
 	github.com/sanposhiho/gomockhandler v1.6.1
 	go.uber.org/mock v0.5.0
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.5.1
-	google.golang.org/protobuf v1.36.5
+	google.golang.org/protobuf v1.36.6
 )
 
 require (
