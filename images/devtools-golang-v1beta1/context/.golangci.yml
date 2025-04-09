@@ -17,6 +17,7 @@ linters:
   - typecheck
   - unused
   - whitespace
+  - stylecheck
 issues:
   exclude-use-default: false
   exclude-rules:
@@ -38,3 +39,6 @@ linters-settings:
   errcheck:
     check-type-assertions: true
     check-blank: true
+  stylecheck:
+    checks:
+      - "ST1005"
