@@ -205,9 +205,11 @@ func UnusedFunc() int {
                 (
                     lambda workdir: (workdir / ".golangci.yml").write_text(
                         """\
+version: "2"
 linters:
-  disable-all: true
-  enable: [ misspell ]
+  default: none
+  enable:
+    - misspell
 """
                     )
                 ),

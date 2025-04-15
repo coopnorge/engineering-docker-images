@@ -1,40 +1,45 @@
-# https://golangci-lint.run/usage/configuration/
-run:
-  timeout: 5m
+version: "2"
 linters:
-  disable-all: true
+  default: none
   enable:
-  - contextcheck
-  - errcheck
-  - gofmt
-  - goimports
-  - gosimple
-  - govet
-  - ineffassign
-  - misspell
-  - revive
-  - staticcheck
-  - typecheck
-  - unused
-  - whitespace
-issues:
-  exclude-use-default: false
-  exclude-rules:
-  - path: _test[.]go
-    linters:
-      - errcheck
-    text: "Error return value of.* is not checked"
-  - path: _test[.]go
-    linters:
-      - gosec
-    text: "Potential file inclusion via variable"
-  - linters:
+    - contextcheck
+    - errcheck
+    - govet
+    - ineffassign
+    - misspell
     - revive
-    # Igorning package comments warning as most our packages don't have package
-    # comments.
-    text: "package-comments: .*"
-linters-settings:
-  # https://golangci-lint.run/usage/linters/#linters-configuration
-  errcheck:
-    check-type-assertions: true
-    check-blank: true
+    - staticcheck
+    - unused
+    - whitespace
+  settings:
+    errcheck:
+      check-type-assertions: true
+      check-blank: true
+  exclusions:
+    generated: lax
+    rules:
+      - linters:
+          - errcheck
+        path: _test[.]go
+        text: Error return value of.* is not checked
+      - linters:
+          - gosec
+        path: _test[.]go
+        text: Potential file inclusion via variable
+      - linters:
+          - revive
+        text: 'package-comments: .*'
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
