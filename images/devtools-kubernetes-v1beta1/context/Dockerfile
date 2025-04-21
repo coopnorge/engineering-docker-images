@@ -6,7 +6,7 @@ FROM ghcr.io/yannh/kubeconform:v0.6.7@sha256:0925177fb05b44ce18574076141b5c3d832
 FROM docker.io/mikefarah/yq:4.45.1@sha256:2c100efaca06e95ffe452cfe9bfc0048b493f0f3a072d5fe06f828c638d9462b AS yq
 FROM ghcr.io/kyverno/kyverno-cli:v1.13.4@sha256:cbff7f69822804b4331539372941b1a458bb79da4dce899ea3149095435feccc AS kyverno
 
-FROM golang:1.24.2@sha256:1ecc479bc712a6bdb56df3e346e33edcc141f469f82840bab9f4bc2bc41bf91d AS buildenv
+FROM golang:1.24.2@sha256:d9db32125db0c3a680cfb7a1afcaefb89c898a075ec148fdc2f0f646cc2ed509 AS buildenv
 
 COPY --from=yq /usr/bin/yq /usr/local/bin/yq
 
@@ -32,7 +32,7 @@ RUN \
     mage -compile  ./mage-k8s
     
 
-FROM golang:1.24.2@sha256:1ecc479bc712a6bdb56df3e346e33edcc141f469f82840bab9f4bc2bc41bf91d AS base
+FROM golang:1.24.2@sha256:d9db32125db0c3a680cfb7a1afcaefb89c898a075ec148fdc2f0f646cc2ed509 AS base
 RUN \
     apt-get update && \
     apt-get install -y \
