@@ -21,6 +21,7 @@ configuration must be compatible.
    ```
 
    Make sure to not set a passphrase, and to `Configure SSO` to Authorize the
+   key for use with coopnorge after you have added it to GitHub.
 
 2. Configure git to access the repositories over SSH instead of HTTPS
 
@@ -30,7 +31,7 @@ configuration must be compatible.
 
    ```console title="Coop specific"
    git config --global url."git@github.com:coopnorge/".insteadOf "https://github.com/coopnorge/"
-   ```  key for use with coopnorge after you have added it to GitHub.
+   ```
 
 ### Configuration
 
