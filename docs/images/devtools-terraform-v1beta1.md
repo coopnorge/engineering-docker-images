@@ -33,7 +33,7 @@
 
 To update tfswitch to the latest version run:
 
-```concole
+```console
 images/devtools-terraform-v1beta1/context/update_tfswitch.py
 ```
 
@@ -46,27 +46,31 @@ latest version number.
 Add the following line to your `devtools/Dockerfile`:
 
 ```Dockerfile title="devtools/Dockerfile"
-FROM ghcr.io/coopnorge/engineering-docker-images/e0/devtools-terraform-v1beta1:latest@sha256:e18031952ade602b87f5c1a4e6d5b426497b66bac1ff28de28144e00752da94d AS terraform-devtools
+FROM ghcr.io/coopnorge/engineering-docker-images/e0/devtools-terraform-v1beta1:latest@sha256:e18031952ade602b87f5c1a4e6d5b426497b66bac1ff28de28144e00752da94d
 ```
 
-Then, add the following section to your `docker-compose.yaml`:
+Then, add the following content to `devtools/terraform.yaml`:
 
-```yaml title="docker-compose.yaml"
-version: "3.7"
-
+```yaml title="devtools/terraform.yaml"
 services:
   terraform-devtools:
     build:
-      context: devtools
-      target: terraform-devtools
+      dockerfile: terraform.Dockerfile
     working_dir: /srv/workspace
     command: validate terraform_init_args="-backend=false"
     volumes:
-      - .:/srv/workspace:z
+      - ../:/srv/workspace:z
       - xdg-cache-home:/root/.cache
       - $HOME/.terraform.d:/root/.terraform.d/
 volumes:
   xdg-cache-home: {}
+```
+
+Then, add the following content to `docker-compose.yaml`:
+
+```yaml title="docker-compose.yaml"
+include:
+  - devtools/terraform.yaml
 ```
 
 To make sure that the image hash specified in `Dockerfile` above is updated

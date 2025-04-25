@@ -9,22 +9,19 @@ The image is designed to run in a repository containing TechDocs.
 
 ### Docker compose configuration
 
-Add a `docker-compose.yaml` file to the repository.
+Add a `devtools/techdocs.yaml` file to the repository.
 
-```yaml title="docker-compose.yaml"
----
+```yaml title="devtools/techdocs.yaml"
 services:
   techdocs:
     build:
-      context: docker-compose
-      dockerfile: Dockerfile
-      target: techdocs
+      dockerfile: techdocs.Dockerfile
     working_dir: /srv/workspace
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS:-}
       GCLOUD_PROJECT: ${GCLOUD_PROJECT:-}
     volumes:
-      - .:/srv/workspace:z
+      - ../:/srv/workspace:z
       - ${XDG_CACHE_HOME:-xdg-cache-home}:/root/.cache
       - $HOME/.config/gcloud:/root/.config/gcloud
       - ${GOOGLE_APPLICATION_CREDENTIALS:-nothing}:${GOOGLE_APPLICATION_CREDENTIALS:-/tmp/empty-GOOGLE_APPLICATION_CREDENTIALS}
@@ -37,8 +34,13 @@ volumes:
   nothing: { }
 ```
 
-```Dockerfile title="docker-compose/Dockerfile"
-FROM ghcr.io/coopnorge/engineering-docker-images/e0/techdocs:latest@sha256:68ce8f1b1745d587dbd542b1e8d4974eacf513ea2adffa1d566e76cca071417c AS techdocs
+```yaml title="docker-compose.yaml"
+include:
+  - devtools/techdocs.yaml
+```
+
+```Dockerfile title="devtools/Dockerfile"
+FROM ghcr.io/coopnorge/engineering-docker-images/e0/techdocs:latest@sha256:68ce8f1b1745d587dbd542b1e8d4974eacf513ea2adffa1d566e76cca071417c
 ```
 
 ### Running a preview site

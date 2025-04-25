@@ -3,7 +3,7 @@
 ## Usage
 
 ```console
-docker-compose run --rm golang-devtools help
+docker compose run --rm golang-devtools help
 ```
 
 ### Prerequisites
@@ -49,23 +49,21 @@ are listed in before any variables are defined:
 If `devtools-targets.mk` is present then it will be loaded after all targets are
 defined.
 
-```Dockerfile title="docker-compose/Dockerfile"
-FROM ghcr.io/coopnorge/engineering-docker-images/e0/devtools-golang-v1beta1:latest@sha256:7e54fe41351af1b7b4cdf75c2cb8251f80b89845b49179ae2003b200b3054369 AS golang-devtools
+```Dockerfile title="devtools/golang.Dockerfile"
+FROM ghcr.io/coopnorge/engineering-docker-images/e0/devtools-golang-v1beta1:latest@sha256:7e54fe41351af1b7b4cdf75c2cb8251f80b89845b49179ae2003b200b3054369
 ```
 
-```yaml title="docker-compose.yaml"
+```yaml title="devtools/golang.yaml"
 services:
   golang-devtools:
     build:
-      context: docker-compose
-      target: golang-devtools
-      dockerfile: Dockerfile
+      dockerfile: golang.Dockerfile
     privileged: true
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
     volumes:
-      - .:/srv/workspace:z
+      - ../:/srv/workspace:z
       - ${DOCKER_CONFIG:-~/.docker}:/root/.docker
       - ${GIT_CONFIG:-~/.gitconfig}:${GIT_CONFIG_GUEST:-/root/.gitconfig}
       - ${SSH_CONFIG:-~/.ssh}:/root/.ssh
@@ -84,6 +82,11 @@ networks:
   default:
 volumes:
     xdg-cache-home: {}
+```
+
+```yaml title="docker-compose.yaml"
+include:
+  - devtools/golang.yaml
 ```
 
 ## Features
