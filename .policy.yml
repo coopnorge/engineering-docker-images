@@ -50,7 +50,7 @@ approval_rules:
     teams:
     - "coopnorge/engineering"
     conditions:
-      has_contributors_in:
+      has_contributor_in:
         organizations: ["coopnorge"]
   options:
     invalidate_on_push: true
