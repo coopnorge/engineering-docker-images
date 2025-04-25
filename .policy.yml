@@ -2,7 +2,9 @@ policy:
   approval:
   - or:
     - Dependabot update
-    - Code change
+    - and:
+      - Code change
+      - External contributors
 
 approval_rules:
 - name: Dependabot update
@@ -47,6 +49,29 @@ approval_rules:
     count: 2
     teams:
     - "coopnorge/engineering"
+    conditions:
+    - has_contributors_in:
+        organizations: ["coopnorge"]
+  options:
+    invalidate_on_push: true
+    request_review:
+      enabled: true
+      mode: random-users
+      count: 8
+    methods:
+      github_review: true
+
+- name: External contributors
+  if:
+    changed_files:
+      paths:
+        - ".*"
+    from_branch:
+      pattern: '^.+:.+$'  # Target branches from forks
+  requires:
+    count: 2
+    teams:
+    - "coopnorge/engineering-community-leadership"
   options:
     invalidate_on_push: true
     request_review:
