@@ -16,6 +16,7 @@ plugins:
       base_path: "docs_dir"
   - link-marker
 markdown_extensions:
+  - github-callouts
   - admonition
   - attr_list
   - pymdownx.details

@@ -153,6 +153,7 @@ markdown==3.3.7 \
     --hash=sha256:cbb516f16218e643d8e0a95b309f77eb118cb138d39a4f27851e6a63581db874 \
     --hash=sha256:f5da449a6e1c989a4cea2631aa8ee67caa5a2ef855d551c88f9e309f4634c621
     # via
+    #   markdown-callouts
     #   markdown-inline-graphviz-extension
     #   mdx-truly-sane-lists
     #   mkdocs
@@ -161,6 +162,10 @@ markdown==3.3.7 \
     #   mkdocs-techdocs-core
     #   plantuml-markdown
     #   pymdown-extensions
+markdown-callouts==0.4.0 \
+    --hash=sha256:7ed2c90486967058a73a547781121983839522d67041ae52c4979616f1b2b746 \
+    --hash=sha256:ed0da38f29158d93116a0d0c6ecaf9df90b37e0d989b5337d678ee6e6d6550b7
+    # via -r requirements-techdocs.in
 markdown-inline-graphviz-extension==1.1.2 \
     --hash=sha256:20cb9d6fe59d01e901653fcdb863c5076d227f9f7e671d09a22f8fa640daec6e \
     --hash=sha256:668a0e71f119c4277f6f1b05e10985ca14694fada99f09d9032d3d492ff07df2
