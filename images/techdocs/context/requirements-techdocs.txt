@@ -145,7 +145,9 @@ gitdb==4.0.11 \
 gitpython==3.1.44 \
     --hash=sha256:9e0e10cda9bed1ee64bc9a6de50e7e38a9c9943241cd7f585f6df3ed28011110 \
     --hash=sha256:c87e30b26253bf5418b01b0660f818967f3c503193838337fe5e573331249269
-    # via mkdocs-git-revision-date-localized-plugin
+    # via
+    #   mkdocs-git-committers-plugin-2
+    #   mkdocs-git-revision-date-localized-plugin
 idna==3.7 \
     --hash=sha256:028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc \
     --hash=sha256:82fee1fc78add43492d3a1898bfa6d8a904cc97d8427f683ed8e798d07761aa0
@@ -258,6 +260,7 @@ mkdocs==1.6.0 \
     # via
     #   mkdocs-awesome-pages-plugin
     #   mkdocs-ezlinks-plugin
+    #   mkdocs-git-committers-plugin-2
     #   mkdocs-git-revision-date-localized-plugin
     #   mkdocs-htmlproofer-plugin
     #   mkdocs-kroki-plugin
@@ -278,6 +281,10 @@ mkdocs-get-deps==0.2.0 \
     --hash=sha256:162b3d129c7fad9b19abfdcb9c1458a651628e4b1dea628ac68790fb3061c60c \
     --hash=sha256:2bf11d0b133e77a0dd036abeeb06dec8775e46efa526dc70667d8863eefc6134
     # via mkdocs
+mkdocs-git-committers-plugin-2==2.5.0 \
+    --hash=sha256:1778becf98ccdc5fac809ac7b62cf01d3c67d6e8432723dffbb823307d1193c4 \
+    --hash=sha256:a01f17369e79ca28651681cddf212770e646e6191954bad884ca3067316aae60
+    # via -r requirements-techdocs.in
 mkdocs-git-revision-date-localized-plugin==1.4.7 \
     --hash=sha256:056c0a90242409148f1dc94d5c9d2c25b5b8ddd8de45489fa38f7fa7ccad2bc4 \
     --hash=sha256:10a49eff1e1c3cb766e054b9d8360c904ce4fe8c33ac3f6cc083ac6459c91953
@@ -507,6 +514,7 @@ requests==2.32.4 \
     --hash=sha256:27babd3cda2a6d50b30443204ee89830707d396671944c998b5975b031ac2b2c \
     --hash=sha256:27d0316682c8a29834d3264820024b62a36942083d52caf2f14c0591336d3422
     # via
+    #   mkdocs-git-committers-plugin-2
     #   mkdocs-htmlproofer-plugin
     #   mkdocs-kroki-plugin
     #   mkdocs-material
