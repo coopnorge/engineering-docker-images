@@ -1,7 +1,7 @@
 FROM docker.io/library/python:3.10.13@sha256:d5b1fbbc00fd3b55620a9314222498bebf09c4bf606425bf464709ed6a79f202 AS python
 FROM docker.io/hadolint/hadolint:2.12.0@sha256:30a8fd2e785ab6176eed53f74769e04f125afb2f74a6c52aef7d463583b6d45e AS hadolint
 FROM --platform=linux/amd64 docker.io/goodwithtech/dockle:v0.4.15@sha256:eade932f793742de0aa8755406c7677cd7696f8675b6180926f7eeffa7abe6b9 AS dockle
-FROM docker.io/moby/buildkit:v0.21.0-rootless@sha256:8a20e0009cb3754c91844e1285b619e6023a438c078ee4920fd02c5401f2b847 AS buildkit
+FROM docker.io/moby/buildkit:v0.21.1-rootless@sha256:1899799ee15c1857f5129c09d0760ad574ee75e0e85fe4633090d56144e0912c AS buildkit
 FROM gcr.io/go-containerregistry/crane:latest@sha256:13952b31a107e8bc4e4c170b0097edb708cd468486a28fc20bbf0d49f71c74e1 AS crane
 FROM docker.io/mikefarah/yq:4@sha256:48f0bd428026b782dfae8e8e07e03b5b385bb957035963c5383ca4cea46d82d4 AS yq
 
