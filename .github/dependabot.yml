@@ -34,6 +34,9 @@ updates:
     directory: "images/devtools-terraform-v1beta1/context/"
     schedule:
       interval: "monthly"
+    ignore:
+    - dependency-name: hashicorp/terraform
+      versions: "> 1.6.0"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
