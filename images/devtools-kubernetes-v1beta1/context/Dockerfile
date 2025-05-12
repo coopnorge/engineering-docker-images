@@ -3,7 +3,7 @@
 FROM docker.io/argoproj/argocd:v2.6.15@sha256:58ebb4ed23c8db4cd4cc3f954f8d94c4b4e3d9669c0751c484108d22b86d52de AS argocd
 FROM zegl/kube-score:v1.20.0@sha256:ac4c43ad560af905d66f6bf57b0937c591332e6dbf2167c31193a13b4695ab97 AS kube-score
 FROM ghcr.io/yannh/kubeconform:v0.6.7@sha256:0925177fb05b44ce18574076141b5c3d83235e1904d3f952182ac99ddc45762c AS kubeconform
-FROM docker.io/mikefarah/yq:4.45.2@sha256:48f0bd428026b782dfae8e8e07e03b5b385bb957035963c5383ca4cea46d82d4 AS yq
+FROM docker.io/mikefarah/yq:4.45.4@sha256:7cf28e5d67782f4b274a93a7bc54a840b553447a0807efd843d069f46bff718c AS yq
 FROM ghcr.io/kyverno/kyverno-cli:v1.14.1@sha256:591dcdafc5d5e4ba4d9a5f8d59975af73fd4a8f93fdab6398aacec0f0f65783e AS kyverno
 
 FROM golang:1.24.3@sha256:39d9e7d9c5d9c9e4baf0d8fff579f06d5032c0f4425cdec9e86732e8e4e374dc AS buildenv
