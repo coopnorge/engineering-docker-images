@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.3
 FROM docker.io/safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622 AS docker-lock
 FROM ghcr.io/terraform-linters/tflint-bundle:v0.48.0.0@sha256:523a85b4bf7af415cbb5f53ac1b56cd7501c8c8125f96c5b5cc19c895d894513 AS tflint
-FROM docker.io/aquasec/trivy:0.62.0@sha256:cb84170aa1fb6942c11b638969dce0845735c35f40d3bd48851c7f2d83a3c1ae AS trivy
+FROM docker.io/aquasec/trivy:0.62.1@sha256:fc10faf341a1d8fa8256c5ff1a6662ef74dd38b65034c8ce42346cf958a02d5d AS trivy
 FROM docker.io/bitnami/oras:1.2.3@sha256:35ab56bae222965524b6734a152223466ede17746ae0fa4de3427fbe9a32191e AS oras
 FROM docker.io/hashicorp/terraform:1.5.7@sha256:9fc0d70fb0f858b0af1fadfcf8b7510b1b61e8b35e7a4bb9ff39f7f6568c321d AS terraform
 FROM quay.io/terraform-docs/terraform-docs:0.20.0@sha256:37329e2dc2518e7f719a986a3954b10771c3fe000f50f83fd4d98d489df2eae2 AS tfdocs
