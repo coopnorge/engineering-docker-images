@@ -1,6 +1,6 @@
 # hadolint global ignore=DL4006,DL3003,SC2046
 # syntax=docker/dockerfile:1.3
-FROM docker.io/argoproj/argocd:v2.6.15@sha256:58ebb4ed23c8db4cd4cc3f954f8d94c4b4e3d9669c0751c484108d22b86d52de AS argocd
+FROM quay.io/argoproj/argocd:v2.11.8@sha256:68e0f882fe77cdcff04cbb3a996ecbe6a3607cc56dcdeba3bffbd525bd2508a8 AS argocd
 FROM zegl/kube-score:v1.20.0@sha256:ac4c43ad560af905d66f6bf57b0937c591332e6dbf2167c31193a13b4695ab97 AS kube-score
 FROM ghcr.io/yannh/kubeconform:v0.6.7@sha256:0925177fb05b44ce18574076141b5c3d83235e1904d3f952182ac99ddc45762c AS kubeconform
 FROM docker.io/mikefarah/yq:4.45.4@sha256:7cf28e5d67782f4b274a93a7bc54a840b553447a0807efd843d069f46bff718c AS yq
@@ -30,7 +30,7 @@ COPY ./magefiles /magefiles
 WORKDIR /magefiles
 RUN \
     mage -compile  ./mage-k8s
-    
+
 
 FROM golang:1.24.3@sha256:39d9e7d9c5d9c9e4baf0d8fff579f06d5032c0f4425cdec9e86732e8e4e374dc AS base
 RUN \
@@ -46,7 +46,7 @@ RUN \
         && \
     rm -vr /var/lib/apt/lists/* && \
     true
-    
+
 
 COPY --from=kube-score /kube-score /usr/local/bin/kube-score
 COPY --from=argocd /usr/local/bin/argocd /usr/local/bin/argocd
@@ -55,7 +55,7 @@ COPY --from=argocd /usr/local/bin/kustomize /usr/local/bin/kustomize
 COPY --from=kubeconform /kubeconform /usr/local/bin/kubeconform
 COPY --from=buildenv /magefiles/mage-k8s /usr/local/bin/mage-k8s
 COPY --from=buildenv /go/bin/mage /usr/local/bin/mage
-COPY --from=buildenv /go/bin/dyff /usr/local/bin/dyff 
+COPY --from=buildenv /go/bin/dyff /usr/local/bin/dyff
 COPY --from=buildenv /kyverno-policies /kyverno-policies
 COPY --from=kyverno /ko-app/kubectl-kyverno /usr/local/bin/kyverno
 
