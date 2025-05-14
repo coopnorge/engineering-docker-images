@@ -76,7 +76,7 @@ services:
       - "50051:50051"
     networks:
       - default
-    working_dir: /srv/workspace
+    working_dir: /srv/workspace/<root-folder-app>
     command: "golang-run"
 networks:
   default:
