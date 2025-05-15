@@ -5,11 +5,13 @@ env:
   XDG_CACHE_HOME: ${{ github.workspace }}/.cache/xdg
   POETRY_CACHE_DIR: ${{ github.workspace }}/.cache/poetry
 jobs:
+
   setup:
     runs-on: ubuntu-24.04
     outputs:
       image-names: ${{ steps.image-names.outputs.image_names }}
       images-ci: ${{ steps.paths-filter.outputs.images }}
+      validate-policy-bot-config: ${{ steps.changes.outputs.policy-bot == 'true' }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # pin@v3
@@ -20,6 +22,8 @@ jobs:
           filters: |
             images:
               - 'images/**'
+            policy-bot:
+              - '.policy.yml'
       - run: |
           set -x
           wget https://github.com/mikefarah/yq/releases/download/v4.25.2/yq_linux_amd64 -O ${GITHUB_WORKSPACE}/yq
@@ -35,6 +39,17 @@ jobs:
     permissions:
       contents: read
       pull-requests: read
+
+  policy-bot:
+    name: Validate policy-bot configuration
+    needs: setup
+    if: needs.setup.outputs.validate-policy-bot-config == 'true'
+    uses: coopnorge/github-workflow-policy-bot-config-validation/.github/workflows/policy-bot-config-validation.yaml@v0
+    permissions:
+      contents: read
+    secrets:
+      policy-bot-server-url: ${{ secrets.POLICY_BOT_BASE_URL }}
+
   image-ci:
     runs-on: ubuntu-24.04
     needs: ["setup"]
@@ -141,6 +156,7 @@ jobs:
     needs:
       - image-ci
       - techdocs
+      - policy-bot
     if: always()
     runs-on: ubuntu-24.04
     steps:
@@ -148,5 +164,7 @@ jobs:
         name: "Catch errors"
         if: |
           needs.image-ci.result == 'failure' ||
-          needs.techdocs.result == 'failure'
+          needs.techdocs.result == 'failure' ||
+          needs.policy-bot.result == 'failure' ||
+          needs.policy-bot.result == 'cancelled'
     permissions: {}
