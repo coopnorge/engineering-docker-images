@@ -2,7 +2,7 @@ FROM docker.io/library/node:24.1.0-bookworm@sha256:c332080545f1de96deb1c407e6fbe
 FROM jdkato/vale:v3.4.2@sha256:da6a0901858421b282aa8d935e72831c84cebf716ae4e276658e9e5d382fad20 AS vale
 FROM plantuml/plantuml:1.2025.3@sha256:7d0f1cb94b31a4fa7984c108306b683a625621e306f098b41827465bb7600b34 AS plantuml
 FROM mikefarah/yq:4.45.4@sha256:7cf28e5d67782f4b274a93a7bc54a840b553447a0807efd843d069f46bff718c AS yq
-FROM docker.io/library/python:3.12.7-bookworm@sha256:db1afbfdc089b792bed227d70e1b1607c16bacb391f1257b7af1f0e6b2384480 AS base
+FROM docker.io/library/python:3.13.4-bookworm@sha256:8300f4e04ed367fafc5877b39dcf7a205532e295778f6fd20a08e1652b177d7b AS base
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
