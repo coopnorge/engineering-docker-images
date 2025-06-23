@@ -63,3 +63,31 @@ make build validate test
 # run tests for only one image
 make IMAGE_NAMES=devtools-terraform-v1beta1 build validate test
 ```
+
+```mermaid
+graph TD
+  A[images/] --> B[<image_name>/]
+  B --> C[Dockerfile]
+  B --> D[context/README.md]
+  B --> E[tests/]
+  E --> F[run]
+  E --> G[README.md]
+
+  H[Registries] --> I[ghcr.io/coopnorge/...]
+  H --> J[europe-north1-docker.pkg.dev/...]
+
+  K[Development] --> L[Using devtools]
+  L --> M[docker compose build]
+  L --> N[make help]
+  L --> O[make validate]
+  L --> P[make watch]
+
+  K --> Q[Without devtools]
+  Q --> R[poetry install]
+  Q --> S[make build]
+  Q --> T[make validate]
+  Q --> U[make test]
+
+  V[Useful command] --> W[make IMAGE_NAMES=... build validate test]
+```
+
