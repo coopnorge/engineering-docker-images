@@ -1,0 +1,20 @@
+{
+  "baseBranches": ["main"],
+  "rebaseWhen": "conflicted",
+  "labels": ["dependencies","renovate"],
+  "automerge": true,
+  "automergeStrategy": "squash",
+  "enabledManagers": ["custom.regex"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^images/techdocs/context/Dockerfile$"],
+      "matchStrings": [
+        "^ENV\\s*VALE_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "errata-ai/vale",
+      "versioningTemplate": "semver"
+    },
+  ]
+}
