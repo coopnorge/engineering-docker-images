@@ -2,12 +2,23 @@ site_name: !ENV SITE_NAME
 repo_name: !ENV [REPO_NAME, null]
 repo_url: !ENV [REPO_URL, null]
 edit_uri: !ENV [EDIT_URI, null]
+theme:
+  name: material
 plugins:
   - techdocs-core
+  - material/meta
   - htmlproofer:
       validate_external_urls: false
   - git-revision-date-localized:
       fallback_to_build_date: true
+      enable_creation_date: true
+  - git-committers:
+      repository: !ENV [REPO_NAME, null]
+      branch: main
+      enabled: !ENV [FETCH_CONTRIBUTORS, false]
+      token: !ENV [GITHUB_TOKEN, ""]
+      exclude_committers:
+        - "web-flow"
   - awesome-pages
   - ezlinks:
       warn_ambiguities: true

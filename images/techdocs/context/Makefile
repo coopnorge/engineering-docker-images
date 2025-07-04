@@ -102,6 +102,9 @@ linguistics-check: validate-pwd vale-sync ## Check spelling, grammar and other l
 	vale $(MARKDOWN_FILES)
 
 SITE_NAME := $(shell yq --no-doc 'select(document_index == 0) | .metadata.title // .metadata.name' ./catalog-info.yaml)
+REPO_NAME := $(shell yq --no-doc 'select(document_index == 0) | .metadata.annotations."github.com/project-slug"' ./catalog-info.yaml)
+ENTITY := $(shell yq --no-doc 'select(document_index == 0) | [.metadata.namespace // "default", .kind, .metadata.name] | join("/")' ./catalog-info.yaml)
+FETCH_CONTRIBUTORS := false
 
 .PHONY: mkdocs.yml
 mkdocs.yml: /usr/local/share/techdocs/mkdocs.yml
@@ -109,12 +112,10 @@ mkdocs.yml: /usr/local/share/techdocs/mkdocs.yml
 
 .PHONY: build
 build: mkdocs.yml ## Build the website
-	export SITE_NAME="$(SITE_NAME)" && export REPO_NAME=$(REPO_NAME) export REPO_URL=$(REPO_URL) && export EDIT_URI=$(EDIT_URI) && techdocs-cli generate --no-docker
-
-ENTITY := $(shell yq --no-doc 'select(document_index == 0) | [.metadata.namespace // "default", .kind, .metadata.name] | join("/")' ./catalog-info.yaml)
+	export SITE_NAME="$(SITE_NAME)" && export REPO_NAME=$(REPO_NAME) && export REPO_URL=$(REPO_URL) && export EDIT_URI=$(EDIT_URI) && export FETCH_CONTRIBUTORS=$(FETCH_CONTRIBUTORS) && export GITHUB_TOKEN=$(GITHUB_TOKEN) && techdocs-cli generate --no-docker --verbose
 
 serve: mkdocs.yml ## Run a preview site
-	export SITE_NAME="$(SITE_NAME)" && export REPO_NAME=$(REPO_NAME) export REPO_URL=$(REPO_URL) && export EDIT_URI=$(EDIT_URI) && techdocs-cli serve --no-docker
+	export SITE_NAME="$(SITE_NAME)" && export REPO_NAME=$(REPO_NAME) && export REPO_URL=$(REPO_URL) && export EDIT_URI=$(EDIT_URI) && export FETCH_CONTRIBUTORS=$(FETCH_CONTRIBUTORS) && techdocs-cli serve --no-docker --verbose
 
 .PHONY: publish
 publish: site ## Publish the website to the TechDocs Bucket
