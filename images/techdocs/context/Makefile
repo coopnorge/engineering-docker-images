@@ -104,6 +104,7 @@ linguistics-check: validate-pwd vale-sync ## Check spelling, grammar and other l
 SITE_NAME := $(shell yq --no-doc 'select(document_index == 0) | .metadata.title // .metadata.name' ./catalog-info.yaml)
 REPO_NAME := $(shell yq --no-doc 'select(document_index == 0) | .metadata.annotations."github.com/project-slug"' ./catalog-info.yaml)
 ENTITY := $(shell yq --no-doc 'select(document_index == 0) | [.metadata.namespace // "default", .kind, .metadata.name] | join("/")' ./catalog-info.yaml)
+FETCH_CONTRIBUTORS := false
 
 .PHONY: mkdocs.yml
 mkdocs.yml: /usr/local/share/techdocs/mkdocs.yml
