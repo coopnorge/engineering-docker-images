@@ -5,7 +5,7 @@ FROM docker.io/aquasec/trivy:0.63.0@sha256:6fb0646988fcd2fdf7bf123f7174945ebc2c9
 FROM docker.io/bitnami/oras:1.2.3@sha256:695e4d341af5e831806cae89219fa3673dabbd0071456d6f312f1a6fd6c1af55 AS oras
 FROM docker.io/hashicorp/terraform:1.5.7@sha256:9fc0d70fb0f858b0af1fadfcf8b7510b1b61e8b35e7a4bb9ff39f7f6568c321d AS terraform
 FROM quay.io/terraform-docs/terraform-docs:0.20.0@sha256:37329e2dc2518e7f719a986a3954b10771c3fe000f50f83fd4d98d489df2eae2 AS tfdocs
-FROM docker.io/library/golang:1.24.4@sha256:270cd5365c84dd24716c42d7f9f7ddfbc131c8687e163e6748b9c1322c518213 AS golang
+FROM docker.io/library/golang:1.24.5@sha256:a9219eb99cd2951b042985dbec09d508b3ddc20c4da52a3a55b275b3779e4a05 AS golang
 
 RUN \
     go env > /usr/local/bin/goenv.sh && \
