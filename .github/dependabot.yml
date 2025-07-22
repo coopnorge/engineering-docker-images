@@ -30,9 +30,6 @@ updates:
     directory: "images/devtools-kubernetes-v1beta1/context/"
     schedule:
       interval: "weekly"
-    ignore:
-      - dependency-name: argoproj/argocd
-        versions: ">= 2.12"
   - package-ecosystem: "docker"
     directory: "images/devtools-terraform-v1beta1/context/"
     schedule:
