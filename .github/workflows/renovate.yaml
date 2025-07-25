@@ -1,0 +1,59 @@
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: "Override default log level"
+        required: false
+        default: "info"
+        type: string
+  schedule:
+    # At 07:30 AM and 12:30 PM, every day
+    - cron: '30 7,12 * * *'
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+jobs:
+  renovate:
+    concurrency:
+      group: ${{ github.workflow }}-renovate
+      cancel-in-progress: true
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule' ||
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'renovate/'))
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Get token
+        id: get_token
+        uses: actions/create-github-app-token@v2.0.6
+        with:
+          app-id: 635546
+          private-key: ${{ secrets.RENOVATE_APP_PRIVATE_KEY_PEM }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+      - name: Run Renovate
+        uses: renovatebot/github-action@13da59cf7cfbd3bfea72ce26752ed22edf747ce9 # pin@v43.0.2
+        env:
+          # Repository taken from variable to keep configuration file generic
+          RENOVATE_REPOSITORIES: ${{ github.repository }}
+          # Onboarding not needed for self-hosted
+          RENOVATE_ONBOARDING: "false"
+          # Username for GitHub authentication (should match GitHub App name + [bot])
+          RENOVATE_USERNAME: "renovate-coop-norge[bot]"
+          # Git commit author used, must match GitHub App
+          RENOVATE_GIT_AUTHOR: "renovate-coop-norge <151545514+renovate-coop-norge[bot]@users.noreply.github.com>"
+          # Use GitHub API to create commits (this allows for signed commits from GitHub App)
+          RENOVATE_PLATFORM_COMMIT: "true"
+          # Override schedule if set
+          RENOVATE_FORCE: "true"
+          LOG_LEVEL: ${{ inputs.logLevel || 'info' }}
+        with:
+          configurationFile: .github/renovate.json5
+          token: ${{ steps.get_token.outputs.token }}
