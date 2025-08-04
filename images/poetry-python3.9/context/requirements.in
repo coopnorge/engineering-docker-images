@@ -1,4 +1,4 @@
-pip-tools==7.4.1
+pip-tools==7.5.0
 poetry==1.8.5
 keyrings.google-artifactregistry-auth==1.1.2
 poetry-dynamic-versioning[plugin]==1.9.1
