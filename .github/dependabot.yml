@@ -8,96 +8,33 @@ registries:
     password: ${{ secrets.DEPENDABOT_GHCR_PULL }}
 
 updates:
-  - package-ecosystem: "docker"
-    directory: "docker-compose/"
-    registries:
-      - coop-ghcr
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "pip"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "docker"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "docker"
-    directory: "images/devtools-golang-v1beta1/context/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "docker"
-    directory: "images/devtools-kubernetes-v1beta1/context/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "docker"
-    directory: "images/devtools-terraform-v1beta1/context/"
-    schedule:
-      interval: "monthly"
-    ignore:
-    - dependency-name: hashicorp/terraform
-      versions: ">= 1.6.0"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+  - package-ecosystem: "docker"
+    directories:
+      - "**/*"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: hashicorp/terraform
+        versions:
+          - ">= 1.6.0"
+    registries:
+      - coop-ghcr
+  - package-ecosystem: "pip"
+    directories:
+      - "**/*"
+    schedule:
+      interval: "weekly"
   - package-ecosystem: "gomod"
-    directory: "/images/devtools-kubernetes-v1beta1/context"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "gomod"
-    directory: "/images/devtools-kubernetes-v1beta1/context/magefiles"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "gomod"
-    directory: "/images/devtools-golang-v1beta1/context"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "docker"
-    directory: "images/poetry-python3.9/context/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "pip"
-    directory: "images/poetry-python3.9/context/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "docker"
-    directory: "images/poetry-python3.10/context/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "pip"
-    directory: "images/poetry-python3.10/context/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "docker"
-    directory: "images/poetry-python3.11/context/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "pip"
-    directory: "images/poetry-python3.11/context/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "docker"
-    directory: "images/benthos-v4/context/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "docker"
-    directory: "images/techdocs/context/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "pip"
-    directory: "images/techdocs/context/"
+    directories:
+      - "**/*"
     schedule:
       interval: "weekly"
   - package-ecosystem: "npm"
-    directory: "images/techdocs/context/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "docker"
-    directory: "images/devtools-python3.10-v1beta1/context/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "pip"
-    directory: "images/devtools-python3.10-v1beta1/context/"
+    directories:
+      - "**/*"
     schedule:
       interval: "weekly"
