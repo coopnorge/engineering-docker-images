@@ -28,6 +28,7 @@ approval_rules:
       paths:
       - ".*Dockerfile$"
       - ".*Dockerfile.app$"
+      - ".*Dockerfile.example$"
       - ".*go.mod$"
       - ".*go.sum$"
       - ".*package-lock.json$"
