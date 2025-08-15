@@ -204,7 +204,7 @@ func init() {
             (
                 lambda workdir: (workdir / "bad_file.go").write_text(
                     """\
-package main
+package somepackage
 
 func UnusedFunc() int {
 	return 3
@@ -219,6 +219,28 @@ func UnusedFunc() int {
                 )
             ],
             id="validate-unchecked-return",
+        ),
+        pytest.param(
+            None,
+            True,
+            (
+                lambda workdir: (workdir / "main.go").write_text(
+                    """\
+package main
+
+func UnusedFunc() int {
+	return 3
+}
+"""
+                )
+            ),
+            [
+                (
+                    "exported: exported function UnusedFunc should have comment or be unexported (revive)",
+                    False,
+                )
+            ],
+            id="validate-unchecked-return-main",
         ),
         pytest.param(
             None,
