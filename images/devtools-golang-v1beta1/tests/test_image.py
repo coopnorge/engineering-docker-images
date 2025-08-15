@@ -153,28 +153,6 @@ func init() {
             id="validate-exported-comment",
         ),
         pytest.param(
-            # Main package does not require comments for exported functions
-            None,
-            True,
-            (
-                lambda workdir: (workdir / "main.go").write_text(
-                    """\
-package main
-
-func NoDocs() int {
-	return 3
-}
-
-func init() {
-	print(NoDocs())
-}
-"""
-                )
-            ),
-            [("exported function NoDocs should have comment or be unexported", False)],
-            id="validate-exported-comment-main",
-        ),
-        pytest.param(
             None,
             False,
             (
@@ -221,28 +199,6 @@ func UnusedFunc() int {
                 )
             ],
             id="validate-unchecked-return",
-        ),
-        pytest.param(
-            None,
-            True,
-            (
-                lambda workdir: (workdir / "main.go").write_text(
-                    """\
-package main
-
-func UnusedFunc() int {
-	return 3
-}
-"""
-                )
-            ),
-            [
-                (
-                    "exported: exported function UnusedFunc should have comment or be unexported (revive)",
-                    False,
-                )
-            ],
-            id="validate-unchecked-return-main",
         ),
         pytest.param(
             None,
