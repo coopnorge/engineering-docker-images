@@ -156,7 +156,7 @@ func init() {
             None,
             True,
             (
-                lambda workdir: (workdir / "main.go").write_text(
+                lambda workdir: (workdir / "bad_file.go").write_text(
                     """\
 package main
 
@@ -224,7 +224,7 @@ func UnusedFunc() int {
             None,
             True,
             (
-                lambda workdir: (workdir / "main.go").write_text(
+                lambda workdir: (workdir / "bad_file.go").write_text(
                     """\
 package main
 
