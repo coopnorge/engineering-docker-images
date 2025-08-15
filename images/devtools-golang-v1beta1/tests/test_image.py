@@ -136,7 +136,7 @@ def test_prototype_ok(test_helper: TestHelper) -> None:
             (
                 lambda workdir: (workdir / "bad_file.go").write_text(
                     """\
-package main
+package somepackage
 
 func NoDocs() int {
 	return 3
@@ -150,6 +150,28 @@ func init() {
             ),
             [("exported function NoDocs should have comment or be unexported", True)],
             id="validate-exported-comment",
+        ),
+        pytest.param(
+            # Main package does not require comments for exported functions
+            None,
+            True,
+            (
+                lambda workdir: (workdir / "main.go").write_text(
+                    """\
+package main
+
+func NoDocs() int {
+	return 3
+}
+
+func init() {
+	print(NoDocs())
+}
+"""
+                )
+            ),
+            [("exported function NoDocs should have comment or be unexported", False)],
+            id="validate-exported-comment-main",
         ),
         pytest.param(
             None,
