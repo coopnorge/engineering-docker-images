@@ -134,7 +134,8 @@ def test_prototype_ok(test_helper: TestHelper) -> None:
             None,
             False,
             (
-                lambda workdir: (workdir / "bad_file.go").write_text(
+                lambda workdir: (workdir / "somepackage").mkdir(),
+                lambda workdir: (workdir / "somepackage" / "bad_file.go").write_text(
                     """\
 package somepackage
 
@@ -146,7 +147,7 @@ func init() {
 	print(NoDocs())
 }
 """
-                )
+                ),
             ),
             [("exported function NoDocs should have comment or be unexported", True)],
             id="validate-exported-comment",
@@ -156,7 +157,7 @@ func init() {
             None,
             True,
             (
-                lambda workdir: (workdir / "bad_file.go").write_text(
+                lambda workdir: (workdir / "main.go").write_text(
                     """\
 package main
 
@@ -202,7 +203,8 @@ func init() {
             None,
             False,
             (
-                lambda workdir: (workdir / "bad_file.go").write_text(
+                lambda workdir: (workdir / "somepackage").mkdir(),
+                lambda workdir: (workdir / "somepackage" / "bad_file.go").write_text(
                     """\
 package somepackage
 
@@ -210,7 +212,7 @@ func UnusedFunc() int {
 	return 3
 }
 """
-                )
+                ),
             ),
             [
                 (
@@ -224,7 +226,7 @@ func UnusedFunc() int {
             None,
             True,
             (
-                lambda workdir: (workdir / "bad_file.go").write_text(
+                lambda workdir: (workdir / "main.go").write_text(
                     """\
 package main
 
