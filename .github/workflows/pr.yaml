@@ -13,7 +13,7 @@ jobs:
       images-ci: ${{ steps.paths-filter.outputs.images }}
       validate-policy-bot-config: ${{ steps.changes.outputs.policy-bot == 'true' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # pin@v3
         id: paths-filter
         with:
@@ -65,7 +65,7 @@ jobs:
       matrix:
         image: ${{ fromJSON(needs.setup.outputs.image-names) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Cache xdg
         uses: actions/cache@v4
         with:
