@@ -11,7 +11,7 @@ require (
 	github.com/go-delve/delve v1.25.1
 	github.com/pseudomuto/protoc-gen-doc v1.5.1
 	github.com/sanposhiho/gomockhandler v1.6.1
-	go.uber.org/mock v0.5.2
+	go.uber.org/mock v0.6.0
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.5.1
 	google.golang.org/protobuf v1.36.7
 )
@@ -66,16 +66,16 @@ require (
 	github.com/xrash/smetrics v0.0.0-20240521201337-686a1a2994c1 // indirect
 	go.starlark.net v0.0.0-20231101134539-556fd59b42f6 // indirect
 	golang.org/x/arch v0.11.0 // indirect
-	golang.org/x/crypto v0.40.0 // indirect
+	golang.org/x/crypto v0.41.0 // indirect
 	golang.org/x/exp v0.0.0-20230224173230-c95f2b4c22f2 // indirect
-	golang.org/x/mod v0.26.0 // indirect
-	golang.org/x/net v0.42.0 // indirect
+	golang.org/x/mod v0.27.0 // indirect
+	golang.org/x/net v0.43.0 // indirect
 	golang.org/x/sync v0.16.0 // indirect
-	golang.org/x/sys v0.34.0 // indirect
-	golang.org/x/telemetry v0.0.0-20250710130107-8d8967aff50b // indirect
-	golang.org/x/term v0.33.0 // indirect
-	golang.org/x/text v0.27.0 // indirect
-	golang.org/x/tools v0.35.0 // indirect
+	golang.org/x/sys v0.35.0 // indirect
+	golang.org/x/telemetry v0.0.0-20250807160809-1a19826ec488 // indirect
+	golang.org/x/term v0.34.0 // indirect
+	golang.org/x/text v0.28.0 // indirect
+	golang.org/x/tools v0.36.0 // indirect
 	golang.org/x/tools/cmd/cover v0.1.0-deprecated // indirect
 	google.golang.org/genproto v0.0.0-20230110181048-76db0878b65f // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6 // indirect
