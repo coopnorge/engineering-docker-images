@@ -43,9 +43,9 @@ latest version number.
 
 ## Configuration
 
-Add the following line to your `devtools/Dockerfile`:
+Add the following new file to your `devtools/` directory:
 
-```Dockerfile title="devtools/Dockerfile"
+```Dockerfile title="devtools/terraform.Dockerfile"
 FROM ghcr.io/coopnorge/engineering-docker-images/e0/devtools-terraform-v1beta1:latest@sha256:e18031952ade602b87f5c1a4e6d5b426497b66bac1ff28de28144e00752da94d
 ```
 
