@@ -8,7 +8,7 @@ require (
 	github.com/abice/go-enum v0.9.1
 	github.com/cortesi/modd v0.8.1
 	github.com/envoyproxy/protoc-gen-validate v1.2.1
-	github.com/go-delve/delve v1.25.1
+	github.com/go-delve/delve v1.25.2
 	github.com/pseudomuto/protoc-gen-doc v1.5.1
 	github.com/sanposhiho/gomockhandler v1.6.1
 	go.uber.org/mock v0.6.0
