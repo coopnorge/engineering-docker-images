@@ -1,5 +1,5 @@
 {
-  "baseBranches": ["main"],
+  "baseBranchPatterns": ["main"],
   "rebaseWhen": "conflicted",
   "labels": ["dependencies","renovate"],
   "automerge": true,
@@ -9,14 +9,13 @@
     // vale version in techdocs
     {
       "customType": "regex",
-      "fileMatch": ["^images/techdocs/context/Dockerfile$"],
+      "managerFilePatterns": ["/^images/techdocs/context/Dockerfile$/"],
       "matchStrings": [
-        "^ENV\\s*VALE_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"
+        "ENV\\s+VALE_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "errata-ai/vale",
       "versioningTemplate": "semver",
-      "allowedVersions": "^3\\.8\\.", // limiting to 3.8, because it only works up to that version as of now
     },
   ]
 }
