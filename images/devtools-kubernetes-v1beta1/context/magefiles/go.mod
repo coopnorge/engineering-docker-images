@@ -1,6 +1,6 @@
 module mage
 
-go 1.23.0
+go 1.25.0
 
 require github.com/coopnorge/mage-kubernetes-lib v0.12.0
 
