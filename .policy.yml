@@ -1,7 +1,7 @@
 policy:
   approval:
   - or:
-    - Dependabot update
+    - Dependabot or Renovatebot update
     - and:
       - Code change
       - External contributors
