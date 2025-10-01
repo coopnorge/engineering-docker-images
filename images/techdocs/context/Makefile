@@ -101,6 +101,21 @@ vale-sync:
 linguistics-check: validate-pwd vale-sync ## Check spelling, grammar and other linguistics issues
 	vale $(MARKDOWN_FILES)
 
+../.prettierrc:
+	if [ -s ..prettierrc ]; then \
+	    yq '. *= load("..prettierrc")' /usr/local/share/techdocs/.prettierrc > $@ ;\
+	else \
+	    cp /usr/local/share/techdocs/.prettierrc $@ ;\
+	fi
+
+.PHONY: format
+format: validate-pwd ../.prettierrc ## Check markdown formatting
+	prettier --check --config ../.prettierrc $(MARKDOWN_FILES)
+
+.PHONY: format-fix
+format-fix: ../.prettierrc ## Fix auto-fixable markdown formatting issues
+	prettier --write --config ../.prettierrc $(MARKDOWN_FILES)
+
 SITE_NAME := $(shell yq --no-doc 'select(document_index == 0) | .metadata.title // .metadata.name' ./catalog-info.yaml)
 REPO_NAME := $(shell yq --no-doc 'select(document_index == 0) | .metadata.annotations."github.com/project-slug"' ./catalog-info.yaml)
 ENTITY := $(shell yq --no-doc 'select(document_index == 0) | [.metadata.namespace // "default", .kind, .metadata.name] | join("/")' ./catalog-info.yaml)
