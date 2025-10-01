@@ -93,6 +93,8 @@ RUN \
     ln -rs /usr/local/bin/maker /usr/local/bin/lint-fix && \
     ln -rs /usr/local/bin/maker /usr/local/bin/lint && \
     ln -rs /usr/local/bin/maker /usr/local/bin/linguistics-check && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/format-fix && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/format && \
     ln -rs /usr/local/bin/maker /usr/local/bin/build && \
     ln -rs /usr/local/bin/maker /usr/local/bin/serve && \
     ln -rs /usr/local/bin/maker /usr/local/bin/publish && \
@@ -101,6 +103,7 @@ RUN \
 COPY Makefile /usr/local/share/techdocs/Makefile
 COPY mkdocs.yml /usr/local/share/techdocs/mkdocs.yml
 COPY markdownlint.yaml /usr/local/share/techdocs/markdownlint.yaml
+COPY .prettierrc /usr/local/share/techdocs/.prettierrc
 
 RUN git config --system --add safe.directory /srv/workspace
 
