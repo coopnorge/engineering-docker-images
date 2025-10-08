@@ -24,6 +24,9 @@ jobs:
               - 'images/**'
             policy-bot:
               - '.policy.yml'
+            tools:
+              - 'Makefile'
+              - 'Dockerfile'
       - run: |
           set -x
           wget https://github.com/mikefarah/yq/releases/download/v4.25.2/yq_linux_amd64 -O ${GITHUB_WORKSPACE}/yq
@@ -31,7 +34,22 @@ jobs:
       - id: image-names
         shell: bash
         run: |
-          images=$(echo ${{ steps.paths-filter.outputs.images_files }} | yq -o=json -I0 '.[] |= sub("images/([^/]+)/.*$", "${1}") | unique' -)
+          set -euo pipefail
+
+          if [[ "${{ steps.paths-filter.outputs.tools }}" == 'true' ]]; then
+            # Collect all image directory names under images/
+            mapfile -t dirs < <(find images -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort -u)
+            if (( ${#dirs[@]} == 0 )); then
+              images='[]'
+            else
+              printf -v json '[%s]' "$(printf '"%s",' "${dirs[@]}" | sed 's/,$//')"
+              images="$json"
+            fi
+          else
+            # Only images affected by the PR
+            images=$(echo ${{ steps.paths-filter.outputs.images_files }} | yq -o=json -I0 '.[] |= sub("images/([^/]+)/.*$", "${1}") | unique' -)
+          fi
+
           echo "$images"
           echo "IMAGE_NAMES=${images}" >> $GITHUB_OUTPUT
       - run: echo ${{ steps.image-names.outputs.image_names }}
