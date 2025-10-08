@@ -11,10 +11,10 @@ WORKDIR /usr/local/share/techdocs
 RUN apt-get clean \
     && apt-get update \
     && apt-get install --no-install-recommends -y \
-        apt-transport-https=2.6.1 \
-        git \
-        lsb-release=12.0-1 \
-        graphviz \
+    apt-transport-https=2.6.1 \
+    git \
+    lsb-release=12.0-1 \
+    graphviz \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -93,8 +93,8 @@ RUN \
     ln -rs /usr/local/bin/maker /usr/local/bin/lint-fix && \
     ln -rs /usr/local/bin/maker /usr/local/bin/lint && \
     ln -rs /usr/local/bin/maker /usr/local/bin/linguistics-check && \
+    ln -rs /usr/local/bin/maker /usr/local/bin/format-check && \
     ln -rs /usr/local/bin/maker /usr/local/bin/format-fix && \
-    ln -rs /usr/local/bin/maker /usr/local/bin/format && \
     ln -rs /usr/local/bin/maker /usr/local/bin/build && \
     ln -rs /usr/local/bin/maker /usr/local/bin/serve && \
     ln -rs /usr/local/bin/maker /usr/local/bin/publish && \

@@ -108,8 +108,8 @@ linguistics-check: validate-pwd vale-sync ## Check spelling, grammar and other l
 	    cp /usr/local/share/techdocs/.prettierrc $@ ;\
 	fi
 
-.PHONY: format
-format: validate-pwd ../.prettierrc ## Check markdown formatting
+.PHONY: format-check
+format-check: validate-pwd ../.prettierrc ## Check markdown formatting
 	prettier --check --config ../.prettierrc $(MARKDOWN_FILES)
 
 .PHONY: format-fix
