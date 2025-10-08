@@ -10,15 +10,20 @@ FROM golang:1.25.1@sha256:8305f5fa8ea63c7b5bc85bd223ccc62941f852318ebfbd22f53bbd
 
 COPY --from=yq /usr/bin/yq /usr/local/bin/yq
 
+ENV MAGE_VERSION=v1.15.0
+ENV DYFF_VERSION=v1.10.2
+
 WORKDIR /build
 COPY go.mod go.sum tools.go /build/
+# hadolint ignore=DL3062
 RUN \
-    cd $(go mod download -json github.com/magefile/mage | yq .Dir)  && \
+    cd $(go mod download -json "github.com/magefile/mage@$MAGE_VERSION" | yq .Dir)  && \
     go run bootstrap.go
 
 WORKDIR /build
+# hadolint ignore=DL3062
 RUN \
-    cd $(go mod download -json github.com/homeport/dyff | yq .Dir)/cmd/dyff  && \
+    cd $(go mod download -json "github.com/homeport/dyff@$DYFF_VERSION" | yq .Dir)/cmd/dyff  && \
     go build -o /go/bin/dyff
 
 RUN \

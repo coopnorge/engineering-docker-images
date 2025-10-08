@@ -29,6 +29,28 @@
       "versioningTemplate": "deb",
       // if we change the debian base image (e.g. FROM docker.io/library/python:x.y.z-bookworm), we need to change the suite string below
       "registryUrlTemplate": "https://deb.debian.org/debian?suite=bookworm&components=main&binaryArch=amd64"
+    },
+    // mage version in devtools-kubernetes
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^images/devtools-kubernetes-v1beta1/context/Dockerfile$/"],
+      "matchStrings": [
+          "ENV\\s+MAGE_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "magefile/mage",
+      "versioningTemplate": "semver",
+    },
+    // dyff version in devtools-kubernetes
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^images/devtools-kubernetes-v1beta1/context/Dockerfile$/"],
+      "matchStrings": [
+          "ENV\\s+DYFF_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "homeport/dyff",
+      "versioningTemplate": "semver",
     }
   ]
 }
