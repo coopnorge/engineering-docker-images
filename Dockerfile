@@ -33,3 +33,4 @@ ENV PATH=/root/.local/bin:$PATH
 WORKDIR /tmp/workspace
 COPY pyproject.toml poetry.toml ./
 RUN poetry install
+
