@@ -11,6 +11,7 @@ jobs:
     outputs:
       image-names: ${{ steps.image-names.outputs.image_names }}
       images-ci: ${{ steps.paths-filter.outputs.images }}
+      tools: ${{ steps.paths-filter.outputs.tools }}
       validate-policy-bot-config: ${{ steps.paths-filter.outputs.policy-bot == 'true' }}
     steps:
       - uses: actions/checkout@v5
@@ -24,6 +25,11 @@ jobs:
               - 'images/**'
             policy-bot:
               - '.policy.yml'
+            tools:
+              - 'Makefile'
+              - 'Dockerfile'
+              - 'poetry.lock'
+              - 'pyproject.toml'
       - run: |
           set -x
           wget https://github.com/mikefarah/yq/releases/download/v4.25.2/yq_linux_amd64 -O ${GITHUB_WORKSPACE}/yq
@@ -31,7 +37,20 @@ jobs:
       - id: image-names
         shell: bash
         run: |
-          images=$(echo ${{ steps.paths-filter.outputs.images_files }} | yq -o=json -I0 '.[] |= sub("images/([^/]+)/.*$", "${1}") | unique' -)
+          set -euo pipefail
+
+          if [[ "${{ steps.paths-filter.outputs.tools }}" == 'true' ]]; then
+            mapfile -t dirs < <(find images -mindepth 1 -maxdepth 1 | cut -d'/' -f2 | sort -u)
+            if (( ${#dirs[@]} == 0 )); then
+              images='[]'
+            else
+              printf -v images '[%s]' "$(printf '"%s",' "${dirs[@]}" | sed 's/,$//')"
+            fi
+          else
+            # Only images affected by the PR
+            images=$(echo ${{ steps.paths-filter.outputs.images_files }} | yq -o=json -I0 '.[] |= sub("images/([^/]+)/.*$", "${1}") | unique' -)
+          fi
+
           echo "$images"
           echo "IMAGE_NAMES=${images}" >> $GITHUB_OUTPUT
       - run: echo ${{ steps.image-names.outputs.image_names }}
@@ -52,7 +71,7 @@ jobs:
   image-ci:
     runs-on: ubuntu-24.04
     needs: ["setup"]
-    if: ${{ needs.setup.outputs.images-ci == 'true' }}
+    if: ${{ needs.setup.outputs.images-ci == 'true' || needs.setup.outputs.tools == 'true' }}
     concurrency:
       group: ${{ github.workflow }}-${{ matrix.image }}-${{ github.ref }}
       cancel-in-progress: true
