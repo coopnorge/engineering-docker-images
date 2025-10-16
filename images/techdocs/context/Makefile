@@ -102,8 +102,8 @@ linguistics-check: validate-pwd vale-sync ## Check spelling, grammar and other l
 	vale $(MARKDOWN_FILES)
 
 ../.prettierrc:
-	if [ -s ..prettierrc ]; then \
-	    yq '. *= load("..prettierrc")' /usr/local/share/techdocs/.prettierrc > $@ ;\
+	if [ -s .prettierrc ]; then \
+		/usr/local/share/techdocs/merge_prettier_configs.sh .prettierrc /usr/local/share/techdocs/.prettierrc $@ ;\
 	else \
 	    cp /usr/local/share/techdocs/.prettierrc $@ ;\
 	fi

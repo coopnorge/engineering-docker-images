@@ -15,6 +15,7 @@ RUN apt-get clean \
     git \
     lsb-release=12.0-1 \
     graphviz \
+    jq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -104,6 +105,7 @@ COPY Makefile /usr/local/share/techdocs/Makefile
 COPY mkdocs.yml /usr/local/share/techdocs/mkdocs.yml
 COPY markdownlint.yaml /usr/local/share/techdocs/markdownlint.yaml
 COPY .prettierrc /usr/local/share/techdocs/.prettierrc
+COPY merge_prettier_configs.sh /usr/local/share/techdocs/merge_prettier_configs.sh
 
 RUN git config --system --add safe.directory /srv/workspace
 
