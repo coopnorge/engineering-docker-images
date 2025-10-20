@@ -11,8 +11,8 @@ github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5 h1:0CwZNZbxp69SHPd
 github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5/go.mod h1:wHh0iHkYZB8zMSxRWpUBQtwG5a7fFgvEO+odwuTv2gs=
 github.com/cloudflare/circl v1.6.1 h1:zqIqSPIndyBh1bjLVVDHMPpVKqp8Su/V+6MeDzzQBQ0=
 github.com/cloudflare/circl v1.6.1/go.mod h1:uddAzsPgqdMAYatqJ0lsjX1oECcQLIlRpzZh3pJrofs=
-github.com/coopnorge/mage-kubernetes-lib v0.13.0 h1:hW08QkMjUhSxuKM9tnZuAgpvaON3O2Ie1p5JqXnGJ6E=
-github.com/coopnorge/mage-kubernetes-lib v0.13.0/go.mod h1:8dbf5K6iV7kuPNheECDIabD1VpFzC0AN+D723bOPrBU=
+github.com/coopnorge/mage-kubernetes-lib v0.13.1 h1:DfylXZGPdWCcskCw2q6AklRe//H/DdoojoXeRxs6FOk=
+github.com/coopnorge/mage-kubernetes-lib v0.13.1/go.mod h1:8dbf5K6iV7kuPNheECDIabD1VpFzC0AN+D723bOPrBU=
 github.com/cyphar/filepath-securejoin v0.4.1 h1:JyxxyPEaktOD+GAnqIqTf9A8tHyAG22rowi7HkoSU1s=
 github.com/cyphar/filepath-securejoin v0.4.1/go.mod h1:Sdj7gXlvMcPZsbhwhQ33GguGLDGQL7h7bg04C/+u9jI=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
