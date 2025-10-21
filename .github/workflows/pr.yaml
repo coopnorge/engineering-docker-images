@@ -3,7 +3,6 @@ on:
   workflow_dispatch: {}
 env:
   XDG_CACHE_HOME: ${{ github.workspace }}/.cache/xdg
-  POETRY_CACHE_DIR: ${{ github.workspace }}/.cache/poetry
 jobs:
 
   setup:
@@ -91,26 +90,14 @@ jobs:
           key: xdg-v1-${{ hashFiles('**/Makefile') }}
           restore-keys: |
             xdg-v1-
-      - name: Cache poetry
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.POETRY_CACHE_DIR }}
-          key: poetry-v1-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: |
-            poetry-v1-
-      - name: Cache python venv
-        uses: actions/cache@v4
-        with:
-          path: ${{ github.workspace }}/.venv
-          key: pyvenv-v1-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: |
-            pyvenv-v1-
+      - name: Install poetry
+        run: pipx install poetry
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
-          python-version: "3.10"
-      - name: Setup Poetry
-        uses: Gr1N/setup-poetry@48b0f77c8c1b1b19cb962f0f00dff7b4be8f81ec # pin@v9
+          python-version: "3.14"
+          cache: "poetry"
+          cache-dependency-path: poetry.lock
       - name: Run Poetry Install
         id: toolchain
         shell: bash
