@@ -112,6 +112,10 @@ def test_test_validate(
         remove=True,
     )
     assert (
+        b"prettier --check --config ../.prettierrc README.md docs/index.md\n"
+        in actual_output
+    )
+    assert (
         b"markdownlint --config=../markdownlint.yaml README.md docs/index.md\n"
         in actual_output
     )
