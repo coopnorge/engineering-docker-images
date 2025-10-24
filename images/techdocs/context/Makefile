@@ -64,7 +64,7 @@ package-lock.json: package.json ## Generate requirements-techdocs.txt
 ########################################################################
 
 .PHONY: validate
-validate: lint linguistics-check ## Validate the content
+validate: format-check lint linguistics-check ## Validate the content
 
 .PHONY: validate-pwd
 validate-pwd:
@@ -76,7 +76,7 @@ validate-pwd:
 	fi
 
 .PHONY: validate-fix
-validate-fix: lint-fix ## Fix auto-fixable validation errors
+validate-fix: format-fix lint-fix ## Fix auto-fixable validation errors
 
 ../markdownlint.yaml:
 	if [ -s .markdownlint.yaml ]; then \
