@@ -4,7 +4,7 @@ name = "engineering-docker-images"
 version = "0.1.0"
 description = ""
 authors = []
-requires-python = "^3.10"
+requires-python = "^3.14"
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=8.2.2"
@@ -24,7 +24,7 @@ package-mode = false
 profile = "black"
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.14"
 strict = true
 warn_unreachable = true
 warn_unused_configs = true
