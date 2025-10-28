@@ -83,13 +83,13 @@ jobs:
         image: ${{ fromJSON(needs.setup.outputs.image-names) }}
     steps:
       - uses: actions/checkout@v5
-#      - name: Cache xdg
-#        uses: actions/cache@v4
-#        with:
-#          path: ${{ env.XDG_CACHE_HOME }}
-#          key: xdg-v1-${{ hashFiles('**/Makefile') }}
-#          restore-keys: |
-#            xdg-v1-
+      - name: Cache xdg
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.XDG_CACHE_HOME }}
+          key: xdg-v1-${{ hashFiles('**/Makefile') }}
+          restore-keys: |
+            xdg-v1-
       - name: Install poetry
         run: pipx install poetry
       - name: Setup Python
