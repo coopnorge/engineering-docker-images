@@ -233,7 +233,7 @@ The workaround is to ensure that you have a line with `>` between the two parts
 of the alert, or to use an ignore-comment to tell Prettier to no format the
 part. There is an
 [open issue](https://github.com/prettier/prettier/issues/15479) on Prettier's
-Github to track this problem.
+GitHub to track this problem.
 
 [MkDocs Awesome Pages]:
   https://github.com/lukasgeiter/mkdocs-awesome-pages-plugin/#features
