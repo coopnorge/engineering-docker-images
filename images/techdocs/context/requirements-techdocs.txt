@@ -289,9 +289,9 @@ mkdocs-git-committers-plugin-2==2.5.0 \
     --hash=sha256:1778becf98ccdc5fac809ac7b62cf01d3c67d6e8432723dffbb823307d1193c4 \
     --hash=sha256:a01f17369e79ca28651681cddf212770e646e6191954bad884ca3067316aae60
     # via -r requirements-techdocs.in
-mkdocs-git-revision-date-localized-plugin==1.4.7 \
-    --hash=sha256:056c0a90242409148f1dc94d5c9d2c25b5b8ddd8de45489fa38f7fa7ccad2bc4 \
-    --hash=sha256:10a49eff1e1c3cb766e054b9d8360c904ce4fe8c33ac3f6cc083ac6459c91953
+mkdocs-git-revision-date-localized-plugin==1.5.0 \
+    --hash=sha256:17345ccfdf69a1905dc96fb1070dce82d03a1eb6b0d48f958081a7589ce3c248 \
+    --hash=sha256:933f9e35a8c135b113f21bb57610d82e9b7bcc71dd34fb06a029053c97e99656
     # via -r requirements-techdocs.in
 mkdocs-htmlproofer-plugin==1.4.0 \
     --hash=sha256:5ef7ceeaad27d8138467fdfc2ba786f9339bdabcd736acdbc5e648859c764d3a \
@@ -480,9 +480,7 @@ python-slugify==8.0.4 \
 pytz==2025.2 \
     --hash=sha256:360b9e3dbb49a209c21ad61809c7fb453643e048b38924c765813546746e81c3 \
     --hash=sha256:5ddf76296dd8c44c26eb8f4b6f35488f3ccbf6fbbd7adee0b7262d43f0ec2f00
-    # via
-    #   mkdocs-git-revision-date-localized-plugin
-    #   pandas
+    # via pandas
 pyyaml==6.0.2 \
     --hash=sha256:01179a4a8559ab5de078078f37e5c1a30d76bb88519906844fd7bdea1b7729ff \
     --hash=sha256:0833f8694549e586547b576dcfaba4a6b55b9e96098b36cdc7ebefe667dfed48 \
