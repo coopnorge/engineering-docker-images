@@ -1,4 +1,4 @@
-FROM docker.io/python:3.10-slim@sha256:a2c9b8dd3da225debeb156176c111752499d152b7505146c1373364766d762a4 AS python
+FROM docker.io/python:3.14-slim@sha256:4ed33101ee7ec299041cc41dd268dae17031184be94384b1ce7936dc4e5dead3 AS python
 
 FROM python AS runtime
 
