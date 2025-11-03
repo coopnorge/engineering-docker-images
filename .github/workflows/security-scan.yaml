@@ -9,7 +9,7 @@ jobs:
     name: Supply Chain
     uses: coopnorge/github-workflow-supply-chain-security-validation/.github/workflows/supply-chain-security-validation.yaml@main
     with:
-      code-scanning-timeout-minutes: 15
+      code-scanning-timeout-minutes: 20
     secrets: inherit
     permissions:
       contents: read
