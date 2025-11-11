@@ -6,12 +6,11 @@
 - `terraform-upgrade` target: This target will run `terraform init -upgrade` in
   each Terraform directory followed by `terraform providers lock`.
 
-- `terraform-relock` target: This target will remove the existing Terraform
-  lock file and then run `terraform providers lock` in each Terraform
-  directory.
+- `terraform-relock` target: This target will remove the existing Terraform lock
+  file and then run `terraform providers lock` in each Terraform directory.
 
-- `.tfsec-ignore` or `.trivy-ignore` file: If this file is present in a directory
-  with Terraform files then trivy will not be used on the directory.
+- `.tfsec-ignore` or `.trivy-ignore` file: If this file is present in a
+  directory with Terraform files then trivy will not be used on the directory.
 
 - `TFDIRS` environment variable: This is a space-separated list of directories
   for which Terraform validation will be run.
@@ -24,8 +23,8 @@
 
   Default: `%/examples %/example`
 
-- `TF_LOCK_PLATFORMS` environment variable: A space-sperarated list of
-  platforms that `terraform providers lock` should use.
+- `TF_LOCK_PLATFORMS` environment variable: A space-separated list of platforms
+  that `terraform providers lock` should use.
 
   Default: `linux_arm64 linux_amd64 darwin_amd64 darwin_arm64 windows_amd64`.
 
@@ -75,8 +74,8 @@ include:
 ```
 
 To make sure that the image hash specified in `Dockerfile` above is updated
-automatically, make sure you have the following configured in dependabot
-config file:
+automatically, make sure you have the following configured in Dependabot config
+file:
 
 ```yaml title=".github/dependabot.yaml"
 registries:
