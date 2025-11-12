@@ -23,7 +23,7 @@
 
   Default: `%/examples %/example`
 
-- `TF_LOCK_PLATFORMS` environment variable: A space-sperarated list of platforms
+- `TF_LOCK_PLATFORMS` environment variable: A space-separated list of platforms
   that `terraform providers lock` should use.
 
   Default: `linux_arm64 linux_amd64 darwin_amd64 darwin_arm64 windows_amd64`.
@@ -73,7 +73,7 @@ include:
 ```
 
 To make sure that the image hash specified in `Dockerfile` above is updated
-automatically, make sure you have the following configured in dependabot config
+automatically, make sure you have the following configured in Dependabot config
 file:
 
 ```yaml title=".github/dependabot.yaml"
