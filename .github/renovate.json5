@@ -4,7 +4,7 @@
   "labels": ["dependencies","renovate"],
   "automerge": true,
   "automergeStrategy": "squash",
-  "enabledManagers": ["custom.regex"],
+  "enabledManagers": ["custom.regex", "tflint-plugin"],
   "customManagers": [
     // vale version in techdocs
     {
