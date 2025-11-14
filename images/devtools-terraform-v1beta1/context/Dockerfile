@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.3
 FROM docker.io/safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622 AS docker-lock
-FROM ghcr.io/terraform-linters/tflint-bundle:v0.48.0.0@sha256:523a85b4bf7af415cbb5f53ac1b56cd7501c8c8125f96c5b5cc19c895d894513 AS tflint
+FROM ghcr.io/terraform-linters/tflint:v0.59.1@sha256:2c23953d05388157922a76be1a5a767ff719cba029e026914f92604e665b0d31 AS tflint
 FROM docker.io/aquasec/trivy:0.67.2@sha256:e2b22eac59c02003d8749f5b8d9bd073b62e30fefaef5b7c8371204e0a4b0c08 AS trivy
 FROM docker.io/bitnami/oras:1.2.3@sha256:1f7883ab36a14675f68e0a449a30a9b9c79b356e13a60e3c73dbfe27b5a9a090 AS oras
 FROM docker.io/hashicorp/terraform:1.5.7@sha256:9fc0d70fb0f858b0af1fadfcf8b7510b1b61e8b35e7a4bb9ff39f7f6568c321d AS terraform
@@ -35,7 +35,7 @@ WORKDIR /srv/workspace
 ARG tfswitcher_version=0.13.1300
 
 COPY --from=terraform /bin/terraform /usr/bin/terraform
-COPY --from=tflint /root/.tflint.d /root/.tflint.d
+COPY .tflint.hcl /root/.tflint.hcl
 COPY --from=tflint /usr/local/bin/tflint /usr/bin/tflint
 COPY --from=trivy  /usr/local/bin/trivy /usr/local/bin/trivy
 COPY --from=golang /usr/local/bin/goenv.sh /usr/local/bin/goenv.sh
@@ -94,5 +94,6 @@ RUN DIGEST=$(oras pull $TRIVY_CHECKS_DB | grep Digest | cut -d' ' -f2) && \
     DOWNLOADED_AT=$(date +"%Y-%m-%dT%H:%M:%S.%6N%:z") && \
     echo "{\"Digest\":\"$DIGEST\",\"DownloadedAt\":\"$DOWNLOADED_AT\"}" > /var/trivy-checks-metadata.json
 
+RUN tflint --init
 
 CMD ["validate"]

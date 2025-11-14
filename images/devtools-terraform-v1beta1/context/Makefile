@@ -103,7 +103,7 @@ $(call dump_vars,trivy_plugin_cache_dir_target TRIVY_CACHE_DIR)
 	fi
 
 trivy=trivy --cache-dir $(trivy_cache_dir_target) config --exit-code 1 --misconfig-scanners=terraform
-tflint=tflint --enable-plugin=google --enable-plugin=azurerm  --disable-rule=terraform_unused_declarations $(if $(filter all commands,$(VERBOSE)),--loglevel=trace)
+tflint=tflint $(if $(filter all commands,$(VERBOSE)),--loglevel=trace)
 tfdocs_version=$(shell terraform-docs --version)
 tfdocs_check=terraform-docs . -c $(terraform_docs_config) --output-check
 tfdocs_generate=terraform-docs . -c $(terraform_docs_config)
