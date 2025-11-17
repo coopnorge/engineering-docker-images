@@ -39,6 +39,7 @@ approval_rules:
       - ".*requirements.*.in$"
       - ".*requirements.*.txt$"
       - "^.github/workflows/.*$"
+      - "^images/devtools-terraform-v1beta1/context/.tflint.hcl$"
     has_valid_signatures_by_keys:
       key_ids: ["B5690EEEBB952194"]
 
