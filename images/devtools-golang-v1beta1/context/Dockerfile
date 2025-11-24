@@ -1,5 +1,5 @@
 FROM docker.io/safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622 AS docker-lock
-FROM golangci/golangci-lint:v2.6-alpine@sha256:a7da5151e0bd61bd7f99e1ebd8e5e144b535b73b2762c498443ff4f6a4a538c4 AS golangci-lint
+FROM golangci/golangci-lint:v2.6-alpine@sha256:a3abd55b17a74e36703f3d27e8183958b8bee15a1b1ffb25529192e114e0edbe AS golangci-lint
 FROM docker.io/fullstorydev/grpcurl:v1.9.3@sha256:085e183ca334eb4e81ca81ee12cbb2b2737505d1d77f5e33dabc5d066593d998 AS grpcurl
 FROM docker.io/mikefarah/yq:4@sha256:75b3a60dce1fa4641b0f02bdb4465eddc5da95e62028118a292239ca8e3921e5 AS yq
 FROM docker.io/hadolint/hadolint:v2.14.0@sha256:27086352fd5e1907ea2b934eb1023f217c5ae087992eb59fde121dce9c9ff21e AS hadolint
