@@ -8,5 +8,5 @@ codespell==2.4.1
 pydantic==2.12.4
 mypy==1.18.2
 jeepney==0.9.0
-SecretStorage==3.4.0
+SecretStorage==3.5.0
 poetry-plugin-export==1.8.0
