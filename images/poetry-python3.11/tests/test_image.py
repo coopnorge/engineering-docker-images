@@ -21,7 +21,7 @@ def build_image(
 
 @pytest.fixture(scope="session")
 def expected_poetry_version() -> bytes:
-    return b"Poetry (version 1."
+    return b"Poetry (version 2."
 
 
 @pytest.fixture(scope="session")
