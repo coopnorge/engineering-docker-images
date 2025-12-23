@@ -4,7 +4,7 @@ mkdocs-ezlinks-plugin==0.1.14
 mkdocs-git-committers-plugin-2==2.5.0
 mkdocs-git-revision-date-localized-plugin==1.5.0
 mkdocs-htmlproofer-plugin==1.4.0
-mkdocs-kroki-plugin==0.9.0
+mkdocs-kroki-plugin==1.1.0
 mkdocs-link-marker==0.2.0
 mkdocs-table-reader-plugin==3.1.0
 mkdocs-techdocs-core==1.5.4
