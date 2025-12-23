@@ -129,6 +129,12 @@ tf-upgrade-$(1): | $(tf_plugin_cache_dir_target)
 	cd $(1) && $$(terraform) init -upgrade $(terraform_init_args)
 	cd $(1) && $$(terraform) providers lock $(terraform_providers_lock_args)
 
+tf-lock: tf-lock-$(1)
+.PHONY: tf-lock-$(1)
+tf-relock-$(1): | $(tf_plugin_cache_dir_target)
+	cd $(1) && $$(tfswitch)
+	cd $(1) && $$(terraform) providers lock $(terraform_providers_lock_args)
+
 tf-relock: tf-relock-$(1)
 .PHONY: tf-relock-$(1)
 tf-relock-$(1): | $(tf_plugin_cache_dir_target)
