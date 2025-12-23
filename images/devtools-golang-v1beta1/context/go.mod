@@ -6,7 +6,7 @@ require (
 	github.com/abice/go-enum v0.9.2
 	github.com/cortesi/modd v0.8.1
 	github.com/envoyproxy/protoc-gen-validate v1.2.1
-	github.com/go-delve/delve v1.25.2
+	github.com/go-delve/delve v1.26.0
 	github.com/pseudomuto/protoc-gen-doc v1.5.1
 	github.com/sanposhiho/gomockhandler v1.6.1
 	go.uber.org/mock v0.6.0
@@ -29,7 +29,7 @@ require (
 	github.com/cortesi/termlog v0.0.0-20210222042314-a1eec763abec // indirect
 	github.com/cosiner/argv v0.1.0 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.7 // indirect
-	github.com/derekparker/trie v0.0.0-20230829180723-39f4de51ef7d // indirect
+	github.com/derekparker/trie/v3 v3.2.0 // indirect
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/go-delve/liner v1.2.3-0.20231231155935-4726ab1d7f62 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
@@ -37,7 +37,6 @@ require (
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/google/go-dap v0.12.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
-	github.com/hashicorp/golang-lru v1.0.2 // indirect
 	github.com/huandu/xstrings v1.5.0 // indirect
 	github.com/iancoleman/strcase v0.3.0 // indirect
 	github.com/imdario/mergo v0.3.13 // indirect
