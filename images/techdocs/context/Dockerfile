@@ -30,7 +30,7 @@ RUN ln -s /usr/local/lib/node_modules/corepack/dist/corepack.js /usr/local/bin/c
     && ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 ENV JDK_VERSION=17
-ENV JDK_PACKAGE_VERSION=17.0.16+8-1~deb12u1
+ENV JDK_PACKAGE_VERSION=17.0.17+10-1~deb12u1
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
     openjdk-${JDK_VERSION}-jdk-headless=${JDK_PACKAGE_VERSION} \
