@@ -19,3 +19,4 @@ spec:
             - "policy-bot: main"
         requiredPullRequestReviews:
           requireCodeOwnerReviews: false
+
