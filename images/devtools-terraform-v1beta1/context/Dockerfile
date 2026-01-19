@@ -11,7 +11,7 @@ RUN \
     go env > /usr/local/bin/goenv.sh && \
     true
 
-FROM docker.io/library/ubuntu:24.04@sha256:66460d557b25769b102175144d538d88219c077c678a49af4afca6fbfc1b5252 AS base
+FROM docker.io/library/ubuntu:24.04@sha256:cd1dba651b3080c3686ecf4e3c4220f026b521fb76978881737d24f200828b2b AS base
 
 
 # https://packages.ubuntu.com/search?keywords=busybox&searchon=names&suite=focal&section=all
