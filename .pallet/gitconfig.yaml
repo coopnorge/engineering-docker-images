@@ -1,0 +1,22 @@
+apiVersion: github.coop.no/v1alpha1
+kind: RepositoryConfig
+metadata:
+  name: engineering-docker-images
+spec:
+  description: "No description provided"
+  visibility: "public"
+
+
+  branches:
+    default: "main"
+    protection:
+      - id: "main"
+        pattern: "main"
+        requireSignedCommits: false
+        requiredStatusChecks:
+          checks:
+            - "build"
+            - "policy-bot: main"
+        requiredPullRequestReviews:
+          requireCodeOwnerReviews: false
+
