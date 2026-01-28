@@ -22,9 +22,7 @@ class Replacer:
     def apply(self, latest_version: str) -> None:
         file = SCRIPT_DIR_PATH / self.file
         # Update version in dockerfile
-        logging.info(
-            f"replace {file = !r} {latest_version = !r} {self.replace = !r}"
-        )
+        logging.info(f"replace {file = !r} {latest_version = !r} {self.replace = !r}")
         file_content = file.read_bytes().decode("utf-8")
         file_content = re.sub(
             self.replace.format(latest_version=r"[0-9a-zA-Z.]+"),
@@ -63,10 +61,9 @@ def lock_latest(
     for remote_asset in release["assets"]:
         for lock_asset in lock_assets:
             if fnmatch.fnmatch(remote_asset["name"], lock_asset.remote_glob):
-                remote_asset[
-                    "local_filename"
-                ] = SCRIPT_DIR_PATH / lock_asset.output_name.format(
-                    latest_version=latest_version
+                remote_asset["local_filename"] = (
+                    SCRIPT_DIR_PATH
+                    / lock_asset.output_name.format(latest_version=latest_version)
                 )
                 remote_assets.append(remote_asset)
 
@@ -110,7 +107,12 @@ def main() -> None:
 
     lock_latest(
         "bufbuild/buf",
-        [LockAsset("sha256.txt", "images/devtools-golang-v1beta1/context/buf-{latest_version}.sha256sum")],
+        [
+            LockAsset(
+                "sha256.txt",
+                "images/devtools-golang-v1beta1/context/buf-{latest_version}.sha256sum",
+            )
+        ],
         [
             Replacer(
                 Path("images/devtools-golang-v1beta1/context/Dockerfile"),

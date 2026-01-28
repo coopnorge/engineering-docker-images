@@ -88,12 +88,10 @@ def ctx_prototype(
             "devtools",
             "bash",
             "-c",
-            textwrap.dedent(
-                """
+            textwrap.dedent("""
                     find /srv/workspace/.terraform/
                     find ~/.cache/
-                    """
-            ),
+                    """),
         ]
         logging.debug("running %s", shlex.join(run_cmd))
         subprocess.run(run_cmd, check=True)
@@ -358,14 +356,12 @@ def test_prototype_fail_fmt(
     capfd: CaptureFixture[str],
 ) -> None:
     with ctx_prototype(tmp_path, cache_dir) as workdir:
-        (workdir / "bad_fmt.tf").write_text(
-            """
+        (workdir / "bad_fmt.tf").write_text("""
 data "null_data_source" "values" {
   a = 1
   aaa = 1111
 }
-"""
-        )
+""")
         with pytest.raises(subprocess.CalledProcessError):
             subprocess.run(devtools_cmd(), check=True)
 
@@ -374,8 +370,7 @@ data "null_data_source" "values" {
 
 
 def write_google_versions_tf(workdir: Path) -> None:
-    (workdir / "versions.tf").write_text(
-        """
+    (workdir / "versions.tf").write_text("""
 # https://www.terraform.io/docs/language/settings/index.html
 # https://www.terraform.io/docs/language/expressions/version-constraints.html
 terraform {
@@ -391,8 +386,7 @@ terraform {
   }
   required_version = "~> 1.0"
 }
-"""
-    )
+""")
 
 
 def test_prototype_fail_validate(
@@ -402,12 +396,10 @@ def test_prototype_fail_validate(
 ) -> None:
     with ctx_prototype(tmp_path, cache_dir) as workdir:
         write_google_versions_tf(workdir)
-        (workdir / "bad_validate.tf").write_text(
-            """
+        (workdir / "bad_validate.tf").write_text("""
 resource "google_storage_bucket" "example" {
 }
-"""
-        )
+""")
         with pytest.raises(subprocess.CalledProcessError):
             subprocess.run(devtools_cmd(), check=True)
         cap = Captured.from_capfd(capfd)
@@ -421,14 +413,12 @@ def test_prototype_trivy_failed_and_skip(
 ) -> None:
     with ctx_prototype(tmp_path, cache_dir) as workdir:
         write_google_versions_tf(workdir)
-        (workdir / "bad_tfsec.tf").write_text(
-            """
+        (workdir / "bad_tfsec.tf").write_text("""
 resource "google_storage_bucket" "example" {
   name     = "example"
   location = "EU"
 }
-"""
-        )
+""")
         with pytest.raises(subprocess.CalledProcessError):
             subprocess.run(devtools_cmd(), check=True)
         cap = Captured.from_capfd(capfd)
@@ -455,8 +445,7 @@ def test_prototype_fail_tflint(
 ) -> None:
     with ctx_prototype(tmp_path, cache_dir) as workdir:
         write_google_versions_tf(workdir)
-        (workdir / "bad_tflint.tf").write_text(
-            """
+        (workdir / "bad_tflint.tf").write_text("""
 resource "google_project_iam_binding" "iam_binding" {
   project = "abc"
   role    = "def"
@@ -464,8 +453,7 @@ resource "google_project_iam_binding" "iam_binding" {
     "first.last@example.com",
   ]
 }
-"""
-        )
+""")
         with pytest.raises(subprocess.CalledProcessError):
             subprocess.run(devtools_cmd(), check=True)
         cap = Captured.from_capfd(capfd)
@@ -478,8 +466,7 @@ def test_prototype_tfdocs_fail(
     capfd: CaptureFixture[str],
 ) -> None:
     with ctx_prototype(tmp_path, cache_dir) as workdir:
-        (workdir / "terraform-docs.yml").write_text(
-            """
+        (workdir / "terraform-docs.yml").write_text("""
 formatter: "markdown table"
 output:
   file: "README.md"
@@ -488,8 +475,7 @@ output:
     <!-- BEGIN_TF_DOCS -->
     {{ .Content }}
     <!-- END_TF_DOCS -->
-"""
-        )
+""")
         with pytest.raises(subprocess.CalledProcessError):
             subprocess.run(devtools_cmd(), check=True)
         cap = Captured.from_capfd(capfd)
