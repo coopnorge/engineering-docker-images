@@ -155,9 +155,7 @@ func init() {
         pytest.param(
             None,
             False,
-            (
-                lambda workdir: (workdir / "bad_file.go").write_text(
-                    """\
+            (lambda workdir: (workdir / "bad_file.go").write_text("""\
 package main
 
 import "fmt"
@@ -171,9 +169,7 @@ func init() {
 	x, _ := GetError()
 	print(x)
 }
-"""
-                )
-            ),
+""")),
             [("Error return value is not checked", True)],
             id="validate-unchecked-return",
         ),
@@ -204,28 +200,20 @@ func UnusedFunc() int {
             None,
             True,
             [
-                (
-                    lambda workdir: (workdir / ".golangci.yml").write_text(
-                        """\
+                (lambda workdir: (workdir / ".golangci.yml").write_text("""\
 version: "2"
 linters:
   default: none
   enable:
     - misspell
-"""
-                    )
-                ),
-                (
-                    lambda workdir: (workdir / "bad_file.go").write_text(
-                        """\
+""")),
+                (lambda workdir: (workdir / "bad_file.go").write_text("""\
 package main
 
 func UnusedFunc() int {
 	return 3
 }
-"""
-                    )
-                ),
+""")),
             ],
             [],
             id="golangci-config-used",
@@ -322,8 +310,7 @@ def test_docker_build_app_resources(test_helper: TestHelper) -> None:
 
 def test_prototype_failing_tests(tmp_path: Path, capfd: CaptureFixture[str]) -> None:
     with ctx_prototype(tmp_path) as workdir:
-        (workdir / "sum/failing_test.go").write_text(
-            """\
+        (workdir / "sum/failing_test.go").write_text("""\
 package sum_test
 
 import "testing"
@@ -331,8 +318,7 @@ import "testing"
 func TestThatFails(t *testing.T) {
 	t.Fatalf("fail")
 }
-"""
-        )
+""")
         with pytest.raises(subprocess.CalledProcessError):
             subprocess.run("docker compose run --rm devtools".split(" "), check=True)
         captured = capfd.readouterr()
@@ -347,8 +333,7 @@ func TestThatFails(t *testing.T) {
 
 def test_prototype_validate_fix(tmp_path: Path) -> None:
     with ctx_prototype(tmp_path) as workdir:
-        (workdir / "bad_file.go").write_text(
-            """\
+        (workdir / "bad_file.go").write_text("""\
 package main
 
 import "fmt"
@@ -366,8 +351,7 @@ func init() {
 	}
 	print(x)
 }
-"""
-        )
+""")
         subprocess.run(
             "docker compose run --rm devtools validate-fix".split(" "), check=True
         )
