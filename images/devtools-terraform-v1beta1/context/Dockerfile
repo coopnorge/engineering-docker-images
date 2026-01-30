@@ -2,7 +2,6 @@
 FROM docker.io/safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622 AS docker-lock
 FROM ghcr.io/terraform-linters/tflint:v0.60.0@sha256:cef181224b4a9cea521d8f785d50957ea3215b449e2d97e7793f222e2808d188 AS tflint
 FROM docker.io/aquasec/trivy:0.67.2@sha256:e2b22eac59c02003d8749f5b8d9bd073b62e30fefaef5b7c8371204e0a4b0c08 AS trivy
-FROM docker.io/bitnami/oras:1.2.3@sha256:1f7883ab36a14675f68e0a449a30a9b9c79b356e13a60e3c73dbfe27b5a9a090 AS oras
 FROM docker.io/hashicorp/terraform:1.5.7@sha256:9fc0d70fb0f858b0af1fadfcf8b7510b1b61e8b35e7a4bb9ff39f7f6568c321d AS terraform
 FROM quay.io/terraform-docs/terraform-docs:0.20.0@sha256:37329e2dc2518e7f719a986a3954b10771c3fe000f50f83fd4d98d489df2eae2 AS tfdocs
 FROM docker.io/library/golang:1.25.6@sha256:ce63a16e0f7063787ebb4eb28e72d477b00b4726f79874b3205a965ffd797ab2 AS golang
@@ -18,14 +17,14 @@ FROM docker.io/library/ubuntu:24.04@sha256:cd1dba651b3080c3686ecf4e3c4220f026b52
 RUN \
     apt-get update && \
     apt-get install -y \
-        --no-install-recommends \
-        busybox \
-        ca-certificates \
-        curl \
-        git \
-        make \
-        socat \
-        && \
+    --no-install-recommends \
+    busybox \
+    ca-certificates \
+    curl \
+    git \
+    make \
+    socat \
+    && \
     rm -vr /var/lib/apt/lists/* && \
     true
 
@@ -41,7 +40,6 @@ COPY --from=trivy  /usr/local/bin/trivy /usr/local/bin/trivy
 COPY --from=golang /usr/local/bin/goenv.sh /usr/local/bin/goenv.sh
 COPY --from=docker-lock /prod/docker-lock /usr/local/bin/docker-lock
 COPY --from=tfdocs /usr/local/bin/terraform-docs /usr/local/bin/terraform-docs
-COPY --from=oras /opt/bitnami/oras/bin/oras /usr/local/bin/oras
 
 COPY terraform-switcher_${tfswitcher_version}_checksums.txt /var/tmp/terraform-switcher_${tfswitcher_version}_checksums.txt
 
@@ -66,6 +64,13 @@ RUN \
     #     tfswitch "${ver}"; \
     # done; \
     true
+
+ENV ORAS_VERSION=1.2.3
+RUN \
+    cd /var/tmp && \
+    . /usr/local/bin/goenv.sh && \
+    curl -LOJ "https://github.com/oras-project/oras/releases/download/v${ORAS_VERSION}/oras_${ORAS_VERSION}_${GOOS}_${GOARCH}.tar.gz" && \
+    tar -xvf "oras_${ORAS_VERSION}_${GOOS}_${GOARCH}.tar.gz" -C /usr/local/bin oras
 
 ENV TF_PLUGIN_CACHE_DIR=/root/.cache/terraform.d/plugin-cache
 ENV TRIVY_CHECKS_DB=ghcr.io/aquasecurity/trivy-checks:1
