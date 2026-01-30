@@ -19,9 +19,10 @@
             "allowedVersions": "< 1.6.0"
         },
         {
-            "matchFileNames": ["images/**"],
-            "additionalBranchPrefix": "{{{lookup (split packageFileDir \"/\") 1}}}-",
-            "commitMessageSuffix": " in {{{lookup (split packageFileDir \"/\") 1}}}"
+            "matchPackageNames": ["poetry"],
+            "matchManagers": ["pip-compile", "pip_setup", "pip_requirements"],
+            "matchFileNames": ["images/**/*python*/**"],
+            "allowedVersions": "< 2.0.0"
         },
         {
             "matchFileNames": ["images/poetry-python3.9/**"],
