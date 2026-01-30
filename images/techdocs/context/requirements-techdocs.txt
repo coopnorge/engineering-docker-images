@@ -360,9 +360,9 @@ mkdocs-git-committers-plugin-2==2.5.0 \
     --hash=sha256:1778becf98ccdc5fac809ac7b62cf01d3c67d6e8432723dffbb823307d1193c4 \
     --hash=sha256:a01f17369e79ca28651681cddf212770e646e6191954bad884ca3067316aae60
     # via -r context/requirements-techdocs.in
-mkdocs-git-revision-date-localized-plugin==1.5.0 \
-    --hash=sha256:17345ccfdf69a1905dc96fb1070dce82d03a1eb6b0d48f958081a7589ce3c248 \
-    --hash=sha256:933f9e35a8c135b113f21bb57610d82e9b7bcc71dd34fb06a029053c97e99656
+mkdocs-git-revision-date-localized-plugin==1.5.1 \
+    --hash=sha256:2b0239455cd84784dd87ac8dfc9253fe4b2dd35e102696f21b5d34e2175981c6 \
+    --hash=sha256:b00fd36ed0f9b2326b1488fd8fa31bf2ce64e68c4aa60a9ce857f10719571903
     # via -r context/requirements-techdocs.in
 mkdocs-htmlproofer-plugin==1.4.1 \
     --hash=sha256:7b2422175960cc8b91a9350f35a5802953f79f12faf2709f6de674a58de38733 \
