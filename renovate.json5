@@ -20,6 +20,7 @@
         },
         {
             "matchPaths": ["images/**"],
+            "additionalBranchPrefix": "{{{lookup (split packageFileDir \"/\") 1}}}-",
             "commitMessageSuffix": " in {{{lookup (split packageFileDir \"/\") 1}}}"
         },
         {
