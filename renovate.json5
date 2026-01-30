@@ -1,0 +1,70 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:recommended",
+    ],
+    "rebaseWhen": "conflicted",
+    "labels": ["dependencies","renovate"],
+    "automerge": true,
+    "automergeStrategy": "squash",
+    "schedule": ["* 4 * * 1"],
+    "postUpdateOptions": [
+        "gomodTidy",
+        "gomodUpdateImportPaths",
+    ],
+    "packageRules": [
+        {
+            "matchPackageNames": ["hashicorp/terraform"],
+            "matchManagers": ["dockerfile", "docker-compose"],
+            "allowedVersions": "< 1.6.0"
+        }
+    ],
+    "customManagers": [
+      // vale version in techdocs
+      {
+        "customType": "regex",
+        "managerFilePatterns": ["/^images/techdocs/context/Dockerfile$/"],
+        "matchStrings": [
+          "ENV\\s+VALE_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"
+        ],
+        "datasourceTemplate": "github-releases",
+        "depNameTemplate": "errata-ai/vale",
+        "versioningTemplate": "semver",
+      },
+      // JDK version in techdocs
+      {
+        "customType": "regex",
+        "managerFilePatterns": ["/^images/techdocs/context/Dockerfile$/"],
+        "matchStrings": [
+          "ENV\\s+JDK_VERSION\\s*=\\s*(?<jdkVersion>\\d+)\\s*[\\r\\n]+ENV\\s+JDK_PACKAGE_VERSION\\s*=\\s*(?<currentValue>[^\\s]+)"
+        ],
+        "depNameTemplate": "openjdk-{{{jdkVersion}}}-jdk",
+        "datasourceTemplate": "deb",
+        "versioningTemplate": "deb",
+        // if we change the debian base image (e.g. FROM docker.io/library/python:x.y.z-bookworm), we need to change the suite string below
+        "registryUrlTemplate": "https://deb.debian.org/debian?suite=bookworm&components=main&binaryArch=amd64"
+      },
+      // mage version in devtools-kubernetes
+      {
+        "customType": "regex",
+        "managerFilePatterns": ["/^images/devtools-kubernetes-v1beta1/context/Dockerfile$/"],
+        "matchStrings": [
+            "ENV\\s+MAGE_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"
+        ],
+        "datasourceTemplate": "github-releases",
+        "depNameTemplate": "magefile/mage",
+        "versioningTemplate": "semver",
+      },
+      // dyff version in devtools-kubernetes
+      {
+        "customType": "regex",
+        "managerFilePatterns": ["/^images/devtools-kubernetes-v1beta1/context/Dockerfile$/"],
+        "matchStrings": [
+            "ENV\\s+DYFF_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"
+        ],
+        "datasourceTemplate": "github-releases",
+        "depNameTemplate": "homeport/dyff",
+        "versioningTemplate": "semver",
+      }
+  ]
+}
