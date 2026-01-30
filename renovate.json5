@@ -7,7 +7,7 @@
     "labels": ["dependencies","renovate"],
     "automerge": true,
     "automergeStrategy": "squash",
-    "schedule": ["* 4 * * 1"],
+    //"schedule": ["* 4 * * 1"],
     "postUpdateOptions": [
         "gomodTidy",
         "gomodUpdateImportPaths",
