@@ -21,7 +21,22 @@
         {
             "matchPaths": ["images/**"],
             "commitMessageSuffix": " in {{{lookup (split parentDir \"/\") 1}}}"
-        }
+        },
+        {
+            "matchPaths": ["images/poetry-python3.9/**"],
+            "matchPackageNames": ["python"],
+            "allowedVersions": "3.9.x"
+        },
+        {
+            "matchPaths": ["images/poetry-python3.10/**", "images/devtools-python3.10-v1beta1/**"],
+            "matchPackageNames": ["python"],
+            "allowedVersions": "3.10.x"
+        },
+        {
+            "matchPaths": ["images/poetry-python3.11/**"],
+            "matchPackageNames": ["python"],
+            "allowedVersions": "3.11.x"
+        },
     ],
     "customManagers": [
       // vale version in techdocs
