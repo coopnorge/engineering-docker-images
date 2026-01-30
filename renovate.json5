@@ -84,6 +84,17 @@
         "datasourceTemplate": "github-releases",
         "depNameTemplate": "homeport/dyff",
         "versioningTemplate": "semver",
+      },
+      // oras version in devtools-terraform
+      {
+        "customType": "regex",
+        "managerFilePatterns": ["/^images/devtools-terraform-v1beta1/context/Dockerfile$/"],
+        "matchStrings": [
+            "ENV\\s+ORAS_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"
+        ],
+        "datasourceTemplate": "github-releases",
+        "depNameTemplate": "oras-project/oras",
+        "versioningTemplate": "semver",
       }
   ]
 }
