@@ -19,6 +19,12 @@
             "allowedVersions": "< 1.6.0"
         },
         {
+            "matchPackageNames": ["poetry"],
+            "matchManagers": ["pip-compile", "pip_setup", "pip_requirements"],
+            "matchPaths": ["images/**/*python*/**"],
+            "allowedVersions": "< 2.0.0"
+        },
+        {
             "matchPaths": ["images/**"],
             "commitMessageSuffix": " in {{{lookup (split packageFileDir \"/\") 1}}}"
         },
