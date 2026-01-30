@@ -20,7 +20,7 @@
         },
         {
             "matchPaths": ["images/**"],
-            "commitMessageSuffix": " in {{{lookup (split parentDir \"/\") 1}}}"
+            "commitMessageSuffix": " in {{{lookup (split packageFileDir \"/\") 1}}}"
         },
         {
             "matchPaths": ["images/poetry-python3.9/**"],
