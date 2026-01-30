@@ -17,6 +17,10 @@
             "matchPackageNames": ["hashicorp/terraform"],
             "matchManagers": ["dockerfile", "docker-compose"],
             "allowedVersions": "< 1.6.0"
+        },
+        {
+            "matchPaths": ["images/**"],
+            "commitMessageSuffix": " in {{{lookup (split parentDir \"/\") 1}}}"
         }
     ],
     "customManagers": [
