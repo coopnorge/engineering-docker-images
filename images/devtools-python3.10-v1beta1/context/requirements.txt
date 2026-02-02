@@ -14,9 +14,9 @@ build==1.0.3 \
     # via
     #   pip-tools
     #   poetry
-cachecontrol[filecache]==0.14.0 \
-    --hash=sha256:7db1195b41c81f8274a7bbd97c956f44e8348265a1bc7641c37dfebc39f0c938 \
-    --hash=sha256:f5bf3f0620c38db2e5122c0726bdebb0d16869de966ea6a2befe92470b740ea0
+CacheControl[filecache]==0.14.4 \
+    --hash=sha256:b7ac014ff72ee199b5f8af1de29d60239954f223e948196fa3d84adaffc71d2b \
+    --hash=sha256:e6220afafa4c22a47dd0badb319f84475d79108100d04e26e8542ef7d3ab05a1
     # via poetry
 cachetools==5.3.2 \
     --hash=sha256:086ee420196f7b2ab9ca2db2520aca326318b68fe5ba8bc4d49cca91add450f2 \
