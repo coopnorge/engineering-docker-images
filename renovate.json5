@@ -4,7 +4,7 @@
         "config:recommended",
     ],
     "rebaseWhen": "conflicted",
-    "labels": ["dependencies","renovate"],
+    "labels": ["dependencies", "renovate"],
     "automerge": true,
     "automergeStrategy": "squash",
     //"schedule": ["* 4 * * 1"],
@@ -19,92 +19,89 @@
             "allowedVersions": "< 1.6.0"
         },
         {
-            "matchPaths": ["images/**"],
+            "matchFileNames": ["images/**"],
             "additionalBranchPrefix": "{{{lookup (split packageFileDir \"/\") 1}}}-",
             "commitMessageSuffix": " in {{{lookup (split packageFileDir \"/\") 1}}}"
         },
         {
-            "matchPaths": ["images/poetry-python3.9/**"],
+            "matchFileNames": ["images/poetry-python3.9/**"],
             "matchPackageNames": ["python"],
             "allowedVersions": "3.9.x",
-            "constraints": {
-                "python": "3.9"
-            },
+            "constraints": {"python": "3.9"}
         },
         {
-            "matchPaths": ["images/poetry-python3.10/**", "images/devtools-python3.10-v1beta1/**"],
+            "matchFileNames": [
+                "images/poetry-python3.10/**",
+                "images/devtools-python3.10-v1beta1/**",
+            ],
             "matchPackageNames": ["python"],
             "allowedVersions": "3.10.x",
-            "constraints": {
-                "python": "3.10"
-            },
+            "constraints": {"python": "3.10"}
         },
         {
-            "matchPaths": ["images/poetry-python3.11/**"],
+            "matchFileNames": ["images/poetry-python3.11/**"],
             "matchPackageNames": ["python"],
             "allowedVersions": "3.11.x",
-            "constraints": {
-                "python": "3.11"
-            },
-        },
+            "constraints": {"python": "3.11"}
+        }
     ],
     "customManagers": [
-      // vale version in techdocs
-      {
-        "customType": "regex",
-        "managerFilePatterns": ["/^images/techdocs/context/Dockerfile$/"],
-        "matchStrings": [
-          "ENV\\s+VALE_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"
-        ],
-        "datasourceTemplate": "github-releases",
-        "depNameTemplate": "errata-ai/vale",
-        "versioningTemplate": "semver",
-      },
-      // JDK version in techdocs
-      {
-        "customType": "regex",
-        "managerFilePatterns": ["/^images/techdocs/context/Dockerfile$/"],
-        "matchStrings": [
-          "ENV\\s+JDK_VERSION\\s*=\\s*(?<jdkVersion>\\d+)\\s*[\\r\\n]+ENV\\s+JDK_PACKAGE_VERSION\\s*=\\s*(?<currentValue>[^\\s]+)"
-        ],
-        "depNameTemplate": "openjdk-{{{jdkVersion}}}-jdk",
-        "datasourceTemplate": "deb",
-        "versioningTemplate": "deb",
-        // if we change the debian base image (e.g. FROM docker.io/library/python:x.y.z-bookworm), we need to change the suite string below
-        "registryUrlTemplate": "https://deb.debian.org/debian?suite=bookworm&components=main&binaryArch=amd64"
-      },
-      // mage version in devtools-kubernetes
-      {
-        "customType": "regex",
-        "managerFilePatterns": ["/^images/devtools-kubernetes-v1beta1/context/Dockerfile$/"],
-        "matchStrings": [
-            "ENV\\s+MAGE_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"
-        ],
-        "datasourceTemplate": "github-releases",
-        "depNameTemplate": "magefile/mage",
-        "versioningTemplate": "semver",
-      },
-      // dyff version in devtools-kubernetes
-      {
-        "customType": "regex",
-        "managerFilePatterns": ["/^images/devtools-kubernetes-v1beta1/context/Dockerfile$/"],
-        "matchStrings": [
-            "ENV\\s+DYFF_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"
-        ],
-        "datasourceTemplate": "github-releases",
-        "depNameTemplate": "homeport/dyff",
-        "versioningTemplate": "semver",
-      },
-      // oras version in devtools-terraform
-      {
-        "customType": "regex",
-        "managerFilePatterns": ["/^images/devtools-terraform-v1beta1/context/Dockerfile$/"],
-        "matchStrings": [
-            "ENV\\s+ORAS_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"
-        ],
-        "datasourceTemplate": "github-releases",
-        "depNameTemplate": "oras-project/oras",
-        "versioningTemplate": "semver",
-      }
-  ]
+        // vale version in techdocs
+        {
+            "customType": "regex",
+            "managerFilePatterns": ["/^images/techdocs/context/Dockerfile$/"],
+            "matchStrings": [
+                "ENV\\s+VALE_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"
+            ],
+            "datasourceTemplate": "github-releases",
+            "depNameTemplate": "errata-ai/vale",
+            "versioningTemplate": "semver"
+        },
+        // JDK version in techdocs
+        {
+            "customType": "regex",
+            "managerFilePatterns": ["/^images/techdocs/context/Dockerfile$/"],
+            "matchStrings": [
+                "ENV\\s+JDK_VERSION\\s*=\\s*(?<jdkVersion>\\d+)\\s*[\\r\\n]+ENV\\s+JDK_PACKAGE_VERSION\\s*=\\s*(?<currentValue>[^\\s]+)"
+            ],
+            "depNameTemplate": "openjdk-{{{jdkVersion}}}-jdk",
+            "datasourceTemplate": "deb",
+            "versioningTemplate": "deb",
+            // if we change the debian base image (e.g. FROM docker.io/library/python:x.y.z-bookworm), we need to change the suite string below
+            "registryUrlTemplate": "https://deb.debian.org/debian?suite=bookworm&components=main&binaryArch=amd64"
+        },
+        // mage version in devtools-kubernetes
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^images/devtools-kubernetes-v1beta1/context/Dockerfile$/"
+            ],
+            "matchStrings": ["ENV\\s+MAGE_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"],
+            "datasourceTemplate": "github-releases",
+            "depNameTemplate": "magefile/mage",
+            "versioningTemplate": "semver"
+        },
+        // dyff version in devtools-kubernetes
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^images/devtools-kubernetes-v1beta1/context/Dockerfile$/"
+            ],
+            "matchStrings": ["ENV\\s+DYFF_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"],
+            "datasourceTemplate": "github-releases",
+            "depNameTemplate": "homeport/dyff",
+            "versioningTemplate": "semver"
+        },
+        // oras version in devtools-terraform
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^images/devtools-terraform-v1beta1/context/Dockerfile$/"
+            ],
+            "matchStrings": ["ENV\\s+ORAS_VERSION\\s*=\\s*(?<currentValue>[0-9.]+)"],
+            "datasourceTemplate": "github-releases",
+            "depNameTemplate": "oras-project/oras",
+            "versioningTemplate": "semver"
+        }
+    ]
 }
