@@ -26,17 +26,26 @@
         {
             "matchPaths": ["images/poetry-python3.9/**"],
             "matchPackageNames": ["python"],
-            "allowedVersions": "3.9.x"
+            "allowedVersions": "3.9.x",
+            "constraints": {
+                "python": "3.9"
+            },
         },
         {
             "matchPaths": ["images/poetry-python3.10/**", "images/devtools-python3.10-v1beta1/**"],
             "matchPackageNames": ["python"],
-            "allowedVersions": "3.10.x"
+            "allowedVersions": "3.10.x",
+            "constraints": {
+                "python": "3.10"
+            },
         },
         {
             "matchPaths": ["images/poetry-python3.11/**"],
             "matchPackageNames": ["python"],
-            "allowedVersions": "3.11.x"
+            "allowedVersions": "3.11.x",
+            "constraints": {
+                "python": "3.11"
+            },
         },
     ],
     "customManagers": [
