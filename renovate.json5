@@ -26,7 +26,7 @@
         },
         {
             "matchFileNames": ["images/poetry-python3.9/**"],
-            "matchPackageNames": ["python"],
+            "matchPackageNames": ["python", "docker.io/library/python"],
             "allowedVersions": "3.9.x",
             "constraints": {"python": "3.9"}
         },
@@ -35,13 +35,13 @@
                 "images/poetry-python3.10/**",
                 "images/devtools-python3.10-v1beta1/**",
             ],
-            "matchPackageNames": ["python"],
+            "matchPackageNames": ["python", "docker.io/library/python"],
             "allowedVersions": "3.10.x",
             "constraints": {"python": "3.10"}
         },
         {
             "matchFileNames": ["images/poetry-python3.11/**"],
-            "matchPackageNames": ["python"],
+            "matchPackageNames": ["python", "docker.io/library/python"],
             "allowedVersions": "3.11.x",
             "constraints": {"python": "3.11"}
         }
