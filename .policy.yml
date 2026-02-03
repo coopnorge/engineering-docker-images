@@ -2,6 +2,7 @@ policy:
   approval:
   - or:
     - Dependabot or Renovatebot update
+    - Renovatebot config update
     - and:
       - Code change
       - External contributors
@@ -43,6 +44,19 @@ approval_rules:
       - "^images/devtools-terraform-v1beta1/context/.tflint.hcl$"
     has_valid_signatures_by_keys:
       key_ids: ["B5690EEEBB952194"]
+
+- name: Renovatebot config update
+  requires:
+    count: 1
+    teams:
+      - "coopnorge/engineering"
+  if:
+    only_has_contributors_in:
+      users:
+        - "pravindahal"
+    only_changed_files:
+      paths:
+        - "^renovate.json5$"
 
 - name: Code change
   if:
