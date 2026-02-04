@@ -15,6 +15,19 @@
     "lockFileMaintenance": {
         "enabled": true,
     },
+    // pip-compile doesn't automatically look for files.
+    // ref: https://docs.renovatebot.com/modules/manager/pip-compile/
+    "pip-compile": {
+        "managerFilePatterns": ["/^\\/images\\/requirements.*\\.txt$/"]
+    },
+    // Since we use pip-compile for requirements*.txt files, we should disable
+    // other managers which look for the same files
+    "pip_requirements": {
+        "enabled": false
+    },
+    "pip_setup": {
+        "enabled": false
+    },
     "packageRules": [
         {
             "matchPackageNames": ["hashicorp/terraform"],
