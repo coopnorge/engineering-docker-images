@@ -10,7 +10,7 @@ require (
 	github.com/pseudomuto/protoc-gen-doc v1.5.1
 	github.com/sanposhiho/gomockhandler v1.6.1
 	go.uber.org/mock v0.6.0
-	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.6.0
+	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.6.1
 	google.golang.org/protobuf v1.36.11
 )
 
