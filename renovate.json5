@@ -27,7 +27,7 @@
             "commitMessageSuffix": " in {{{lookup (split packageFileDir \"/\") 1}}}"
         },
         {
-            "matchPackageNames": ["poetry"],
+            "matchPackageNames": ["poetry", "poetry-core"],
             "matchManagers": ["pip-compile", "pip_setup", "pip_requirements"],
             "matchFileNames": ["images/**/*python*/**"],
             "allowedVersions": "< 2.0.0"
