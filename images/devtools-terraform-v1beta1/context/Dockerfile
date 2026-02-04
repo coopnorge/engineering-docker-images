@@ -65,7 +65,7 @@ RUN \
     # done; \
     true
 
-ENV ORAS_VERSION=1.2.3
+ENV ORAS_VERSION=1.3.0
 RUN \
     cd /var/tmp && \
     . /usr/local/bin/goenv.sh && \
