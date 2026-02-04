@@ -12,6 +12,9 @@
         "gomodTidy",
         "gomodUpdateImportPaths",
     ],
+    "lockFileMaintenance": {
+        "enabled": true,
+    },
     "packageRules": [
         {
             "matchPackageNames": ["hashicorp/terraform"],
