@@ -30,6 +30,10 @@
     },
     "packageRules": [
         {
+            matchManagers: ['pip-compile'],
+            versioning: 'pep440'
+        },
+        {
             "matchPackageNames": ["mkdocs-*"],
             "matchFileNames": ["images/techdocs/**"],
             "groupName": "mkdocs dependencies"
