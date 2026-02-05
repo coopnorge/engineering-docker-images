@@ -30,6 +30,11 @@
     },
     "packageRules": [
         {
+            "matchPackageNames": ["mkdocs-*"],
+            "matchFileNames": ["images/techdocs/**"],
+            "groupName": "mkdocs dependencies"
+        },
+        {
             "matchPackageNames": ["docker.io/hashicorp/terraform"],
             "matchManagers": ["dockerfile", "docker-compose"],
             "allowedVersions": "< 1.6.0"
