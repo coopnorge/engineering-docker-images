@@ -34,7 +34,7 @@
             versioning: 'pep440'
         },
         {
-            "matchPackageNames": ["mkdocs-*"],
+            "matchPackageNames": ["mkdocs-*", "pymdown-extensions"],
             "matchFileNames": ["images/techdocs/**"],
             "groupName": "mkdocs dependencies"
         },
