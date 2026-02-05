@@ -8,4 +8,4 @@ mkdocs-kroki-plugin==1.2.0
 mkdocs-link-marker==0.2.0
 mkdocs-table-reader-plugin==3.1.0
 mkdocs-techdocs-core==1.5.4
-pymdown-extensions==10.14.3
+pymdown-extensions==10.16.1
