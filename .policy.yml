@@ -27,6 +27,7 @@ approval_rules:
       - "dependabot[bot]"
       - "renovate-coop-norge[bot]"
       - "renovatebot-coopnorge[bot]"
+      - "coopnorge-renovate[bot]"
     only_changed_files:
       paths:
       - ".*Dockerfile$"
