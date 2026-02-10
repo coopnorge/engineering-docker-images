@@ -59,6 +59,9 @@ jobs:
           RENOVATE_DOCKER_DOCKER_IO_PASSWORD: ${{ secrets.DOCKER_HUB_PAT }}
           RENOVATE_TERRAFORM__MODULE_APP_SPACELIFT_IO_TOKEN: ${{ secrets.SPACELIFT_READ_TOKEN }}
           RENOVATE_TERRAFORM__MODULE_SPACELIFT_IO_TOKEN: ${{ secrets.SPACELIFT_READ_TOKEN }}
+          GONOPROXY: github.com/coopnorge
+          GONOSUMDB: github.com/coopnorge
+          GOPRIVATE: github.com/coopnorge
         with:
           configurationFile: renovate.json5
           token: ${{ steps.get_token.outputs.token }}
