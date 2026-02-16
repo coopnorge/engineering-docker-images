@@ -1,20 +1,12 @@
 on:
-  workflow_call:
-    inputs:
-      logLevel:
-        description: "Override default log level"
-        required: false
-        default: "info"
-        type: string
-    secrets: {}
-
   workflow_dispatch:
     inputs:
       logLevel:
         description: "Override default log level"
         required: false
-        default: "info"
+        default: "debug"
         type: string
+
   schedule:
     - cron: "0 4 * * 1"
 
@@ -25,43 +17,5 @@ jobs:
       pull-requests: write
       id-token: write
       issues: write
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Get token
-        id: get_token
-        uses: actions/create-github-app-token@v2.2.1
-        with:
-          app-id: 635546
-          private-key: ${{ secrets.RENOVATE_APP_PRIVATE_KEY_PEM }}
-          owner: ${{ github.repository_owner }}
-          repositories: engineering-docker-images
-
-      - name: Run Renovate
-        uses: renovatebot/github-action@e23f4d9675532445118c886434f5a34292b630b4 # v46.0.2
-        env:
-          # Repository taken from variable to keep configuration file generic
-          RENOVATE_REPOSITORIES: ${{ github.repository }}
-          # Onboarding not needed for self-hosted
-          RENOVATE_ONBOARDING: "false"
-          # Username for GitHub authentication (should match GitHub App name + [bot])
-          RENOVATE_USERNAME: "renovate-coop-norge[bot]"
-          # Git commit author used, must match GitHub App
-          RENOVATE_GIT_AUTHOR: "renovate-coop-norge <151545514+renovate-coop-norge[bot]@users.noreply.github.com>"
-          # Use GitHub API to create commits (this allows for signed commits from GitHub App)
-          RENOVATE_PLATFORM_COMMIT: "true"
-          # Override schedule if set
-          RENOVATE_FORCE: "true"
-          LOG_LEVEL: ${{ inputs.logLevel || 'info' }}
-          RENOVATE_DOCKER_DOCKER_IO_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-          RENOVATE_DOCKER_DOCKER_IO_PASSWORD: ${{ secrets.DOCKER_HUB_PAT }}
-          RENOVATE_TERRAFORM__MODULE_APP_SPACELIFT_IO_TOKEN: ${{ secrets.SPACELIFT_READ_TOKEN }}
-          RENOVATE_TERRAFORM__MODULE_SPACELIFT_IO_TOKEN: ${{ secrets.SPACELIFT_READ_TOKEN }}
-          GONOPROXY: github.com/coopnorge
-          GONOSUMDB: github.com/coopnorge
-          GOPRIVATE: github.com/coopnorge
-        with:
-          configurationFile: renovate.json5
-          token: ${{ steps.get_token.outputs.token }}
+    uses: coopnorge/github-workflow-renovate/.github/workflows/renovate.yaml@v0
+    secrets: inherit
