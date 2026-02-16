@@ -94,7 +94,7 @@ jobs:
         shell: bash
         run: |
           poetry install -vvv
-      - uses: crazy-max/ghaction-github-runtime@fe36b0a410e9196601af7fee42fadab6f5890fc7 # pin@v3
+      - uses: crazy-max/ghaction-github-runtime@c624246617ee8212c6833e18685a84c75168f004 # pin@v3
       - uses: docker/setup-qemu-action@7e10951aea186e886cef2f1a25a7bbf4e593d710 # pin@v3
       - uses: docker/setup-buildx-action@7c525be6cc8a882d5163ce04293cac18617c709f # pin@v3
       - name: Validate python
