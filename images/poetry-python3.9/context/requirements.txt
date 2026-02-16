@@ -361,9 +361,9 @@ dulwich==0.21.7 \
     --hash=sha256:fa4d14767cf7a49c9231c2e52cb2a3e90d0c83f843eb6a2ca2b5d81d254cf6b9 \
     --hash=sha256:ffc27fb063f740712e02b4d2f826aee8bbed737ed799962fef625e2ce56e2d29
     # via poetry
-dunamai==1.25.0 \
-    --hash=sha256:7f9dc687dd3256e613b6cc978d9daabfd2bb5deb8adc541fc135ee423ffa98ab \
-    --hash=sha256:a7f8360ea286d3dbaf0b6a1473f9253280ac93d619836ad4514facb70c0719d1
+dunamai==1.26.0 \
+    --hash=sha256:5396ac43aa20ed059040034e9f9798c7464cf4334c6fc3da3732e29273a2f97d \
+    --hash=sha256:f584edf0fda0d308cce0961f807bc90a8fe3d9ff4d62f94e72eca7b43f0ed5f6
     # via poetry-dynamic-versioning
 fastjsonschema==2.21.2 \
     --hash=sha256:1c797122d0a86c5cace2e54bf4e819c36223b552017172f32c5c024a6b77e463 \
