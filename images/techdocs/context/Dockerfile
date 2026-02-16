@@ -1,4 +1,4 @@
-FROM docker.io/library/node:25.6.0-bookworm@sha256:3523df9d45c0280f49f4b503c7e2d354eeab5d676017488dd082188a0f09f99a AS node
+FROM docker.io/library/node:25.6.1-bookworm@sha256:39f92e620aa34854b8877b43bdffd411a301a50eefb38400785a01991f25a2f6 AS node
 FROM plantuml/plantuml:1.2026.1@sha256:0cd265d12d84b8a0cf307a7dd8c74f237d137b9327b5053bd5aa822f38952caa AS plantuml
 FROM mikefarah/yq:4.52.4@sha256:a4c2cafdf4674b2dc3c6ac457fe1486d55d7d93edb3ed4459637afda3c286af6 AS yq
 FROM docker.io/library/python:3.14.3-bookworm@sha256:dea5c0690cedf3c93529f8b62467fe6206a0b6163c2bf9a0c5115f4c8367a33d AS base
