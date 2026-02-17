@@ -19,3 +19,7 @@ jobs:
       issues: write
     uses: coopnorge/github-workflow-renovate/.github/workflows/renovate.yaml@v0
     secrets: inherit
+    with:
+      extra-env-vars: |
+        GONOSUMDB=github.com/envoyproxy/protoc-gen-validate,github.com/coopnorge
+        GONOPROXY=github.com/envoyproxy/protoc-gen-validate,github.com/coopnorge
