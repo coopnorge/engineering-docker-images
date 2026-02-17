@@ -2,7 +2,7 @@
 # https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/experimental.md
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
 
-FROM docker.io/kvij/scuttle:1.1.13@sha256:a44b76ae59812de81a88d07a5e44570b57d8b12a6080a88ef9e73b5a984202b5 AS scuttle
+FROM docker.io/kvij/scuttle:1.1.14@sha256:385f44bddd506fbff1256f6895a768e1bfd767620e71ab90b55cae6f48fe7706 AS scuttle
 FROM docker.io/library/alpine:3@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659 AS alpine
 
 FROM alpine AS runtime
