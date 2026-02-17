@@ -153,8 +153,8 @@
 			},
 			{
 				"name": "golangci/golangci-lint",
-				"tag": "v1.51-alpine",
-				"digest": "d4441632fdd9787214ebcfe026339adb9ab24a94026df18c8835893bfcdc9e27"
+				"tag": "v2.9-alpine",
+				"digest": "efea7fae4d772680c2c2dc3a067bde22c8c0344dde7e800d110589aaee6ce977"
 			},
 			{
 				"name": "docker.io/fullstorydev/grpcurl",
