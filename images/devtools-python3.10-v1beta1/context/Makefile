@@ -4,6 +4,7 @@ SHELL=bash
 .SHELLFLAGS=-ec -o pipefail
 PYTHON_BIN?=python
 py_source?=./src ./tests
+tests_source?=./tests
 
 # Load settings.
 $(if $(wildcard devtools-settings.mk),$(info loading devtools-settings.mk)$(eval include devtools-settings.mk),)
@@ -112,11 +113,19 @@ validate-fix: configure ## fix auto-fixable validation errors
 
 .PHONY: test
 test: configure ## run the project's tests
-	$(poetry) run pytest --cov-config=pyproject.toml --cov-report term --cov-report xml --cov=src ./tests
+	@if [ -d "$(tests_source)" ]; then \
+		$(poetry) run pytest --cov-config=pyproject.toml --cov-report term --cov-report xml --cov=src $(tests_source); \
+	else \
+		echo "no tests found in $(tests_source), skipping tests"; \
+	fi
 
 .PHONY: test-verbose
 test-verbose: configure ## run the project's tests with verbose output
-	$(poetry) run pytest -rA --log-level DEBUG --cov-config=pyproject.toml --cov-report term --cov-report xml --cov=src ./tests
+	@if [ -d "$(tests_source)" ]; then \
+		$(poetry) run pytest -rA --log-level DEBUG --cov-config=pyproject.toml --cov-report term --cov-report xml --cov=src $(tests_source) \
+	else \
+		echo "no tests found in $(tests_source), skipping tests"; \
+	fi
 
 .PHONY: build
 build: ## Build the source.
