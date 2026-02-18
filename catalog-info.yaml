@@ -6,6 +6,7 @@ metadata:
   description: Devtools and other useful container images
   annotations:
     backstage.io/techdocs-ref: dir:.
+    backstage.io/adr-location: docs/adrs
     github.com/project-slug: coopnorge/engineering-docker-images
 spec:
   owner: engineering
