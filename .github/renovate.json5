@@ -7,7 +7,6 @@
     "labels": ["dependencies", "renovate"],
     "automerge": true,
     "automergeStrategy": "squash",
-    //"schedule": ["* 4 * * 1"],
     "postUpdateOptions": [
         "gomodTidy",
         "gomodUpdateImportPaths",
@@ -29,10 +28,6 @@
         "enabled": false
     },
     "packageRules": [
-        {
-            matchManagers: ['pip-compile'],
-            versioning: 'pep440'
-        },
         {
             "matchPackageNames": ["mkdocs-*", "pymdown-extensions"],
             "matchFileNames": ["images/techdocs/**"],
