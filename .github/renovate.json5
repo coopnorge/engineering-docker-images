@@ -14,6 +14,7 @@
     "lockFileMaintenance": {
         "enabled": true,
     },
+    "prHourlyLimit": 5,
     // pip-compile doesn't automatically look for files.
     // ref: https://docs.renovatebot.com/modules/manager/pip-compile/
     "pip-compile": {
