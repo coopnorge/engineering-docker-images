@@ -3,7 +3,7 @@ module github.com/coopnorge/engineering-docker-images/images/devtools-kubernetes
 go 1.25.0
 
 require (
-	github.com/homeport/dyff v1.10.4
+	github.com/homeport/dyff v1.10.5
 	github.com/magefile/mage v1.15.0
 )
 
@@ -30,6 +30,6 @@ require (
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/sync v0.19.0 // indirect
 	golang.org/x/sys v0.41.0 // indirect
-	golang.org/x/term v0.39.0 // indirect
+	golang.org/x/term v0.40.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
