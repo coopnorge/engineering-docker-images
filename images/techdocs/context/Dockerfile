@@ -62,7 +62,7 @@ COPY --from=yq /usr/bin/yq /usr/bin/yq
 RUN echo $'#!/bin/sh\n\njava -jar '/opt/plantuml.jar' ${@}' >> /usr/local/bin/plantuml && \
     chmod 755 /usr/local/bin/plantuml
 
-ENV VALE_VERSION=3.11.2
+ENV VALE_VERSION=3.13.1
 
 # hadolint ignore=DL4006
 RUN curl -fsSL https://github.com/errata-ai/vale/releases/download/v${VALE_VERSION}/vale_${VALE_VERSION}_Linux_64-bit.tar.gz \
