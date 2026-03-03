@@ -3,15 +3,16 @@ module github.com/coopnorge/engineering-docker-images/images/devtools-kubernetes
 go 1.25.0
 
 require (
-	github.com/homeport/dyff v1.10.5
+	github.com/homeport/dyff v1.11.2
 	github.com/magefile/mage v1.15.0
 )
 
 require (
 	github.com/BurntSushi/toml v1.6.0 // indirect
+	github.com/caarlos0/env/v11 v11.4.0 // indirect
 	github.com/gonvenience/bunt v1.4.3 // indirect
 	github.com/gonvenience/idem v0.0.3 // indirect
-	github.com/gonvenience/neat v1.3.17 // indirect
+	github.com/gonvenience/neat v1.3.18 // indirect
 	github.com/gonvenience/term v1.0.5 // indirect
 	github.com/gonvenience/text v1.0.10 // indirect
 	github.com/gonvenience/ytbx v1.4.8 // indirect
