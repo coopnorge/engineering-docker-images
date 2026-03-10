@@ -368,13 +368,13 @@ mkdocs-htmlproofer-plugin==1.5.0 \
     --hash=sha256:09e04388fdaabcc345dda8be8f7b4f95005bd502c2d51c1f827b5b258822519d \
     --hash=sha256:4ff5a9bb4505e5b6332ca8a301cf77cfc548e5680b48fffb421eb95d72b07390
     # via -r requirements-techdocs.in
-mkdocs-kroki-plugin==1.2.1 \
-    --hash=sha256:3ef444a407f66442eb625afc0254acfdd7a5cf6db0f0325db6b5f9a97716f16f \
-    --hash=sha256:642404e63310b77bfc2e71159c38a275d4705e7bc9b3daceb4d0dc3ae24a5fdf
+mkdocs-kroki-plugin==1.3.0 \
+    --hash=sha256:29d028fcfe2565b983d28bfa9261fe2bd48d0a890f2508a3800246cf2ee128c5 \
+    --hash=sha256:cca01dfe6ea593867d0f3dffbfddd3c0d977bb33640a92b1f3b5af3da39be7ca
     # via -r requirements-techdocs.in
-mkdocs-link-marker==0.2.0 \
-    --hash=sha256:1a6b92b3bc67349d8d49eb18278a4ad9e1a9c0037f4dcc76bbb9e4aaf969539d \
-    --hash=sha256:8d194fd1666368ecf588f942bcc920071723776ef777961c72b7dc16da7c41a5
+mkdocs-link-marker==0.3.0 \
+    --hash=sha256:76249153ee3f22f904cc5b3153accbe5baac7611b0284adb2b58533618b207b3 \
+    --hash=sha256:bfc0a86076f2d8de5a042cae752d073d3b85e67b65e0ce3dfd0af42a9dfd7a77
     # via -r requirements-techdocs.in
 mkdocs-material==9.7.1 \
     --hash=sha256:3f6100937d7d731f87f1e3e3b021c97f7239666b9ba1151ab476cabb96c60d5c \
