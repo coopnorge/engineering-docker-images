@@ -1,7 +1,6 @@
 # syntax=docker/dockerfile:1.22
 FROM docker.io/safewaters/docker-lock:latest@sha256:432d90ddc2891f4845241adc63e5eef2dd1486fa14ea7882433cbd3f8ed64622 AS docker-lock
 FROM ghcr.io/terraform-linters/tflint:v0.61.0@sha256:b835d64d66abfdbc146694b918eb3cd733ec772465ad511464d4e8bebbdd6732 AS tflint
-FROM docker.io/aquasec/trivy:0.69.3@sha256:bcc376de8d77cfe086a917230e818dc9f8528e3c852f7b1aff648949b6258d1c AS trivy
 FROM docker.io/hashicorp/terraform:1.5.7@sha256:9fc0d70fb0f858b0af1fadfcf8b7510b1b61e8b35e7a4bb9ff39f7f6568c321d AS terraform
 FROM quay.io/terraform-docs/terraform-docs:0.20.0@sha256:37329e2dc2518e7f719a986a3954b10771c3fe000f50f83fd4d98d489df2eae2 AS tfdocs
 FROM docker.io/library/golang:1.26.1@sha256:c7e98cc0fd4dfb71ee7465fee6c9a5f079163307e4bf141b336bb9dae00159a5 AS golang
@@ -36,7 +35,6 @@ ARG tfswitcher_version=0.13.1300
 COPY --from=terraform /bin/terraform /usr/bin/terraform
 COPY .tflint.hcl /root/.tflint.hcl
 COPY --from=tflint /usr/local/bin/tflint /usr/bin/tflint
-COPY --from=trivy  /usr/local/bin/trivy /usr/local/bin/trivy
 COPY --from=golang /usr/local/bin/goenv.sh /usr/local/bin/goenv.sh
 COPY --from=docker-lock /prod/docker-lock /usr/local/bin/docker-lock
 COPY --from=tfdocs /usr/local/bin/terraform-docs /usr/local/bin/terraform-docs
@@ -73,9 +71,6 @@ RUN \
     tar -xvf "oras_${ORAS_VERSION}_${GOOS}_${GOARCH}.tar.gz" -C /usr/local/bin oras
 
 ENV TF_PLUGIN_CACHE_DIR=/root/.cache/terraform.d/plugin-cache
-ENV TRIVY_CHECKS_DB=ghcr.io/aquasecurity/trivy-checks:1
-ENV TRIVY_CACHE_DIR=/root/.cache/trvy
-
 
 COPY maker /usr/local/bin/maker
 RUN \
@@ -91,13 +86,6 @@ RUN \
 COPY Makefile /usr/local/share/devtools-terraform/Makefile
 
 RUN git config --system --add safe.directory /srv/workspace
-
-# Include the current version of trivy checks db in the image
-SHELL ["/bin/bash", "-exo", "pipefail", "-c"]
-RUN DIGEST=$(oras pull $TRIVY_CHECKS_DB | grep Digest | cut -d' ' -f2) && \
-    mv bundle.tar.gz /var/trivy-checks-db.tar.gz && \
-    DOWNLOADED_AT=$(date +"%Y-%m-%dT%H:%M:%S.%6N%:z") && \
-    echo "{\"Digest\":\"$DIGEST\",\"DownloadedAt\":\"$DOWNLOADED_AT\"}" > /var/trivy-checks-metadata.json
 
 RUN tflint --init
 
