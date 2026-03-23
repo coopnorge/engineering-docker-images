@@ -39,6 +39,12 @@
             "matchManagers": ["dockerfile", "docker-compose"],
             "allowedVersions": "< 1.6.0"
         },
+        // until setteld https://github.com/aquasecurity/trivy-action/issues/541
+        {
+            "matchPackageNames": ["docker.io/aquasec/trivy"],
+            "matchManagers": ["dockerfile", "docker-compose"],
+            "allowedVersions": "< 0.69.4"
+        },
         {
             "matchFileNames": ["images/**"],
             "additionalBranchPrefix": "{{{lookup (split packageFileDir \"/\") 1}}}-",
