@@ -7,7 +7,7 @@ on:
 jobs:
   supply-chain-security-validation:
     name: Supply Chain
-    uses: coopnorge/github-workflow-supply-chain-security-validation/.github/workflows/supply-chain-security-validation.yaml@pravindahal/chore/Replace-enry-with-github-linguist
+    uses: coopnorge/github-workflow-supply-chain-security-validation/.github/workflows/supply-chain-security-validation.yaml@main
     with:
       code-scanning-timeout-minutes: 20
     secrets: inherit
