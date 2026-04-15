@@ -384,9 +384,9 @@ mkdocs-htmlproofer-plugin==1.5.0 \
     --hash=sha256:09e04388fdaabcc345dda8be8f7b4f95005bd502c2d51c1f827b5b258822519d \
     --hash=sha256:4ff5a9bb4505e5b6332ca8a301cf77cfc548e5680b48fffb421eb95d72b07390
     # via -r requirements-techdocs.in
-mkdocs-kroki-plugin==1.3.0 \
-    --hash=sha256:29d028fcfe2565b983d28bfa9261fe2bd48d0a890f2508a3800246cf2ee128c5 \
-    --hash=sha256:cca01dfe6ea593867d0f3dffbfddd3c0d977bb33640a92b1f3b5af3da39be7ca
+mkdocs-kroki-plugin==1.3.1 \
+    --hash=sha256:9d23bfc489c710d88721d1ca3acee899314c3217f6fd94e76390b6f2827297b5 \
+    --hash=sha256:e7eee81dfda0c9bc1a1b4cb300cdcf2891f8cb7898cfb827f1fe151c906e83af
     # via -r requirements-techdocs.in
 mkdocs-link-marker==0.3.0 \
     --hash=sha256:76249153ee3f22f904cc5b3153accbe5baac7611b0284adb2b58533618b207b3 \
