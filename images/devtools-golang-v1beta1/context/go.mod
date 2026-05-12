@@ -8,7 +8,7 @@ require (
 	github.com/envoyproxy/protoc-gen-validate v1.3.3
 	github.com/go-delve/delve v1.26.1
 	github.com/pseudomuto/protoc-gen-doc v1.5.1
-	github.com/sanposhiho/gomockhandler v1.6.1
+	github.com/sanposhiho/gomockhandler v1.7.0
 	go.uber.org/mock v0.6.0
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.6.1
 	google.golang.org/protobuf v1.36.11
