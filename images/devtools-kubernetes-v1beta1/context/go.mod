@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	github.com/homeport/dyff v1.11.3
-	github.com/magefile/mage v1.17.1
+	github.com/magefile/mage v1.17.2
 )
 
 require (
