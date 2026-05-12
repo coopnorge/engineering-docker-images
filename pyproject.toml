@@ -7,14 +7,14 @@ authors = []
 requires-python = "^3.14"
 
 [tool.poetry.group.dev.dependencies]
-pytest = ">=8.2.2"
-isort = ">=5.13.2"
-black = ">=24.4.2"
-flake8 = ">=7.0.0"
-flake8-black = ">=0.3.6"
-pyproject-flake8 = ">=7.0.0"
-mypy = ">=1.10.0"
-docker = ">=7.1.0"
+pytest = "==9.0.3"
+isort = "==8.0.1"
+black = "==26.3.1"
+flake8 = "==7.0.0"
+flake8-black = "==0.4.0"
+pyproject-flake8 = "==7.0.0"
+mypy = "==1.20.0"
+docker = "==7.1.0"
 
 [tool.poetry]
 package-mode = false
@@ -46,5 +46,5 @@ log_cli_format = "%(asctime)s %(process)d %(thread)d %(levelno)03d:%(levelname)-
 log_cli_date_format = "%Y-%m-%dT%H:%M:%S"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core==2.4.0"]
 build-backend = "poetry.core.masonry.api"
