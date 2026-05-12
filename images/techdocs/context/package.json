@@ -3,6 +3,6 @@
     "@techdocs/cli": "1.10.7",
     "markdownlint": "^0.40.0",
     "markdownlint-cli": "^0.48.0",
-    "prettier": "3.8.1"
+    "prettier": "3.8.3"
   }
 }
