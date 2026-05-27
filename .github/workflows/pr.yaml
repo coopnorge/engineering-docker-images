@@ -4,7 +4,7 @@ on:
 jobs:
 
   setup:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-slim
     outputs:
       image-names: ${{ steps.image-names.outputs.image_names }}
       images-ci: ${{ steps.paths-filter.outputs.images }}
@@ -153,14 +153,9 @@ jobs:
       - image-ci
       - techdocs
       - policy-bot
-    if: always()
-    runs-on: ubuntu-24.04
+    if: failure() || cancelled()
+    runs-on: ubuntu-slim
     steps:
       - run: exit 1
         name: "Catch errors"
-        if: |
-          needs.image-ci.result == 'failure' ||
-          needs.techdocs.result == 'failure' ||
-          needs.policy-bot.result == 'failure' ||
-          needs.policy-bot.result == 'cancelled'
     permissions: {}
