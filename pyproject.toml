@@ -13,7 +13,7 @@ black = "==26.3.1"
 flake8 = "==7.0.0"
 flake8-black = "==0.4.0"
 pyproject-flake8 = "==7.0.0"
-mypy = "==1.20.0"
+mypy = "==2.1.0"
 docker = "==7.1.0"
 
 [tool.poetry]
