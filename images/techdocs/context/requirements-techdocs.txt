@@ -383,9 +383,9 @@ mkdocs-git-committers-plugin-2==2.5.0 \
     --hash=sha256:1778becf98ccdc5fac809ac7b62cf01d3c67d6e8432723dffbb823307d1193c4 \
     --hash=sha256:a01f17369e79ca28651681cddf212770e646e6191954bad884ca3067316aae60
     # via -r requirements-techdocs.in
-mkdocs-git-revision-date-localized-plugin==1.5.2 \
-    --hash=sha256:0b3d65abdb8b82591d724c1d5ece6af7bb3cd305bdd47e2fadd430886a9a2513 \
-    --hash=sha256:4f3175e039bc4fe0055cac97d295ce8d0d233a13d65986d42fd5324e4985acc2
+mkdocs-git-revision-date-localized-plugin==1.5.3 \
+    --hash=sha256:873444b54cab4d47c69bd6e85da05ef5fbe81fee27e64508114c46a0e4f81e37 \
+    --hash=sha256:cd96e432de6a7e59b31c7041574b22f84179c8636835419ff458877ecfaaaf05
     # via -r requirements-techdocs.in
 mkdocs-htmlproofer-plugin==1.5.0 \
     --hash=sha256:09e04388fdaabcc345dda8be8f7b4f95005bd502c2d51c1f827b5b258822519d \
