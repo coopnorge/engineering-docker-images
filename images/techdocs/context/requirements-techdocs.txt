@@ -237,7 +237,6 @@ markdown==3.10.2 \
     #   mkdocs-htmlproofer-plugin
     #   mkdocs-material
     #   mkdocs-techdocs-core
-    #   plantuml-markdown
     #   properdocs
     #   pymdown-extensions
 markdown-callouts==0.4.0 \
@@ -360,6 +359,7 @@ mkdocs==1.6.1 \
     #   mkdocs-ezlinks-plugin
     #   mkdocs-git-committers-plugin-2
     #   mkdocs-git-revision-date-localized-plugin
+    #   mkdocs-github-admonitions-plugin
     #   mkdocs-htmlproofer-plugin
     #   mkdocs-kroki-plugin
     #   mkdocs-link-marker
@@ -387,6 +387,10 @@ mkdocs-git-revision-date-localized-plugin==1.5.3 \
     --hash=sha256:873444b54cab4d47c69bd6e85da05ef5fbe81fee27e64508114c46a0e4f81e37 \
     --hash=sha256:cd96e432de6a7e59b31c7041574b22f84179c8636835419ff458877ecfaaaf05
     # via -r requirements-techdocs.in
+mkdocs-github-admonitions-plugin==0.1.1 \
+    --hash=sha256:7f81520a0681b9955952d73b21ce99b923921830b6b6d1ace9b3fb95cd1fb61f \
+    --hash=sha256:824dc821764171943c1043c88218d4af0329693870ba9be657f890d484a0aa85
+    # via mkdocs-techdocs-core
 mkdocs-htmlproofer-plugin==1.5.0 \
     --hash=sha256:09e04388fdaabcc345dda8be8f7b4f95005bd502c2d51c1f827b5b258822519d \
     --hash=sha256:4ff5a9bb4505e5b6332ca8a301cf77cfc548e5680b48fffb421eb95d72b07390
@@ -419,9 +423,9 @@ mkdocs-table-reader-plugin==3.1.0 \
     --hash=sha256:50a1302661c14d96b90ba0434ae96110441e0c653ce23559e3c6911fe79e7bd2 \
     --hash=sha256:eb15688ee8c0cd1a842f506f18973b87be22bd7baa5e2e551089de6b7f9ec25b
     # via -r requirements-techdocs.in
-mkdocs-techdocs-core==1.6.2 \
-    --hash=sha256:d4f212fa19bb0e85af7689cc4950b0d0ef00e3528cf2d767a435b75615dd0596 \
-    --hash=sha256:d6d1517341d108fef20da6e9912ff29cea574915654ef29204c156232d58ccc0
+mkdocs-techdocs-core==1.7.0 \
+    --hash=sha256:294c41a69b1c95def9534196fe74f0ef0cfd9625a5aef1fd70c0094ef600f9b4 \
+    --hash=sha256:2fc8d0a6d1312b19371c9a40bd7e9ffbfb067a659bbba526fefc5e7abe37ae51
     # via -r requirements-techdocs.in
 natsort==8.4.0 \
     --hash=sha256:45312c4a0e5507593da193dedd04abb1469253b601ecaf63445ad80f0a1ea581 \
@@ -567,9 +571,9 @@ pathspec==1.1.1 \
     # via
     #   mkdocs
     #   properdocs
-plantuml-markdown==3.11.1 \
-    --hash=sha256:0ac39c5d13d3ea8b84ec88f57369a85d058ff15c0c225591dd649b327586142c \
-    --hash=sha256:52c8507be5b4e5b57e3c4c1cfbe8894b6204f4b6bac2279896efb03d3b79bacf
+plantuml-markdown==3.11.2 \
+    --hash=sha256:45eb97fed669cc23c90593ae1d42122809bfc3693970a6edb0004c0dc20cde27 \
+    --hash=sha256:700a6ebf5c265da488aafa3c376f27e23d604dc4a151ff811fc3aec156ed51a3
     # via mkdocs-techdocs-core
 platformdirs==4.9.6 \
     --hash=sha256:3bfa75b0ad0db84096ae777218481852c0ebc6c727b3168c1b9e0118e458cf0a \
@@ -593,9 +597,9 @@ pygtrie==2.5.0 \
     --hash=sha256:203514ad826eb403dab1d2e2ddd034e0d1534bbe4dbe0213bb0593f66beba4e2 \
     --hash=sha256:8795cda8105493d5ae159a5bef313ff13156c5d4d72feddefacaad59f8c8ce16
     # via mkdocs-ezlinks-plugin
-pymdown-extensions==10.21.2 \
-    --hash=sha256:5c0fd2a2bea14eb39af8ff284f1066d898ab2187d81b889b75d46d4348c01638 \
-    --hash=sha256:c3f55a5b8a1d0edf6699e35dcbea71d978d34ff3fa79f3d807b8a5b3fa90fbdc
+pymdown-extensions==10.21.3 \
+    --hash=sha256:72cfcf55f07aea0d4af2c4f11dd4e52466ddfb1bb819673146398e0bd3a77354 \
+    --hash=sha256:d7a5d08014fc571e80ca21dd6f854e31f94c489800350564d55d15b3c41e76b6
     # via
     #   -r requirements-techdocs.in
     #   mkdocs-material
@@ -704,7 +708,6 @@ requests==2.34.2 \
     #   mkdocs-git-committers-plugin-2
     #   mkdocs-htmlproofer-plugin
     #   mkdocs-material
-    #   plantuml-markdown
 result==0.17.0 \
     --hash=sha256:49fd668b4951ad15800b8ccefd98b6b94effc789607e19c65064b775570933e8 \
     --hash=sha256:b73da420c0cb1a3bf741dbd41ff96dedafaad6a1b3ef437a9e33e380bb0d91cf
@@ -712,9 +715,7 @@ result==0.17.0 \
 six==1.17.0 \
     --hash=sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274 \
     --hash=sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81
-    # via
-    #   plantuml-markdown
-    #   python-dateutil
+    # via python-dateutil
 smmap==5.0.3 \
     --hash=sha256:4d9debb8b99007ae47165abc08670bd74cb74b5227dda7f643eccc4e9eb5642c \
     --hash=sha256:c106e05d5a61449cf6ba9a1e650227ecfb141590d2a98412103ff35d89fc7b2f
