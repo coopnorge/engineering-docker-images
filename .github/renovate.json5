@@ -3,6 +3,8 @@
     "extends": [
         "github>coopnorge/github-workflow-renovate",
     ],
+    // Renovate is run only one day in a week in this repo, so setting higher prHourlyLimit
+    "prHourlyLimit": 20,
     // pip-compile doesn't automatically look for files.
     // ref: https://docs.renovatebot.com/modules/manager/pip-compile/
     "pip-compile": {
