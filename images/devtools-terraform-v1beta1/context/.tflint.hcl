@@ -4,15 +4,17 @@ plugin "terraform" {
 }
 
 plugin "azurerm" {
-    enabled = true
-    version = "0.32.0"
-    source  = "github.com/terraform-linters/tflint-ruleset-azurerm"
+    enabled   = true
+    version   = "0.32.0"
+    source    = "github.com/terraform-linters/tflint-ruleset-azurerm"
+    signature = "pgp"
 }
 
 plugin "google" {
-    enabled = true
-    version = "0.39.0"
-    source  = "github.com/terraform-linters/tflint-ruleset-google"
+    enabled   = true
+    version   = "0.39.0"
+    source    = "github.com/terraform-linters/tflint-ruleset-google"
+    signature = "pgp"
 }
 
 rule "terraform_unused_declarations" {
