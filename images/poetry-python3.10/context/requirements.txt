@@ -425,9 +425,9 @@ fastjsonschema==2.21.2 \
     --hash=sha256:1c797122d0a86c5cace2e54bf4e819c36223b552017172f32c5c024a6b77e463 \
     --hash=sha256:b1eb43748041c880796cd077f1a07c3d94e93ae84bba5ed36800a33554ae05de
     # via poetry
-filelock==3.30.2 \
-    --hash=sha256:1ea7c857465c897a4a6e64c1aace28ff6b83f5bc66c1c06ea148efa65bc2ec5d \
-    --hash=sha256:a64b58f75048ec39589983e97f5117163f822261dcb6ba843e098f05aac9663f
+filelock==3.30.3 \
+    --hash=sha256:06e1c6d5e12277022172b7f8d090affe0e8f940f1a37ca45f548855ee51a6b86 \
+    --hash=sha256:6575420cd497ed15fc43a7ac46c48f6b6371c733fc40cf5a4e216871397bc1e2
     # via
     #   cachecontrol
     #   virtualenv
