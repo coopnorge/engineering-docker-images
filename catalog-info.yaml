@@ -63,7 +63,8 @@ metadata:
   name: devtools-terraform-v1beta1
   annotations:
     github.com/project-slug: coopnorge/engineering-docker-images
-    backstage.io/techdocs-ref: url:https://github.com/coopnorge/engineering-docker-images
+    backstage.io/techdocs-entity: system:default:engineering-docker-images
+    backstage.io/techdocs-entity-path: /images/devtools-terraform-v1beta1.md
   tags:
     - devtools
     - terraform
