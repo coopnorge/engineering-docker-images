@@ -49,15 +49,15 @@ COPY Dockerfile.app /usr/local/share/devtools-python3.10-v1beta1/
 
 RUN \
     set -x; \
-    targets=( \
+    targets=" \
         help \
         poetry-install \
         validate validate-static validate-fix \
         test test-verbose \
         build publish clean \
         oci-build oci-validate oci-push \
-    ); \
-    for target in "${targets[@]}"; \
+    "; \
+    for target in $targets; \
     do \
         ln -s /usr/local/bin/maker "/usr/local/bin/${target}"; \
     done && \

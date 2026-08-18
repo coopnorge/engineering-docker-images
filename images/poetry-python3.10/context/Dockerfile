@@ -42,13 +42,13 @@ COPY Makefile /usr/local/share/poetry-python3.10/
 
 RUN \
     set -x; \
-    targets=( \
+    targets=" \
         help \
         poetry-install \
         validate validate-static validate-fix \
         test test-verbose \
-    ); \
-    for target in "${targets[@]}"; \
+    "; \
+    for target in $targets; \
     do \
         ln -s /usr/local/bin/maker "/usr/local/bin/${target}"; \
     done && \
