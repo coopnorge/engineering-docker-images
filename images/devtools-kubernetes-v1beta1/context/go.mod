@@ -1,6 +1,6 @@
 module github.com/coopnorge/engineering-docker-images/images/devtools-kubernetes-v1beta1/context/gotools
 
-go 1.26.0
+go 1.27.0
 
 require (
 	github.com/homeport/dyff v1.12.0
