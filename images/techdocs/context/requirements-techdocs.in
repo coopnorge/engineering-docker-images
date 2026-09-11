@@ -9,3 +9,4 @@ mkdocs-link-marker==0.3.0
 mkdocs-table-reader-plugin==3.1.0
 mkdocs-techdocs-core==1.7.0
 pymdown-extensions>=10.14.3
+openpyxl>=3.1.5
