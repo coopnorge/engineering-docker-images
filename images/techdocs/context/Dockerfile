@@ -65,7 +65,11 @@ RUN echo $'#!/bin/sh\n\njava -jar '/opt/plantuml.jar' ${@}' >> /usr/local/bin/pl
 ENV VALE_VERSION=3.17.1
 
 # hadolint ignore=DL4006
-RUN curl -fsSL https://github.com/errata-ai/vale/releases/download/v${VALE_VERSION}/vale_${VALE_VERSION}_Linux_64-bit.tar.gz \
+RUN case $(uname -m) in \
+    x86_64) VALE_ARCH="64-bit" ;; \
+    aarch64) VALE_ARCH="arm64" ;; \
+    esac \
+    && curl -fsSL "https://github.com/errata-ai/vale/releases/download/v${VALE_VERSION}/vale_${VALE_VERSION}_Linux_${VALE_ARCH}.tar.gz" \
     | tar -xz -C /bin --strip-components=0 vale \
     && chmod +x /bin/vale
 
