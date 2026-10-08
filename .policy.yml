@@ -12,7 +12,7 @@ approval_rules:
   requires:
     count: 1
     teams:
-    - "coopnorge/engineering"
+    - "coopnorge/backend-and-platform-engineering"
   options:
     invalidate_on_push: true
     request_review:
@@ -50,7 +50,7 @@ approval_rules:
   requires:
     count: 1
     teams:
-      - "coopnorge/engineering"
+      - "coopnorge/backend-and-platform-engineering"
   if:
     only_has_contributors_in:
       users:
@@ -67,7 +67,7 @@ approval_rules:
   requires:
     count: 2
     teams:
-    - "coopnorge/engineering"
+    - "coopnorge/backend-and-platform-engineering"
     conditions:
       has_contributor_in:
         organizations: ["coopnorge"]

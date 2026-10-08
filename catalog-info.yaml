@@ -8,7 +8,7 @@ metadata:
     backstage.io/techdocs-ref: dir:.
     github.com/project-slug: coopnorge/engineering-docker-images
 spec:
-  owner: engineering
+  owner: backend-and-platform-engineering
   domain: platform
 ---
 apiVersion: backstage.io/v1alpha1
@@ -24,7 +24,7 @@ metadata:
 spec:
   type: devtool
   lifecycle: experimental
-  owner: engineering
+  owner: backend-and-platform-engineering
   system: engineering-docker-images
 ---
 apiVersion: backstage.io/v1alpha1
@@ -39,7 +39,7 @@ metadata:
 spec:
   type: devtool
   lifecycle: experimental
-  owner: engineering
+  owner: backend-and-platform-engineering
   system: engineering-docker-images
 ---
 apiVersion: backstage.io/v1alpha1
