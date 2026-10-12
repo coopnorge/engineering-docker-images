@@ -3,7 +3,7 @@ module github.com/coopnorge/engineering-docker-images/images/devtools-golang-v1b
 go 1.27.1
 
 require (
-	github.com/abice/go-enum v0.9.4
+	github.com/abice/go-enum v0.9.5
 	github.com/cortesi/modd v0.8.1
 	github.com/envoyproxy/protoc-gen-validate v1.3.3
 	github.com/go-delve/delve v1.27.2
@@ -62,7 +62,7 @@ require (
 	github.com/urfave/cli/v2 v2.27.7 // indirect
 	github.com/xrash/smetrics v0.0.0-20240521201337-686a1a2994c1 // indirect
 	go.starlark.net v0.0.0-20231101134539-556fd59b42f6 // indirect
-	go.yaml.in/yaml/v3 v3.0.4 // indirect
+	go.yaml.in/yaml/v3 v3.0.5 // indirect
 	golang.org/x/arch v0.28.0 // indirect
 	golang.org/x/crypto v0.56.0 // indirect
 	golang.org/x/mod v0.40.0 // indirect
