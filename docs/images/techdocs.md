@@ -51,6 +51,30 @@ docker compose up techdocs
 
 Open your browser at <http://localhost:3000/docs/default/component/local/>
 
+### Validating markdown
+
+```bash
+docker compose run --rm --build techdocs validate
+```
+
+Or for a certain file/directory:
+
+```bash
+docker compose run --rm --build techdocs validate MARKDOWN_FILES=docs/<path-to-a-markdown-file-or-directory>
+```
+
+### Fixing certain markdown issues
+
+```bash
+docker compose run --rm --build techdocs validate-fix
+```
+
+Or for a certain file/directory:
+
+```bash
+docker compose run --rm --build techdocs validate-fix MARKDOWN_FILES=docs/<path-to-a-markdown-file-or-directory>
+```
+
 ### List targets
 
 ```bash
@@ -62,10 +86,9 @@ docker compose run --rm techdocs help
 ### Toolbox
 
 - [TechDocs](https://backstage.io/docs/features/techdocs/)
-- [MKDocs](https://www.mkdocs.org/)
+- [MkDocs](https://www.mkdocs.org/)
 
-  MKDocs Plugins:
-
+  MkDocs Plugins:
   - [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
   - [MkDocs Awesome Pages]
   - [EZLinks](https://github.com/orbikm/mkdocs-ezlinks-plugin)
@@ -156,9 +179,9 @@ This is some text
 
 ### Prettier vs MkDocs Admonitions
 
-An
-[admonition](https://squidfunk.github.io/mkdocs-material/reference/admonitions/)
-is written in Markdown like this:
+MkDocs
+[admonitions](https://squidfunk.github.io/mkdocs-material/reference/admonitions/)
+are written in Markdown like this:
 
 ```md
 !!! note "Title"
@@ -195,9 +218,8 @@ admonition.
 
 ### Prettier vs GitHub Markdown Alerts
 
-A
-[GitHub Markdown Alert](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts)
-is written in Markdown like this:
+[GitHub Markdown Alerts](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts)
+are written in Markdown like this:
 
 ```md
 > [!NOTE]
