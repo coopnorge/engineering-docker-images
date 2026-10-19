@@ -59,7 +59,7 @@ jobs:
     name: Validate policy-bot configuration
     needs: setup
     if: needs.setup.outputs.validate-policy-bot-config == 'true'
-    uses: coopnorge/github-workflow-policy-bot-config-validation/.github/workflows/policy-bot-config-validation.yaml@v0
+    uses: coopnorge/github-workflow-policy-bot-config-validation/.github/workflows/policy-bot-config-validation.yaml@v0.1.7
     permissions:
       contents: read
     secrets:
