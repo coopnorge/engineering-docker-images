@@ -62,7 +62,7 @@ COPY --from=yq /usr/bin/yq /usr/bin/yq
 RUN echo $'#!/bin/sh\n\njava -jar '/opt/plantuml.jar' ${@}' >> /usr/local/bin/plantuml && \
     chmod 755 /usr/local/bin/plantuml
 
-ENV VALE_VERSION=3.23.0
+ENV VALE_VERSION=3.24.0
 
 # hadolint ignore=DL4006
 RUN case $(uname -m) in \
