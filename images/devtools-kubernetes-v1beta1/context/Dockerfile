@@ -1,6 +1,6 @@
 # hadolint global ignore=DL4006,DL3003,SC2046
 # syntax=docker/dockerfile:1.3
-FROM quay.io/argoproj/argocd:v3.3.6@sha256:16b92ba472fbb9287459cc52e0ecff07288dff461209955098edb56ce866fe49 AS argocd
+FROM quay.io/argoproj/argocd:v3.5.6@sha256:8e5cc5bb008df8a09dba439462e58c94c55b7735888d3ebde0c25fc05e4e5335 AS argocd
 FROM zegl/kube-score:v1.20.0@sha256:ac4c43ad560af905d66f6bf57b0937c591332e6dbf2167c31193a13b4695ab97 AS kube-score
 FROM ghcr.io/yannh/kubeconform:v0.7.0@sha256:85dbef6b4b312b99133decc9c6fc9495e9fc5f92293d4ff3b7e1b30f5611823c AS kubeconform
 FROM docker.io/mikefarah/yq:4.54.1@sha256:4b3d9475d65571d28cbb19544d3820ec2945e4c8b2f18279394282b8dc3a592e AS yq
