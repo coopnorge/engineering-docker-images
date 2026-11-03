@@ -9,7 +9,7 @@ metadata:
     github.com/project-slug: coopnorge/engineering-docker-images
 spec:
   owner: backend-and-platform-engineering
-  domain: platform
+  domain: engineering
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Component
