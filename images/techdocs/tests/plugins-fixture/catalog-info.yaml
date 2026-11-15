@@ -1,0 +1,14 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: test-plugins
+  title: Test Plugins
+  description: Fixture for checking that mkdocs plugins survive techdocs-cli generate
+  annotations:
+    github.com/project-slug: example/test-plugins
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: library
+  lifecycle: experimental
+  owner: people

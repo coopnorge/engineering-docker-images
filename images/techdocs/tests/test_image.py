@@ -2,6 +2,7 @@ import logging
 import os
 import pathlib
 import re
+import shutil
 from typing import List, Pattern
 
 import docker
@@ -206,3 +207,44 @@ def test_command_output(
         assert len(expected_pattern.findall(actual_output.decode("utf-8"))) >= 1
     for unexpected_pattern in unexpected_patterns:
         assert len(unexpected_pattern.findall(actual_output.decode("utf-8"))) == 0
+
+
+LIST_PLUGINS = "yq '.plugins[] | select(tag == \"!!str\") // (keys | .[0])' "
+
+
+def test_build_keeps_image_plugins_and_nav_order(
+    docker_client: docker.DockerClient,
+    build_image: Image,
+    tmp_path: pathlib.Path,
+) -> None:
+    fixture = pathlib.Path(__file__).parent.resolve() / "plugins-fixture"
+    workspace = tmp_path / "workspace"
+    shutil.copytree(fixture, workspace)
+    volumes = {str(workspace): {"bind": "/srv/workspace", "mode": "rw"}}
+
+    expected = docker_client.containers.run(
+        build_image.id,
+        command=["sh", "-c", LIST_PLUGINS + "/usr/local/share/techdocs/mkdocs.yml"],
+        remove=True,
+    )
+    expected_plugins = set(expected.decode("utf-8").split())
+    assert len(expected_plugins) > 1
+
+    docker_client.containers.run(
+        build_image.id,
+        command='build GITHUB_TOKEN="fake-token"',
+        volumes=volumes,
+        remove=True,
+    )
+
+    actual = docker_client.containers.run(
+        build_image.id,
+        command=["sh", "-c", LIST_PLUGINS + "mkdocs.yml"],
+        volumes=volumes,
+        remove=True,
+    )
+    assert expected_plugins <= set(actual.decode("utf-8").split())
+
+    index = (workspace / "site" / "index.html").read_text()
+    links = re.findall(r'<a href="([^"#]*)" class="md-nav__link', index)
+    assert links.index("b/") < links.index("a/")
