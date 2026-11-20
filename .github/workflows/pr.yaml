@@ -66,7 +66,7 @@ jobs:
       policy-bot-server-url: ${{ secrets.POLICY_BOT_BASE_URL }}
 
   image-ci:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs: ["setup"]
     if: ${{ needs.setup.outputs.images-ci == 'true' || needs.setup.outputs.tools == 'true' }}
     concurrency:
