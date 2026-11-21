@@ -270,13 +270,6 @@
 				"digest": "208bd0911d0e1a9c810eba780224117f74cbb8fed4e0309d0376591c22b0f3d4"
 			}
 		],
-		"images/poetry-python3.8/context/Dockerfile": [
-			{
-				"name": "docker.io/library/python",
-				"tag": "3.8.16",
-				"digest": "8bfe365ca738c4bc988d8c66571514972565b5abb3a04c0c342f976def6a962c"
-			}
-		],
 		"images/poetry-python3.9/context/Dockerfile": [
 			{
 				"name": "docker.io/library/python",
