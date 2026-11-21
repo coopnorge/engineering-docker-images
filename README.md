@@ -1,5 +1,13 @@
 # engineering-docker-images
 
+> [!IMPORTANT]
+>
+> The `devtools-golang-v1beta1`, `devtools-kubernetes-v1beta1`,
+> `devtools-terraform-v1beta1`, `poetry-python3.10` and `poetry-python3.11`
+> images are deprecated and will be deleted. Each image page names its
+> replacement. Progress is tracked in
+> [#4456](https://github.com/coopnorge/engineering-docker-images/issues/4456).
+
 ## Layout
 
 Dockerfiles for images are all located in the `images/` directory. Each image
@@ -11,8 +19,8 @@ Docker images are published to the following registries:
 
 - `ghcr.io/coopnorge/engineering-docker-images/e0/${image_name}:latest`
 
-  This is mainly for easy usage from GitHub, once it is easier to setup
-  workload identity we can remove this.
+  This is mainly for easy usage from GitHub, once it is easier to setup workload
+  identity we can remove this.
 
 - `europe-north1-docker.pkg.dev/engineering-production-af50/images/${image_name}:latest`
 
@@ -27,8 +35,8 @@ executed, for example, to test the `devtools-golang-v1beta1` image, the
 `images/devtools-golang-v1beta1/tests/run` file will be executed. This file can
 run any test framework.
 
-Each image should have a `README.md` in its `tests` directory that provides
-some additional testing instructions, e.g.
+Each image should have a `README.md` in its `tests` directory that provides some
+additional testing instructions, e.g.
 `images/devtools-golang-v1beta1/tests/README.md`.
 
 ### Using images while developing

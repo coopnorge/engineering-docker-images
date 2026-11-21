@@ -38,7 +38,7 @@ metadata:
     - go
 spec:
   type: devtool
-  lifecycle: experimental
+  lifecycle: deprecated
   owner: backend-and-platform-engineering
   system: engineering-docker-images
 ---
@@ -53,7 +53,7 @@ metadata:
     - kubernetes
 spec:
   type: devtool
-  lifecycle: experimental
+  lifecycle: deprecated
   owner: cloud-platform
   system: engineering-docker-images
 ---
@@ -70,7 +70,7 @@ metadata:
     - terraform
 spec:
   type: devtool
-  lifecycle: experimental
+  lifecycle: deprecated
   owner: cloud-platform
   system: engineering-docker-images
 ---
@@ -84,7 +84,7 @@ metadata:
     - python
 spec:
   type: devtool
-  lifecycle: production
+  lifecycle: deprecated
   owner: cloud-platform
   system: engineering-docker-images
 ---
@@ -98,7 +98,7 @@ metadata:
     - python
 spec:
   type: devtool
-  lifecycle: production
+  lifecycle: deprecated
   owner: cloud-platform
   system: engineering-docker-images
 ---
