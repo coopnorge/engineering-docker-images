@@ -1,5 +1,13 @@
 # Golang development tools
 
+> [!IMPORTANT]
+>
+> The `devtools-golang-v1beta1` image is deprecated and will be deleted. Use the
+> targets and reusable workflows in
+> [coopnorge/mage](https://github.com/coopnorge/mage) instead. Progress is
+> tracked in
+> [engineering-docker-images#4456](https://github.com/coopnorge/engineering-docker-images/issues/4456).
+
 ## Usage
 
 ```console
@@ -81,7 +89,7 @@ services:
 networks:
   default:
 volumes:
-    xdg-cache-home: {}
+  xdg-cache-home: {}
 ```
 
 ```yaml title="docker-compose.yaml"
@@ -93,13 +101,14 @@ include:
 
 ### OCI image building
 
-!!! warning "Security Consideration"
-    OCI building requires that the devtools container run in privileged mode.
-    For this to be more secure of a rootless OCI runtime
-    (e.g. rootless dockerd) should be used.
+> [!WARNING]
+>
+> **Security Consideration**: OCI building requires that the devtools container
+> run in privileged mode. For this to be more secure of a rootless OCI runtime
+> (e.g. rootless `dockerd`) should be used.
 
-This devtool provides a simple Dockerfile which should cover typical service use
-cases. To use it set the `APP_DOCKERFILE` variable to
+This development tool provides a simple Dockerfile which should cover typical
+service use cases. To use it set the `APP_DOCKERFILE` variable to
 `/usr/local/share/devtools-golang/Dockerfile.app`. Complex use cases can
 otherwise supply their own Dockerfile.
 
@@ -137,12 +146,13 @@ printenv GITHUB_TOKEN \
 
   Default: The value of `APP_NAME`.
 
-- `APP_DOCKERFILE`: The dockerfile to use when building an OCI image.
+- `APP_DOCKERFILE`: The Dockerfile to use when building an OCI image.
 
   Default: `build/package/Dockerfile`.
 
 - `APP_RESOURCE_PATHS`: A space-separated list of paths to copy to the
-  application's working directory. Paths will be chowned to `root`:`root`.
+  application's working directory. Paths will have their owner changed to
+  `root`:`root`.
 
   Default: unset.
 
@@ -151,7 +161,7 @@ printenv GITHUB_TOKEN \
   Default: This defaults to `true` if a user supplied `APP_DOCKERFILE` exists
   and to `false` in other cases.
 
-- `OCI_REF_NAMES`: The space seperated OCI reference names that the OCI image
+- `OCI_REF_NAMES`: The space separated OCI reference names that the OCI image
   should be published as.
 
   e.g.
