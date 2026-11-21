@@ -14,22 +14,6 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: benthos-v4
-  description: |
-    This is a mirror of the latest version 4 of Benthos and is provided so that
-    Benthos can be used with cloud run which needs the image to be on a Google
-    registry.
-  annotations:
-    github.com/project-slug: coopnorge/engineering-docker-images
-spec:
-  type: devtool
-  lifecycle: experimental
-  owner: backend-and-platform-engineering
-  system: engineering-docker-images
----
-apiVersion: backstage.io/v1alpha1
-kind: Component
-metadata:
   name: devtools-golang-v1beta1
   annotations:
     github.com/project-slug: coopnorge/engineering-docker-images
