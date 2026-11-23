@@ -1,5 +1,12 @@
 # Terraform Development Tools
 
+> [!IMPORTANT]
+>
+> The `devtools-terraform-v1beta1` image is deprecated and will be deleted. Use
+> the `terraform` targets in [coopnorge/mage](https://github.com/coopnorge/mage)
+> instead. See
+> [#4456](https://github.com/coopnorge/engineering-docker-images/issues/4456).
+
 - `terraform-reinit` target: This target will run `terraform init` in each
   Terraform directory.
 
@@ -18,7 +25,7 @@
   Default: If this is not set it is auto-detected.
 
 - `TFDIRS_EXCLUDE` environment variable: This is a space-separated list of GNU
-  make string pattens (which use `%` as wildcard) to exclude directories from
+  make string patterns (which use `%` as wildcard) to exclude directories from
   Terraform validation.
 
   Default: `%/examples %/example`
