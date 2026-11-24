@@ -263,13 +263,6 @@
 				"digest": "208bd0911d0e1a9c810eba780224117f74cbb8fed4e0309d0376591c22b0f3d4"
 			}
 		],
-		"images/poetry-python3.9/context/Dockerfile": [
-			{
-				"name": "docker.io/library/python",
-				"tag": "3.9.16",
-				"digest": "fc49b0b2ba630f57e5dde88537c682152bcc8863a49545116fd662cb25d7cfc7"
-			}
-		],
 		"images/techdocs/context/Dockerfile": [
 			{
 				"name": "docker.io/library/node",

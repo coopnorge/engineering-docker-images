@@ -47,11 +47,6 @@
             "allowedVersions": "< 2.0.0"
         },
         {
-            "matchFileNames": ["images/poetry-python3.9/**"],
-            "matchPackageNames": ["python", "docker.io/library/python"],
-            "allowedVersions": "3.9.x"
-        },
-        {
             "matchFileNames": ["images/poetry-python3.10/**"],
             "matchPackageNames": ["python", "docker.io/library/python"],
             "allowedVersions": "3.10.x"
