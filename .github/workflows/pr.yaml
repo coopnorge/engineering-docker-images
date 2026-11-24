@@ -46,16 +46,27 @@ jobs:
           else
             # Only images affected by the PR
             images=$(echo ${{ steps.paths-filter.outputs.images_files }} | yq -o=json -I0 '.[] |= sub("images/([^/]+)/.*$", "${1}") | unique' -)
-            # Drop images that were removed by the PR
+            # Skip images that were removed in the PR
             existing=()
-            while IFS= read -r name; do
+            for name in $(echo "${images}" | yq -r '.[]' -); do
               [[ -d "images/${name}" ]] && existing+=("${name}")
-            done < <(echo "${images}" | yq -r '.[]' -)
+            done
             if (( ${#existing[@]} == 0 )); then
               images='[]'
             else
               printf -v images '[%s]' "$(printf '"%s",' "${existing[@]}" | sed 's/,$//')"
             fi
+          fi
+
+          # Drop images that were removed in this change
+          existing=()
+          for name in $(echo "$images" | yq -o=tsv '.[]' -); do
+            [[ -d "images/${name}" ]] && existing+=("$name")
+          done
+          if (( ${#existing[@]} == 0 )); then
+            images='[]'
+          else
+            printf -v images '[%s]' "$(printf '"%s",' "${existing[@]}" | sed 's/,$//')"
           fi
 
           echo "$images"
