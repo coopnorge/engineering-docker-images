@@ -138,13 +138,6 @@
 				"digest": "208bd0911d0e1a9c810eba780224117f74cbb8fed4e0309d0376591c22b0f3d4"
 			}
 		],
-		"images/benthos-v4/context/Dockerfile": [
-			{
-				"name": "docker.io/jeffail/benthos",
-				"tag": "4",
-				"digest": "7a5f4d9e3f8c6ef354d00f200ceb1195294bcfe6983b0244bb0aa67e7f6b9d1d"
-			}
-		],
 		"images/devtools-golang-v1beta1/context/Dockerfile": [
 			{
 				"name": "docker.io/safewaters/docker-lock",
