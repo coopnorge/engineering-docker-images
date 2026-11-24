@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-script_dirname="$( dirname -- "${0}" )"
-set -x
-exec poetry run pytest "${script_dirname}" "${@}"
